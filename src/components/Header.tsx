@@ -11,6 +11,7 @@ const NAV_ITEMS: { to: string; key: string }[] = [
   { to: '/recipes', key: 'nav.recipes' },
   { to: '/arab-cuisine', key: 'nav.arabCuisine' },
   { to: '/films', key: 'nav.films' },
+  { to: '/academy', key: 'nav.academy' },
   { to: '/videos', key: 'nav.videos' },
   { to: '/library', key: 'nav.library' },
   { to: '/magazines', key: 'nav.magazines' },
