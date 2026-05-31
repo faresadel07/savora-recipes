@@ -8,12 +8,8 @@ import {
   Copy,
   Coffee,
   Download,
-  Globe,
-  Map,
-  Newspaper,
   Pause,
   Play,
-  Sparkles,
   Star,
   Tv,
   Utensils,
@@ -162,7 +158,6 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-ink-100 pt-5">
-      <p className="mr-1 text-[11px] uppercase tracking-widest text-ink-400">Take it with you</p>
       <button
         type="button"
         onClick={handleDownload}
@@ -241,7 +236,6 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
 }
 
 function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: number; accent?: 'gold' | 'sage' }) {
-  const numberRing = accent === 'sage' ? 'bg-sage-500' : 'bg-ink-900';
   const bullet = accent === 'sage' ? 'bg-sage-500' : 'bg-gold-500';
   const stepNum = accent === 'sage' ? 'bg-sage-500' : 'bg-ink-900';
 
@@ -250,33 +244,27 @@ function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: 
       id={`dish-${dish.id}`}
       className="grid scroll-mt-24 items-start gap-8 md:grid-cols-12 md:gap-12"
     >
-      <div className={`md:col-span-7 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
-        <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-ink-900 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)]">
-          <YoutubeLite videoId={dish.videoId} title={dish.name} />
-        </div>
-      </div>
-
-      <div className="md:col-span-5">
-        <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-widest text-ink-400">
-          <span className={`grid h-5 w-5 place-items-center rounded-full ${numberRing} text-[10px] font-semibold text-cream-50`}>
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          {dish.origin}
-        </p>
-        <h3 className="mt-3 text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tighter">
+      {/* TITLE always first in DOM, so mobile reads title before video. On desktop, alternate columns. */}
+      <div className={`md:col-span-5 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
+        <h3 className="text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tighter">
           {dish.name}
         </h3>
         <p className="mt-1 text-xl font-medium tracking-tight text-ink-500">{dish.nameAr}</p>
+        <p className="mt-4 text-[15px] font-medium tracking-tight text-ink-500">{dish.origin}</p>
         <p className="mt-5 text-sm leading-relaxed text-ink-600 sm:text-base">{dish.story}</p>
+      </div>
+
+      <div className="md:col-span-7">
+        <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-ink-900 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)]">
+          <YoutubeLite videoId={dish.videoId} title={dish.name} />
+        </div>
       </div>
 
       <div className="md:col-span-12">
         <div className="rounded-3xl border border-ink-100 bg-cream-50 p-6 md:p-8">
           <div className="grid gap-6 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-4">
-              <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-widest text-ink-400">
-                <Sparkles className="h-3 w-3" /> Ingredients
-              </p>
+              <h4 className="text-base font-semibold tracking-tight text-ink-900">Ingredients</h4>
               <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-ink-700 md:text-[15px]">
                 {dish.ingredients.map((ing) => (
                   <li key={ing} className="flex gap-2.5">
@@ -287,9 +275,7 @@ function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: 
               </ul>
             </div>
             <div className="md:col-span-8">
-              <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-widest text-ink-400">
-                <Utensils className="h-3 w-3" /> Method
-              </p>
+              <h4 className="text-base font-semibold tracking-tight text-ink-900">Method</h4>
               <ol className="mt-4 space-y-4 text-[14px] leading-relaxed text-ink-700 md:text-[15px]">
                 {dish.steps.map((s, idx) => (
                   <li key={idx} className="flex gap-4">
@@ -328,9 +314,6 @@ export default function ArabCuisinePage() {
         <div className="container-wide relative z-10">
           <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
-              <p className="mb-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-widest text-ink-400">
-                <Globe className="h-3 w-3" /> A thousand years at one table
-              </p>
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
                 The Arab table.
                 <br />
@@ -414,7 +397,6 @@ export default function ArabCuisinePage() {
       <section id="recipes" className="border-t border-ink-100 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            icon={<Utensils className="h-3 w-3" />}
             title="Eighteen recipes, eighteen videos."
             body="Each dish gets the full treatment: a short story, the exact ingredients, step-by-step method, and an embedded cooking tutorial. Press play, watch, cook. Take it with you as a PDF, copy it to your clipboard, or have it read aloud."
           />
@@ -432,9 +414,6 @@ export default function ArabCuisinePage() {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sage-500 via-gold-500 to-terracotta-500" />
         <div className="container-wide">
           <div className="mb-12 max-w-3xl">
-            <p className="mb-4 inline-flex items-center gap-2 text-[11px] uppercase tracking-widest text-sage-600">
-              <Star className="h-3 w-3" /> The Palestinian kitchen
-            </p>
             <h2 className="text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-[1.05] tracking-tighter text-ink-900">
               Five dishes from olive country.
               <span className="block text-sage-600">المطبخ الفلسطيني.</span>
@@ -459,7 +438,6 @@ export default function ArabCuisinePage() {
       {/* ============ REGIONS (browse by) ============ */}
       <section id="regions" className="container-wide py-16 md:py-24">
         <SectionHead
-          icon={<Map className="h-3 w-3" />}
           title="Eight kitchens, one heritage."
           body="The Arab world is not one cuisine, it is a constellation. Pick a region to see its signature dishes, its spice cabinet, and any recipes from our library that match."
         />
@@ -484,12 +462,12 @@ export default function ArabCuisinePage() {
 
         <div className="grid gap-8 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-5">
-            <p className="text-[11px] uppercase tracking-widest text-ink-400">{activeRegion.nameAr}</p>
-            <h3 className="mt-2 text-[clamp(1.875rem,3.5vw,3rem)] font-semibold leading-tight tracking-tighter">{activeRegion.name}</h3>
+            <h3 className="text-[clamp(1.875rem,3.5vw,3rem)] font-semibold leading-tight tracking-tighter">{activeRegion.name}</h3>
+            <p className="mt-1 text-xl font-medium tracking-tight text-ink-500">{activeRegion.nameAr}</p>
             <p className="mt-5 text-sm leading-relaxed text-ink-600 sm:text-base">{activeRegion.blurb}</p>
 
             <div className="mt-7">
-              <p className="text-[11px] uppercase tracking-widest text-ink-400">Signature dishes</p>
+              <h4 className="text-base font-semibold tracking-tight text-ink-900">Signature dishes</h4>
               <div className="mt-3 flex flex-wrap gap-2">
                 {activeRegion.signatureDishes.map((d) => (
                   <span key={d} className="rounded-full bg-cream-100 px-3 py-1.5 text-[12px] font-medium tracking-tight text-ink-700">
@@ -500,7 +478,7 @@ export default function ArabCuisinePage() {
             </div>
 
             <div className="mt-6">
-              <p className="text-[11px] uppercase tracking-widest text-ink-400">Spice cabinet</p>
+              <h4 className="text-base font-semibold tracking-tight text-ink-900">Spice cabinet</h4>
               <div className="mt-3 flex flex-wrap gap-2">
                 {activeRegion.signatureSpices.map((s) => (
                   <span
@@ -525,7 +503,7 @@ export default function ArabCuisinePage() {
           <div className="md:col-span-7">
             {regionRecipesQ.data && regionRecipesQ.data.results.length > 0 ? (
               <>
-                <p className="mb-4 text-[11px] uppercase tracking-widest text-ink-400">Recipes from our library</p>
+                <h4 className="mb-4 text-base font-semibold tracking-tight text-ink-900">Recipes from our library</h4>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3">
                   {regionRecipesQ.data.results.slice(0, 9).map((r, i) => (
                     <RecipeCard key={r.id} recipe={r} index={i} />
@@ -534,8 +512,7 @@ export default function ArabCuisinePage() {
               </>
             ) : (
               <div className="rounded-3xl border border-ink-100 bg-cream-50 p-8">
-                <p className="text-[11px] uppercase tracking-widest text-ink-400">In the kitchen</p>
-                <h4 className="mt-3 text-xl font-semibold leading-snug tracking-tight">
+                <h4 className="text-xl font-semibold leading-snug tracking-tight">
                   These dishes live in the recipes and videos above.
                 </h4>
                 <p className="mt-3 text-sm leading-relaxed text-ink-600">
@@ -552,7 +529,6 @@ export default function ArabCuisinePage() {
       <section id="cookbooks" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            icon={<BookOpen className="h-3 w-3" />}
             title="Ten cookbooks, read in place."
             body="Ten Arab-cuisine cookbooks hosted on Internet Archive. Open the reader and turn the pages right here, without leaving the site."
           />
@@ -568,9 +544,8 @@ export default function ArabCuisinePage() {
                   <RecipeImage src={b.coverUrl} alt={b.title} className="absolute inset-0 h-full w-full object-cover" />
                 </a>
                 <div className="flex flex-1 flex-col">
-                  <p className="text-[11px] uppercase tracking-widest text-ink-400">Published {b.year}</p>
-                  <h3 className="mt-3 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{b.title}</h3>
-                  <p className="mt-1 text-[12px] tracking-tight text-ink-400">{b.author}</p>
+                  <h3 className="text-xl font-semibold leading-snug tracking-tight md:text-2xl">{b.title}</h3>
+                  <p className="mt-1 text-sm tracking-tight text-ink-500">{b.author}, {b.year}</p>
                   <p className="mt-4 text-sm leading-relaxed text-ink-600">{b.blurb}</p>
                   <ArchiveReader embedUrl={b.embedUrl} detailUrl={b.detailUrl} title={b.title} />
                 </div>
@@ -583,7 +558,6 @@ export default function ArabCuisinePage() {
       {/* ============ SPICES ============ */}
       <section id="spices" className="container-wide py-16 md:py-24">
         <SectionHead
-          icon={<Sparkles className="h-3 w-3" />}
           title="Nine spices that built a cuisine."
           body="Memorize this short list and you can read any Arab recipe. The whole Arab kitchen is variations on these aromatics."
         />
@@ -595,11 +569,10 @@ export default function ArabCuisinePage() {
                 <h3 className="text-xl font-semibold tracking-tight">{s.name}</h3>
                 <span className="text-base font-medium text-ink-400">{s.nameAr}</span>
               </div>
-              <p className="mt-1 text-[10px] uppercase tracking-widest text-ink-400">{s.origin}</p>
+              <p className="mt-1 text-xs tracking-tight text-ink-400">{s.origin}</p>
               <p className="mt-4 text-sm leading-relaxed text-ink-600">{s.description}</p>
-              <p className="mt-4 border-t border-ink-100 pt-4 text-[12px] tracking-tight text-ink-500">
-                <span className="font-semibold uppercase tracking-widest text-ink-700">Use it:</span>{' '}
-                {s.uses}
+              <p className="mt-4 border-t border-ink-100 pt-4 text-[13px] tracking-tight text-ink-600">
+                <span className="font-semibold text-ink-900">Use:</span> {s.uses}
               </p>
             </article>
           ))}
@@ -610,7 +583,6 @@ export default function ArabCuisinePage() {
       <section id="heritage" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            icon={<Coffee className="h-3 w-3" />}
             title="Six notes on heritage."
             body="The Arab kitchen carries a long memory. Six short notes that help explain why dishes taste the way they do."
           />
@@ -636,7 +608,6 @@ export default function ArabCuisinePage() {
       {/* ============ CHANNELS (explore more) ============ */}
       <section id="channels" className="container-wide py-16 md:py-24">
         <SectionHead
-          icon={<Tv className="h-3 w-3" />}
           title="Seventeen channels to explore."
           body="Hand-picked YouTube channels covering Levantine, Egyptian, Maghrebi, Gulf, and pan-Arab cooking. All free, all public."
         />
@@ -652,7 +623,6 @@ export default function ArabCuisinePage() {
       <section id="sites" className="border-t border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            icon={<Newspaper className="h-3 w-3" />}
             title="Where Arab chefs publish online."
             body="Five contemporary Arab and Arab-diaspora cooks whose websites and books are worth the bookmark."
           />
@@ -674,7 +644,7 @@ export default function ArabCuisinePage() {
                   <ArrowUpRight className="rtl-flip h-4 w-4 flex-none text-ink-400 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink-900" />
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-ink-600">{s.blurb}</p>
-                <p className="mt-4 text-[10px] uppercase tracking-widest text-ink-400">
+                <p className="mt-4 text-xs tracking-tight text-ink-400">
                   {s.language === 'ar' ? 'Arabic' : s.language === 'en' ? 'English' : 'Bilingual'}
                 </p>
               </a>
@@ -692,7 +662,7 @@ export default function ArabCuisinePage() {
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
             "Coffee is in two cups. The first is for the host, the second for the guest. Drink slowly and stay a while."
           </h3>
-          <p className="mt-4 text-[12px] uppercase tracking-widest text-cream-100/60">Bedouin saying</p>
+          <p className="mt-4 text-sm italic tracking-tight text-cream-100/70">Bedouin saying</p>
           <Link to="/recipes" className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400">
             Browse all recipes
             <ArrowUpRight className="rtl-flip h-4 w-4" />
@@ -703,14 +673,9 @@ export default function ArabCuisinePage() {
   );
 }
 
-function SectionHead({ title, body, icon }: { title: string; body?: string; icon?: React.ReactNode }) {
+function SectionHead({ title, body }: { title: string; body?: string; icon?: React.ReactNode }) {
   return (
     <div className="mb-10 max-w-3xl">
-      {icon && (
-        <span className="mb-4 inline-grid h-8 w-8 place-items-center rounded-full bg-ink-900 text-cream-50">
-          {icon}
-        </span>
-      )}
       <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">{title}</h2>
       {body && <p className="mt-3 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">{body}</p>}
     </div>
@@ -721,7 +686,7 @@ function LightStat({ top, bottom }: { top: string; bottom: string }) {
   return (
     <div className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
       <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{top}</p>
-      <p className="mt-1 text-[10px] uppercase tracking-widest text-ink-400">{bottom}</p>
+      <p className="mt-1 text-xs tracking-tight text-ink-500">{bottom}</p>
     </div>
   );
 }
@@ -749,8 +714,8 @@ function ChannelCard({ channel: c, index }: { channel: (typeof ARAB_CHANNELS)[nu
       </div>
 
       <div>
-        <p className="text-[10px] uppercase tracking-widest text-ink-400">{c.region}</p>
-        <h3 className="mt-2 text-lg font-semibold leading-snug tracking-tight transition-colors group-hover:text-gold-600 md:text-xl">
+        <p className="text-xs tracking-tight text-ink-400">{c.region}</p>
+        <h3 className="mt-1.5 text-lg font-semibold leading-snug tracking-tight transition-colors group-hover:text-gold-600 md:text-xl">
           {c.name}
         </h3>
         {c.nameAr && <p className="mt-0.5 text-[13px] tracking-tight text-ink-500">{c.nameAr}</p>}
@@ -759,7 +724,7 @@ function ChannelCard({ channel: c, index }: { channel: (typeof ARAB_CHANNELS)[nu
 
       <p className="mt-auto text-sm leading-relaxed text-ink-600">{c.blurb}</p>
 
-      <div className="mt-1 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-ink-400">
+      <div className="mt-1 inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
         <Tv className="h-3 w-3" /> Open on YouTube
       </div>
     </a>
