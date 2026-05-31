@@ -12,6 +12,7 @@ const NAV_ITEMS: { to: string; key: string }[] = [
   { to: '/videos', key: 'nav.videos' },
   { to: '/library', key: 'nav.library' },
   { to: '/magazines', key: 'nav.magazines' },
+  { to: '/fitness', key: 'nav.fitness' },
 ];
 
 export default function Header() {
