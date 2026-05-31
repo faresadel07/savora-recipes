@@ -173,8 +173,12 @@ html[dir='rtl'] .rtl-flip {
            hover:after:origin-left hover:after:scale-x-100;
   }
 
+  /* Eyebrow labels (small uppercase headers like "TODAY'S PICK") are
+     intentionally hidden across the whole site per the owner's request.
+     The class is kept so existing markup still parses; we just don't
+     render the visual decoration. */
   .eyebrow {
-    @apply text-[11px] uppercase tracking-widest text-ink-400 font-medium;
+    display: none !important;
   }
 }
 
