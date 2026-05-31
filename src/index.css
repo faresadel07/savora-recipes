@@ -60,13 +60,8 @@ html[dir='rtl'] .rtl-flip {
     color-scheme: light;
     /* Always reserve the vertical scrollbar so the page never shifts
        horizontally as the user scrolls between pages of different
-       heights. overflow-y: scroll is the bulletproof fallback for
-       browsers that don't fully honor scrollbar-gutter. */
+       heights. */
     scrollbar-gutter: stable;
-    overflow-y: scroll;
-    /* Cut off anything that leaks past the viewport horizontally (blur
-       decorations, etc.) without creating a horizontal scroll bar. */
-    overflow-x: clip;
   }
 
   html.dark {
@@ -77,8 +72,9 @@ html[dir='rtl'] .rtl-flip {
     @apply bg-cream-50 text-ink-900 transition-colors duration-300;
     letter-spacing: -0.005em;
     font-feature-settings: 'ss01', 'cv11', 'cv02';
-    overflow-x: clip;
-    /* Fallback for older browsers where overflow: clip is not supported. */
+    /* Width clamp instead of overflow-x: clip. The latter forces the
+       browser to interpret overflow-y as auto, which makes body a
+       scroll container and breaks `position: sticky` on the header. */
     max-width: 100vw;
   }
 
