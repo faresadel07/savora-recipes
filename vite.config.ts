@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'robots.txt'],
+      includeAssets: ['favicon-32.png', 'apple-touch-icon.png', 'zaytoun-logo.jpg', 'robots.txt'],
       manifest: {
         name: 'Zaytoun',
         short_name: 'Zaytoun',
@@ -41,11 +41,29 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Make sure the big mealdb cache is precached so the app works offline.
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2,woff,json}'],
+        // Precache static build assets so the app works offline.
+        globPatterns: ['**/*.{js,css,svg,png,jpg,woff2,woff,json}'],
         // 4 MB ceiling per asset is plenty; our biggest is the recipe cache.
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
+        // Always try the network for navigations first so users see the
+        // latest deploy. Fall back to the cached index.html only when
+        // they're offline.
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api/, /\.(?:json|js|css|png|jpg|svg|woff2?)$/],
+        clientsClaim: true,
+        skipWaiting: true,
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
+          {
+            // HTML pages: always fetch fresh, fall back to cache.
+            urlPattern: ({ request }: { request: Request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-pages',
+              networkTimeoutSeconds: 4,
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
           {
             urlPattern: /^https:\/\/www\.themealdb\.com\/.*$/,
             handler: 'CacheFirst',
