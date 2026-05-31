@@ -149,7 +149,7 @@ export default function Footer() {
         {/* Brand */}
         <div className="md:col-span-4">
           <Link to="/" className="inline-flex items-center gap-2.5 text-3xl font-semibold tracking-tighter text-cream-50">
-            <img src="/favicon.svg" alt="" width={28} height={28} className="h-7 w-7" />
+            <img src="/zaytoun-logo.jpg" alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" />
             Zaytoun
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream-100/70">

@@ -59,7 +59,7 @@ export default function Header() {
     >
       <div className="container-wide flex h-14 items-center justify-between gap-4 md:h-16">
         <Link to="/" className="flex items-center gap-2 group" aria-label="Zaytoun home">
-          <img src="/favicon.svg" alt="" width={22} height={22} className="h-5 w-5 md:h-[22px] md:w-[22px]" />
+          <img src="/zaytoun-logo.jpg" alt="" width={28} height={28} className="h-6 w-6 rounded-full object-cover md:h-7 md:w-7" />
           <span className="text-lg font-semibold tracking-tighter md:text-xl">Zaytoun</span>
         </Link>
 
