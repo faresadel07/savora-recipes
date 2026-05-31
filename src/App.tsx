@@ -11,6 +11,7 @@ import LibraryPage from './pages/LibraryPage';
 import MagazinesPage from './pages/MagazinesPage';
 import FitnessPage from './pages/FitnessPage';
 import ArabCuisinePage from './pages/ArabCuisinePage';
+import FilmLibraryPage from './pages/FilmLibraryPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="magazines" element={<MagazinesPage />} />
         <Route path="fitness" element={<FitnessPage />} />
         <Route path="arab-cuisine" element={<ArabCuisinePage />} />
+        <Route path="films" element={<FilmLibraryPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
         <Route path="*" element={<NotFoundPage />} />
