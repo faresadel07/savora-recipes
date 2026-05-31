@@ -56,14 +56,15 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
       <img
         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
         onLoad={(e) => {
-          // YouTube returns a 120x90 placeholder when maxresdefault doesn't exist,
-          // and the browser loads it successfully so onError never fires. Detect
-          // the placeholder by its dimensions and fall back to a smaller size that
-          // is reliably present for every public video.
+          // YouTube returns a 120x90 placeholder when a higher-quality thumbnail
+          // doesn't exist, instead of a real HTTP 404. Walk down the size ladder
+          // until we land on a real image. hqdefault is generated for every
+          // public video, so it is the safe terminal.
           const t = e.currentTarget;
-          if (t.naturalWidth <= 120 && !t.src.includes('sddefault') && !t.src.includes('hqdefault')) {
+          if (t.naturalWidth > 120) return;
+          if (t.src.includes('maxresdefault')) {
             t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-          } else if (t.naturalWidth <= 120 && !t.src.includes('hqdefault')) {
+          } else if (t.src.includes('sddefault')) {
             t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
           }
         }}
@@ -184,14 +185,14 @@ export default function FilmLibraryPage() {
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
                 Watch the masters.
                 <br />
-                <span className="text-gold-600">Forty-two films, one library.</span>
+                <span className="text-gold-600">{FOOD_FILMS.length} films, one library.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
                 A curated library of professional food films from Netflix,
-                National Geographic, PBS, CNN, DW, UNESCO, and the best
-                independent food channels on YouTube. Chef profiles, travel
-                docs, food history, food science, and cultural deep dives.
-                Press play and watch inside the site.
+                National Geographic, PBS, DW, UNESCO, and the best independent
+                food channels on YouTube. Chef profiles, travel docs, food
+                history, food science, and cultural deep dives. Press play and
+                watch inside the site.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -237,8 +238,11 @@ export default function FilmLibraryPage() {
                       src={`https://img.youtube.com/vi/${f.videoId}/maxresdefault.jpg`}
                       onLoad={(e) => {
                         const t = e.currentTarget;
-                        if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
+                        if (t.naturalWidth > 120) return;
+                        if (t.src.includes('maxresdefault')) {
                           t.src = `https://img.youtube.com/vi/${f.videoId}/sddefault.jpg`;
+                        } else if (t.src.includes('sddefault')) {
+                          t.src = `https://img.youtube.com/vi/${f.videoId}/hqdefault.jpg`;
                         }
                       }}
                       onError={(e) => {

@@ -1,28 +1,37 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowUpRight,
   AlertTriangle,
+  Check,
   Clock,
   GraduationCap,
   Lightbulb,
   Play,
   Search,
+  Sparkles,
   Target,
+  Trophy,
   X,
 } from 'lucide-react';
 import {
   COOKING_SKILLS,
   FEATURED_SKILLS,
+  LEARNING_PATHS,
   LEVEL_META,
   SKILL_CATEGORIES,
+  categoryTotalMinutes,
+  pathTotalMinutes,
   type CookingSkill,
+  type LearningPath,
   type SkillCategory,
   type SkillLevel,
 } from '../data/skills-academy';
 
 type CategoryFilter = 'all' | SkillCategory;
 type LevelFilter = 'all' | SkillLevel;
+
+const STORAGE_KEY = 'zaytoun:academy:watched';
 
 const CATEGORY_FILTERS: { id: CategoryFilter; name: string }[] = [
   { id: 'all', name: 'All skills' },
@@ -36,12 +45,53 @@ const LEVEL_FILTERS: { id: LevelFilter; name: string }[] = [
   { id: 'advanced', name: 'Advanced' },
 ];
 
-const HERO_STATS = [
-  { value: `${COOKING_SKILLS.length}`, label: 'Lessons' },
-  { value: `${SKILL_CATEGORIES.length}`, label: 'Categories' },
-  { value: `${new Set(COOKING_SKILLS.map((s) => s.channel)).size}`, label: 'Channels' },
-  { value: '3', label: 'Levels' },
-];
+const TOTAL_MINUTES = COOKING_SKILLS.reduce((sum, s) => {
+  if (!s.runtime) return sum;
+  const m = parseInt(s.runtime.match(/\d+/)?.[0] ?? '0', 10);
+  return sum + (Number.isFinite(m) ? m : 0);
+}, 0);
+
+function formatMinutes(min: number): string {
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60);
+  const rem = min - h * 60;
+  return rem === 0 ? `${h} hr` : `${h} hr ${rem} min`;
+}
+
+function useWatched() {
+  const [watched, setWatched] = useState<Set<string>>(() => {
+    if (typeof window === 'undefined') return new Set();
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return new Set<string>(raw ? JSON.parse(raw) : []);
+    } catch {
+      return new Set();
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(watched)));
+    } catch {
+      /* ignore */
+    }
+  }, [watched]);
+
+  function toggle(id: string) {
+    setWatched((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function reset() {
+    setWatched(new Set());
+  }
+
+  return { watched, toggle, reset };
+}
 
 function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
   const [playing, setPlaying] = useState(false);
@@ -68,8 +118,11 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
         onLoad={(e) => {
           const t = e.currentTarget;
-          if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
+          if (t.naturalWidth > 120) return;
+          if (t.src.includes('maxresdefault')) {
             t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+          } else if (t.src.includes('sddefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
           }
         }}
         onError={(e) => {
@@ -102,13 +155,60 @@ function LevelPill({ level }: { level: SkillLevel }) {
   );
 }
 
-function SkillCard({ skill }: { skill: CookingSkill }) {
+function WatchedToggle({
+  isWatched,
+  onToggle,
+  size = 'md',
+}: {
+  isWatched: boolean;
+  onToggle: () => void;
+  size?: 'sm' | 'md';
+}) {
+  const dim = size === 'sm' ? 'h-7 w-7' : 'h-9 w-9';
+  const iconDim = size === 'sm' ? 'h-3.5 w-3.5' : 'h-4 w-4';
   return (
-    <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        onToggle();
+      }}
+      title={isWatched ? 'Mark as not watched' : 'Mark as watched'}
+      aria-label={isWatched ? 'Mark as not watched' : 'Mark as watched'}
+      className={`grid ${dim} flex-none place-items-center rounded-full border transition-all ${
+        isWatched
+          ? 'border-sage-500 bg-sage-500 text-cream-50 hover:bg-sage-600'
+          : 'border-ink-200 bg-cream-50 text-ink-400 hover:border-ink-900 hover:text-ink-900'
+      }`}
+    >
+      <Check className={iconDim} strokeWidth={2.5} />
+    </button>
+  );
+}
+
+function SkillCard({
+  skill,
+  isWatched,
+  onToggleWatched,
+}: {
+  skill: CookingSkill;
+  isWatched: boolean;
+  onToggleWatched: () => void;
+}) {
+  return (
+    <article
+      className={`group flex flex-col overflow-hidden rounded-3xl border bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)] ${
+        isWatched ? 'border-sage-500/40' : 'border-ink-100 hover:border-ink-900'
+      }`}
+    >
       <div className="relative aspect-video bg-ink-900">
         <YoutubeLite videoId={skill.videoId} title={skill.name} />
         <div className="absolute left-3 top-3">
           <LevelPill level={skill.level} />
+        </div>
+        <div className="absolute right-3 top-3">
+          <WatchedToggle isWatched={isWatched} onToggle={onToggleWatched} />
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5 md:p-6">
@@ -146,13 +246,138 @@ function SkillCard({ skill }: { skill: CookingSkill }) {
   );
 }
 
-function SkillHeroCard({ skill }: { skill: CookingSkill }) {
+function PathCard({
+  path,
+  watched,
+  onToggleWatched,
+  isOpen,
+  onToggleOpen,
+}: {
+  path: LearningPath;
+  watched: Set<string>;
+  onToggleWatched: (id: string) => void;
+  isOpen: boolean;
+  onToggleOpen: () => void;
+}) {
+  const skills = path.skillIds
+    .map((sid) => COOKING_SKILLS.find((s) => s.id === sid))
+    .filter((s): s is CookingSkill => Boolean(s));
+  const completed = skills.filter((s) => watched.has(s.id)).length;
+  const total = skills.length;
+  const totalMin = pathTotalMinutes(path);
+  const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  const stripe =
+    path.accent === 'gold' ? 'bg-gold-500'
+    : path.accent === 'sage' ? 'bg-sage-500'
+    : 'bg-terracotta-500';
+  const badgeBg =
+    path.accent === 'gold' ? 'bg-gold-500/15 text-gold-700'
+    : path.accent === 'sage' ? 'bg-sage-50 text-sage-700'
+    : 'bg-terracotta-50 text-terracotta-600';
+
+  return (
+    <article className="relative overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
+      <div className={`absolute inset-x-0 top-0 h-1 ${stripe}`} />
+      <div className="p-6 md:p-7">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium tracking-tight ${badgeBg}`}>
+              <Sparkles className="h-3 w-3" /> Path
+            </span>
+            <h3 className="mt-3 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{path.name}</h3>
+            <p className="mt-1 text-sm italic tracking-tight text-ink-500">{path.goal}</p>
+          </div>
+          {completed === total && total > 0 && (
+            <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-sage-500 text-cream-50" title="Path complete">
+              <Trophy className="h-4 w-4" />
+            </span>
+          )}
+        </div>
+
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">{path.blurb}</p>
+
+        <div className="mt-5 flex items-center justify-between text-[12px] font-medium tracking-tight text-ink-500">
+          <span className="inline-flex items-center gap-1.5">
+            <GraduationCap className="h-3.5 w-3.5" /> {total} lessons
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Clock className="h-3.5 w-3.5" /> {formatMinutes(totalMin)}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="h-3.5 w-3.5 text-sage-600" /> {completed} / {total}
+          </span>
+        </div>
+
+        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-ink-100">
+          <div className={`h-full ${stripe} transition-all duration-500`} style={{ width: `${pct}%` }} />
+        </div>
+
+        <button
+          type="button"
+          onClick={onToggleOpen}
+          className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink-900 px-5 py-2.5 text-[12px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
+        >
+          {isOpen ? 'Hide lessons' : 'See the path'}
+          <ArrowUpRight className={`rtl-flip h-3.5 w-3.5 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+        </button>
+
+        {isOpen && (
+          <ol className="mt-6 space-y-3 border-t border-ink-100 pt-5">
+            {skills.map((skill, i) => {
+              const skillWatched = watched.has(skill.id);
+              return (
+                <li
+                  key={skill.id}
+                  className={`flex items-center gap-3 rounded-2xl border p-3 transition-colors ${
+                    skillWatched ? 'border-sage-500/40 bg-sage-50/30' : 'border-ink-100 bg-cream-50'
+                  }`}
+                >
+                  <span className={`grid h-7 w-7 flex-none place-items-center rounded-full text-[12px] font-semibold ${
+                    skillWatched ? 'bg-sage-500 text-cream-50' : 'bg-ink-100 text-ink-700'
+                  }`}>
+                    {skillWatched ? <Check className="h-3.5 w-3.5" strokeWidth={2.5} /> : i + 1}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium tracking-tight text-ink-900">{skill.name}</p>
+                    <p className="text-[11px] tracking-tight text-ink-400">
+                      {skill.channel}
+                      {skill.runtime ? ` · ${skill.runtime}` : ''}
+                    </p>
+                  </div>
+                  <WatchedToggle
+                    isWatched={skillWatched}
+                    onToggle={() => onToggleWatched(skill.id)}
+                    size="sm"
+                  />
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </div>
+    </article>
+  );
+}
+
+function SkillHeroCard({
+  skill,
+  isWatched,
+  onToggleWatched,
+}: {
+  skill: CookingSkill;
+  isWatched: boolean;
+  onToggleWatched: () => void;
+}) {
   return (
     <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
       <div className="relative aspect-[16/9] md:aspect-[16/7]">
         <YoutubeLite videoId={skill.videoId} title={skill.name} />
         <div className="absolute left-4 top-4">
           <LevelPill level={skill.level} />
+        </div>
+        <div className="absolute right-4 top-4">
+          <WatchedToggle isWatched={isWatched} onToggle={onToggleWatched} />
         </div>
       </div>
       <div className="p-6 md:p-8">
@@ -183,6 +408,8 @@ export default function SkillsAcademyPage() {
   const [category, setCategory] = useState<CategoryFilter>('all');
   const [level, setLevel] = useState<LevelFilter>('all');
   const [query, setQuery] = useState('');
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const { watched, toggle: toggleWatched, reset: resetWatched } = useWatched();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -197,6 +424,9 @@ export default function SkillsAcademyPage() {
 
   const showCategoryGroups = category === 'all' && level === 'all' && !query;
   const featured = FEATURED_SKILLS[0];
+  const watchedCount = watched.size;
+  const totalCount = COOKING_SKILLS.length;
+  const progressPct = totalCount === 0 ? 0 : Math.round((watchedCount / totalCount) * 100);
 
   return (
     <div>
@@ -208,40 +438,65 @@ export default function SkillsAcademyPage() {
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
                 Skills Academy.
                 <br />
-                <span className="text-gold-600">{COOKING_SKILLS.length} masterclass lessons.</span>
+                <span className="text-gold-600">{COOKING_SKILLS.length} lessons. {LEARNING_PATHS.length} paths. Free.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A free curriculum of cooking techniques. Each lesson is a short, focused
-                video from a credible teacher: Jacques Pépin on omelets, Kenji on
-                reverse-sear, Epicurious on knife skills, King Arthur Baking on baguettes,
-                Bon Appétit on dry brining. With when to use the technique, and the
-                mistake most home cooks make.
+                A real curriculum, not just a video library. Six curated paths
+                walk you from knife basics to mother sauces, each path is a
+                weekend project. Jacques Pépin on omelets, Kenji on
+                reverse-sear, Epicurious on knife skills, King Arthur on
+                baguettes. Your progress saves on this device.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
-                  href="#academy"
+                  href="#paths"
                   className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
                 >
-                  <GraduationCap className="h-3.5 w-3.5" />
-                  Start the academy
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Start a path
                 </a>
                 <a
-                  href="#cat-knife"
+                  href="#academy"
                   className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
                 >
-                  Knife skills first
+                  Browse all lessons
                 </a>
               </div>
 
               <div className="mt-10 grid max-w-md grid-cols-4 gap-2">
-                {HERO_STATS.map((s) => (
-                  <div key={s.label} className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
-                    <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{s.value}</p>
-                    <p className="mt-1 text-xs tracking-tight text-ink-500">{s.label}</p>
-                  </div>
-                ))}
+                <div className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
+                  <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{totalCount}</p>
+                  <p className="mt-1 text-xs tracking-tight text-ink-500">Lessons</p>
+                </div>
+                <div className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
+                  <p className="text-xl font-bold tracking-tighter text-sage-600 md:text-2xl">{watchedCount}/{totalCount}</p>
+                  <p className="mt-1 text-xs tracking-tight text-ink-500">Watched</p>
+                </div>
+                <div className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
+                  <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{LEARNING_PATHS.length}</p>
+                  <p className="mt-1 text-xs tracking-tight text-ink-500">Paths</p>
+                </div>
+                <div className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
+                  <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{Math.round(TOTAL_MINUTES / 60)}</p>
+                  <p className="mt-1 text-xs tracking-tight text-ink-500">Hours</p>
+                </div>
               </div>
+
+              {watchedCount > 0 && (
+                <div className="mt-6 max-w-md">
+                  <div className="mb-1.5 flex items-center justify-between text-[11px] tracking-tight text-ink-500">
+                    <span>Your progress</span>
+                    <span>{progressPct}%</span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-ink-100">
+                    <div
+                      className="h-full bg-sage-500 transition-all duration-500"
+                      style={{ width: `${progressPct}%` }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="md:col-span-5">
@@ -258,8 +513,11 @@ export default function SkillsAcademyPage() {
                       src={`https://img.youtube.com/vi/${s.videoId}/maxresdefault.jpg`}
                       onLoad={(e) => {
                         const t = e.currentTarget;
-                        if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
+                        if (t.naturalWidth > 120) return;
+                        if (t.src.includes('maxresdefault')) {
                           t.src = `https://img.youtube.com/vi/${s.videoId}/sddefault.jpg`;
+                        } else if (t.src.includes('sddefault')) {
+                          t.src = `https://img.youtube.com/vi/${s.videoId}/hqdefault.jpg`;
                         }
                       }}
                       onError={(e) => {
@@ -290,6 +548,46 @@ export default function SkillsAcademyPage() {
         <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-sage-400/15 blur-3xl" />
       </section>
 
+      {/* ============ LEARNING PATHS ============ */}
+      <section id="paths" className="border-t border-ink-100 py-12 md:py-16">
+        <div className="container-wide">
+          <div className="mb-10 flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+                Learning paths
+              </h2>
+              <p className="mt-2 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
+                Six curated sequences of lessons that build on each other. Each
+                path is a single project you can finish in a weekend.
+              </p>
+            </div>
+            {watchedCount > 0 && (
+              <button
+                type="button"
+                onClick={resetWatched}
+                className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 px-4 py-2 text-[12px] font-medium tracking-tight text-ink-500 transition-colors hover:border-ink-900 hover:text-ink-900"
+                title="Clear all your watched marks on this device"
+              >
+                <X className="h-3.5 w-3.5" /> Reset progress
+              </button>
+            )}
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {LEARNING_PATHS.map((path) => (
+              <PathCard
+                key={path.id}
+                path={path}
+                watched={watched}
+                onToggleWatched={toggleWatched}
+                isOpen={openPath === path.id}
+                onToggleOpen={() => setOpenPath(openPath === path.id ? null : path.id)}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ============ FEATURED LESSON ============ */}
       {featured && (
         <section className="border-t border-ink-100 py-12 md:py-16">
@@ -300,7 +598,11 @@ export default function SkillsAcademyPage() {
               </h2>
               <p className="text-sm tracking-tight text-ink-500">One technique, mastered well</p>
             </div>
-            <SkillHeroCard skill={featured} />
+            <SkillHeroCard
+              skill={featured}
+              isWatched={watched.has(featured.id)}
+              onToggleWatched={() => toggleWatched(featured.id)}
+            />
           </div>
         </section>
       )}
@@ -392,6 +694,8 @@ export default function SkillsAcademyPage() {
               {SKILL_CATEGORIES.map((cat) => {
                 const items = COOKING_SKILLS.filter((s) => s.category === cat.id);
                 if (items.length === 0) return null;
+                const catWatched = items.filter((s) => watched.has(s.id)).length;
+                const catMin = categoryTotalMinutes(cat.id);
                 return (
                   <div key={cat.id} id={`cat-${cat.id}`} className="scroll-mt-24">
                     <div className="mb-6 flex items-end justify-between gap-4">
@@ -401,11 +705,20 @@ export default function SkillsAcademyPage() {
                         </h3>
                         <p className="mt-1 text-sm tracking-tight text-ink-500">{cat.tagline}</p>
                       </div>
-                      <p className="text-sm tracking-tight text-ink-500">{items.length} lessons</p>
+                      <p className="text-right text-sm tracking-tight text-ink-500">
+                        {items.length} lessons · {formatMinutes(catMin)}
+                        <br />
+                        <span className="text-sage-600">{catWatched}/{items.length} watched</span>
+                      </p>
                     </div>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                       {items.map((s) => (
-                        <SkillCard key={s.id} skill={s} />
+                        <SkillCard
+                          key={s.id}
+                          skill={s}
+                          isWatched={watched.has(s.id)}
+                          onToggleWatched={() => toggleWatched(s.id)}
+                        />
                       ))}
                     </div>
                   </div>
@@ -430,7 +743,12 @@ export default function SkillsAcademyPage() {
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((s) => (
-                <SkillCard key={s.id} skill={s} />
+                <SkillCard
+                  key={s.id}
+                  skill={s}
+                  isWatched={watched.has(s.id)}
+                  onToggleWatched={() => toggleWatched(s.id)}
+                />
               ))}
             </div>
           )}
@@ -447,9 +765,8 @@ export default function SkillsAcademyPage() {
             One technique a week. By the end of the year, a different cook.
           </h3>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
-            Each of these lessons has been verified to exist and is taught by a credible
-            teacher. Watch one a week and the recipes you cook will keep improving without
-            you noticing.
+            Each of these lessons is taught by a credible chef on a credible channel.
+            Mark them watched as you go. Your progress lives on this device, with you.
           </p>
           <Link
             to="/films"

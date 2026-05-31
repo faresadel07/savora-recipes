@@ -163,17 +163,17 @@ export const FOOD_FILMS: FoodFilm[] = [
 
   // ===================== TRAVEL AND FOOD =====================
   {
-    id: 'bourdain-lebanon',
-    title: 'The Dangerous Excitement of Lebanon',
+    id: 'bourdain-beirut',
+    title: 'Anthony Bourdain in Beirut',
     series: 'Parts Unknown',
-    channel: 'CNN',
-    year: 2014,
-    runtime: '4 min',
+    channel: 'Banijay Documentaries',
+    year: 2015,
+    runtime: '42 min',
     category: 'travel',
     region: 'Beirut, Lebanon',
     blurb:
-      "Anthony Bourdain in Beirut: nightclubs, kibbeh, and a city that refuses to be defined by what the world thinks of it. CNN's official upload from the celebrated Parts Unknown episode.",
-    videoId: '77aR8JFNvVQ',
+      "A full Parts Unknown episode. Bourdain returns to Beirut, the city he first fell for in 2006, eating kibbeh and lamb, hearing the impossible questions every visitor leaves with. S05 E08.",
+    videoId: '1LptZ9E4ZG4',
     featured: true,
   },
   {

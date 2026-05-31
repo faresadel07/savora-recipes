@@ -48,9 +48,12 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
         onLoad={(e) => {
           const t = e.currentTarget;
-          if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
-            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-          }
+          if (t.naturalWidth > 120) return;
+                          if (t.src.includes('maxresdefault')) {
+                            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+                          } else if (t.src.includes('sddefault')) {
+                            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                          }
         }}
         onError={(e) => {
           const t = e.currentTarget;
@@ -249,9 +252,12 @@ export default function WorldMarketsPage() {
                       src={`https://img.youtube.com/vi/${m.videoId}/maxresdefault.jpg`}
                       onLoad={(e) => {
                         const t = e.currentTarget;
-                        if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
-                          t.src = `https://img.youtube.com/vi/${m.videoId}/sddefault.jpg`;
-                        }
+                        if (t.naturalWidth > 120) return;
+                          if (t.src.includes('maxresdefault')) {
+                            t.src = `https://img.youtube.com/vi/${m.videoId}/sddefault.jpg`;
+                          } else if (t.src.includes('sddefault')) {
+                            t.src = `https://img.youtube.com/vi/${m.videoId}/hqdefault.jpg`;
+                          }
                       }}
                       onError={(e) => {
                         const t = e.currentTarget;

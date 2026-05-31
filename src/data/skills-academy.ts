@@ -243,13 +243,13 @@ export const COOKING_SKILLS: CookingSkill[] = [
   {
     id: 'spatchcock-chicken',
     name: 'Spatchcock a chicken',
-    channel: 'Chef Jack Ovens',
-    videoId: '2Ewjt5Xmj50',
+    channel: 'J. Kenji López-Alt',
+    videoId: 'bbqZJZOUM6I',
     category: 'meat',
     level: 'intermediate',
-    runtime: '6 min',
+    runtime: '12 min',
     description:
-      "Remove the backbone and flatten the bird. The result roasts in 35 minutes instead of 90 and gets crisp skin all over. The single biggest upgrade to home-roasted chicken.",
+      "Kenji on how to remove the backbone and flatten the bird. The result roasts in 35 minutes instead of 90 and gets crisp skin all over. The single biggest upgrade to home-roasted chicken.",
     whenToUse: 'Roast chicken in less than an hour. Better than rotisserie.',
     featured: true,
   },
@@ -445,15 +445,15 @@ export const COOKING_SKILLS: CookingSkill[] = [
     whenToUse: 'Pan-seared fish, scallops, asparagus. Anything that wants a luxurious, silky finish.',
   },
   {
-    id: 'mayonnaise-jessica',
+    id: 'mayonnaise-epicurious',
     name: 'Mayonnaise from scratch',
-    channel: 'Jessica Gavin',
-    videoId: '-f_F3NlwthQ',
+    channel: 'Epicurious',
+    videoId: 'MsOtWt66A9s',
     category: 'sauce',
     level: 'beginner',
-    runtime: '4 min',
+    runtime: '8 min',
     description:
-      "The classic egg yolk emulsion. Slow drizzle of oil, constant whisking, the moment it transforms from liquid to creamy. The grandmother of all mother sauces.",
+      "Epicurious on the classic egg-yolk emulsion. Slow drizzle of oil, constant whisking, the moment it transforms from liquid to creamy. The grandmother of all mother sauces.",
     whenToUse: 'Once made fresh, the difference vs jarred is stark. Foundation for aioli, tartar, remoulade.',
     commonMistake: 'Pouring oil too fast. The emulsion breaks instantly; start with a thread, then increase.',
   },
@@ -580,4 +580,91 @@ export const FEATURED_SKILLS: CookingSkill[] = COOKING_SKILLS.filter((s) => s.fe
 
 export function skillsForCategory(c: SkillCategory): CookingSkill[] {
   return COOKING_SKILLS.filter((s) => s.category === c);
+}
+
+/**
+ * Curated learning paths. Each path is a hand-picked sequence of lessons that
+ * build on each other, like a single-week curriculum. Watch them in order.
+ */
+export interface LearningPath {
+  id: string;
+  name: string;
+  blurb: string;
+  goal: string;
+  accent: 'gold' | 'sage' | 'terracotta';
+  skillIds: string[];
+}
+
+export const LEARNING_PATHS: LearningPath[] = [
+  {
+    id: 'foundations',
+    name: 'Foundations',
+    blurb:
+      "If you only ever learn five things, learn these. Knife grip, onion, garlic, omelet, egg timing. After these, every recipe becomes easier.",
+    goal: 'The five fundamentals every cook needs.',
+    accent: 'gold',
+    skillIds: ['epicurious-9-knife', 'ramsay-onion', 'wired-garlic', 'pepin-omelet-pbs', 'egg-timing-test'],
+  },
+  {
+    id: 'sunday-roast',
+    name: 'The Sunday roast',
+    blurb:
+      "Buy one whole chicken on Saturday. By Sunday lunch you have a perfectly browned bird with crisp skin everywhere. Four lessons to nail it.",
+    goal: 'A perfect Sunday roast chicken.',
+    accent: 'terracotta',
+    skillIds: ['break-chicken-jw', 'spatchcock-chicken', 'dry-brine-turkey', 'kenji-reverse-sear'],
+  },
+  {
+    id: 'bread-week',
+    name: 'Bread week',
+    blurb:
+      "From a bag of flour to a real baguette in four steps. Start with the hand-kneading lesson; finish with the King Arthur Baking shape.",
+    goal: 'Real bread from your own oven.',
+    accent: 'gold',
+    skillIds: ['knead-by-hand', 'score-sourdough', 'baguette-shape-king-arthur', 'pizza-stretch-epicurious'],
+  },
+  {
+    id: 'sauce-master',
+    name: 'Sauce master',
+    blurb:
+      "Mayonnaise teaches the principle, vinaigrette teaches the proportion, beurre blanc teaches the patience. Aioli puts them together.",
+    goal: 'Four mother emulsions, one weekend.',
+    accent: 'sage',
+    skillIds: ['mayonnaise-epicurious', 'vinaigrette-ina', 'beurre-blanc-fw', 'aioli-ben'],
+  },
+  {
+    id: 'knife-sharp',
+    name: 'Knife sharp',
+    blurb:
+      "A sharper knife saves more time than any other kitchen upgrade. Five lessons that turn a slow chopper into a kitchen athlete.",
+    goal: 'Become invisible behind the cutting board.',
+    accent: 'terracotta',
+    skillIds: ['epicurious-9-knife', 'ramsay-onion', 'julienne-poppy', 'chiffonade-basil', 'sharpen-whetstone'],
+  },
+  {
+    id: 'mediterranean-basics',
+    name: 'Mediterranean basics',
+    blurb:
+      "Build a sofrito, caramelize onions, roast vegetables right, dress them with a real aioli. This is dinner four nights a week.",
+    goal: 'Dinner anywhere on the Mediterranean coast.',
+    accent: 'sage',
+    skillIds: ['sofrito-italian', 'caramelize-onions-fn', 'roast-veg-ethan', 'aioli-ben'],
+  },
+];
+
+export function pathTotalMinutes(path: LearningPath): number {
+  return path.skillIds.reduce((sum, sid) => {
+    const s = COOKING_SKILLS.find((x) => x.id === sid);
+    if (!s?.runtime) return sum;
+    const m = parseInt(s.runtime.match(/\d+/)?.[0] ?? '0', 10);
+    return sum + (Number.isFinite(m) ? m : 0);
+  }, 0);
+}
+
+export function categoryTotalMinutes(c: SkillCategory): number {
+  return COOKING_SKILLS.filter((s) => s.category === c).reduce((sum, s) => {
+    if (!s.runtime) return sum;
+    const m = parseInt(s.runtime.match(/\d+/)?.[0] ?? '0', 10);
+    return sum + (Number.isFinite(m) ? m : 0);
+  }, 0);
 }
