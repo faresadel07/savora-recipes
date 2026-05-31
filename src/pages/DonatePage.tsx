@@ -207,7 +207,7 @@ export default function DonatePage() {
               <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
             </a>
             <a
-              href="mailto:hello@savora.app"
+              href="mailto:hello@zaytoun.app"
               className="btn-outline"
             >
               {t('donate.emailUs')}

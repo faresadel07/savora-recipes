@@ -72,7 +72,7 @@ export default function InstallPrompt() {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[13px] font-semibold tracking-tight">
-                  {language === 'ar' ? 'ثبّت سافورا على جهازك' : 'Install Savora'}
+                  {language === 'ar' ? 'ثبّت زيتون على جهازك' : 'Install Zaytoun'}
                 </p>
                 <p className="mt-0.5 text-[12px] text-cream-100/70">
                   {language === 'ar'

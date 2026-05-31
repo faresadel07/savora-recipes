@@ -150,7 +150,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
       const measure = transformMeasure(i.measure, factor, system);
       return `• ${measure ? measure + ' ' : ''}${i.name}`;
     });
-    const text = `${r.title}\nFor ${servings} ${servings === 1 ? 'serving' : 'servings'}\n\n${lines.join('\n')}\n\nFrom Savora · ${window.location.href}`;
+    const text = `${r.title}\nFor ${servings} ${servings === 1 ? 'serving' : 'servings'}\n\n${lines.join('\n')}\n\nFrom Zaytoun · ${window.location.href}`;
     await navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);

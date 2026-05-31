@@ -1,7 +1,7 @@
 /**
  * Cooking magazines and journals — two flavors:
  *  1. ARCHIVE_MAGAZINES: public-domain magazines hosted on Internet Archive,
- *     embeddable in full inside Savora via the BookReader iframe.
+ *     embeddable in full inside Zaytoun via the BookReader iframe.
  *  2. MODERN_SITES: living cooking magazines/sites that are free to read at
  *     their own URL. We link out (linking is unrestricted).
  *

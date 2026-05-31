@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'robots.txt'],
       manifest: {
-        name: 'Savora',
-        short_name: 'Savora',
+        name: 'Zaytoun',
+        short_name: 'Zaytoun',
         description:
           'A quiet, curated corner of the internet for recipes worth cooking.',
         theme_color: '#13110F',

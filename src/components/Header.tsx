@@ -58,9 +58,9 @@ export default function Header() {
       }`}
     >
       <div className="container-wide flex h-14 items-center justify-between gap-4 md:h-16">
-        <Link to="/" className="flex items-center gap-1.5 group" aria-label="Savora home">
-          <span className="text-lg font-semibold tracking-tighter md:text-xl">Savora</span>
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-terracotta-500 transition-transform group-hover:scale-150" />
+        <Link to="/" className="flex items-center gap-2 group" aria-label="Zaytoun home">
+          <img src="/favicon.svg" alt="" width={22} height={22} className="h-5 w-5 md:h-[22px] md:w-[22px]" />
+          <span className="text-lg font-semibold tracking-tighter md:text-xl">Zaytoun</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -201,7 +201,10 @@ export default function Header() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xl font-semibold tracking-tighter">Savora</span>
+            <span className="inline-flex items-center gap-2 text-xl font-semibold tracking-tighter">
+              <img src="/favicon.svg" alt="" width={20} height={20} />
+              Zaytoun
+            </span>
             <button
               type="button"
               onClick={() => setMobileOpen(false)}

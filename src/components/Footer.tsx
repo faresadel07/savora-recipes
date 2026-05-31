@@ -68,8 +68,8 @@ const CUISINES_AR = [
 const SUPPORT_LINKS: NavItem[] = [
   { to: '/donate', labelKey: 'footer.donate' },
   { to: '/donate', labelKey: 'footer.about' },
-  { to: 'mailto:hello@savora.app', labelKey: 'footer.contact' },
-  { to: 'mailto:hello@savora.app', labelKey: 'footer.feedback' },
+  { to: 'mailto:hello@zaytoun.app', labelKey: 'footer.contact' },
+  { to: 'mailto:hello@zaytoun.app', labelKey: 'footer.feedback' },
 ];
 
 function FooterLink({ to, children }: { to: string; children: React.ReactNode }) {
@@ -148,8 +148,9 @@ export default function Footer() {
       <div className="container-wide grid gap-10 py-14 md:grid-cols-12 md:gap-8 md:py-16">
         {/* Brand */}
         <div className="md:col-span-4">
-          <Link to="/" className="inline-flex items-baseline gap-0 text-3xl font-semibold tracking-tighter text-cream-50">
-            Savora<span className="text-terracotta-500">.</span>
+          <Link to="/" className="inline-flex items-center gap-2.5 text-3xl font-semibold tracking-tighter text-cream-50">
+            <img src="/favicon.svg" alt="" width={28} height={28} className="h-7 w-7" />
+            Zaytoun
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream-100/70">
             {t('footer.blurb')}
