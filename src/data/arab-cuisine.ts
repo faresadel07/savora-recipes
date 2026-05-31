@@ -537,6 +537,137 @@ export const FAMOUS_DISHES: ArabDish[] = [
   },
 ];
 
+// ============ PALESTINIAN KITCHEN (dedicated section) ============
+// A deeper focus on Palestinian heritage cooking. The dishes below are
+// specifically Palestinian (or, in the case of Mujadara and Warak Inab,
+// emblematic of how the Palestinian kitchen treats them).
+
+export const PALESTINIAN_DISHES: ArabDish[] = [
+  {
+    id: 'musakhan',
+    name: 'Musakhan',
+    nameAr: 'المسخن',
+    origin: 'Palestine, the national dish.',
+    story:
+      "Roasted chicken laid over taboon flatbread that has soaked up a rain of caramelized onions and sumac. Olive oil, fresh from the autumn pressing, is the secret. Born in the villages around Jenin and Tulkarem during olive-harvest season, when the new oil was tasted by drizzling it over warm bread. Now eaten across the world wherever Palestinian families have settled.",
+    ingredients: [
+      '1 whole chicken, cut into quarters',
+      '4 large onions, sliced very thin (almost a kilo)',
+      '4 tbsp ground sumac (more for serving)',
+      '1/2 cup extra virgin olive oil (this is the soul of the dish, use the best you have)',
+      '1 tsp allspice, 1/2 tsp cinnamon, 1/2 tsp cardamom, salt and black pepper',
+      'Toasted pine nuts',
+      'Taboon, markook or large pita bread',
+    ],
+    steps: [
+      'Rub chicken with allspice, cinnamon, salt and pepper. Roast at 200°C for 40 minutes until skin is deep gold and juices run clear.',
+      'While chicken roasts, cook onions in olive oil over very low heat for 30 minutes. They should go silky and translucent, not brown. Stir often.',
+      'Off the heat, stir 3 tbsp sumac into the onions. Taste and add salt.',
+      'Lay taboon bread on a large platter. Spoon two-thirds of the onion mixture over, letting the bread drink it up.',
+      'Place chicken pieces on top. Spoon the remaining onions and all the oil from the pan over the chicken.',
+      'Scatter toasted pine nuts and a final dust of sumac. Tear and eat with your hands. Yogurt on the side.',
+    ],
+    videoId: '5B8Aj5fnKM0',
+  },
+  {
+    id: 'maftoul',
+    name: 'Maftoul',
+    nameAr: 'المفتول',
+    origin: 'Palestine, hand-rolled by grandmothers.',
+    story:
+      "Palestinian couscous. Pearls of dough rolled by hand from bulgur and flour, steamed over a stew of chicken and chickpeas. UNESCO has recognized the tradition of rolling maftoul as part of Palestine's intangible heritage. Each woman who learns it carries forward a chain of hands going back centuries.",
+    ingredients: [
+      '500 g maftoul pearls (can buy dried, or roll fresh)',
+      '1 whole chicken, jointed',
+      '2 onions, 2 cinnamon sticks, 4 cardamom pods, 1 tsp baharat',
+      '1 cup chickpeas, soaked overnight',
+      '1 small pumpkin or butternut squash, cubed',
+      '1/4 cup olive oil, salt',
+      'Toasted slivered almonds, parsley',
+    ],
+    steps: [
+      'Boil chicken with whole onion, cinnamon, cardamom, baharat and salt. Cook 45 minutes until tender. Reserve broth.',
+      'Add soaked chickpeas to broth, simmer 30 minutes. Add pumpkin in the last 10 minutes.',
+      'Steam maftoul pearls in a couscoussier (or a fine-mesh sieve set over the simmering broth) for 20 minutes. Toss with olive oil so they stay separate.',
+      'Build the platter: mound maftoul, then chickpeas, pumpkin and chicken. Ladle hot broth around (not on top, that makes it soggy). Crown with almonds and parsley.',
+    ],
+    videoId: 'tw32JsSd2Ag',
+  },
+  {
+    id: 'mujadara',
+    name: 'Mujadara',
+    nameAr: 'مجدرة',
+    origin: 'Palestine and the wider Levant.',
+    story:
+      "A peasant dish older than the Crusades. Lentils and rice cooked together, topped with onions fried until they are nearly black. Called the dish of Esau in some Palestinian villages, after the biblical bowl of lentils. Cheap, deeply filling, served warm or at room temperature with yogurt and pickled vegetables.",
+    ingredients: [
+      '1 cup brown or green lentils',
+      '1 cup short-grain rice or coarse bulgur',
+      '4 large onions, sliced very thin',
+      '1/2 cup olive oil',
+      '1 tsp cumin, 1 tsp salt, 1/2 tsp black pepper',
+      'Plain yogurt and pickled cucumber to serve',
+    ],
+    steps: [
+      'Boil lentils in 4 cups water for 15 minutes (they should be al dente, not falling apart). Drain, save the cooking water.',
+      'Fry onions in olive oil over medium heat, 25 to 30 minutes, until very dark and crisp. This is the heart of the dish, do not rush. Drain on paper, save the oil.',
+      'In the same oil, fry rice for 2 minutes. Add cumin, salt, pepper. Add lentils and 2 cups of the lentil water. Bring to a boil, cover, simmer on low 18 minutes.',
+      'Off the heat, rest 10 minutes. Fluff. Mound on a platter, crown with all the crispy onions. Serve with cold yogurt.',
+    ],
+    videoId: 'YA32PoHaCh8',
+  },
+  {
+    id: 'sayadieh',
+    name: 'Sayadieh',
+    nameAr: 'الصيادية',
+    origin: 'Palestine, Gaza and the coast.',
+    story:
+      "The fisherman's dish, from the Gaza and Akka coasts. White fish on a bed of rice cooked in a dark caramelized-onion broth, served with a tahini-and-lemon sauce on the side. Brown onions long enough for the broth to turn the color of mahogany, that is the secret.",
+    ingredients: [
+      '1 kg firm white fish (sea bream, sea bass), cleaned',
+      '2 cups basmati rice, soaked 30 minutes',
+      '4 large onions, sliced',
+      '1/4 cup olive oil',
+      '1 tbsp cumin, 1 tsp coriander, 1 tsp turmeric, 1 cinnamon stick, 1 bay leaf',
+      'Toasted pine nuts and slivered almonds',
+      'Tahini sauce: 1/2 cup tahini, juice of 1 lemon, 1 garlic clove crushed, water',
+    ],
+    steps: [
+      'Rub fish with cumin and salt. Pan-fry both sides until just cooked, 3 minutes per side. Set aside.',
+      'In the same pan, cook onions in olive oil over medium-low heat for 30 minutes until very dark brown (almost black at the edges).',
+      'Add coriander, turmeric, cinnamon, bay leaf. Pour in 4 cups water. Simmer 15 minutes. Strain the broth (you want the color, not the onions on the plate).',
+      'Cook drained rice in 3 cups of the strained broth, lid on, low heat, 18 minutes. Rest 10 minutes.',
+      'Whisk tahini, lemon, garlic with water until creamy.',
+      'Mound rice on platter, lay fish on top, scatter pine nuts and almonds. Serve with tahini sauce and lemon wedges.',
+    ],
+    videoId: '3Q-mh0bwYeY',
+  },
+  {
+    id: 'warak-inab',
+    name: 'Warak Inab Bil Zeit',
+    nameAr: 'ورق عنب بالزيت',
+    origin: 'Palestine, the meatless village version.',
+    story:
+      "Grape leaves rolled tight around a vegetarian filling of rice, tomato, parsley and lemon, slow-cooked with olive oil. The Palestinian village style: no meat, lots of lemon, often a layer of small potatoes at the bottom of the pot to absorb the cooking liquid. Eaten cold or at room temperature, sliced into the rolls like little jewels.",
+    ingredients: [
+      '500 g fresh grape leaves (or jarred, well rinsed)',
+      'Filling: 1.5 cups short-grain rice, 3 tomatoes finely diced, 1 onion grated, 1 cup parsley, 1/2 cup mint, 1 tsp baharat, salt',
+      'Juice of 3 lemons',
+      '1/2 cup olive oil',
+      'Small potatoes or tomato slices to line the pot',
+    ],
+    steps: [
+      'Mix all filling ingredients in a wide bowl. The mixture should be a little wet, that is the rice taking up flavor.',
+      'Blanch fresh grape leaves in salted water for 1 minute (skip if jarred). Trim stems.',
+      'Lay a leaf vein-side up. Place 1 tsp filling near the stem. Fold sides in, roll into a tight cigar the size of a finger.',
+      'Line a heavy pot with sliced potatoes or tomato. Pack rolled leaves in close concentric rings, very tight, in two or three layers.',
+      'Pour over the lemon juice, olive oil and just enough water to cover. Press an inverted plate on top.',
+      'Bring to a simmer. Cover. Cook on the lowest heat for 1 hour 15 minutes. Rest 30 minutes off the heat before flipping. Eat at room temperature.',
+    ],
+    videoId: 'l-6hVasChIs',
+  },
+];
+
 // ============ 18 ARABIC COOKING CHANNELS (verified) ============
 
 export interface ArabChannel {
