@@ -55,9 +55,25 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
     >
       <img
         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        onLoad={(e) => {
+          // YouTube returns a 120x90 placeholder when maxresdefault doesn't exist,
+          // and the browser loads it successfully so onError never fires. Detect
+          // the placeholder by its dimensions and fall back to a smaller size that
+          // is reliably present for every public video.
+          const t = e.currentTarget;
+          if (t.naturalWidth <= 120 && !t.src.includes('sddefault') && !t.src.includes('hqdefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+          } else if (t.naturalWidth <= 120 && !t.src.includes('hqdefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          }
+        }}
         onError={(e) => {
           const t = e.currentTarget;
-          if (!t.src.includes('hqdefault')) t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          if (t.src.includes('maxresdefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+          } else if (t.src.includes('sddefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          }
         }}
         alt=""
         loading="lazy"
@@ -219,9 +235,19 @@ export default function FilmLibraryPage() {
                   >
                     <img
                       src={`https://img.youtube.com/vi/${f.videoId}/maxresdefault.jpg`}
+                      onLoad={(e) => {
+                        const t = e.currentTarget;
+                        if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
+                          t.src = `https://img.youtube.com/vi/${f.videoId}/sddefault.jpg`;
+                        }
+                      }}
                       onError={(e) => {
                         const t = e.currentTarget;
-                        if (!t.src.includes('hqdefault')) t.src = `https://img.youtube.com/vi/${f.videoId}/hqdefault.jpg`;
+                        if (t.src.includes('maxresdefault')) {
+                          t.src = `https://img.youtube.com/vi/${f.videoId}/sddefault.jpg`;
+                        } else if (t.src.includes('sddefault')) {
+                          t.src = `https://img.youtube.com/vi/${f.videoId}/hqdefault.jpg`;
+                        }
                       }}
                       alt={f.title}
                       loading="lazy"

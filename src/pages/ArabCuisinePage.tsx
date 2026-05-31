@@ -219,9 +219,19 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
     >
       <img
         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        onLoad={(e) => {
+          const t = e.currentTarget;
+          if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+          }
+        }}
         onError={(e) => {
           const t = e.currentTarget;
-          if (!t.src.includes('hqdefault')) t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          if (t.src.includes('maxresdefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+          } else if (t.src.includes('sddefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          }
         }}
         alt=""
         loading="lazy"
@@ -369,9 +379,19 @@ export default function ArabCuisinePage() {
                   >
                     <img
                       src={`https://img.youtube.com/vi/${d.videoId}/maxresdefault.jpg`}
+                      onLoad={(e) => {
+                        const t = e.currentTarget;
+                        if (t.naturalWidth <= 120 && !t.src.includes('sddefault')) {
+                          t.src = `https://img.youtube.com/vi/${d.videoId}/sddefault.jpg`;
+                        }
+                      }}
                       onError={(e) => {
                         const t = e.currentTarget;
-                        if (!t.src.includes('hqdefault')) t.src = `https://img.youtube.com/vi/${d.videoId}/hqdefault.jpg`;
+                        if (t.src.includes('maxresdefault')) {
+                          t.src = `https://img.youtube.com/vi/${d.videoId}/sddefault.jpg`;
+                        } else if (t.src.includes('sddefault')) {
+                          t.src = `https://img.youtube.com/vi/${d.videoId}/hqdefault.jpg`;
+                        }
                       }}
                       alt={d.name}
                       loading="lazy"
