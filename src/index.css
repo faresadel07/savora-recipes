@@ -58,11 +58,14 @@ html[dir='rtl'] .rtl-flip {
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
     color-scheme: light;
-    /* Reserve the scrollbar space so the page doesn't shift left/right
-       when content height pushes a vertical scrollbar in/out. */
+    /* Always reserve the vertical scrollbar so the page never shifts
+       horizontally as the user scrolls between pages of different
+       heights. overflow-y: scroll is the bulletproof fallback for
+       browsers that don't fully honor scrollbar-gutter. */
     scrollbar-gutter: stable;
+    overflow-y: scroll;
     /* Cut off anything that leaks past the viewport horizontally (blur
-       decorations, etc.) without creating a scroll container. */
+       decorations, etc.) without creating a horizontal scroll bar. */
     overflow-x: clip;
   }
 
