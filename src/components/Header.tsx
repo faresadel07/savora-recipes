@@ -55,29 +55,29 @@ export default function Header() {
   return (
     <header className="sticky top-3 z-40 px-3 md:top-4 md:px-6">
       <div
-        className={`mx-auto max-w-5xl overflow-hidden rounded-2xl border border-ink-100/70 bg-cream-50/85 backdrop-blur-xl transition-shadow duration-300 ${
+        className={`mx-auto max-w-7xl overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow duration-300 ${
           scrolled
             ? 'shadow-[0_12px_36px_-12px_rgba(0,0,0,0.18)]'
             : 'shadow-[0_4px_16px_-6px_rgba(0,0,0,0.08)]'
         }`}
       >
-      <div className="flex h-14 items-center justify-between gap-4 px-4 md:px-6">
-        <Link to="/" className="flex items-center gap-2 group" aria-label="Zaytoun home">
+      <div className="flex h-14 items-center gap-2 px-4 md:h-16 md:px-6">
+        <Link to="/" className="flex flex-none items-center gap-2 group" aria-label="Zaytoun home">
           <img src="/zaytoun-logo.jpg" alt="" width={28} height={28} className="h-6 w-6 rounded-full object-cover md:h-7 md:w-7" />
           <span className="text-lg font-semibold tracking-tighter md:text-xl">Zaytoun</span>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `text-[13px] font-medium tracking-tight transition-colors ${
+                `whitespace-nowrap rounded-full px-3.5 py-1.5 text-[13px] font-medium tracking-tight transition-all ${
                   isActive
-                    ? 'text-ink-900 dark:text-cream-50'
-                    : 'text-ink-400 hover:text-ink-900 dark:text-ink-300 dark:hover:text-cream-50'
+                    ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
+                    : 'text-ink-500 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'
                 }`
               }
             >
@@ -86,7 +86,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-0.5 sm:gap-1">
+        <div className="flex flex-none items-center gap-0.5 sm:gap-1">
           <Link
             to="/donate"
             className="hidden items-center gap-1.5 rounded-full bg-terracotta-500/10 px-3.5 py-1.5 text-[12px] font-medium tracking-tight text-terracotta-600 transition-colors hover:bg-terracotta-500 hover:text-cream-50 md:inline-flex"
