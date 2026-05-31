@@ -135,7 +135,7 @@ export default function FitnessPage() {
       </section>
 
       {/* ============ HIGH-PROTEIN RECIPES ============ */}
-      <section className="container-wide py-16 md:py-24">
+      <section id="recipes" className="container-wide py-16 md:py-24">
         <SectionHead
           eyebrow="From the library"
           icon={<Beef className="h-3 w-3" />}
@@ -180,7 +180,7 @@ export default function FitnessPage() {
       </section>
 
       {/* ============ WORKOUT MEALS ============ */}
-      <section className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
+      <section id="workout" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
             eyebrow="Timed for training"
@@ -227,7 +227,7 @@ export default function FitnessPage() {
       </section>
 
       {/* ============ MEAL PREP ============ */}
-      <section className="container-wide py-16 md:py-24">
+      <section id="mealprep" className="container-wide py-16 md:py-24">
         <SectionHead
           eyebrow="Sunday afternoon"
           icon={<ShoppingBasket className="h-3 w-3" />}
@@ -372,7 +372,7 @@ export default function FitnessPage() {
       </section>
 
       {/* ============ DRINKS & SHAKES ============ */}
-      <section className="container-wide py-16 md:py-24">
+      <section id="drinks" className="container-wide py-16 md:py-24">
         <SectionHead
           eyebrow="Drink your protein"
           icon={<GlassWater className="h-3 w-3" />}
@@ -482,7 +482,7 @@ export default function FitnessPage() {
       </section>
 
       {/* ============ PROTEIN 101 ============ */}
-      <section className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
+      <section id="protein" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
             eyebrow="The science, briefly"
