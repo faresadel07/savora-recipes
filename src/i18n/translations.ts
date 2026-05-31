@@ -70,6 +70,7 @@ export const en = {
   nav: {
     home: 'Home',
     recipes: 'Recipes',
+    arabCuisine: 'Arab Cuisine',
     videos: 'Videos',
     library: 'Library',
     magazines: 'Magazines',
@@ -111,6 +112,7 @@ export const en = {
     contact: 'Contact',
     feedback: 'Send feedback',
     allRecipes: 'All recipes',
+    arabCuisine: 'Arab cuisine',
     videoLibrary: 'Video library',
     cookbookLibrary: 'Cookbook library',
     magazineRack: 'Magazine rack',
@@ -418,6 +420,7 @@ export const ar: typeof en = {
   nav: {
     home: 'الرئيسية',
     recipes: 'الوصفات',
+    arabCuisine: 'المطبخ العربي',
     videos: 'الفيديوهات',
     library: 'المكتبة',
     magazines: 'المجلات',
@@ -459,6 +462,7 @@ export const ar: typeof en = {
     contact: 'تواصل',
     feedback: 'أرسل ملاحظات',
     allRecipes: 'كل الوصفات',
+    arabCuisine: 'المطبخ العربي',
     videoLibrary: 'مكتبة الفيديو',
     cookbookLibrary: 'مكتبة الكتب',
     magazineRack: 'رف المجلات',

@@ -9,6 +9,7 @@ import { useTranslation } from '../i18n';
 const NAV_ITEMS: { to: string; key: string }[] = [
   { to: '/', key: 'nav.home' },
   { to: '/recipes', key: 'nav.recipes' },
+  { to: '/arab-cuisine', key: 'nav.arabCuisine' },
   { to: '/videos', key: 'nav.videos' },
   { to: '/library', key: 'nav.library' },
   { to: '/magazines', key: 'nav.magazines' },
