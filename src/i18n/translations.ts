@@ -88,6 +88,9 @@ export const en = {
   footer: {
     blurb: 'A quiet, curated corner of the internet for recipes worth cooking. Hundreds of thousands of dishes from kitchens around the world, all in one place.',
     discover: 'Discover',
+    curated: 'Curated',
+    cookieSettings: 'Cookie settings',
+    cookieReset: 'Reset, refreshing',
     categories: 'Categories',
     cuisines: 'Cuisines',
     fitness: 'Fitness',
@@ -447,6 +450,9 @@ export const ar: typeof en = {
   footer: {
     blurb: 'ركن هادئ ومنتقى على الإنترنت لوصفات تستحق الطبخ. مئات الآلاف من الأطباق من مطابخ حول العالم، كلها في مكان واحد.',
     discover: 'استكشف',
+    curated: 'منتقاة',
+    cookieSettings: 'إعدادات الكوكيز',
+    cookieReset: 'يتم التحديث',
     categories: 'الفئات',
     cuisines: 'المطابخ',
     fitness: 'اللياقة',

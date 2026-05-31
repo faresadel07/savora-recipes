@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Heart, Mail, Send } from 'lucide-react';
+import { ArrowUpRight, Cookie, Heart, Mail, Send } from 'lucide-react';
 import { useTranslation } from '../i18n';
 
 interface NavItem {
@@ -8,18 +8,23 @@ interface NavItem {
   labelKey: string;
 }
 
+// Recipe-focused entry points. The user is here to cook or to flip pages.
 const DISCOVER_LINKS: NavItem[] = [
   { to: '/recipes', labelKey: 'footer.allRecipes' },
+  { to: '/videos', labelKey: 'footer.videoLibrary' },
+  { to: '/library', labelKey: 'footer.cookbookLibrary' },
+  { to: '/magazines', labelKey: 'footer.magazineRack' },
+  { to: '/favorites', labelKey: 'footer.yourFavorites' },
+];
+
+// Curated sections we have built: cinematic, editorial libraries.
+const CURATED_LINKS: NavItem[] = [
   { to: '/arab-cuisine', labelKey: 'footer.arabCuisine' },
   { to: '/arab-cuisine#palestine', labelKey: 'footer.palestinianKitchen' },
   { to: '/films', labelKey: 'footer.filmLibrary' },
   { to: '/academy', labelKey: 'footer.skillsAcademy' },
   { to: '/markets', labelKey: 'footer.worldMarkets' },
   { to: '/chefs', labelKey: 'footer.chefHall' },
-  { to: '/videos', labelKey: 'footer.videoLibrary' },
-  { to: '/library', labelKey: 'footer.cookbookLibrary' },
-  { to: '/magazines', labelKey: 'footer.magazineRack' },
-  { to: '/favorites', labelKey: 'footer.yourFavorites' },
 ];
 
 const FITNESS_LINKS: NavItem[] = [
@@ -84,8 +89,7 @@ const CUISINES_AR = [
 const SUPPORT_LINKS: NavItem[] = [
   { to: '/donate', labelKey: 'footer.donate' },
   { to: '/donate', labelKey: 'footer.about' },
-  { to: 'mailto:hello@zaytoun.app', labelKey: 'footer.contact' },
-  { to: 'mailto:hello@zaytoun.app', labelKey: 'footer.feedback' },
+  { to: 'mailto:miggajigga6767@gmail.com', labelKey: 'footer.contact' },
 ];
 
 function FooterLink({ to, children }: { to: string; children: React.ReactNode }) {
@@ -110,6 +114,7 @@ export default function Footer() {
 
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [cookieReset, setCookieReset] = useState(false);
 
   function submitNewsletter(e: React.FormEvent) {
     e.preventDefault();
@@ -120,6 +125,16 @@ export default function Footer() {
     setSubscribed(true);
     setEmail('');
     setTimeout(() => setSubscribed(false), 6000);
+  }
+
+  function resetCookieConsent() {
+    try {
+      localStorage.removeItem('zaytoun:cookies:accepted');
+    } catch { /* ignore */ }
+    setCookieReset(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 700);
   }
 
   return (
@@ -184,8 +199,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Links grid — 5 columns on desktop */}
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-5 md:gap-8">
+        {/* Links grid — 6 columns on desktop */}
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 md:gap-8 lg:grid-cols-6">
           {/* Discover */}
           <div>
             <h4 className="text-[11px] font-medium uppercase tracking-widest text-cream-100/50">
@@ -193,6 +208,20 @@ export default function Footer() {
             </h4>
             <ul className="mt-5 space-y-2.5 text-[15px] font-medium tracking-tight">
               {DISCOVER_LINKS.map((item) => (
+                <li key={item.labelKey}>
+                  <FooterLink to={item.to}>{t(item.labelKey)}</FooterLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Curated sections */}
+          <div>
+            <h4 className="text-[11px] font-medium uppercase tracking-widest text-cream-100/50">
+              {t('footer.curated')}
+            </h4>
+            <ul className="mt-5 space-y-2.5 text-[15px] font-medium tracking-tight">
+              {CURATED_LINKS.map((item) => (
                 <li key={item.labelKey}>
                   <FooterLink to={item.to}>{t(item.labelKey)}</FooterLink>
                 </li>
@@ -253,6 +282,16 @@ export default function Footer() {
                   <FooterLink to={item.to}>{t(item.labelKey)}</FooterLink>
                 </li>
               ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={resetCookieConsent}
+                  className="link-underline inline-flex items-center gap-1.5 text-left text-cream-50/90 transition-colors hover:text-cream-50"
+                >
+                  <Cookie className="h-3.5 w-3.5" />
+                  {cookieReset ? t('footer.cookieReset') : t('footer.cookieSettings')}
+                </button>
+              </li>
             </ul>
           </div>
         </div>
