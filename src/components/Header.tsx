@@ -13,6 +13,7 @@ const NAV_ITEMS: { to: string; key: string }[] = [
   { to: '/films', key: 'nav.films' },
   { to: '/academy', key: 'nav.academy' },
   { to: '/markets', key: 'nav.markets' },
+  { to: '/chefs', key: 'nav.chefs' },
   { to: '/videos', key: 'nav.videos' },
   { to: '/library', key: 'nav.library' },
   { to: '/magazines', key: 'nav.magazines' },

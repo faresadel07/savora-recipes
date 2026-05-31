@@ -1,7 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Globe2, Heart, PlayCircle, Sparkles, Timer, Utensils } from 'lucide-react';
+import { ArrowUpRight, BookOpen, ChefHat, Film, Globe2, GraduationCap, Heart, MapPin, PlayCircle, Sparkles, Star, Timer, Utensils } from 'lucide-react';
 import { getRandomRecipe, getRandomRecipes, searchRecipes } from '../api';
+import { FAMOUS_DISHES, PALESTINIAN_DISHES } from '../data/arab-cuisine';
+import { FOOD_FILMS, FEATURED_FILMS } from '../data/food-films';
+import { COOKING_SKILLS, LEARNING_PATHS } from '../data/skills-academy';
+import { WORLD_MARKETS, FEATURED_MARKETS } from '../data/world-markets';
+import { CHEFS, FEATURED_CHEFS } from '../data/chef-hall';
 import { HOME_CATEGORIES, WORLD_CUISINES } from '../lib/constants';
 import { useCollections } from '../hooks/useCollections';
 import { useTranslation } from '../i18n';
@@ -173,6 +178,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* EXPLORE ZAYTOUN - showcase the major sections */}
+      <SectionsShowcase language={language} />
+
+      {/* RECIPE OF THE DAY */}
+      <RecipeOfTheDay language={language} />
+
+      {/* FEATURED LEARNING PATH + EDITOR'S PICK FILM */}
+      <FeaturedTrio language={language} />
 
       {/* BENTO */}
       <section className="mt-20 md:mt-28">
@@ -470,5 +484,325 @@ function DonateStat({ top, bottom }: { top: string; bottom: string }) {
       <p className="text-2xl font-bold tracking-tighter text-cream-50 md:text-3xl">{top}</p>
       <p className="mt-1.5 text-xs tracking-tight text-cream-100/75">{bottom}</p>
     </div>
+  );
+}
+
+// ============================================================
+// SECTIONS SHOWCASE  five big cards leading to each major page
+// ============================================================
+const SHOWCASE_SECTIONS = [
+  {
+    to: '/arab-cuisine',
+    titleEn: 'Arab Cuisine',
+    titleAr: 'المطبخ العربي',
+    blurbEn: '23 heritage recipes, embedded videos, full ingredients, methods, and a dedicated Palestinian kitchen.',
+    blurbAr: '23 وصفة تراثية مع الفيديوهات والمكونات وقسم خاص للمطبخ الفلسطيني.',
+    stat: () => `${FAMOUS_DISHES.length + PALESTINIAN_DISHES.length} recipes`,
+    statAr: () => `${FAMOUS_DISHES.length + PALESTINIAN_DISHES.length} وصفة`,
+    icon: Star,
+    accent: 'sage' as const,
+    imageVideoId: () => FAMOUS_DISHES[1]?.videoId,
+  },
+  {
+    to: '/films',
+    titleEn: 'Film Library',
+    titleAr: 'مكتبة الأفلام',
+    blurbEn: 'Curated documentaries from Netflix, National Geographic, PBS, UNESCO, and the best independent food channels.',
+    blurbAr: 'أفلام وثائقية مختارة من Netflix و National Geographic و PBS و UNESCO وأفضل قنوات الطعام المستقلة.',
+    stat: () => `${FOOD_FILMS.length} films`,
+    statAr: () => `${FOOD_FILMS.length} فيلم`,
+    icon: Film,
+    accent: 'gold' as const,
+    imageVideoId: () => FEATURED_FILMS[0]?.videoId,
+  },
+  {
+    to: '/academy',
+    titleEn: 'Skills Academy',
+    titleAr: 'أكاديمية المهارات',
+    blurbEn: '40 masterclass lessons in six learning paths. Jacques Pépin, Kenji, Epicurious. Your progress saves on this device.',
+    blurbAr: '40 درساً تقنياً في ستة مسارات تعلّم. باسبين، كنجي، إبيكيوريوس. تقدّمك محفوظ على جهازك.',
+    stat: () => `${COOKING_SKILLS.length} lessons · ${LEARNING_PATHS.length} paths`,
+    statAr: () => `${COOKING_SKILLS.length} درساً · ${LEARNING_PATHS.length} مسار`,
+    icon: GraduationCap,
+    accent: 'terracotta' as const,
+    imageVideoId: () => COOKING_SKILLS.find((s) => s.featured)?.videoId,
+  },
+  {
+    to: '/markets',
+    titleEn: 'World Markets',
+    titleAr: 'أسواق العالم',
+    blurbEn: 'A travelogue of 26 famous food markets, from Khan El-Khalili to Borough Market, each with a video tour and history.',
+    blurbAr: 'رحلة في 26 سوقاً شهيراً للطعام، من خان الخليلي إلى بورو ماركت، مع جولة فيديو لكل سوق.',
+    stat: () => `${WORLD_MARKETS.length} markets`,
+    statAr: () => `${WORLD_MARKETS.length} سوقاً`,
+    icon: MapPin,
+    accent: 'gold' as const,
+    imageVideoId: () => FEATURED_MARKETS[0]?.videoId,
+  },
+  {
+    to: '/chefs',
+    titleEn: 'Chef Hall',
+    titleAr: 'قاعة الشيفات',
+    blurbEn: 'Portraits of the people behind the plate. Ottolenghi to Pépin, Bottura to Bayless. A philosophy, a bio, a video for each.',
+    blurbAr: 'صور الشخصيات اللي وراء الطبق. أوتولينغي وباسبين وبوتورا وغيرهم. فلسفة وسيرة وفيديو لكل شيف.',
+    stat: () => `${CHEFS.length} chefs`,
+    statAr: () => `${CHEFS.length} شيفاً`,
+    icon: ChefHat,
+    accent: 'sage' as const,
+    imageVideoId: () => FEATURED_CHEFS[0]?.videoId,
+  },
+  {
+    to: '/library',
+    titleEn: 'Cookbook Library',
+    titleAr: 'مكتبة الكتب',
+    blurbEn: 'Public-domain cookbooks hosted on Internet Archive. Read inside the site, full pages, no downloads required.',
+    blurbAr: 'كتب طبخ بالمجال العام مستضافة على Internet Archive. اقرأها داخل الموقع، صفحات كاملة، بدون تحميل.',
+    stat: () => 'Read in place',
+    statAr: () => 'اقرأ مباشرة',
+    icon: BookOpen,
+    accent: 'terracotta' as const,
+    imageVideoId: () => undefined,
+  },
+];
+
+function ShowcaseImage({ videoId }: { videoId?: string }) {
+  if (!videoId) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-cream-200 to-cream-300">
+        <BookOpen className="h-16 w-16 text-ink-300" strokeWidth={1.5} />
+      </div>
+    );
+  }
+  return (
+    <img
+      src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+      onLoad={(e) => {
+        const t = e.currentTarget;
+        if (t.naturalWidth > 120) return;
+        if (t.src.includes('maxresdefault')) {
+          t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+        } else if (t.src.includes('sddefault')) {
+          t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        }
+      }}
+      onError={(e) => {
+        const t = e.currentTarget;
+        if (t.src.includes('maxresdefault')) {
+          t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+        } else if (t.src.includes('sddefault')) {
+          t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        }
+      }}
+      alt=""
+      loading="lazy"
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+    />
+  );
+}
+
+function SectionsShowcase({ language }: { language: string }) {
+  const accentBar = {
+    sage: 'bg-sage-500',
+    gold: 'bg-gold-500',
+    terracotta: 'bg-terracotta-500',
+  };
+  return (
+    <section className="mt-20 md:mt-28">
+      <div className="container-wide">
+        <div className="mb-10 max-w-3xl">
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+            {language === 'ar' ? 'استكشف زيتون.' : 'Explore Zaytoun.'}
+          </h2>
+          <p className="mt-3 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
+            {language === 'ar'
+              ? 'ستّ مكتبات منتقاة بعناية. اختر من وين بدّك تبدأ.'
+              : 'Six curated libraries. Pick where you want to begin.'}
+          </p>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {SHOWCASE_SECTIONS.map((s) => {
+            const Icon = s.icon;
+            return (
+              <Link
+                key={s.to}
+                to={s.to}
+                className="group relative overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
+              >
+                <div className={`absolute inset-x-0 top-0 h-1 ${accentBar[s.accent]}`} />
+                <div className="relative aspect-video bg-cream-200">
+                  <ShowcaseImage videoId={s.imageVideoId()} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" />
+                  <div className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-cream-50/95 text-ink-900 backdrop-blur">
+                    <Icon className="h-4 w-4" strokeWidth={1.8} />
+                  </div>
+                </div>
+                <div className="p-5 md:p-6">
+                  <p className="text-xs font-medium tracking-tight text-gold-600">
+                    {language === 'ar' ? s.statAr() : s.stat()}
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">
+                    {language === 'ar' ? s.titleAr : s.titleEn}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-600">
+                    {language === 'ar' ? s.blurbAr : s.blurbEn}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:text-terracotta-500">
+                    {language === 'ar' ? 'افتح' : 'Open'}
+                    <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// RECIPE OF THE DAY  rotates daily based on day of year
+// ============================================================
+function RecipeOfTheDay({ language }: { language: string }) {
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  const allDishes = [...FAMOUS_DISHES, ...PALESTINIAN_DISHES];
+  const todays = allDishes[dayOfYear % allDishes.length];
+  if (!todays) return null;
+
+  return (
+    <section className="mt-20 md:mt-28">
+      <div className="container-wide">
+        <div className="mb-8 flex items-baseline justify-between gap-4">
+          <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
+            {language === 'ar' ? 'وصفة اليوم.' : "Today's dish."}
+          </h2>
+          <Link
+            to="/arab-cuisine"
+            className="inline-flex items-center gap-1 text-sm font-medium tracking-tight text-ink-500 hover:text-ink-900"
+          >
+            {language === 'ar' ? 'كل الوصفات' : 'All dishes'}
+            <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <Link
+          to={`/arab-cuisine#dish-${todays.id}`}
+          className="group relative grid gap-6 overflow-hidden rounded-3xl bg-ink-900 text-cream-50 transition-shadow duration-500 hover:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.4)] md:grid-cols-2"
+        >
+          <div className="relative aspect-video bg-ink-800 md:aspect-auto">
+            <ShowcaseImage videoId={todays.videoId} />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
+          </div>
+          <div className="p-6 md:p-8">
+            <p className="text-[11px] font-medium tracking-tight text-gold-400">
+              {language === 'ar' ? 'وصفة اليوم' : 'Today'}
+            </p>
+            <h3 className="mt-2 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+              {todays.name}
+            </h3>
+            <p className="mt-1 text-xl font-medium tracking-tight text-gold-400">{todays.nameAr}</p>
+            <p className="mt-4 text-sm leading-relaxed text-cream-100/80 md:text-base">{todays.story}</p>
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-cream-50 px-5 py-2.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:bg-gold-400">
+              {language === 'ar' ? 'افتح الوصفة' : 'Open the recipe'}
+              <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
+            </div>
+          </div>
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// FEATURED TRIO  Path + Film + Chef hero strip
+// ============================================================
+function FeaturedTrio({ language }: { language: string }) {
+  const path = LEARNING_PATHS[0];
+  const film = FEATURED_FILMS[0];
+  const chef = FEATURED_CHEFS[0];
+  if (!path || !film || !chef) return null;
+
+  return (
+    <section className="mt-20 md:mt-28">
+      <div className="container-wide">
+        <div className="mb-10 max-w-3xl">
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+            {language === 'ar' ? 'مقترحات هذا الأسبوع.' : 'This week, three picks.'}
+          </h2>
+          <p className="mt-3 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
+            {language === 'ar'
+              ? 'مسار للتعلّم، فيلم للمشاهدة، شيف للقاء. خصوصاً لو ما عندك فكرة من وين تبدا.'
+              : 'A path to learn, a film to watch, a chef to meet. Especially if you do not know where to begin.'}
+          </p>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {/* Path card */}
+          <Link
+            to="/academy#paths"
+            className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)] md:p-7"
+          >
+            <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-gold-500/15 px-2.5 py-1 text-[11px] font-medium tracking-tight text-gold-700">
+              <Sparkles className="h-3 w-3" /> {language === 'ar' ? 'مسار تعلّم' : 'Learning path'}
+            </div>
+            <h3 className="mt-4 text-xl font-semibold tracking-tight md:text-2xl">{path.name}</h3>
+            <p className="mt-1 text-sm italic tracking-tight text-ink-500">{path.goal}</p>
+            <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-600">{path.blurb}</p>
+            <div className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:text-terracotta-500">
+              {language === 'ar' ? 'ابدأ المسار' : 'Start the path'}
+              <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </div>
+          </Link>
+
+          {/* Film card */}
+          <Link
+            to="/films"
+            className="group relative flex flex-col overflow-hidden rounded-3xl bg-ink-900 text-cream-50 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.4)]"
+          >
+            <div className="relative aspect-video bg-ink-800">
+              <ShowcaseImage videoId={film.videoId} />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/30 to-transparent" />
+            </div>
+            <div className="flex flex-1 flex-col p-6 md:p-7">
+              <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-gold-500/25 px-2.5 py-1 text-[11px] font-medium tracking-tight text-gold-400">
+                <Film className="h-3 w-3" /> {language === 'ar' ? "اختيار المحرّر" : "Editor's pick"}
+              </div>
+              <h3 className="mt-3 text-xl font-semibold tracking-tight md:text-2xl">{film.title}</h3>
+              <p className="mt-1 text-sm tracking-tight text-cream-100/70">{film.channel}{film.runtime ? ` · ${film.runtime}` : ''}</p>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-cream-100/80">{film.blurb}</p>
+              <div className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-cream-50 transition-colors group-hover:text-gold-400">
+                {language === 'ar' ? 'شاهد الآن' : 'Watch now'}
+                <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Chef card */}
+          <Link
+            to="/chefs"
+            className="group relative flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
+          >
+            <div className="relative aspect-video bg-ink-900">
+              <ShowcaseImage videoId={chef.videoId} />
+            </div>
+            <div className="flex flex-1 flex-col p-6 md:p-7">
+              <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-50 px-2.5 py-1 text-[11px] font-medium tracking-tight text-sage-700">
+                <ChefHat className="h-3 w-3" /> {language === 'ar' ? 'شيف الأسبوع' : 'Chef portrait'}
+              </div>
+              <h3 className="mt-3 text-xl font-semibold tracking-tight md:text-2xl">{chef.name}</h3>
+              <p className="mt-1 text-sm tracking-tight text-ink-500">{chef.nationality} · {chef.cuisine}</p>
+              <p className="mt-3 flex-1 border-l-2 border-gold-500/40 pl-3 text-sm italic leading-relaxed text-ink-600">
+                "{chef.philosophy}"
+              </p>
+              <div className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:text-terracotta-500">
+                {language === 'ar' ? 'افتح القاعة' : 'Open the hall'}
+                <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

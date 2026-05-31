@@ -15,6 +15,7 @@ const DISCOVER_LINKS: NavItem[] = [
   { to: '/films', labelKey: 'footer.filmLibrary' },
   { to: '/academy', labelKey: 'footer.skillsAcademy' },
   { to: '/markets', labelKey: 'footer.worldMarkets' },
+  { to: '/chefs', labelKey: 'footer.chefHall' },
   { to: '/videos', labelKey: 'footer.videoLibrary' },
   { to: '/library', labelKey: 'footer.cookbookLibrary' },
   { to: '/magazines', labelKey: 'footer.magazineRack' },
