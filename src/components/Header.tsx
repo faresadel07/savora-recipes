@@ -51,14 +51,15 @@ export default function Header() {
   }
 
   return (
-    <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? 'bg-cream-50/80 backdrop-blur-xl shadow-[0_1px_0_0_rgba(0,0,0,0.04)]'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="container-wide flex h-14 items-center justify-between gap-4 md:h-16">
+    <header className="sticky top-3 z-40 px-3 md:top-4 md:px-6">
+      <div
+        className={`mx-auto max-w-5xl overflow-hidden rounded-2xl border border-ink-100/70 bg-cream-50/85 backdrop-blur-xl transition-shadow duration-300 ${
+          scrolled
+            ? 'shadow-[0_12px_36px_-12px_rgba(0,0,0,0.18)]'
+            : 'shadow-[0_4px_16px_-6px_rgba(0,0,0,0.08)]'
+        }`}
+      >
+      <div className="flex h-14 items-center justify-between gap-4 px-4 md:px-6">
         <Link to="/" className="flex items-center gap-2 group" aria-label="Zaytoun home">
           <img src="/zaytoun-logo.jpg" alt="" width={28} height={28} className="h-6 w-6 rounded-full object-cover md:h-7 md:w-7" />
           <span className="text-lg font-semibold tracking-tighter md:text-xl">Zaytoun</span>
@@ -159,30 +160,31 @@ export default function Header() {
         </div>
       </div>
 
-      <div
-        className={`overflow-hidden border-t border-ink-100/60 transition-[max-height,opacity] duration-300 ${
-          searchOpen ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="container-wide py-3.5">
-          <form onSubmit={submitSearch} className="flex items-center gap-3">
-            <Search className="h-4 w-4 text-ink-400" strokeWidth={1.8} />
-            <input
-              autoFocus={searchOpen}
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder={t('common.searchRecipes')}
-              className="flex-1 bg-transparent text-base tracking-tight placeholder:text-ink-400 focus:outline-none md:text-lg"
-            />
-            <button
-              type="button"
-              onClick={() => setSearchOpen(false)}
-              className="rounded-full p-1.5 text-ink-400 hover:text-ink-900"
-              aria-label="Close search"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </form>
+        <div
+          className={`transition-[max-height,opacity] duration-300 ${
+            searchOpen ? 'max-h-32 border-t border-ink-100/60 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="px-4 py-3.5 md:px-6">
+            <form onSubmit={submitSearch} className="flex items-center gap-3">
+              <Search className="h-4 w-4 text-ink-400" strokeWidth={1.8} />
+              <input
+                autoFocus={searchOpen}
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={t('common.searchRecipes')}
+                className="flex-1 bg-transparent text-base tracking-tight placeholder:text-ink-400 focus:outline-none md:text-lg"
+              />
+              <button
+                type="button"
+                onClick={() => setSearchOpen(false)}
+                className="rounded-full p-1.5 text-ink-400 hover:text-ink-900"
+                aria-label="Close search"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 
