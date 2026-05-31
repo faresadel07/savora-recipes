@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -6,9 +6,11 @@ const KEY = 'savora:theme:v1';
 
 function resolveInitial(): Theme {
   if (typeof window === 'undefined') return 'light';
+  // Light is the default. Dark only kicks in when the user explicitly
+  // chooses it with the toggle. We deliberately ignore the OS
+  // prefers-color-scheme setting per the owner's request.
   const stored = localStorage.getItem(KEY) as Theme | null;
-  if (stored === 'light' || stored === 'dark') return stored;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return stored === 'dark' ? 'dark' : 'light';
 }
 
 function applyTheme(t: Theme) {
@@ -23,20 +25,6 @@ export function useTheme() {
     applyTheme(initial);
     return initial;
   });
-
-  // Follow OS changes only when the user has not explicitly chosen a theme.
-  useEffect(() => {
-    const stored = localStorage.getItem(KEY);
-    if (stored) return;
-    const m = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = (e: MediaQueryListEvent) => {
-      const next: Theme = e.matches ? 'dark' : 'light';
-      setThemeState(next);
-      applyTheme(next);
-    };
-    m.addEventListener('change', onChange);
-    return () => m.removeEventListener('change', onChange);
-  }, []);
 
   const setTheme = useCallback((next: Theme) => {
     localStorage.setItem(KEY, next);
