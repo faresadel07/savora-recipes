@@ -133,7 +133,7 @@ export default function Header() {
           <Link
             to="/donate"
             className="hidden items-center gap-1.5 rounded-full bg-terracotta-500/10 px-3.5 py-1.5 text-[12px] font-medium tracking-tight text-terracotta-600 transition-colors hover:bg-terracotta-500 hover:text-cream-50 md:inline-flex"
-            aria-label={t('nav.supportSavora')}
+            aria-label={t('nav.supportZaytoun')}
           >
             <HeartHandshake className="h-3.5 w-3.5" strokeWidth={2} />
             {t('nav.donate')}
@@ -360,7 +360,7 @@ export default function Header() {
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-terracotta-500 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-600"
             >
               <HeartHandshake className="h-4 w-4" />
-              {t('nav.supportSavora')}
+              {t('nav.supportZaytoun')}
             </NavLink>
 
             <div className="mt-3 grid grid-cols-2 gap-2">
