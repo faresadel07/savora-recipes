@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
-  BookOpen,
   ChefHat,
   Film,
   GlassWater,
@@ -35,32 +34,47 @@ interface NavItem {
   icon: LucideIcon;
 }
 
+// Full nav catalog used by the mobile drawer.
 const NAV_ITEMS: NavItem[] = [
   { to: '/', key: 'nav.home', icon: Home },
   { to: '/recipes', key: 'nav.recipes', icon: Utensils },
   { to: '/arab-cuisine', key: 'nav.arabCuisine', icon: Star },
+  { to: '/drinks', key: 'nav.drinks', icon: GlassWater },
   { to: '/films', key: 'nav.films', icon: Film },
   { to: '/academy', key: 'nav.academy', icon: GraduationCap },
-  { to: '/markets', key: 'nav.markets', icon: MapPin },
   { to: '/chefs', key: 'nav.chefs', icon: ChefHat },
-  { to: '/drinks', key: 'nav.drinks', icon: GlassWater },
+  { to: '/markets', key: 'nav.markets', icon: MapPin },
   { to: '/videos', key: 'nav.videos', icon: Tv },
-  { to: '/library', key: 'nav.library', icon: BookOpen },
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
   { to: '/fitness', key: 'nav.fitness', icon: Activity },
 ];
 
-// Mobile menu groups the nav items into three editorial sections so the
-// drawer reads like a table of contents instead of one long list.
+// Desktop pill: only the highest-trafficked routes so the bar breathes.
+// Everything else stays one tap away in the mobile drawer or the footer.
+const DESKTOP_NAV_KEYS = new Set<string>([
+  'nav.home',
+  'nav.recipes',
+  'nav.arabCuisine',
+  'nav.drinks',
+  'nav.films',
+  'nav.academy',
+  'nav.chefs',
+  'nav.markets',
+]);
+
+const DESKTOP_NAV_ITEMS = NAV_ITEMS.filter((item) => DESKTOP_NAV_KEYS.has(item.key));
+
+// Mobile menu groups the nav items into editorial sections so the drawer
+// reads like a table of contents instead of one long list.
 const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   { titleKey: 'nav.browse', itemKeys: ['nav.home', 'nav.recipes'] },
   {
     titleKey: 'nav.curated',
-    itemKeys: ['nav.arabCuisine', 'nav.films', 'nav.academy', 'nav.markets', 'nav.chefs', 'nav.drinks'],
+    itemKeys: ['nav.arabCuisine', 'nav.drinks', 'nav.films', 'nav.academy', 'nav.chefs', 'nav.markets'],
   },
   {
     titleKey: 'nav.more',
-    itemKeys: ['nav.videos', 'nav.library', 'nav.magazines', 'nav.fitness'],
+    itemKeys: ['nav.videos', 'nav.magazines', 'nav.fitness'],
   },
 ];
 
@@ -104,7 +118,7 @@ export default function Header() {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-          {NAV_ITEMS.map((item) => (
+          {DESKTOP_NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
