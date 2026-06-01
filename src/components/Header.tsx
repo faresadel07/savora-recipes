@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
   BookOpen,
@@ -26,6 +26,7 @@ import { useFavorites } from '../hooks/useFavorites';
 import { useTheme } from '../hooks/useTheme';
 import { useSurpriseRecipe } from '../hooks/useSurpriseRecipe';
 import { useTranslation } from '../i18n';
+import SmartSearchInput from './SmartSearchInput';
 
 interface NavItem {
   to: string;
@@ -66,7 +67,6 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [q, setQ] = useState('');
-  const navigate = useNavigate();
   const { favorites } = useFavorites();
   const { theme, toggle: toggleTheme } = useTheme();
   const { surprise, loading: surpriseLoading } = useSurpriseRecipe();
@@ -85,15 +85,6 @@ export default function Header() {
       document.body.style.overflow = '';
     };
   }, [mobileOpen]);
-
-  function submitSearch(e: React.FormEvent) {
-    e.preventDefault();
-    if (!q.trim()) return;
-    navigate(`/recipes?q=${encodeURIComponent(q.trim())}`);
-    setSearchOpen(false);
-    setMobileOpen(false);
-    setQ('');
-  }
 
   return (
     <header className="sticky top-3 z-40 px-3 md:top-4 md:px-6">
@@ -211,24 +202,17 @@ export default function Header() {
           }`}
         >
           <div className="px-4 py-3.5 md:px-6">
-            <form onSubmit={submitSearch} className="flex items-center gap-3">
-              <Search className="h-4 w-4 text-ink-400" strokeWidth={1.8} />
-              <input
-                autoFocus={searchOpen}
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder={t('common.searchRecipes')}
-                className="flex-1 bg-transparent text-base tracking-tight placeholder:text-ink-400 focus:outline-none md:text-lg"
-              />
-              <button
-                type="button"
-                onClick={() => setSearchOpen(false)}
-                className="rounded-full p-1.5 text-ink-400 hover:text-ink-900"
-                aria-label="Close search"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </form>
+            <SmartSearchInput
+              value={q}
+              onChange={setQ}
+              placeholder={t('common.searchRecipes')}
+              autoFocus={searchOpen}
+              variant="header"
+              onClose={() => {
+                setSearchOpen(false);
+                setQ('');
+              }}
+            />
           </div>
         </div>
       </div>
@@ -265,18 +249,17 @@ export default function Header() {
           </div>
 
           {/* Sticky search inside the drawer */}
-          <form
-            onSubmit={submitSearch}
-            className="flex flex-none items-center gap-2 border-b border-ink-100 px-6 py-3"
-          >
-            <Search className="h-4 w-4 flex-none text-ink-400" />
-            <input
+          <div className="flex flex-none items-center gap-2 border-b border-ink-100 px-6 py-3">
+            <SmartSearchInput
               value={q}
-              onChange={(e) => setQ(e.target.value)}
+              onChange={setQ}
               placeholder={t('common.searchRecipes')}
-              className="flex-1 bg-transparent py-1 text-[15px] placeholder:text-ink-400 focus:outline-none"
+              onClose={() => {
+                setMobileOpen(false);
+                setQ('');
+              }}
             />
-          </form>
+          </div>
 
           {/* Scrollable nav body */}
           <nav className="flex-1 overflow-y-auto px-6 py-5">

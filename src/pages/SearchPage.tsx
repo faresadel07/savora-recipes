@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { ChevronDown, Filter, Search as SearchIcon, X } from 'lucide-react';
+import { ChevronDown, Filter, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { searchRecipes } from '../api';
 import { MEALDB_AREAS, MEALDB_CATEGORIES } from '../lib/constants';
 import { LOCAL_RECIPES } from '../data/local-recipes';
 import { useTranslation } from '../i18n';
+import { translateQuery } from '../lib/search-i18n';
 import RecipeCard from '../components/RecipeCard';
 import RecipeImage from '../components/RecipeImage';
+import SmartSearchInput from '../components/SmartSearchInput';
 import { RecipeGridSkeleton } from '../components/Skeleton';
 import ErrorState from '../components/ErrorState';
 
@@ -49,7 +51,9 @@ export default function SearchPage() {
 
   const filters = useMemo(
     () => ({
-      query: query || undefined,
+      // Translate Arabic to English at the API boundary. If the query is
+      // already English, translateQuery returns it unchanged.
+      query: query ? translateQuery(query) : undefined,
       category: category || undefined,
       area: area || undefined,
       offset: (page - 1) * PAGE,
@@ -95,37 +99,15 @@ export default function SearchPage() {
                 {t('search.body')}
               </p>
 
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  update('q', draftQuery);
-                }}
-                className="mt-7 flex items-center gap-3 border-b border-ink-900 pb-2.5"
-              >
-                <SearchIcon className="h-5 w-5 text-ink-400" strokeWidth={1.8} />
-                <input
+              <div className="mt-7">
+                <SmartSearchInput
                   value={draftQuery}
-                  onChange={(e) => setDraftQuery(e.target.value)}
+                  onChange={setDraftQuery}
+                  onSubmit={(translated) => update('q', translated)}
                   placeholder={t('common.searchPlaceholder')}
-                  className="flex-1 bg-transparent text-lg font-medium tracking-tight placeholder:text-ink-400/70 focus:outline-none md:text-2xl"
+                  variant="large"
                 />
-                {draftQuery && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setDraftQuery('');
-                      update('q', null);
-                    }}
-                    className="rounded-full p-1 text-ink-400 hover:text-ink-900"
-                    aria-label="Clear search"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                )}
-                <button type="submit" className="btn-primary !py-2 !px-5">
-                  {t('common.search')}
-                </button>
-              </form>
+              </div>
 
               <div className="mt-7 space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
