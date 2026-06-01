@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Cookie, Heart, Mail, Send } from 'lucide-react';
+import { ArrowUpRight, Cookie, Heart } from 'lucide-react';
 import { useTranslation } from '../i18n';
 
 interface NavItem {
@@ -92,6 +92,8 @@ const SUPPORT_LINKS: NavItem[] = [
   { to: '/donate', labelKey: 'footer.donate' },
   { to: '/about', labelKey: 'footer.about' },
   { to: '/contact', labelKey: 'footer.contact' },
+  { to: '/privacy', labelKey: 'footer.privacy' },
+  { to: '/terms', labelKey: 'footer.terms' },
 ];
 
 function FooterLink({ to, children }: { to: string; children: React.ReactNode }) {
@@ -114,20 +116,7 @@ export default function Footer() {
   const categoryLabels = language === 'ar' ? CATEGORY_LABELS_AR : CATEGORY_LABELS_EN;
   const cuisineItems = language === 'ar' ? CUISINES_AR : CUISINES_EN;
 
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
   const [cookieReset, setCookieReset] = useState(false);
-
-  function submitNewsletter(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim()) return;
-    try {
-      localStorage.setItem('zaytoun:newsletter:email', email.trim());
-    } catch { /* ignore */ }
-    setSubscribed(true);
-    setEmail('');
-    setTimeout(() => setSubscribed(false), 6000);
-  }
 
   function resetCookieConsent() {
     try {
@@ -141,41 +130,6 @@ export default function Footer() {
 
   return (
     <footer className="mt-24 bg-ink-900 text-cream-100">
-      {/* TOP BAND: NEWSLETTER */}
-      <div className="border-b border-cream-100/10">
-        <div className="container-wide grid items-center gap-8 py-12 md:grid-cols-2 md:gap-12 md:py-14">
-          <div>
-            <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-widest text-cream-100/60">
-              <Mail className="h-3 w-3" /> {t('footer.newsletterTitle')}
-            </p>
-            <h3 className="mt-3 text-2xl font-semibold tracking-tighter text-cream-50 md:text-3xl">
-              {t('footer.newsletterTitle')}
-            </h3>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-cream-100/70">
-              {t('footer.newsletterBody')}
-            </p>
-          </div>
-          <form onSubmit={submitNewsletter} className="flex flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={t('footer.newsletterPlaceholder')}
-              className="flex-1 rounded-full border border-cream-100/15 bg-cream-50/5 px-5 py-3 text-sm tracking-tight text-cream-50 placeholder:text-cream-100/40 focus:border-cream-50/40 focus:outline-none"
-              aria-label={t('footer.newsletterPlaceholder')}
-            />
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-all hover:bg-terracotta-500 hover:text-cream-50 active:scale-[0.98]"
-            >
-              <Send className="h-3.5 w-3.5" />
-              {subscribed ? t('footer.newsletterThanks') : t('footer.newsletterSubscribe')}
-            </button>
-          </form>
-        </div>
-      </div>
-
       {/* MIDDLE BAND: BRAND + LINKS (6 columns on desktop) */}
       <div className="container-wide py-14 md:py-16">
         {/* Brand row — full width */}

@@ -377,6 +377,131 @@ export const en = {
     ctaQuote: '"Behind every recipe is a person who loved cooking enough to write it down. Behind this site is just one of them."',
     ctaAbout: 'Read the story',
   },
+  privacy: {
+    eyebrow: 'Privacy',
+    title1: 'Privacy first,',
+    title2: 'by design.',
+    subtitle: 'Zaytoun does not run ads, does not use trackers, and does not collect any personal information on a server. The whole site is designed around that promise.',
+    lastUpdated: 'Last updated: June 2026',
+
+    p1Title: 'No accounts, no profiles.',
+    p1Body: 'You do not need to sign in to use any part of Zaytoun. There is no user database, no analytics dashboard, no shadow profile.',
+    p2Title: 'No trackers, no ads.',
+    p2Body: 'Zero advertising scripts. Zero third party analytics. Zero behavioral tracking. The page loads and that is it.',
+    p3Title: 'Everything stays on your device.',
+    p3Body: 'Your favorites, your theme, your progress: stored only in your browser local storage. You can wipe them by clearing site data.',
+
+    s1Eyebrow: 'Section 1',
+    s1Title: 'What we store, and where.',
+    s1Body: 'Zaytoun keeps a small number of preferences and history items in your browser local storage, never on a server. Clearing site data in your browser deletes everything below in one click.',
+    storeKey: 'Storage key',
+    storePurpose: 'What it stores',
+    storeTheme: 'Light or dark theme choice.',
+    storeLang: 'English or Arabic interface language.',
+    storeFavs: 'Recipe IDs you marked as favorites.',
+    storeProgress: 'Which academy lessons you watched.',
+    storeMacros: 'Last macro calculator inputs and results.',
+    storeRecent: 'Recent search queries shown as chips.',
+    storeCookie: 'Whether you dismissed the cookies banner.',
+    s1Clear: 'To clear all of this at once, use your browser settings to clear site data for zaytoun.online.',
+
+    s2Eyebrow: 'Section 2',
+    s2Title: 'What we never do.',
+    s2L1: 'We do not show you advertising of any kind.',
+    s2L2: 'We do not load Google Analytics, Facebook Pixel, Hotjar, or any tracker.',
+    s2L3: 'We do not set first party cookies on your browser.',
+    s2L4: 'We do not collect your name, email, phone, or any other contact information on any server.',
+    s2L5: 'We do not share, sell, or trade any visitor data with anyone, because we never collect any.',
+    s2L6: 'We do not profile you based on your browsing within the site.',
+
+    s3Eyebrow: 'Section 3',
+    s3Title: 'Third party services we link to.',
+    s3Body: 'Zaytoun displays recipes, videos, and images from a small number of public services. When you load a page, your browser fetches assets from these services directly. Their privacy policies apply when you interact with them.',
+    tpMealDb: 'Recipe data API. Public, no account required.',
+    tpForkify: 'Secondary recipe search. Public, no account required.',
+    tpYouTube: 'Embedded video tutorials, served through the privacy-enhanced youtube-nocookie.com domain. Cookies are only set when you click play.',
+    tpUnsplash: 'Source for some recipe photos, used under the Unsplash license.',
+    tpArchive: 'Public domain cookbooks linked from the cookbook section.',
+    tpKofi: 'Optional donations. You only interact with Ko-fi if you click the support link, and any payment is handled by Ko-fi.',
+    tpVercel: 'Hosting provider. Vercel sees standard server logs for any visit (IP, timestamp, user agent), but Zaytoun does not have access to these.',
+
+    s4Eyebrow: 'Section 4',
+    s4Title: 'Security measures in place.',
+    s4Body: 'Zaytoun is served only over HTTPS, with the following protections enabled:',
+    s4L1: 'HSTS with two year preload eligibility.',
+    s4L2: 'X-Frame-Options DENY against clickjacking.',
+    s4L3: 'X-Content-Type-Options nosniff.',
+    s4L4: 'Strict Referrer-Policy.',
+    s4L5: 'Permissions-Policy locking down camera, payment, geolocation, USB, and other sensor APIs.',
+
+    s5Eyebrow: 'Section 5',
+    s5Title: 'Children under 13.',
+    s5Body: 'Zaytoun is a general audience cooking and food culture website. Nothing on the site is targeted at children under 13. Because we do not collect any personal information, there is no risk of inadvertently collecting it from a minor.',
+
+    s6Eyebrow: 'Section 6',
+    s6Title: 'Your rights.',
+    s6Body: 'You can clear every byte Zaytoun has stored about you at any time by clearing site data in your browser. There is no data deletion request to file, no email to send, no account to delete. Your control is total and instant.',
+
+    s7Eyebrow: 'Section 7',
+    s7Title: 'Changes to this policy.',
+    s7Body: 'If the privacy practices of Zaytoun ever change, this page will be updated and the last updated date at the top will reflect the change. Material changes will also be announced on the home page for a reasonable period.',
+
+    ctaEyebrow: 'Questions?',
+    ctaQuote: '"Privacy promises only matter if they are easy to verify. Read the source code, audit the network calls, and check the headers yourself."',
+    ctaContact: 'Contact me',
+    ctaTerms: 'Terms of Service',
+  },
+  terms: {
+    eyebrow: 'Terms',
+    title1: 'The rules,',
+    title2: 'in plain language.',
+    subtitle: 'A short, honest set of terms covering what Zaytoun is, what it is not, and what each side is responsible for.',
+    lastUpdated: 'Last updated: June 2026',
+
+    introEyebrow: 'Welcome',
+    intro: 'By using Zaytoun, you agree to these terms. They are written in plain language so you actually read them, not in dense legal jargon so you do not.',
+
+    s1Title: 'Acceptance.',
+    s1Body: 'Visiting zaytoun.online or using any of its features means you accept these terms. If you disagree with any part, please simply do not use the service.',
+
+    s2Title: 'What Zaytoun is.',
+    s2Body: 'Zaytoun is a free, ad-free, single-page web platform that aggregates recipes, Arab culinary heritage, food films, lessons, markets, chefs, drinks, and short videos. It is built and maintained by Faris Hamdan as a personal and academic project.',
+
+    s3Title: 'Use at your own risk (food and health).',
+    s3Body: 'Recipes on Zaytoun are sourced from public materials and shared for educational and entertainment purposes. Cooking carries inherent risks (cuts, burns, allergens, food safety). The macro calculator is a general guidance tool, not medical advice. Consult a professional for any specific dietary, medical, or allergen concern.',
+
+    s4Title: 'Intellectual property.',
+    s4Body: 'Recipe text from public domain or government sources is attributed in each entry. Videos remain the property of the original creators and are embedded via YouTube under standard embed terms. The Zaytoun design, code, and editorial selection are copyright Faris Hamdan. You may not republish or commercialize substantial portions of the content without permission.',
+
+    s5Title: 'Acceptable use.',
+    s5Body: 'You agree not to attempt to disrupt the service, reverse engineer security measures, scrape data at industrial scale, abuse external APIs through this site, or use Zaytoun to harm any other party.',
+
+    s6Title: 'Third party content.',
+    s6Body: 'Zaytoun displays material from TheMealDB, Forkify, YouTube, Unsplash, Internet Archive, and similar public sources. We do not control these services. If a video or external page is unavailable, changed, or removed, we are not responsible for the loss of that content.',
+
+    s7Title: 'Donations.',
+    s7Body: 'Donations through Ko-fi are entirely voluntary and not refundable. The platform does not offer any service in exchange for a donation. Donations are subject to Ko-fi terms in addition to these.',
+
+    s8Title: 'No warranty.',
+    s8Body: 'Zaytoun is provided as is, without warranty of any kind. The site may have bugs, may go offline, may change features without notice, and may permanently retire at any time. Recipes have not been individually tested in a commercial kitchen.',
+
+    s9Title: 'Limitation of liability.',
+    s9Body: 'To the maximum extent permitted by law, Faris Hamdan shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of Zaytoun, including damages for loss of profits, data, or other intangible losses.',
+
+    s10Title: 'Changes to terms.',
+    s10Body: 'These terms may be updated to reflect changes in the service or in applicable law. The last updated date at the top will reflect any change. Continued use after a change means acceptance of the updated terms.',
+
+    s11Title: 'Governing law.',
+    s11Body: 'These terms are governed by the laws of the Hashemite Kingdom of Jordan. Any dispute arising from the use of Zaytoun shall be subject to the exclusive jurisdiction of the competent courts in Amman, Jordan.',
+
+    s12Title: 'Contact.',
+    s12Body: 'For any question about these terms, write to miggajigga6767@gmail.com or use the contact form on the site. We aim to reply within 48 hours.',
+
+    ctaEyebrow: 'Want to read the privacy side?',
+    ctaQuote: '"Good terms are the ones nobody minds reading. We hope these earned that."',
+    ctaContact: 'Send a question',
+    ctaPrivacy: 'Privacy Policy',
+  },
   donate: {
     eyebrow: 'Support Zaytoun',
     title1: 'Built solo,',
@@ -842,6 +967,131 @@ export const ar: typeof en = {
     ctaEyebrow: 'فضولي بشأن المشروع؟',
     ctaQuote: '"خلف كل وصفة شخص أحبّ الطبخ لدرجة كتابتها. خلف هذا الموقع واحد منهم فقط."',
     ctaAbout: 'اقرأ القصة',
+  },
+  privacy: {
+    eyebrow: 'الخصوصية',
+    title1: 'الخصوصية أولاً،',
+    title2: 'منذ التصميم.',
+    subtitle: 'زيتون لا يعرض إعلانات، ولا يستخدم أدوات تتبّع، ولا يجمع أي معلومات شخصية على خادم. الموقع بأكمله مصمّم حول هذا الالتزام.',
+    lastUpdated: 'آخر تحديث: حزيران 2026',
+
+    p1Title: 'بدون حسابات، بدون ملفات شخصية.',
+    p1Body: 'لا تحتاج تسجيل الدخول لاستخدام أي جزء من زيتون. لا توجد قاعدة بيانات للمستخدمين، ولا لوحة تحليلات، ولا ملف ظلّ.',
+    p2Title: 'بدون متتبّعين، بدون إعلانات.',
+    p2Body: 'صفر سكربتات إعلانات. صفر تحليلات طرف ثالث. صفر تتبّع سلوكي. الصفحة تُحمَّل وانتهى الأمر.',
+    p3Title: 'كل شيء يبقى على جهازك.',
+    p3Body: 'مفضّلاتك، الثيم تاعك، تقدّمك: محفوظة فقط في local storage الخاص بمتصفّحك. تقدر تمسحها بمسح بيانات الموقع.',
+
+    s1Eyebrow: 'القسم الأول',
+    s1Title: 'ما الذي نخزّنه، وأين.',
+    s1Body: 'زيتون يحفظ عدداً صغيراً من التفضيلات وعناصر السجلّ في local storage بمتصفّحك، أبداً لا على خادم. مسح بيانات الموقع من إعدادات المتصفّح يحذف كل ما هو أدناه بضغطة واحدة.',
+    storeKey: 'مفتاح التخزين',
+    storePurpose: 'ما يُخزَّن فيه',
+    storeTheme: 'اختيار الثيم الفاتح أو الداكن.',
+    storeLang: 'لغة الواجهة العربية أو الإنجليزية.',
+    storeFavs: 'معرّفات الوصفات التي جعلتها مفضّلة.',
+    storeProgress: 'الدروس التي شاهدتها في الأكاديمية.',
+    storeMacros: 'آخر مدخلات ونتائج حاسبة الماكروز.',
+    storeRecent: 'استعلامات البحث الحديثة المعروضة كرقائق.',
+    storeCookie: 'هل أغلقت شريط ملفات الكوكيز.',
+    s1Clear: 'لمسح كل ذلك دفعة واحدة، استخدم إعدادات متصفّحك لمسح بيانات الموقع لـ zaytoun.online.',
+
+    s2Eyebrow: 'القسم الثاني',
+    s2Title: 'ما لا نفعله أبداً.',
+    s2L1: 'لا نعرض لك أي نوع من الإعلانات.',
+    s2L2: 'لا نحمّل Google Analytics أو Facebook Pixel أو Hotjar أو أي متتبّع.',
+    s2L3: 'لا نضع كوكيز طرف أول في متصفّحك.',
+    s2L4: 'لا نجمع اسمك أو بريدك أو هاتفك أو أي معلومات اتصال على أي خادم.',
+    s2L5: 'لا نشارك أو نبيع أو نتاجر بأي بيانات زائر مع أي طرف، لأننا أصلاً لا نجمع شيئاً.',
+    s2L6: 'لا نُنشئ ملفّاً شخصيّاً عنك بناءً على تصفّحك داخل الموقع.',
+
+    s3Eyebrow: 'القسم الثالث',
+    s3Title: 'خدمات الطرف الثالث التي نرتبط بها.',
+    s3Body: 'زيتون يعرض وصفات وفيديوهات وصوراً من عدد قليل من الخدمات العامة. عند تحميل صفحة، يجلب متصفّحك المحتوى مباشرة من هذه الخدمات. سياسات الخصوصية الخاصة بها تنطبق عند التعامل معها.',
+    tpMealDb: 'واجهة API لبيانات الوصفات. عامة، لا تتطلّب حساباً.',
+    tpForkify: 'بحث وصفات ثانوي. عام، لا يتطلّب حساباً.',
+    tpYouTube: 'فيديوهات تعليمية مدمجة، تُقدَّم عبر نطاق youtube-nocookie.com المعزّز للخصوصية. لا تُضبط الكوكيز إلا عند الضغط على play.',
+    tpUnsplash: 'مصدر بعض صور الوصفات، يُستخدَم بموجب رخصة Unsplash.',
+    tpArchive: 'كتب طبخ من الملك العام مرتبطة من قسم الكتب.',
+    tpKofi: 'تبرّعات اختيارية. تتعامل مع Ko-fi فقط إذا ضغطت على رابط الدعم، وأي دفع يُعالَج من قبل Ko-fi.',
+    tpVercel: 'مزوّد الاستضافة. تطّلع Vercel على سجلّات خادم قياسية لأي زيارة (IP وطابع زمني ووكيل المستخدم)، لكنّ زيتون لا يصل إلى هذه السجلّات.',
+
+    s4Eyebrow: 'القسم الرابع',
+    s4Title: 'الإجراءات الأمنية المطبّقة.',
+    s4Body: 'يُقدَّم زيتون عبر HTTPS حصراً، مع الحمايات التالية مفعّلة:',
+    s4L1: 'HSTS مع إمكانية preload لسنتين.',
+    s4L2: 'X-Frame-Options DENY ضد clickjacking.',
+    s4L3: 'X-Content-Type-Options nosniff.',
+    s4L4: 'Referrer-Policy صارمة.',
+    s4L5: 'Permissions-Policy تقفل الكاميرا والدفع والموقع و USB وواجهات المستشعرات الأخرى.',
+
+    s5Eyebrow: 'القسم الخامس',
+    s5Title: 'الأطفال دون 13 سنة.',
+    s5Body: 'زيتون موقع للجمهور العام عن الطبخ وثقافة الطعام. لا شيء في الموقع موجّه للأطفال دون 13 سنة. لأنّنا لا نجمع أي معلومات شخصية، لا يوجد خطر جمعها عن غير قصد من قاصر.',
+
+    s6Eyebrow: 'القسم السادس',
+    s6Title: 'حقوقك.',
+    s6Body: 'تقدر تمسح كل بايت يخزّنه زيتون عنك في أي وقت بمسح بيانات الموقع في متصفّحك. لا يوجد طلب حذف بيانات لتقديمه، ولا بريد لإرساله، ولا حساب لحذفه. سيطرتك كاملة وفورية.',
+
+    s7Eyebrow: 'القسم السابع',
+    s7Title: 'تغييرات على هذه السياسة.',
+    s7Body: 'إذا تغيّرت ممارسات الخصوصية في زيتون في أي وقت، ستُحدَّث هذه الصفحة وسيعكس تاريخ آخر تحديث في الأعلى التغيير. التغييرات الجوهرية ستُعلَن أيضاً على الصفحة الرئيسية لفترة معقولة.',
+
+    ctaEyebrow: 'أسئلة؟',
+    ctaQuote: '"وعود الخصوصية لا تعني شيئاً إلا إذا كان من السهل التحقّق منها. اقرأ الكود المصدري، وراجع طلبات الشبكة، وافحص الـ headers بنفسك."',
+    ctaContact: 'تواصل معي',
+    ctaTerms: 'شروط الاستخدام',
+  },
+  terms: {
+    eyebrow: 'الشروط',
+    title1: 'القواعد،',
+    title2: 'بلغة بسيطة.',
+    subtitle: 'مجموعة قصيرة وصادقة من الشروط تغطّي ما هو زيتون، وما ليس هو، وما يتحمّله كل طرف.',
+    lastUpdated: 'آخر تحديث: حزيران 2026',
+
+    introEyebrow: 'مرحباً',
+    intro: 'باستخدامك زيتون، فأنت توافق على هذه الشروط. مكتوبة بلغة بسيطة لتقرأها فعلاً، لا بلغة قانونية كثيفة كي لا تفعل.',
+
+    s1Title: 'القبول.',
+    s1Body: 'زيارة zaytoun.online أو استخدام أي من ميزاته يعني قبولك لهذه الشروط. إذا لم توافق على أي جزء، فضلاً لا تستخدم الخدمة ببساطة.',
+
+    s2Title: 'ما هو زيتون.',
+    s2Body: 'زيتون منصّة ويب مجانية بلا إعلانات ومن صفحة واحدة، تجمع الوصفات والتراث الطهوي العربي وأفلام الطعام والدروس والأسواق والشيفات والمشروبات والفيديوهات القصيرة. بناه ويصونه فارس حمدان كمشروع شخصي وأكاديمي.',
+
+    s3Title: 'الاستخدام على مسؤوليتك (الطعام والصحة).',
+    s3Body: 'الوصفات على زيتون مصادرها مواد عامة وتُشارَك لأغراض تعليمية وترفيهية. الطبخ ينطوي على مخاطر متأصّلة (جروح، حروق، مسبّبات حساسية، سلامة غذاء). حاسبة الماكروز أداة إرشاد عامة، لا نصيحة طبية. استشر مختصّاً لأي مخاوف غذائية أو طبية أو حساسية محدّدة.',
+
+    s4Title: 'الملكية الفكرية.',
+    s4Body: 'نصوص الوصفات من مصادر الملك العام أو المصادر الحكومية مذكورة في كل إدخال. الفيديوهات تبقى ملكاً لأصحابها الأصليين وتُدمَج عبر YouTube بموجب شروط الدمج القياسية. تصميم زيتون والكود والاختيار التحريري حقوق محفوظة لفارس حمدان. لا يجوز إعادة نشر أو تسويق أجزاء جوهرية من المحتوى بدون إذن.',
+
+    s5Title: 'الاستخدام المقبول.',
+    s5Body: 'توافق على عدم محاولة تعطيل الخدمة، أو الهندسة العكسية للإجراءات الأمنية، أو سحب البيانات بكميات صناعية، أو إساءة استخدام الـ APIs الخارجية عبر هذا الموقع، أو استخدام زيتون لإيذاء أي طرف آخر.',
+
+    s6Title: 'محتوى الطرف الثالث.',
+    s6Body: 'يعرض زيتون محتوى من TheMealDB و Forkify و YouTube و Unsplash و Internet Archive ومصادر عامة مماثلة. لا نتحكّم بهذه الخدمات. إذا أصبح فيديو أو صفحة خارجية غير متاحة أو تغيّرت أو حُذفت، فنحن غير مسؤولين عن فقدان ذلك المحتوى.',
+
+    s7Title: 'التبرّعات.',
+    s7Body: 'التبرّعات عبر Ko-fi طوعية تماماً وغير قابلة للاسترداد. المنصّة لا تقدّم أي خدمة مقابل التبرّع. تخضع التبرّعات لشروط Ko-fi إضافة إلى هذه الشروط.',
+
+    s8Title: 'بدون ضمان.',
+    s8Body: 'يُقدَّم زيتون كما هو، بدون ضمان من أي نوع. قد يحتوي الموقع على أخطاء، وقد ينقطع، وقد تتغيّر ميزاته بدون إشعار، وقد يُغلَق نهائياً في أي وقت. الوصفات لم تُختبَر بشكل فردي في مطبخ تجاري.',
+
+    s9Title: 'حدود المسؤولية.',
+    s9Body: 'إلى أقصى حدّ يسمح به القانون، لن يكون فارس حمدان مسؤولاً عن أي أضرار غير مباشرة أو عرضية أو خاصة أو تبعية أو عقابية ناتجة عن استخدامك لزيتون، بما في ذلك أضرار خسارة الأرباح أو البيانات أو الخسائر غير الملموسة الأخرى.',
+
+    s10Title: 'تغييرات على الشروط.',
+    s10Body: 'قد تُحدَّث هذه الشروط لتعكس تغييرات في الخدمة أو في القانون الساري. سيعكس تاريخ آخر تحديث في الأعلى أي تغيير. الاستخدام المتواصل بعد التغيير يعني قبول الشروط المحدّثة.',
+
+    s11Title: 'القانون الحاكم.',
+    s11Body: 'تخضع هذه الشروط لقوانين المملكة الأردنية الهاشمية. أي نزاع ينشأ عن استخدام زيتون يخضع للاختصاص الحصري للمحاكم المختصّة في عمّان، الأردن.',
+
+    s12Title: 'التواصل.',
+    s12Body: 'لأي سؤال حول هذه الشروط، اكتب إلى miggajigga6767@gmail.com أو استخدم نموذج التواصل في الموقع. نهدف إلى الردّ خلال 48 ساعة.',
+
+    ctaEyebrow: 'تريد قراءة جانب الخصوصية؟',
+    ctaQuote: '"الشروط الجيدة هي التي لا يمانع أحد قراءتها. نأمل أن هذه نالت ذلك."',
+    ctaContact: 'أرسل سؤالاً',
+    ctaPrivacy: 'سياسة الخصوصية',
   },
   donate: {
     eyebrow: 'ادعم زيتون',
