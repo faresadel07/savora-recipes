@@ -338,6 +338,58 @@ for (const [k, v] of Object.entries(RAW_AR_EN)) {
   NORMALIZED_AR_EN[normalizeArabic(k)] = v;
 }
 
+// English synonyms. Useful when British, American, and Australian users
+// type the same ingredient under different names. We expand the query at
+// search time, not at the API call, so the user can still type either form.
+const ENGLISH_SYNONYMS: Record<string, string> = {
+  aubergine: 'eggplant',
+  eggplant: 'aubergine',
+  courgette: 'zucchini',
+  zucchini: 'courgette',
+  cilantro: 'coriander',
+  coriander: 'cilantro',
+  chickpea: 'garbanzo',
+  garbanzo: 'chickpea',
+  chickpeas: 'garbanzo chickpeas',
+  prawn: 'shrimp',
+  prawns: 'shrimp',
+  shrimp: 'prawn',
+  mince: 'ground beef',
+  'minced beef': 'ground beef',
+  capsicum: 'bell pepper',
+  rocket: 'arugula',
+  arugula: 'rocket',
+  swede: 'rutabaga',
+  beetroot: 'beet',
+  spring: 'scallion',
+  scallion: 'spring onion',
+  'spring onion': 'scallion',
+  yogurt: 'yoghurt',
+  yoghurt: 'yogurt',
+  candy: 'sweets',
+  sweets: 'candy',
+  cookies: 'biscuits',
+  biscuits: 'cookies',
+  fries: 'chips',
+  crisps: 'chips',
+  soda: 'pop fizzy drink',
+  pop: 'soda',
+};
+
+export function expandEnglishSynonyms(s: string): string {
+  if (!s) return s;
+  const lower = s.toLowerCase().trim();
+  if (ENGLISH_SYNONYMS[lower]) return `${s} ${ENGLISH_SYNONYMS[lower]}`;
+  // Word-level expansion
+  const words = lower.split(/\s+/);
+  const extras: string[] = [];
+  for (const w of words) {
+    if (ENGLISH_SYNONYMS[w]) extras.push(ENGLISH_SYNONYMS[w]);
+  }
+  if (extras.length === 0) return s;
+  return `${s} ${extras.join(' ')}`;
+}
+
 const ARABIC_RE = /[؀-ۿ]/;
 
 export function containsArabic(s: string): boolean {

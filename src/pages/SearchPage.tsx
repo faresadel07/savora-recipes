@@ -7,7 +7,7 @@ import { searchRecipes } from '../api';
 import { MEALDB_AREAS, MEALDB_CATEGORIES } from '../lib/constants';
 import { LOCAL_RECIPES } from '../data/local-recipes';
 import { useTranslation } from '../i18n';
-import { translateQuery } from '../lib/search-i18n';
+import { expandEnglishSynonyms, translateQuery } from '../lib/search-i18n';
 import RecipeCard from '../components/RecipeCard';
 import RecipeImage from '../components/RecipeImage';
 import SmartSearchInput from '../components/SmartSearchInput';
@@ -51,9 +51,9 @@ export default function SearchPage() {
 
   const filters = useMemo(
     () => ({
-      // Translate Arabic to English at the API boundary. If the query is
-      // already English, translateQuery returns it unchanged.
-      query: query ? translateQuery(query) : undefined,
+      // Translate Arabic to English and expand English synonyms at the API
+      // boundary. So aubergine → aubergine + eggplant, فلافل → falafel.
+      query: query ? expandEnglishSynonyms(translateQuery(query)) : undefined,
       category: category || undefined,
       area: area || undefined,
       offset: (page - 1) * PAGE,
