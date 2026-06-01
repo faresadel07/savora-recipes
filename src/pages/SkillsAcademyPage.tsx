@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '../i18n';
 import {
   ArrowUpRight,
   AlertTriangle,
@@ -196,6 +197,12 @@ function SkillCard({
   isWatched: boolean;
   onToggleWatched: () => void;
 }) {
+  const { pl, language } = useTranslation();
+  const isAr = language === 'ar';
+  const name = pl(skill.name, skill.nameAr);
+  const description = pl(skill.description, skill.descriptionAr);
+  const whenToUse = pl(skill.whenToUse, skill.whenToUseAr);
+  const commonMistake = skill.commonMistake ? pl(skill.commonMistake, skill.commonMistakeAr) : undefined;
   return (
     <article
       className={`group flex flex-col overflow-hidden rounded-3xl border bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)] ${
@@ -203,7 +210,7 @@ function SkillCard({
       }`}
     >
       <div className="relative aspect-video bg-ink-900">
-        <YoutubeLite videoId={skill.videoId} title={skill.name} />
+        <YoutubeLite videoId={skill.videoId} title={name} />
         <div className="absolute left-3 top-3">
           <LevelPill level={skill.level} />
         </div>
@@ -221,22 +228,22 @@ function SkillCard({
           )}
         </div>
         <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight md:text-xl">
-          {skill.name}
+          {name}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-ink-600">{skill.description}</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-600">{description}</p>
 
         <div className="mt-5 space-y-3 border-t border-ink-100 pt-4 text-sm leading-relaxed text-ink-700">
           <div className="flex items-start gap-2.5">
             <Target className="mt-0.5 h-4 w-4 flex-none text-gold-600" />
             <p>
-              <span className="font-semibold text-ink-900">When:</span> {skill.whenToUse}
+              <span className="font-semibold text-ink-900">{isAr ? 'متى:' : 'When:'}</span> {whenToUse}
             </p>
           </div>
-          {skill.commonMistake && (
+          {commonMistake && (
             <div className="flex items-start gap-2.5">
               <AlertTriangle className="mt-0.5 h-4 w-4 flex-none text-terracotta-500" />
               <p>
-                <span className="font-semibold text-ink-900">Watch out:</span> {skill.commonMistake}
+                <span className="font-semibold text-ink-900">{isAr ? 'احذر:' : 'Watch out:'}</span> {commonMistake}
               </p>
             </div>
           )}

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock, MapPin, Play, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
+import { useTranslation } from '../i18n';
 import {
   MARKET_REGIONS,
   WORLD_MARKETS,
@@ -76,13 +77,19 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
 }
 
 function MarketCard({ market }: { market: FoodMarket }) {
+  const { pl, language } = useTranslation();
+  const isAr = language === 'ar';
+  const marketType = pl(market.marketType, market.marketTypeAr);
+  const blurb = pl(market.blurb, market.blurbAr);
+  const history = pl(market.history, market.historyAr);
+  const foods = isAr && market.signatureFoodsAr ? market.signatureFoodsAr : market.signatureFoods;
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
         <YoutubeLite videoId={market.videoId} title={market.name} />
         {market.yearFounded && (
           <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
-            <Clock className="h-3 w-3" /> Since {market.yearFounded}
+            <Clock className="h-3 w-3" /> {isAr ? 'منذ' : 'Since'} {market.yearFounded}
           </span>
         )}
       </div>
@@ -97,13 +104,13 @@ function MarketCard({ market }: { market: FoodMarket }) {
         {market.nameLocal && (
           <p className="mt-1 text-base font-medium tracking-tight text-ink-500">{market.nameLocal}</p>
         )}
-        <p className="mt-3 text-sm tracking-tight text-ink-500">{market.marketType}</p>
-        <p className="mt-4 text-sm leading-relaxed text-ink-600">{market.blurb}</p>
+        <p className="mt-3 text-sm tracking-tight text-ink-500">{marketType}</p>
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">{blurb}</p>
 
         <div className="mt-5">
-          <p className="text-[12px] font-semibold tracking-tight text-ink-900">Signature foods</p>
+          <p className="text-[12px] font-semibold tracking-tight text-ink-900">{isAr ? 'الأكلات الشهيرة' : 'Signature foods'}</p>
           <div className="mt-2.5 flex flex-wrap gap-1.5">
-            {market.signatureFoods.map((food) => (
+            {foods.map((food) => (
               <span
                 key={food}
                 className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700"
@@ -118,11 +125,11 @@ function MarketCard({ market }: { market: FoodMarket }) {
           <summary className="cursor-pointer list-none text-[12px] font-semibold tracking-tight text-ink-900 hover:text-gold-600">
             <span className="inline-flex items-center gap-1.5">
               <Sparkles className="h-3 w-3" />
-              History
+              {isAr ? 'التاريخ' : 'History'}
               <span className="text-ink-400 transition-transform group-open/details:rotate-90">›</span>
             </span>
           </summary>
-          <p className="mt-3 text-sm leading-relaxed text-ink-600">{market.history}</p>
+          <p className="mt-3 text-sm leading-relaxed text-ink-600">{history}</p>
         </details>
       </div>
     </article>
@@ -130,6 +137,10 @@ function MarketCard({ market }: { market: FoodMarket }) {
 }
 
 function MarketHeroCard({ market }: { market: FoodMarket }) {
+  const { pl, language } = useTranslation();
+  const heroIsAr = language === 'ar';
+  const heroBlurb = pl(market.blurb, market.blurbAr);
+  const heroFoods = heroIsAr && market.signatureFoodsAr ? market.signatureFoodsAr : market.signatureFoods;
   return (
     <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
       <div className="relative aspect-[16/9] md:aspect-[16/7]">
@@ -139,7 +150,7 @@ function MarketHeroCard({ market }: { market: FoodMarket }) {
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-cream-100/70">
           <MapPin className="h-3 w-3" />
           {market.city}, {market.country}
-          {market.yearFounded && <span className="ml-2">Since {market.yearFounded}</span>}
+          {market.yearFounded && <span className="ml-2">{heroIsAr ? 'منذ' : 'Since'} {market.yearFounded}</span>}
         </p>
         <h3 className="mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tighter">
           {market.name}
@@ -148,10 +159,10 @@ function MarketHeroCard({ market }: { market: FoodMarket }) {
           <p className="mt-1 text-lg font-medium tracking-tight text-gold-400">{market.nameLocal}</p>
         )}
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-cream-100/80 md:text-base">
-          {market.blurb}
+          {heroBlurb}
         </p>
         <div className="mt-5 flex flex-wrap gap-1.5">
-          {market.signatureFoods.slice(0, 5).map((food) => (
+          {heroFoods.slice(0, 5).map((food) => (
             <span
               key={food}
               className="rounded-full border border-cream-50/20 bg-cream-50/5 px-2.5 py-1 text-[11px] font-medium tracking-tight text-cream-100/90"

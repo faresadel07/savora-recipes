@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock, Film, Play, Search, X } from 'lucide-react';
+import { useTranslation } from '../i18n';
 import {
   FILM_CATEGORIES,
   FOOD_FILMS,
@@ -89,10 +90,13 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
 }
 
 function FilmCard({ film }: { film: FoodFilm }) {
+  const { pl } = useTranslation();
+  const title = pl(film.title, film.titleAr);
+  const blurb = pl(film.blurb, film.blurbAr);
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
-        <YoutubeLite videoId={film.videoId} title={film.title} />
+        <YoutubeLite videoId={film.videoId} title={title} />
       </div>
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs tracking-tight text-ink-400">
@@ -108,22 +112,25 @@ function FilmCard({ film }: { film: FoodFilm }) {
           <p className="mt-2 text-[12px] font-medium tracking-tight text-gold-600">{film.series}</p>
         )}
         <h3 className="mt-2 text-lg font-semibold leading-snug tracking-tight md:text-xl">
-          {film.title}
+          {title}
         </h3>
         {film.region && (
           <p className="mt-1 text-sm tracking-tight text-ink-500">{film.region}</p>
         )}
-        <p className="mt-3 text-sm leading-relaxed text-ink-600">{film.blurb}</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-600">{blurb}</p>
       </div>
     </article>
   );
 }
 
 function FilmHeroCard({ film }: { film: FoodFilm }) {
+  const { pl } = useTranslation();
+  const title = pl(film.title, film.titleAr);
+  const blurb = pl(film.blurb, film.blurbAr);
   return (
     <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
       <div className="relative aspect-[16/9] md:aspect-[16/7]">
-        <YoutubeLite videoId={film.videoId} title={film.title} />
+        <YoutubeLite videoId={film.videoId} title={title} />
       </div>
       <div className="p-6 md:p-8">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs tracking-tight text-cream-100/70">
@@ -140,10 +147,10 @@ function FilmHeroCard({ film }: { film: FoodFilm }) {
           <p className="mt-3 text-sm font-medium tracking-tight text-gold-400">{film.series}</p>
         )}
         <h3 className="mt-1 text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-tight tracking-tighter">
-          {film.title}
+          {title}
         </h3>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cream-100/80 md:text-base">
-          {film.blurb}
+          {blurb}
         </p>
       </div>
     </article>

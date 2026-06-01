@@ -16,6 +16,7 @@ import {
   Volume2,
 } from 'lucide-react';
 import { searchRecipes } from '../api';
+import { useTranslation } from '../i18n';
 import {
   ARAB_CHANNELS,
   ARAB_COOKBOOKS,
@@ -39,32 +40,53 @@ const HERO_STATS = [
   { value: '8', label: 'Regions' },
 ];
 
-function dishToPlainText(d: ArabDish): string {
+function dishToPlainText(d: ArabDish, isAr: boolean): string {
+  const story = isAr && d.storyAr ? d.storyAr : d.story;
+  const origin = isAr && d.originAr ? d.originAr : d.origin;
+  const ingredients = isAr && d.ingredientsAr ? d.ingredientsAr : d.ingredients;
+  const steps = isAr && d.stepsAr ? d.stepsAr : d.steps;
+  const labels = isAr
+    ? { ingredients: 'المكوّنات', method: 'الطريقة', video: 'فيديو الوصفة', from: 'من زيتون' }
+    : { ingredients: 'INGREDIENTS', method: 'METHOD', video: 'Video tutorial', from: 'From Zaytoun' };
   return [
     `${d.name}  (${d.nameAr})`,
-    d.origin,
+    origin,
     '',
-    d.story,
+    story,
     '',
-    'INGREDIENTS',
-    ...d.ingredients.map((i) => `• ${i}`),
+    labels.ingredients,
+    ...ingredients.map((i) => `• ${i}`),
     '',
-    'METHOD',
-    ...d.steps.map((s, i) => `${i + 1}. ${s}`),
+    labels.method,
+    ...steps.map((s, i) => `${i + 1}. ${s}`),
     '',
-    `Video tutorial: https://www.youtube.com/watch?v=${d.videoId}`,
-    'From Zaytoun, zaytoun-nu.vercel.app',
+    `${labels.video}: https://www.youtube.com/watch?v=${d.videoId}`,
+    `${labels.from}, zaytoun.online`,
   ].join('\n');
 }
 
-function dishToSpoken(d: ArabDish): string {
+function dishToSpoken(d: ArabDish, isAr: boolean): string {
+  const story = isAr && d.storyAr ? d.storyAr : d.story;
+  const origin = isAr && d.originAr ? d.originAr : d.origin;
+  const ingredients = isAr && d.ingredientsAr ? d.ingredientsAr : d.ingredients;
+  const steps = isAr && d.stepsAr ? d.stepsAr : d.steps;
+  if (isAr) {
+    return [
+      `وصفة ${d.nameAr}. ${origin}`,
+      story,
+      'المكوّنات:',
+      ...ingredients,
+      'الطريقة:',
+      ...steps.map((s, i) => `الخطوة ${i + 1}. ${s}`),
+    ].join('. ');
+  }
   return [
-    `Recipe for ${d.name}. ${d.origin}.`,
-    d.story,
+    `Recipe for ${d.name}. ${origin}.`,
+    story,
     'Ingredients:',
-    ...d.ingredients,
+    ...ingredients,
     'Method:',
-    ...d.steps.map((s, i) => `Step ${i + 1}. ${s}`),
+    ...steps.map((s, i) => `Step ${i + 1}. ${s}`),
   ].join('. ');
 }
 
@@ -74,11 +96,20 @@ function dishToSpoken(d: ArabDish): string {
  * Listen uses the browser's built-in SpeechSynthesis (works offline, no API key).
  */
 function RecipeActions({ dish }: { dish: ArabDish }) {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
   const [copied, setCopied] = useState(false);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [pdfBusy, setPdfBusy] = useState(false);
 
   const speaking = speakingId === dish.id;
+  const origin = isAr && dish.originAr ? dish.originAr : dish.origin;
+  const story = isAr && dish.storyAr ? dish.storyAr : dish.story;
+  const ingredients = isAr && dish.ingredientsAr ? dish.ingredientsAr : dish.ingredients;
+  const steps = isAr && dish.stepsAr ? dish.stepsAr : dish.steps;
+  const labels = isAr
+    ? { ingredients: 'المكوّنات', method: 'الطريقة', video: 'فيديو الوصفة', from: 'من زيتون' }
+    : { ingredients: 'INGREDIENTS', method: 'METHOD', video: 'Video tutorial', from: 'From Zaytoun' };
 
   async function handleDownload() {
     setPdfBusy(true);
@@ -104,6 +135,9 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
         y += spaceAfter;
       };
 
+      // Note: jsPDF default fonts do not support Arabic glyphs.
+      // For now keep the PDF in English text so it renders correctly.
+      // Arabic content shows in the on-page card, the read-aloud, and the copied clipboard text.
       writeWrapped(dish.name, 26, 'bold', 4);
       writeWrapped(dish.origin, 11, 'normal', 12);
       doc.setDrawColor(220);
@@ -131,7 +165,7 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(dishToPlainText(dish));
+      await navigator.clipboard.writeText(dishToPlainText(dish, isAr));
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
@@ -147,7 +181,8 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
       return;
     }
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(dishToSpoken(dish));
+    const utter = new SpeechSynthesisUtterance(dishToSpoken(dish, isAr));
+    utter.lang = isAr ? 'ar-SA' : 'en-US';
     utter.rate = 0.95;
     utter.pitch = 1;
     utter.onend = () => setSpeakingId((id) => (id === dish.id ? null : id));
@@ -155,6 +190,7 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
     window.speechSynthesis.speak(utter);
     setSpeakingId(dish.id);
   }
+  void origin; void story; void ingredients; void steps; void labels;
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-ink-100 pt-5">
@@ -165,7 +201,7 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
         className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-4 py-2 text-[12px] font-medium tracking-tight text-ink-700 transition-all hover:border-ink-900 hover:text-ink-900 disabled:opacity-60"
       >
         <Download className="h-3.5 w-3.5" />
-        {pdfBusy ? 'Building PDF' : 'PDF'}
+        {pdfBusy ? (isAr ? 'جاري التحضير' : 'Building PDF') : 'PDF'}
       </button>
       <button
         type="button"
@@ -173,7 +209,7 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
         className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-4 py-2 text-[12px] font-medium tracking-tight text-ink-700 transition-all hover:border-ink-900 hover:text-ink-900"
       >
         {copied ? <Check className="h-3.5 w-3.5 text-sage-600" /> : <Copy className="h-3.5 w-3.5" />}
-        {copied ? 'Copied' : 'Copy recipe'}
+        {copied ? (isAr ? 'تم النسخ' : 'Copied') : isAr ? 'نسخ الوصفة' : 'Copy recipe'}
       </button>
       <button
         type="button"
@@ -185,7 +221,7 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
         }`}
       >
         {speaking ? <Pause className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
-        {speaking ? 'Stop' : 'Listen'}
+        {speaking ? (isAr ? 'إيقاف' : 'Stop') : isAr ? 'استمع' : 'Listen'}
       </button>
     </div>
   );
@@ -249,8 +285,16 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
 }
 
 function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: number; accent?: 'gold' | 'sage' }) {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
   const bullet = accent === 'sage' ? 'bg-sage-500' : 'bg-gold-500';
   const stepNum = accent === 'sage' ? 'bg-sage-500' : 'bg-ink-900';
+  const displayName = isAr ? dish.nameAr : dish.name;
+  const subName = isAr ? dish.name : dish.nameAr;
+  const displayOrigin = isAr && dish.originAr ? dish.originAr : dish.origin;
+  const displayStory = isAr && dish.storyAr ? dish.storyAr : dish.story;
+  const displayIngredients = isAr && dish.ingredientsAr ? dish.ingredientsAr : dish.ingredients;
+  const displaySteps = isAr && dish.stepsAr ? dish.stepsAr : dish.steps;
 
   return (
     <article
@@ -260,16 +304,16 @@ function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: 
       {/* TITLE always first in DOM, so mobile reads title before video. On desktop, alternate columns. */}
       <div className={`md:col-span-5 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
         <h3 className="text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tighter">
-          {dish.name}
+          {displayName}
         </h3>
-        <p className="mt-1 text-xl font-medium tracking-tight text-ink-500">{dish.nameAr}</p>
-        <p className="mt-4 text-[15px] font-medium tracking-tight text-ink-500">{dish.origin}</p>
-        <p className="mt-5 text-sm leading-relaxed text-ink-600 sm:text-base">{dish.story}</p>
+        <p className="mt-1 text-xl font-medium tracking-tight text-ink-500">{subName}</p>
+        <p className="mt-4 text-[15px] font-medium tracking-tight text-ink-500">{displayOrigin}</p>
+        <p className="mt-5 text-sm leading-relaxed text-ink-600 sm:text-base">{displayStory}</p>
       </div>
 
       <div className="md:col-span-7">
         <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-ink-900 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)]">
-          <YoutubeLite videoId={dish.videoId} title={dish.name} />
+          <YoutubeLite videoId={dish.videoId} title={displayName} />
         </div>
       </div>
 
@@ -277,9 +321,9 @@ function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: 
         <div className="rounded-3xl border border-ink-100 bg-cream-50 p-6 md:p-8">
           <div className="grid gap-6 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-4">
-              <h4 className="text-base font-semibold tracking-tight text-ink-900">Ingredients</h4>
+              <h4 className="text-base font-semibold tracking-tight text-ink-900">{isAr ? 'المكوّنات' : 'Ingredients'}</h4>
               <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-ink-700 md:text-[15px]">
-                {dish.ingredients.map((ing) => (
+                {displayIngredients.map((ing) => (
                   <li key={ing} className="flex gap-2.5">
                     <span className={`mt-2 h-1.5 w-1.5 flex-none rounded-full ${bullet}`} />
                     <span>{ing}</span>
@@ -288,9 +332,9 @@ function DishArticle({ dish, index, accent = 'gold' }: { dish: ArabDish; index: 
               </ul>
             </div>
             <div className="md:col-span-8">
-              <h4 className="text-base font-semibold tracking-tight text-ink-900">Method</h4>
+              <h4 className="text-base font-semibold tracking-tight text-ink-900">{isAr ? 'الطريقة' : 'Method'}</h4>
               <ol className="mt-4 space-y-4 text-[14px] leading-relaxed text-ink-700 md:text-[15px]">
-                {dish.steps.map((s, idx) => (
+                {displaySteps.map((s, idx) => (
                   <li key={idx} className="flex gap-4">
                     <span className={`grid h-7 w-7 flex-none place-items-center rounded-full ${stepNum} text-[12px] font-semibold text-cream-50`}>
                       {idx + 1}

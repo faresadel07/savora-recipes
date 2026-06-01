@@ -27,6 +27,10 @@ export interface Chef {
   videoId: string;
   channel: string;
   featured?: boolean;
+  nationalityAr?: string;
+  cuisineAr?: string;
+  philosophyAr?: string;
+  bioAr?: string;
 }
 
 export const CHEF_REGIONS: { id: ChefRegion; name: string; tagline: string }[] = [
@@ -51,6 +55,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Vegetables are not a supporting cast. They are the lead.",
     bio: "The chef who rewrote how the West cooks vegetables. Ottolenghi's books made za'atar, sumac, pomegranate molasses, and tahini household ingredients across the English-speaking world. Born in Jerusalem, trained in Paris, settled in London, and built a small culinary empire by treating vegetables with the seriousness others reserve for meat.",
+    nationalityAr: 'British',
+    cuisineAr: 'Modern Middle Eastern',
+    philosophyAr: 'Vegetables are not supporting cast. They are lead.',
+    bioAr: 'chef who rewrote how West cooks vegetables. Ottolenghi\'s books made زعتر, سمّاق, pomegranate دبس, و طحينة household ingredients across English-speaking world. Born in Jerusalem, trained in Paris, settled in London, و built صغير culinary empire by treating vegetables مع seriousness others reserve لمدة meat.',
     videoId: 'SaQ8OEj2DDw',
     channel: 'Jewish News',
     featured: true,
@@ -66,6 +74,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Food is how we keep a country alive when its borders try to take it away.",
     bio: "Born in East Jerusalem, Sami Tamimi co-founded the Ottolenghi delis in London and wrote Falastin, the definitive English-language Palestinian cookbook. A chef whose entire career is also an act of cultural preservation.",
+    nationalityAr: 'Palestinian',
+    cuisineAr: 'Palestinian',
+    philosophyAr: 'Food is how we keep country alive when its borders try to take it away.',
+    bioAr: 'Born in East Jerusalem, Sami Tamimi co-founded Ottolenghi delis in London و wrote Falastin, definitive English-language Palestinian cookbook. chef whose entire career is also act of cultural preservation.',
     videoId: '83KKfYofZlo',
     channel: 'Channel 4 News',
   },
@@ -79,6 +91,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Recipe books are time capsules. The trick is to keep opening them.",
     bio: "The doyenne of Arab cookbook writing in English. Anissa Helou's books have documented the food of the Islamic world from Morocco to Indonesia, with the rigor of a historian and the warmth of a grandmother. A frequent collaborator with TASTE, Al Jazeera, and BBC Food.",
+    nationalityAr: 'Lebanese-Syrian',
+    cuisineAr: 'Levantine و Pan-Arab',
+    philosophyAr: 'Recipe books are time capsules. trick is to keep opening them.',
+    bioAr: 'doyenne of Arab cookbook writing in English. Anissa Helou\'s books have documented food of Islamic world from Morocco to Indonesia, مع rigor of historian و warmth of grandmother. frequent collaborator مع تذوّق, Al Jazeera, و BBC Food.',
     videoId: 'KiLKVFWDjNk',
     channel: 'Qatar America Institute',
   },
@@ -92,6 +108,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "There is no single Arab cuisine. There are dozens, and that is the point.",
     bio: "An award-winning Palestinian writer whose two cookbooks place recipes inside the larger story of identity, displacement, and inheritance. Her work has appeared in the Washington Post, the Guardian, and the New York Times.",
+    nationalityAr: 'Palestinian',
+    cuisineAr: 'Palestinian heritage cooking',
+    philosophyAr: 'There is no single Arab cuisine. There are dozens, و that is point.',
+    bioAr: 'award-winning Palestinian writer whose two cookbooks ضع recipes inside larger story of identity, displacement, و inheritance. Her work has appeared in Washington Post, Guardian, و New York Times.',
     videoId: 'breku9C2wHA',
     channel: 'afikra',
   },
@@ -106,6 +126,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "I want everyone to taste what my grandmother cooked, and to ask the obvious next question.",
     bio: "London-based Palestinian chef whose pop-ups and books made village Palestinian cooking visible to a generation of British and Arab diaspora readers. Cooked at El Bulli early in her career; returned to her family's kitchen for the rest of it.",
+    nationalityAr: 'Palestinian',
+    cuisineAr: 'Palestinian',
+    philosophyAr: 'I want everyone to تذوّق what my grandmother cooked, و to ask obvious next question.',
+    bioAr: 'London-based Palestinian chef whose pop-ups و books made village Palestinian cooking visible to generation of British و Arab diaspora readers. Cooked at El Bulli early in her career; returned to her family\'s kitchen لمدة rest of it.',
     videoId: 'I1pexF8i6r4',
     channel: 'The Enlightenment Podcast',
   },
@@ -119,6 +143,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "A recipe is a piece of history that you happen to be able to eat.",
     bio: "Cairo-born, London-based, the founding figure of English-language Middle Eastern cookbook writing. Her 1968 first edition opened the door for every Arab and Sephardic cuisine that followed.",
+    nationalityAr: 'Egyptian-British',
+    cuisineAr: 'Middle Eastern و Sephardic',
+    philosophyAr: 'recipe is piece of history that you happen to be able to eat.',
+    bioAr: 'Cairo-born, London-based, founding figure of English-language Middle Eastern cookbook writing. Her 1968 first edition opened door لمدة every Arab و Sephardic cuisine that followed.',
     videoId: 'is7IJgibSxE',
     channel: 'TEDx',
   },
@@ -132,6 +160,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Iraqi food is not a national cuisine. It is a 4,000-year archive of cuisines.",
     bio: "Translator of medieval Arabic culinary manuscripts and the foremost living scholar of Iraqi food history. Her work bridges 10th-century Baghdad and the modern Iraqi diaspora kitchen.",
+    nationalityAr: 'Iraqi-American',
+    cuisineAr: 'Iraqi heritage',
+    philosophyAr: 'Iraqi food is not national cuisine. It is 4,000-year archive of cuisines.',
+    bioAr: 'Translator of medieval Arabic culinary manuscripts و foremost living scholar of Iraqi food history. Her work bridges 10th-century Baghdad و modern Iraqi diaspora kitchen.',
     videoId: 'O7yCSMiCHSg',
     channel: 'afikra',
   },
@@ -148,6 +180,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Tradition is a starting line, not a finish line.",
     bio: "The Modenese three-Michelin-star chef whose Osteria Francescana was twice voted the world's best restaurant. Co-founded Food for Soul, a nonprofit that turns surplus food into dignified meals for those who need them.",
+    nationalityAr: 'Italian',
+    cuisineAr: 'Modern Italian',
+    philosophyAr: 'Tradition is starting line, not finish line.',
+    bioAr: 'Modenese three-Michelin-star chef whose Osteria Francescana was twice voted world\'s best restaurant. Co-founded Food لمدة Soul, nonprofit that turns surplus food into dignified meals لمدة those who need them.',
     videoId: '1pY6IvkQm2Q',
     channel: 'Netflix',
     featured: true,
@@ -163,6 +199,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Italian food is the food of grandmothers. Hold onto that and you cannot go wrong.",
     bio: "PBS's most beloved Italian cooking host and one of the most respected restaurateurs in New York. Bastianich's cooking is regional Italy distilled, with the simple authority of a woman who learned it in her own kitchen first.",
+    nationalityAr: 'Italian-American',
+    cuisineAr: 'Regional Italian',
+    philosophyAr: 'Italian food is food of grandmothers. Hold onto that و you cannot go wrong.',
+    bioAr: 'PBS\'s most beloved Italian cooking host و one of most respected restaurateurs in New York. Bastianich\'s cooking is regional Italy distilled, مع simple authority of woman who learned it in her own kitchen first.',
     videoId: 'SnoEhb9lNMI',
     channel: 'PBS Food',
   },
@@ -177,6 +217,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "The best chef is the one who steps back and lets the produce speak.",
     bio: "The first chef ever to hold three Michelin stars at three restaurants on three continents at the same time. Ducasse's empire of haute French cuisine spans Monaco, Paris, Tokyo, London, and beyond.",
+    nationalityAr: 'French',
+    cuisineAr: 'Haute French',
+    philosophyAr: 'best chef is one who steps back و lets produce speak.',
+    bioAr: 'first chef ever to hold three Michelin stars at three restaurants on three continents at same time. Ducasse\'s empire of haute French cuisine spans Monaco, Paris, Tokyo, London, و beyond.',
     videoId: 'IDxIqqi2now',
     channel: 'Hello French',
   },
@@ -191,6 +235,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Pastry is architecture. Calculate the proportions, then make it beautiful.",
     bio: "The pastry chef Vogue called Picasso of Pastry. Hermé rewrote what a macaron could taste like, from rose-litchi to chocolate-foie gras, and built a global pastry boutique from a single Tokyo shop.",
+    nationalityAr: 'French',
+    cuisineAr: 'Patisserie',
+    philosophyAr: 'Pastry is architecture. Calculate proportions, then make it beautiful.',
+    bioAr: 'pastry chef Vogue called Picasso of Pastry. Hermé rewrote what macaron could تذوّق like, from rose-litchi to chocolate-foie gras, و built global pastry boutique from single Tokyo shop.',
     videoId: 'tvwtmaHWzDY',
     channel: 'PastryClass',
   },
@@ -205,6 +253,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Respect the season, respect the producer, respect the guest. In that order.",
     bio: "Lyon-trained, New York-based, Boulud has been a pillar of French fine dining in America for four decades. His DBGB and Daniel set the standard for how a French chef can adapt without diluting.",
+    nationalityAr: 'French-American',
+    cuisineAr: 'Modern French',
+    philosophyAr: 'Respect تبّل, respect producer, respect guest. In that order.',
+    bioAr: 'Lyon-trained, New York-based, Boulud has been pillar of French fine dining in America لمدة four decades. His DBGB و Daniel set standard لمدة how French chef can adapt بدون diluting.',
     videoId: 'Aw-uhwr64IE',
     channel: 'GourmetPhile',
   },
@@ -219,6 +271,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "The fish is the star. Everything else is a frame around it.",
     bio: "Chef and co-owner of Le Bernardin, the only restaurant in New York to hold four stars from the New York Times for 32 consecutive years. Ripert is the world's foremost authority on cooking fish.",
+    nationalityAr: 'French',
+    cuisineAr: 'Seafood',
+    philosophyAr: 'سمك is star. Everything else is frame around it.',
+    bioAr: 'Chef و co-owner of Le Bernardin, only restaurant in New York to hold four stars from New York Times لمدة 32 consecutive years. Ripert is world\'s foremost authority on cooking سمك.',
     videoId: 'Lrn2AONZyCM',
     channel: 'Bon Appétit',
   },
@@ -233,6 +289,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Cook the dish you love, the way you love it. The rest is noise.",
     bio: "The youngest chef ever to win three Michelin stars at 33. Trained Gordon Ramsay and a generation of British chefs. Walked away from his stars at 38 because he could not bear to be judged any longer.",
+    nationalityAr: 'British',
+    cuisineAr: 'British / French',
+    philosophyAr: 'اطبخ dish you love, way you love it. rest is noise.',
+    bioAr: 'youngest chef ever to win three Michelin stars at 33. Trained Gordon Ramsay و generation of British chefs. Walked away from his stars at 38 because he could not bear to be judged any longer.',
     videoId: '30MeweA_jjg',
     channel: 'PopCultureMoments',
   },
@@ -247,6 +307,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Creativity is not making something new. It is finding the question no one else asked.",
     bio: "The chef who broke the rules of cuisine in the 21st century. El Bulli held three Michelin stars and was voted the best restaurant in the world five times before Adrià closed it to turn it into a research foundation.",
+    nationalityAr: 'Spanish',
+    cuisineAr: 'Avant-garde / Molecular',
+    philosophyAr: 'Creativity is not making something new. It is finding question no one else asked.',
+    bioAr: 'chef who broke rules of cuisine in 21st century. El Bulli held three Michelin stars و was voted best restaurant in world five times before Adrià closed it to turn it into research foundation.',
     videoId: 'WoHKFEq-zCw',
     channel: 'wocomoCOOK',
   },
@@ -261,6 +325,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Food is a universal right. Treat it as one and the politics follow.",
     bio: "Chef, restaurateur, and humanitarian. Andrés brought Spanish tapas to America in the 1990s, then founded World Central Kitchen, a nonprofit that has served tens of millions of meals in disaster zones from Haiti to Gaza.",
+    nationalityAr: 'Spanish-American',
+    cuisineAr: 'Spanish',
+    philosophyAr: 'Food is universal right. Treat it as one و politics follow.',
+    bioAr: 'Chef, restaurateur, و humanitarian. Andrés brought Spanish tapas to America in 1990s, then founded World Central Kitchen, nonprofit that has served tens of millions of meals in disaster zones from Haiti to Gaza.',
     videoId: '-eYaSwwmGl4',
     channel: 'National Geographic',
   },
@@ -275,6 +343,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Fire is the oldest kitchen, and still the best one.",
     bio: "The Patagonian master of open-fire cooking. Mallmann lives between three remote Argentine outposts and cooks meat, vegetables, and bread over wood and embers. Featured in the first season of Netflix's Chef's Table.",
+    nationalityAr: 'Argentine',
+    cuisineAr: 'Fire cooking, Argentine',
+    philosophyAr: 'Fire is oldest kitchen, و still best one.',
+    bioAr: 'Patagonian master of open-fire cooking. Mallmann lives between three remote Argentine outposts و cooks meat, vegetables, و خبز over wood و embers. Featured in first تبّل of Netflix\'s Chef\'s Table.',
     videoId: '-fnIO1z2Wwk',
     channel: 'YesChef',
   },
@@ -291,6 +363,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "The knife is the most important tool in the kitchen. Learn the knife and the rest follows.",
     bio: "Personal chef to three French heads of state before age 30, then PBS's most beloved cooking teacher for the next half century. Pépin's omelet videos and his book La Technique are the foundational texts of modern American home cooking.",
+    nationalityAr: 'French-American',
+    cuisineAr: 'Classical French',
+    philosophyAr: 'knife is most important tool in kitchen. Learn knife و rest follows.',
+    bioAr: 'Personal chef to three French heads of state before age 30, then PBS\'s most beloved cooking teacher لمدة next half century. Pépin\'s omelet videos و his book La Technique are foundational texts of modern American home cooking.',
     videoId: 'De0SiZHf2oU',
     channel: 'KQED',
     featured: true,
@@ -306,6 +382,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Cooking is about discipline, not drama. The drama is for television.",
     bio: "Trained by Marco Pierre White and Joël Robuchon, Ramsay holds 17 Michelin stars across his restaurant group. The reality TV persona is a character; the chef is one of the most technically rigorous in the world.",
+    nationalityAr: 'British',
+    cuisineAr: 'Modern British / French',
+    philosophyAr: 'Cooking is حوالي discipline, not drama. drama is لمدة television.',
+    bioAr: 'Trained by Marco Pierre White و Joël Robuchon, Ramsay holds 17 Michelin stars across his restaurant group. reality TV persona is character; chef is one of most technically rigorous in world.',
     videoId: 'AFHEb85Jw2M',
     channel: 'MasterClass',
   },
@@ -320,6 +400,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Anyone can cook. Take the fear out of the kitchen and watch what happens.",
     bio: "The Essex chef whose 1999 BBC series made home cooking suddenly cool in Britain again. His campaigns reformed school dinners across the UK and pushed sugar tax legislation through parliament.",
+    nationalityAr: 'British',
+    cuisineAr: 'Modern British',
+    philosophyAr: 'Anyone can اطبخ. Take fear out of kitchen و watch what happens.',
+    bioAr: 'Essex chef whose 1999 BBC series made home cooking suddenly برّد in Britain again. His campaigns reformed school dinners across UK و pushed سكر tax legislation through parliament.',
     videoId: '78Qgxm38ejI',
     channel: 'Jamie Oliver TV',
   },
@@ -334,6 +418,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "If a recipe has always been done one way, that is exactly the question to ask.",
     bio: "Self-taught British chef whose Fat Duck holds three Michelin stars and serves dishes like Sound of the Sea, eaten with headphones. Pioneered multi-sensory dining and changed what a fine-dining tasting menu could be.",
+    nationalityAr: 'British',
+    cuisineAr: 'Experimental / Molecular',
+    philosophyAr: 'If recipe has always been done one way, that is exactly question to ask.',
+    bioAr: 'Self-taught British chef whose Fat Duck holds three Michelin stars و serves dishes like Sound of Sea, eaten مع headphones. Pioneered multi-sensory dining و changed what fine-dining tasting menu could be.',
     videoId: 'FjGfqezhuU4',
     channel: '50 Best',
   },
@@ -347,6 +435,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Cook for the people you love. Everything else is just performance.",
     bio: "The Bake Off winner who became a national treasure. Hussain's BBC shows reframed British home cooking through her Bangladeshi heritage, and her cookbooks have helped make Bengali ingredients standard in British pantries.",
+    nationalityAr: 'British-Bangladeshi',
+    cuisineAr: 'Home baking و family cooking',
+    philosophyAr: 'اطبخ لمدة people you love. Everything else is just performance.',
+    bioAr: 'اخبز Off winner who became national treasure. Hussain\'s BBC shows reframed British home cooking through her Bangladeshi heritage, و her cookbooks have helped make Bengali ingredients standard in British pantries.',
     videoId: 'IDBAuTHZ_MM',
     channel: 'BBC',
   },
@@ -361,6 +453,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "A great pub kitchen and a great fine-dining kitchen are doing the same thing.",
     bio: "The first ever pub chef to win two Michelin stars at The Hand & Flowers. Kerridge's TV series have made hearty, technical British pub cooking accessible to a generation of home cooks.",
+    nationalityAr: 'British',
+    cuisineAr: 'Modern British pub',
+    philosophyAr: 'great pub kitchen و great fine-dining kitchen are doing same thing.',
+    bioAr: 'first ever pub chef to win two Michelin stars at Hand & Flowers. Kerridge\'s TV series have made hearty, technical British pub cooking accessible to generation of home cooks.',
     videoId: 'ZyqYq7TIOqY',
     channel: 'Food TV',
   },
@@ -375,6 +471,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Travel is the spice. Bring the dishes home; do not change the destination.",
     bio: "The Cornish chef and broadcaster whose travel-food series for the BBC have shaped how the English-speaking world understands regional cuisines, from Cornwall to Vietnam.",
+    nationalityAr: 'British',
+    cuisineAr: 'Seafood و world cooking',
+    philosophyAr: 'Travel is spice. Bring dishes home; do not change destination.',
+    bioAr: 'Cornish chef و broadcaster whose travel-food series لمدة BBC have shaped how English-speaking world understands regional cuisines, from Cornwall to Vietnam.',
     videoId: 'MA49pIGWt_o',
     channel: 'Life of Joe & Jordan',
   },
@@ -388,6 +488,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Cook to please yourself first. Pleasing others is a side effect.",
     bio: "Cookbook writer and broadcaster whose books defined British home cooking for two decades. Lawson's writing about food is read like literature; her recipes are cooked on weeknights from London to Sydney.",
+    nationalityAr: 'British',
+    cuisineAr: 'Home cooking',
+    philosophyAr: 'اطبخ to please yourself first. Pleasing others is side effect.',
+    bioAr: 'Cookbook writer و broadcaster whose books defined British home cooking لمدة two decades. Lawson\'s writing حوالي food is read like literature; her recipes are cooked on weeknights from London to Sydney.',
     videoId: 'Y0NJSVCHQ_w',
     channel: 'Good Housekeeping UK',
   },
@@ -402,6 +506,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "The cook is as important as the recipe. Both belong to the same heritage.",
     bio: "Born into a royal Bengali family in Kolkata. Khan's London restaurant Darjeeling Express is powered entirely by an all-female kitchen of home cooks. The first British chef ever featured on Netflix's Chef's Table.",
+    nationalityAr: 'Indian-British',
+    cuisineAr: 'Indian (Mughlai)',
+    philosophyAr: 'اطبخ is as important as recipe. Both belong to same heritage.',
+    bioAr: 'Born into royal Bengali family in Kolkata. Khan\'s London restaurant Darjeeling Express is powered entirely by all-female kitchen of home cooks. first British chef ever featured on Netflix\'s Chef\'s Table.',
     videoId: 'Cki3E_0TRdY',
     channel: 'TOPJAW',
   },
@@ -418,6 +526,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "A great chef takes the simplest thing and makes it the best version of itself.",
     bio: "The first American chef to be awarded three Michelin stars at two restaurants simultaneously. Keller's Yountville and New York kitchens have trained more leading American chefs than any other.",
+    nationalityAr: 'American',
+    cuisineAr: 'New American / French',
+    philosophyAr: 'great chef takes simplest thing و makes it best version of itself.',
+    bioAr: 'first American chef to be awarded three Michelin stars at two restaurants simultaneously. Keller\'s Yountville و New York kitchens have trained more leading American chefs than any other.',
     videoId: 'HOjYk2UpTM0',
     channel: 'MasterClass',
   },
@@ -432,6 +544,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Eat what is in season, grown nearby, by people you trust. Then keep cooking.",
     bio: "Founder of Chez Panisse and the godmother of American farm-to-table cooking. Waters's Edible Schoolyard project has been replicated in over 6,000 schools worldwide.",
+    nationalityAr: 'American',
+    cuisineAr: 'Californian, farm-to-table',
+    philosophyAr: 'Eat what is in تبّل, grown nearby, by people you trust. Then keep cooking.',
+    bioAr: 'Founder of Chez Panisse و godmother of American farm-to-table cooking. Waters\'s Edible Schoolyard project has been replicated in over 6,000 schools worldwide.',
     videoId: 'C9IX3x12PLE',
     channel: 'Brief But Spectacular',
   },
@@ -445,6 +561,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "If you have great ingredients, you do not have to do much.",
     bio: "The Barefoot Contessa. Garten's Food Network show and bestselling cookbooks have made East Hampton's relaxed home cooking style the de facto standard of American entertaining.",
+    nationalityAr: 'American',
+    cuisineAr: 'American home cooking',
+    philosophyAr: 'If you have great ingredients, you do not have to do much.',
+    bioAr: 'Barefoot Contessa. Garten\'s Food Network show و bestselling cookbooks have made East Hampton\'s relaxed home cooking style de facto standard of American entertaining.',
     videoId: 'mscypfHJGwo',
     channel: 'Food Network',
   },
@@ -459,6 +579,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Heat and acid. Get those two right and the dish takes care of itself.",
     bio: "New York chef whose Mesa Grill defined modern American Southwestern cuisine in the 1990s. Flay's grilling and chili expertise have made him one of the most recognizable American chefs on television.",
+    nationalityAr: 'American',
+    cuisineAr: 'Southwestern, grilling',
+    philosophyAr: 'سخن و acid. Get those two right و dish takes care of itself.',
+    bioAr: 'New York chef whose Mesa اشوِ defined modern American Southwestern cuisine in 1990s. Flay\'s grilling و فلفل حار expertise have made him one of most recognizable American chefs on television.',
     videoId: 'I1MjwhkBQn0',
     channel: 'BBQ Channel',
   },
@@ -473,6 +597,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Regional Mexican is one of the world's three great cuisines. Treat it that way.",
     bio: "Chicago chef and PBS host who has done more than any other to teach Americans real regional Mexican cooking. His 25-year PBS series, restaurants, and books are the gold standard.",
+    nationalityAr: 'American',
+    cuisineAr: 'Regional Mexican',
+    philosophyAr: 'Regional Mexican is one of world\'s three great cuisines. Treat it that way.',
+    bioAr: 'Chicago chef و PBS host who has done more than any other to teach Americans real regional Mexican cooking. His 25-year PBS series, restaurants, و books are gold standard.',
     videoId: '5KZr7tASvfw',
     channel: 'Rick Bayless',
   },
@@ -487,6 +615,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Simple food, perfectly executed, in beautiful surroundings. The rest is decoration.",
     bio: "The Austrian chef who put Los Angeles on the global culinary map. Puck's Spago invented the California pizza, and his Beverly Hills restaurant has been at the center of Hollywood dining for 40 years.",
+    nationalityAr: 'Austrian-American',
+    cuisineAr: 'Californian, Austrian',
+    philosophyAr: 'Simple food, perfectly executed, in beautiful surroundings. rest is decoration.',
+    bioAr: 'Austrian chef who put Los Angeles on global culinary map. Puck\'s Spago invented California pizza, و his Beverly Hills restaurant has been at center of Hollywood dining لمدة 40 years.',
     videoId: '9_v_smgvzEM',
     channel: 'MasterClass',
   },
@@ -501,6 +633,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Authenticity is a story. Deliciousness is the only thing that matters.",
     bio: "The Korean-American chef whose Momofuku restaurants rewrote how New York thought about Asian food. Hosts Ugly Delicious on Netflix and the Dave Chang Show podcast.",
+    nationalityAr: 'Korean-American',
+    cuisineAr: 'Asian fusion',
+    philosophyAr: 'Authenticity is story. Deliciousness is only thing that matters.',
+    bioAr: 'Korean-American chef whose Momofuku restaurants rewrote how New York thought حوالي Asian food. Hosts Ugly Delicious on Netflix و Dave Chang Show podcast.',
     videoId: 'pN_XItALHmM',
     channel: 'Netflix',
   },
@@ -514,6 +650,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Every dish in the world is some balance of salt, fat, acid, and heat. Learn those four and you can cook anything.",
     bio: "Trained at Chez Panisse. Nosrat's book and Netflix series Salt Fat Acid Heat reframed how home cooks understand recipes. Her food writing in the New York Times has won a James Beard Award.",
+    nationalityAr: 'Iranian-American',
+    cuisineAr: 'World techniques',
+    philosophyAr: 'Every dish in world is some balance of ملح, fat, acid, و سخن. Learn those four و you can اطبخ anything.',
+    bioAr: 'Trained at Chez Panisse. Nosrat\'s book و Netflix series ملح Fat Acid سخن reframed how home cooks understand recipes. Her food writing in New York Times has won James Beard Award.',
     videoId: '2oKbs4jAf7M',
     channel: 'Netflix',
   },
@@ -527,6 +667,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Make it better than the restaurant. There is nothing they do that you cannot do at home.",
     bio: "The YouTube chef whose But Better series rebuilt fast-food classics from scratch. Weissman's relentless, high-production-value videos have made him one of the most-watched cooking voices on the internet.",
+    nationalityAr: 'American',
+    cuisineAr: 'Internet cooking',
+    philosophyAr: 'Make it better than restaurant. There is nothing they do that you cannot do at home.',
+    bioAr: 'YouTube chef whose But Better series rebuilt fast-food classics from scratch. Weissman\'s relentless, high-production-value videos have made him one of most-watched cooking voices on internet.',
     videoId: 'VylU-ueLA_g',
     channel: 'Architectural Digest',
   },
@@ -541,6 +685,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Cooking is how a city remembers itself. Make sure every voice is in the pot.",
     bio: "Born in Ethiopia, adopted to Sweden, working in Harlem. Samuelsson's Red Rooster celebrates the African diaspora's contribution to American cuisine. The youngest chef ever to receive a three-star New York Times review.",
+    nationalityAr: 'Ethiopian-Swedish-American',
+    cuisineAr: 'Pan-African, Scandinavian',
+    philosophyAr: 'Cooking is how city remembers itself. Make sure every voice is in pot.',
+    bioAr: 'Born in Ethiopia, adopted to Sweden, working in Harlem. Samuelsson\'s Red Rooster celebrates African diaspora\'s contribution to American cuisine. youngest chef ever to receive three-star New York Times review.',
     videoId: '-lJiJTeslF0',
     channel: 'Fork the People',
   },
@@ -555,6 +703,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "The food of the African diaspora is American food. Cook it that way.",
     bio: "Bronx-born chef whose New York restaurant Tatiana was named the New York Times' best new restaurant of 2023. Onwuachi's memoir traced his journey through Caribbean kitchens, Per Se, and back to his own table.",
+    nationalityAr: 'American (Nigerian heritage)',
+    cuisineAr: 'Afro-Caribbean, Pan-African',
+    philosophyAr: 'food of African diaspora is American food. اطبخ it that way.',
+    bioAr: 'Bronx-born chef whose New York restaurant Tatiana was named New York Times\' best new restaurant of 2023. Onwuachi\'s memoir traced his journey through Caribbean kitchens, Per Se, و back to his own table.',
     videoId: 'Co-SRNUEKBs',
     channel: '50 Best',
   },
@@ -569,6 +721,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "A menu is a poem. A meal is the reading.",
     bio: "The first female chef in the United States to earn three Michelin stars. Crenn's Atelier Crenn is one of the most lyrical restaurants in San Francisco; she also became one of the few chefs to remove meat from a three-star menu.",
+    nationalityAr: 'French-American',
+    cuisineAr: 'New French, plant-forward',
+    philosophyAr: 'menu is poem. meal is reading.',
+    bioAr: 'first female chef in United States to earn three Michelin stars. Crenn\'s Atelier Crenn is one of most lyrical restaurants in San Francisco; she also became one of few chefs to ارفع meat from three-star menu.',
     videoId: 'cLshKazkzMs',
     channel: 'CBS Sunday Morning',
   },
@@ -584,6 +740,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Kaiseki is a conversation between season, ingredient, and guest. Nothing else belongs.",
     bio: "Featured in the first season of Netflix's Chef's Table. Nakayama's n/naka is the most acclaimed kaiseki restaurant in the United States, a 13-course meditation on Japanese seasonality.",
+    nationalityAr: 'Japanese-American',
+    cuisineAr: 'Kaiseki',
+    philosophyAr: 'Kaiseki is conversation between تبّل, ingredient, و guest. Nothing else belongs.',
+    bioAr: 'Featured in first تبّل of Netflix\'s Chef\'s Table. Nakayama\'s n/naka is most acclaimed kaiseki restaurant in United States, 13-course meditation on Japanese seasonality.',
     videoId: 'IX9dd14GyKg',
     channel: 'Netflix',
   },
@@ -597,6 +757,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Indian food is twenty cuisines pretending to be one. Learn the twenty.",
     bio: "The Indian actress turned cookbook writer who introduced Indian cooking to Britain and America in the 1970s. Awarded a CBE for services to cookery. Now teaches an Indian cooking MasterClass.",
+    nationalityAr: 'Indian-British',
+    cuisineAr: 'Indian',
+    philosophyAr: 'Indian food is twenty cuisines pretending to be one. Learn twenty.',
+    bioAr: 'Indian actress turned cookbook writer who introduced Indian cooking to Britain و America in 1970s. Awarded CBE لمدة services to cookery. Now teaches Indian cooking MasterClass.',
     videoId: 'XJUp2LHTXaU',
     channel: 'MasterClass',
   },
@@ -610,6 +774,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Take Indian food, throw away the rules, keep the soul.",
     bio: "Calcutta-born, Bangkok-based. Anand's restaurant was four-times voted the best in Asia. His Indian tasting menus are deconstructed, ironic, and rigorous all at once.",
+    nationalityAr: 'Indian',
+    cuisineAr: 'Progressive Indian',
+    philosophyAr: 'Take Indian food, throw away rules, keep soul.',
+    bioAr: 'Calcutta-born, Bangkok-based. Anand\'s restaurant was four-times voted best in Asia. His Indian tasting menus are deconstructed, ironic, و rigorous all at once.',
     videoId: 'PONuoBHDx6s',
     channel: 'NDTV Food',
   },
@@ -623,6 +791,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Food is the most honest way to tell the story of who lives in a place.",
     bio: "Cookbook writer, longtime Top Chef host, and creator of Taste the Nation on Hulu, which explores immigrant cuisines across America. Lakshmi's writing on Indian cuisine and identity has reshaped American food media.",
+    nationalityAr: 'Indian-American',
+    cuisineAr: 'Indian, global',
+    philosophyAr: 'Food is most honest way to tell story of who lives in ضع.',
+    bioAr: 'Cookbook writer, longtime Top Chef host, و creator of تذوّق Nation on Hulu, which explores immigrant cuisines across America. Lakshmi\'s writing on Indian cuisine و identity has reshaped American food media.',
     videoId: 'VEUutcTqcno',
     channel: 'NPR',
   },
@@ -639,6 +811,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "If you cannot find it in your own region, do not put it on the plate.",
     bio: "The chef who launched the New Nordic movement. Redzepi's Noma has been voted World's Best Restaurant five times. Co-founder of MAD, a nonprofit that hosts the world's most ambitious chef conferences.",
+    nationalityAr: 'Danish-Macedonian',
+    cuisineAr: 'New Nordic',
+    philosophyAr: 'If you cannot find it in your own region, do not put it on plate.',
+    bioAr: 'chef who launched New Nordic movement. Redzepi\'s Noma has been voted World\'s Best Restaurant five times. Co-founder of MAD, nonprofit that hosts world\'s most ambitious chef conferences.',
     videoId: 'HGKzwgoyVp0',
     channel: '50 Best',
   },
@@ -653,6 +829,10 @@ export const CHEFS: Chef[] = [
     philosophy:
       "Use what is around you. If it is around you in only a small window, use it then.",
     bio: "The Jämtland chef whose Fäviken restaurant in a remote Swedish forest served twelve diners a night a tasting menu of foraged moss, cured meats, and hyper-local produce. Closed Fäviken in 2019 to write and forage.",
+    nationalityAr: 'Swedish',
+    cuisineAr: 'Hyper-local Nordic',
+    philosophyAr: 'Use what is around you. If it is around you in only صغير window, use it then.',
+    bioAr: 'Jämtland chef whose Fäviken restaurant in remote Swedish forest served twelve diners night tasting menu of foraged moss, cured meats, و hyper-local produce. Closed Fäviken in 2019 to write و forage.',
     videoId: 'OU32g8miTa0',
     channel: 'What Makes a Great Chef',
   },

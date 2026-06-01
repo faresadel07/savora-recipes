@@ -77,7 +77,7 @@ export default function Header() {
   const { favorites } = useFavorites();
   const { theme, toggle: toggleTheme } = useTheme();
   const { surprise, loading: surpriseLoading } = useSurpriseRecipe();
-  const { t } = useTranslation();
+  const { t, language, toggle: toggleLanguage } = useTranslation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -136,23 +136,17 @@ export default function Header() {
             <HeartHandshake className="h-3.5 w-3.5" strokeWidth={2} />
             {t('nav.donate')}
           </Link>
-          {/* Language toggle temporarily hidden — recipe content still
-              needs Arabic translation before this can be reopened. The
-              i18n machinery + Arabic strings stay in place so we can
-              just un-comment when ready. */}
-          {/*
           <button
             type="button"
             onClick={toggleLanguage}
-            className="hidden rounded-full p-2 text-ink-900 transition-colors hover:bg-ink-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10 sm:block"
-            aria-label={language === 'ar' ? t('common.english') : t('common.arabic')}
-            title={language === 'ar' ? t('common.english') : t('common.arabic')}
+            className="rounded-full p-2 text-ink-900 transition-colors hover:bg-ink-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
+            aria-label={language === 'ar' ? 'English' : 'العربية'}
+            title={language === 'ar' ? 'English' : 'العربية'}
           >
-            <span className="block text-[11px] font-semibold tracking-tight">
+            <span className="block text-[12px] font-semibold tracking-tight">
               {language === 'ar' ? 'EN' : 'ع'}
             </span>
           </button>
-          */}
           <button
             type="button"
             onClick={() => surprise()}

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Award, BookOpen, ChefHat, MapPin, Play, Search, Sparkles, Utensils, X } from 'lucide-react';
+import { useTranslation } from '../i18n';
 import {
   CHEF_REGIONS,
   CHEFS,
@@ -76,6 +77,12 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
 }
 
 function ChefCard({ chef }: { chef: Chef }) {
+  const { pl, language } = useTranslation();
+  const isAr = language === 'ar';
+  const nationality = pl(chef.nationality, chef.nationalityAr);
+  const cuisine = pl(chef.cuisine, chef.cuisineAr);
+  const philosophy = pl(chef.philosophy, chef.philosophyAr);
+  const bio = pl(chef.bio, chef.bioAr);
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
@@ -84,19 +91,19 @@ function ChefCard({ chef }: { chef: Chef }) {
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
           <MapPin className="h-3 w-3" />
-          {chef.nationality}
+          {nationality}
         </p>
         <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{chef.name}</h3>
-        <p className="mt-1 text-sm tracking-tight text-gold-600">{chef.cuisine}</p>
+        <p className="mt-1 text-sm tracking-tight text-gold-600">{cuisine}</p>
         <p className="mt-4 border-l-2 border-gold-500/40 pl-3 text-sm italic leading-relaxed text-ink-600">
-          "{chef.philosophy}"
+          "{philosophy}"
         </p>
-        <p className="mt-4 text-sm leading-relaxed text-ink-600">{chef.bio}</p>
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">{bio}</p>
 
         {chef.restaurants && chef.restaurants.length > 0 && (
           <div className="mt-5">
             <p className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-tight text-ink-900">
-              <Utensils className="h-3 w-3" /> Restaurants
+              <Utensils className="h-3 w-3" /> {isAr ? 'المطاعم' : 'Restaurants'}
             </p>
             <div className="mt-2.5 flex flex-wrap gap-1.5">
               {chef.restaurants.map((r) => (
@@ -114,7 +121,7 @@ function ChefCard({ chef }: { chef: Chef }) {
         {chef.books && chef.books.length > 0 && (
           <div className="mt-4">
             <p className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-tight text-ink-900">
-              <BookOpen className="h-3 w-3" /> Books
+              <BookOpen className="h-3 w-3" /> {isAr ? 'الكتب' : 'Books'}
             </p>
             <div className="mt-2.5 flex flex-wrap gap-1.5">
               {chef.books.map((b) => (
@@ -134,6 +141,11 @@ function ChefCard({ chef }: { chef: Chef }) {
 }
 
 function ChefHeroCard({ chef }: { chef: Chef }) {
+  const { pl } = useTranslation();
+  const nationality = pl(chef.nationality, chef.nationalityAr);
+  const cuisine = pl(chef.cuisine, chef.cuisineAr);
+  const philosophy = pl(chef.philosophy, chef.philosophyAr);
+  const bio = pl(chef.bio, chef.bioAr);
   return (
     <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
       <div className="relative aspect-[16/9] md:aspect-[16/7]">
@@ -142,16 +154,16 @@ function ChefHeroCard({ chef }: { chef: Chef }) {
       <div className="p-6 md:p-8">
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-cream-100/70">
           <MapPin className="h-3 w-3" />
-          {chef.nationality}
-          <span className="ml-2 text-gold-400">{chef.cuisine}</span>
+          {nationality}
+          <span className="ml-2 text-gold-400">{cuisine}</span>
         </p>
         <h3 className="mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tighter">
           {chef.name}
         </h3>
         <p className="mt-4 max-w-3xl border-l-2 border-gold-400 pl-4 text-base italic leading-relaxed text-cream-100/90 md:text-lg">
-          "{chef.philosophy}"
+          "{philosophy}"
         </p>
-        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-cream-100/80 md:text-base">{chef.bio}</p>
+        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-cream-100/80 md:text-base">{bio}</p>
       </div>
     </article>
   );

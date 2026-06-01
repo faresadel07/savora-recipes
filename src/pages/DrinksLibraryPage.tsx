@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '../i18n';
 import {
   ArrowUpRight,
   Coffee,
@@ -112,13 +113,21 @@ function TempPill({ temp }: { temp: DrinkTemp }) {
 }
 
 function DrinkCard({ drink }: { drink: Drink }) {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
+  const name = isAr && drink.nameAr ? drink.nameAr : drink.name;
+  const sub = isAr ? drink.name : drink.nameAr;
+  const origin = isAr && drink.originAr ? drink.originAr : drink.origin;
+  const story = isAr && drink.storyAr ? drink.storyAr : drink.story;
+  const ingredients = isAr && drink.ingredientsAr ? drink.ingredientsAr : drink.ingredients;
+  const steps = isAr && drink.stepsAr ? drink.stepsAr : drink.steps;
   return (
     <article
       id={`drink-${drink.id}`}
       className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
     >
       <div className="relative aspect-video bg-ink-900">
-        <YoutubeLite videoId={drink.videoId} title={drink.name} />
+        <YoutubeLite videoId={drink.videoId} title={name} />
         <div className="absolute left-3 top-3">
           <TempPill temp={drink.temp} />
         </div>
@@ -126,28 +135,28 @@ function DrinkCard({ drink }: { drink: Drink }) {
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
           <MapPin className="h-3 w-3" />
-          {drink.origin}
+          {origin}
         </p>
-        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{drink.name}</h3>
-        {drink.nameAr && (
-          <p className="mt-1 text-base font-medium tracking-tight text-ink-500">{drink.nameAr}</p>
+        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{name}</h3>
+        {sub && (
+          <p className="mt-1 text-base font-medium tracking-tight text-ink-500">{sub}</p>
         )}
-        <p className="mt-4 text-sm leading-relaxed text-ink-600">{drink.story}</p>
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">{story}</p>
 
         <details className="group/details mt-5 border-t border-ink-100 pt-4">
           <summary className="cursor-pointer list-none text-[12px] font-semibold tracking-tight text-ink-900 hover:text-gold-600">
             <span className="inline-flex items-center gap-1.5">
-              <Sparkles className="h-3 w-3" /> Recipe and method
+              <Sparkles className="h-3 w-3" /> {isAr ? 'الوصفة والطريقة' : 'Recipe and method'}
               <span className="text-ink-400 transition-transform group-open/details:rotate-90">›</span>
             </span>
           </summary>
           <div className="mt-4 grid gap-5 md:grid-cols-12">
             <div className="md:col-span-5">
               <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-ink-400">
-                <Sparkles className="h-3 w-3" /> Ingredients
+                <Sparkles className="h-3 w-3" /> {isAr ? 'المكوّنات' : 'Ingredients'}
               </p>
               <ul className="mt-3 space-y-2 text-sm leading-relaxed text-ink-700">
-                {drink.ingredients.map((ing) => (
+                {ingredients.map((ing) => (
                   <li key={ing} className="flex gap-2">
                     <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-gold-500" />
                     <span>{ing}</span>
@@ -157,10 +166,10 @@ function DrinkCard({ drink }: { drink: Drink }) {
             </div>
             <div className="md:col-span-7">
               <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-ink-400">
-                <Utensils className="h-3 w-3" /> Method
+                <Utensils className="h-3 w-3" /> {isAr ? 'الطريقة' : 'Method'}
               </p>
               <ol className="mt-3 space-y-3 text-sm leading-relaxed text-ink-700">
-                {drink.steps.map((s, i) => (
+                {steps.map((s, i) => (
                   <li key={i} className="flex gap-3">
                     <span className="grid h-6 w-6 flex-none place-items-center rounded-full bg-ink-900 text-[11px] font-semibold text-cream-50">
                       {i + 1}
@@ -178,10 +187,16 @@ function DrinkCard({ drink }: { drink: Drink }) {
 }
 
 function DrinkHeroCard({ drink }: { drink: Drink }) {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
+  const heroName = isAr && drink.nameAr ? drink.nameAr : drink.name;
+  const heroSub = isAr ? drink.name : drink.nameAr;
+  const heroOrigin = isAr && drink.originAr ? drink.originAr : drink.origin;
+  const heroStory = isAr && drink.storyAr ? drink.storyAr : drink.story;
   return (
     <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
       <div className="relative aspect-[16/9] md:aspect-[16/7]">
-        <YoutubeLite videoId={drink.videoId} title={drink.name} />
+        <YoutubeLite videoId={drink.videoId} title={heroName} />
         <div className="absolute left-4 top-4">
           <TempPill temp={drink.temp} />
         </div>
@@ -189,15 +204,15 @@ function DrinkHeroCard({ drink }: { drink: Drink }) {
       <div className="p-6 md:p-8">
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-cream-100/70">
           <MapPin className="h-3 w-3" />
-          {drink.origin}
+          {heroOrigin}
         </p>
         <h3 className="mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-          {drink.name}
+          {heroName}
         </h3>
-        {drink.nameAr && (
-          <p className="mt-1 text-lg font-medium tracking-tight text-gold-400">{drink.nameAr}</p>
+        {heroSub && (
+          <p className="mt-1 text-lg font-medium tracking-tight text-gold-400">{heroSub}</p>
         )}
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-cream-100/85 md:text-base">{drink.story}</p>
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-cream-100/85 md:text-base">{heroStory}</p>
       </div>
     </article>
   );

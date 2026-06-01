@@ -78,8 +78,16 @@ export default function RecipeDetailPage() {
 
 function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] }) {
   const { t, language } = useTranslation();
+  const isAr = language === 'ar';
   const localAr = LOCAL_RECIPE_AR[r.id];
-  const displayTitle = language === 'ar' && localAr?.title ? localAr.title : r.title;
+  // Embedded Ar fields on LocalRecipe (Phase 4 translation)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const lr = r as any;
+  const displayTitle = isAr ? lr.titleAr || localAr?.title || r.title : r.title;
+  const displayCategory = isAr ? lr.categoryAr || r.category : r.category;
+  const displayArea = isAr ? lr.areaAr || r.area : r.area;
+  const displayIngredients = isAr && lr.ingredientsAr ? lr.ingredientsAr : r.ingredients;
+  const displaySteps = isAr && lr.stepsAr ? lr.stepsAr : r.steps;
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(r.id);
 
@@ -169,17 +177,18 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
 
   const ingredientLines = useMemo(
     () =>
-      (r.ingredients ?? []).map((i) => ({
+      (displayIngredients ?? []).map((i: { measure?: string; name: string }) => ({
         measure: transformMeasure(i.measure, factor, system),
         name: i.name,
       })),
-    [r.ingredients, factor, system],
+    [displayIngredients, factor, system],
   );
 
   // Voice helpers
   const speakAll = () => {
-    if (!r.steps?.length) return;
-    const text = r.steps.map((s, i) => `Step ${i + 1}. ${s}`).join(' ');
+    if (!displaySteps?.length) return;
+    const stepWord = isAr ? 'الخطوة' : 'Step';
+    const text = displaySteps.map((s: string, i: number) => `${stepWord} ${i + 1}. ${s}`).join(' ');
     voiceRef.current.speak(text);
   };
   const speakStep = (text: string) => voiceRef.current.speak(text);
@@ -187,7 +196,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
   const resumeVoice = () => voiceRef.current.resume();
   const stopVoice = () => voiceRef.current.stop();
 
-  const hasSteps = (r.steps?.length ?? 0) > 0;
+  const hasSteps = (displaySteps?.length ?? 0) > 0;
 
   return (
     <article>
@@ -226,13 +235,13 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
             <div className="mb-5 flex flex-wrap items-center gap-2">
               {r.category && (
                 <span className="eyebrow inline-flex items-center gap-1">
-                  <Utensils className="h-3 w-3" /> {r.category}
+                  <Utensils className="h-3 w-3" /> {displayCategory}
                 </span>
               )}
               {r.category && r.area && <span className="h-0.5 w-0.5 rounded-full bg-ink-300" />}
               {r.area && (
                 <span className="eyebrow inline-flex items-center gap-1">
-                  <Globe className="h-3 w-3" /> {r.area}
+                  <Globe className="h-3 w-3" /> {displayArea}
                 </span>
               )}
             </div>
@@ -366,7 +375,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
 
               <ul className="mt-7 divide-y divide-ink-100">
                 {ingredientLines.length > 0 ? (
-                  ingredientLines.map((line, i) => (
+                  ingredientLines.map((line: { measure?: string; name: string }, i: number) => (
                     <li key={`${line.name}-${i}`} className="flex items-start gap-3.5 py-3">
                       <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-cream-100">
                         <Salad className="h-3.5 w-3.5 text-ink-400" />
@@ -408,12 +417,12 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
 
               {hasSteps ? (
                 <ol className="mt-8 space-y-8">
-                  {r.steps!.map((step, i) => (
+                  {displaySteps!.map((step: string, i: number) => (
                     <StepRow
                       key={i}
                       step={step}
                       index={i}
-                      onSpeak={() => speakStep(`Step ${i + 1}. ${step}`)}
+                      onSpeak={() => speakStep(`${isAr ? 'الخطوة' : 'Step'} ${i + 1}. ${step}`)}
                       voiceState={voiceState}
                       voiceSupported={isVoiceSupported()}
                       readStepLabel={t('common.readStep')}

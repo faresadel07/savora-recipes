@@ -10,12 +10,8 @@ const listeners = new Set<Listener>();
 
 function readInitial(): Language {
   if (typeof window === 'undefined') return 'en';
-  // Arabic UI toggle is temporarily hidden because recipe content from the
-  // public APIs is still English-only. Force English so anyone who picked
-  // Arabic earlier doesn't get stuck with a half-translated experience.
   const stored = localStorage.getItem(STORAGE_KEY) as Language | null;
-  if (stored === 'ar') localStorage.removeItem(STORAGE_KEY);
-  if (stored === 'en') return stored;
+  if (stored === 'ar' || stored === 'en') return stored;
   return 'en';
 }
 
@@ -90,5 +86,10 @@ export function useTranslation() {
     return lookup(translations[language], key) as T | undefined;
   }
 
-  return { t, tArray, tObject, language, setLanguage, toggle, isRtl };
+  function pl<T>(en: T, ar?: T): T {
+    if (language === 'ar' && ar !== undefined && ar !== '' && ar !== null) return ar;
+    return en;
+  }
+
+  return { t, tArray, tObject, pl, language, setLanguage, toggle, isRtl };
 }
