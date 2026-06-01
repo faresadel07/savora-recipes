@@ -575,10 +575,21 @@ const SHOWCASE_SECTIONS = [
     icon: BookOpen,
     accent: 'terracotta' as const,
     imageVideoId: () => undefined,
+    imageUrl: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=1200&h=900&fit=crop&q=80',
   },
 ];
 
-function ShowcaseImage({ videoId }: { videoId?: string }) {
+function ShowcaseImage({ videoId, imageUrl }: { videoId?: string; imageUrl?: string }) {
+  if (imageUrl) {
+    return (
+      <img
+        src={imageUrl}
+        alt=""
+        loading="lazy"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+      />
+    );
+  }
   if (!videoId) {
     return (
       <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-cream-200 to-cream-300">
@@ -644,7 +655,7 @@ function SectionsShowcase({ language }: { language: string }) {
               >
                 <div className={`absolute inset-x-0 top-0 h-1 ${accentBar[s.accent]}`} />
                 <div className="relative aspect-video bg-cream-200">
-                  <ShowcaseImage videoId={s.imageVideoId()} />
+                  <ShowcaseImage videoId={s.imageVideoId()} imageUrl={('imageUrl' in s ? s.imageUrl : undefined) as string | undefined} />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" />
                   <div className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-cream-50/95 text-ink-900 backdrop-blur">
                     <Icon className="h-4 w-4" strokeWidth={1.8} />
