@@ -148,7 +148,7 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
                 {showIframe ? (
                   <iframe
                     key={`if-${s.id}-${i === index ? 'active' : 'idle'}`}
-                    src={`https://www.youtube.com/embed/${s.id}?autoplay=${i === index ? 1 : 0}&mute=1&playsinline=1&loop=1&playlist=${s.id}&modestbranding=1&rel=0`}
+                    src={`https://www.youtube-nocookie.com/embed/${s.id}?autoplay=${i === index ? 1 : 0}&mute=1&playsinline=1&loop=1&playlist=${s.id}&modestbranding=1&rel=0`}
                     title="short"
                     allow="autoplay; encrypted-media; picture-in-picture"
                     allowFullScreen
