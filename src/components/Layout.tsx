@@ -34,7 +34,7 @@ function ScrollManager() {
 
 export default function Layout() {
   return (
-    <div className="flex min-h-screen flex-col bg-cream-50">
+    <div className="flex min-h-[100dvh] flex-col bg-cream-50">
       <ScrollManager />
       <Header />
       <main className="flex-1">

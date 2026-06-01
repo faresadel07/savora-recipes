@@ -41,7 +41,7 @@ export default function RecipeCard({ recipe, variant = 'default', index = 0, eag
   const isCompact = variant === 'compact';
 
   return (
-    <article className="group relative flex flex-col animate-fade-up" style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}>
+    <article className="group relative flex flex-col">
       <Link
         to={`/recipe/${recipe.id}`}
         className={`relative block overflow-hidden rounded-2xl bg-cream-200 ${
