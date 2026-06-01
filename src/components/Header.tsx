@@ -10,6 +10,8 @@ import {
   Heart,
   HeartHandshake,
   Home,
+  Info,
+  Mail,
   MapPin,
   Zap,
   Menu,
@@ -100,7 +102,7 @@ export default function Header() {
             : 'shadow-[0_4px_16px_-6px_rgba(0,0,0,0.08)]'
         }`}
       >
-      <div className="flex h-14 items-center gap-2 px-4 md:h-16 md:px-5 xl:px-6">
+      <div className="flex h-14 items-center justify-between gap-2 px-4 md:h-16 md:px-5 xl:px-6">
         <Link to="/" className="flex flex-none items-center gap-2 group" aria-label="Zaytoun home">
           <img src="/zaytoun-logo.jpg" alt="" width={28} height={28} className="h-6 w-6 rounded-full object-cover md:h-7 md:w-7" />
           <span className="text-lg font-semibold tracking-tighter md:text-xl">Zaytoun</span>
@@ -266,92 +268,154 @@ export default function Header() {
             />
           </div>
 
-          {/* Scrollable nav body */}
-          <nav className="flex-1 overflow-y-auto px-6 py-5">
+          {/* Scrollable nav body — compact grid so every feature is
+              visible at once on a typical phone, with a soft scroll
+              hint at the bottom if the screen is shorter than the
+              grid. */}
+          <nav className="relative flex-1 overflow-y-auto px-4 py-4">
             {MOBILE_GROUPS.map((group, gi) => (
-              <div key={group.titleKey} className={gi === 0 ? '' : 'mt-7'}>
-                <p className="px-3 text-[11px] font-medium uppercase tracking-widest text-ink-400">
+              <div key={group.titleKey} className={gi === 0 ? '' : 'mt-4'}>
+                <p className="px-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400">
                   {t(group.titleKey)}
                 </p>
-                <ul className="mt-2 space-y-0.5">
+                <div className="mt-2 grid grid-cols-3 gap-2">
                   {group.itemKeys.map((key) => {
                     const item = NAV_ITEMS.find((n) => n.key === key);
                     if (!item) return null;
                     const Icon = item.icon;
                     return (
-                      <li key={item.to}>
-                        <NavLink
-                          to={item.to}
-                          end={item.to === '/'}
-                          onClick={() => setMobileOpen(false)}
-                          className={({ isActive }) =>
-                            `flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[15px] font-medium tracking-tight transition-colors ${
-                              isActive
-                                ? 'bg-ink-900 text-cream-50'
-                                : 'text-ink-700 hover:bg-ink-100/70 hover:text-ink-900'
-                            }`
-                          }
-                        >
-                          {({ isActive }) => (
-                            <>
-                              <Icon className={`h-4 w-4 flex-none ${isActive ? 'text-gold-400' : 'text-ink-400'}`} strokeWidth={1.8} />
-                              <span className="flex-1">{t(item.key)}</span>
-                            </>
-                          )}
-                        </NavLink>
-                      </li>
+                      <NavLink
+                        key={item.to}
+                        to={item.to}
+                        end={item.to === '/'}
+                        onClick={() => setMobileOpen(false)}
+                        className={({ isActive }) =>
+                          `flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center transition-all ${
+                            isActive
+                              ? 'border-ink-900 bg-ink-900 text-cream-50 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)]'
+                              : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-300 hover:bg-cream-100'
+                          }`
+                        }
+                      >
+                        {({ isActive }) => (
+                          <>
+                            <Icon
+                              className={`h-5 w-5 ${isActive ? 'text-gold-400' : 'text-terracotta-500'}`}
+                              strokeWidth={1.8}
+                            />
+                            <span className="text-[11px] font-medium leading-tight tracking-tight">
+                              {t(item.key)}
+                            </span>
+                          </>
+                        )}
+                      </NavLink>
                     );
                   })}
-                </ul>
+                </div>
               </div>
             ))}
 
-            <div className="mt-7">
-              <p className="px-3 text-[11px] font-medium uppercase tracking-widest text-ink-400">
+            {/* Personal: favorites + about + contact in one compact row */}
+            <div className="mt-4">
+              <p className="px-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400">
                 {t('nav.personal')}
               </p>
-              <ul className="mt-2 space-y-0.5">
-                <li>
-                  <NavLink
-                    to="/favorites"
-                    onClick={() => setMobileOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[15px] font-medium tracking-tight transition-colors ${
-                        isActive ? 'bg-ink-900 text-cream-50' : 'text-ink-700 hover:bg-ink-100/70 hover:text-ink-900'
-                      }`
-                    }
-                  >
-                    {({ isActive }) => (
-                      <>
-                        <Heart className={`h-4 w-4 flex-none ${isActive ? 'text-gold-400' : 'text-terracotta-500'}`} strokeWidth={1.8} />
-                        <span className="flex-1">{t('nav.favorites')}</span>
-                        {favorites.length > 0 && (
-                          <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-                            isActive ? 'bg-cream-50/15 text-cream-50' : 'bg-terracotta-500 text-cream-50'
-                          }`}>
-                            {favorites.length}
-                          </span>
-                        )}
-                      </>
-                    )}
-                  </NavLink>
-                </li>
-              </ul>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                <NavLink
+                  to="/favorites"
+                  onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `relative flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center transition-all ${
+                      isActive
+                        ? 'border-ink-900 bg-ink-900 text-cream-50 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)]'
+                        : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-300 hover:bg-cream-100'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Heart
+                        className={`h-5 w-5 ${isActive ? 'text-gold-400' : 'text-terracotta-500'}`}
+                        strokeWidth={1.8}
+                      />
+                      <span className="text-[11px] font-medium leading-tight tracking-tight">
+                        {t('nav.favorites')}
+                      </span>
+                      {favorites.length > 0 && (
+                        <span
+                          className={`absolute right-1.5 top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 text-[9px] font-bold ${
+                            isActive ? 'bg-cream-50 text-ink-900' : 'bg-terracotta-500 text-cream-50'
+                          }`}
+                        >
+                          {favorites.length > 99 ? '99+' : favorites.length}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </NavLink>
+                <NavLink
+                  to="/about"
+                  onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center transition-all ${
+                      isActive
+                        ? 'border-ink-900 bg-ink-900 text-cream-50 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)]'
+                        : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-300 hover:bg-cream-100'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Info
+                        className={`h-5 w-5 ${isActive ? 'text-gold-400' : 'text-sage-600'}`}
+                        strokeWidth={1.8}
+                      />
+                      <span className="text-[11px] font-medium leading-tight tracking-tight">
+                        {t('nav.about')}
+                      </span>
+                    </>
+                  )}
+                </NavLink>
+                <NavLink
+                  to="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center transition-all ${
+                      isActive
+                        ? 'border-ink-900 bg-ink-900 text-cream-50 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)]'
+                        : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-300 hover:bg-cream-100'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Mail
+                        className={`h-5 w-5 ${isActive ? 'text-gold-400' : 'text-ink-500'}`}
+                        strokeWidth={1.8}
+                      />
+                      <span className="text-[11px] font-medium leading-tight tracking-tight">
+                        {t('nav.contact')}
+                      </span>
+                    </>
+                  )}
+                </NavLink>
+              </div>
             </div>
           </nav>
 
-          {/* Fixed bottom controls */}
-          <div className="flex-none border-t border-ink-100 bg-cream-50 px-6 pb-6 pt-4">
+          {/* Fixed bottom controls — kept compact so the grid above
+              has room to breathe on shorter phones. */}
+          <div className="flex-none border-t border-ink-100 bg-cream-50 px-4 pb-4 pt-3">
             <NavLink
               to="/donate"
               onClick={() => setMobileOpen(false)}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-terracotta-500 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-600"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-terracotta-500 py-2.5 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-600"
             >
               <HeartHandshake className="h-4 w-4" />
               {t('nav.supportZaytoun')}
             </NavLink>
 
-            <div className="mt-3 grid grid-cols-2 gap-2">
+            <div className="mt-2 grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => {
@@ -359,7 +423,7 @@ export default function Header() {
                   surprise();
                 }}
                 disabled={surpriseLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-cream-50 py-2.5 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-900 disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-ink-200 bg-cream-50 py-2 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-900 disabled:opacity-50"
               >
                 <Shuffle className={`h-3.5 w-3.5 ${surpriseLoading ? 'animate-spin' : ''}`} />
                 {t('common.surpriseMe')}
@@ -367,7 +431,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-cream-50 py-2.5 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-900"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-ink-200 bg-cream-50 py-2 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-900"
               >
                 {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
                 {theme === 'dark' ? t('nav.light') : t('nav.dark')}
