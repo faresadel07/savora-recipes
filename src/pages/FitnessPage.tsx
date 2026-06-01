@@ -8,7 +8,6 @@ import {
   Calendar,
   ChefHat,
   Coffee,
-  Dumbbell,
   Flame,
   GlassWater,
   Heart,
@@ -36,14 +35,14 @@ import {
 import RecipeCard from '../components/RecipeCard';
 import MacroCalculator from '../components/MacroCalculator';
 
+const PROTEIN_CATEGORIES = ['Chicken', 'Seafood', 'Beef', 'Lamb', 'Pork'] as const;
+
 const HERO_STATS = [
-  { value: '300+', label: 'Protein recipes' },
-  { value: '12', label: 'Channels' },
-  { value: '3', label: 'Goal plans' },
+  { value: '700+', label: 'Recipes' },
+  { value: `${FITNESS_CHANNELS.length}`, label: 'Channels' },
+  { value: `${GOAL_PLANS.length}`, label: 'Goal plans' },
   { value: 'Free', label: 'Always' },
 ];
-
-const PROTEIN_CATEGORIES = ['Chicken', 'Seafood', 'Beef', 'Lamb', 'Pork'] as const;
 
 export default function FitnessPage() {
   const [activeCategory, setActiveCategory] = useState<(typeof PROTEIN_CATEGORIES)[number]>('Chicken');
@@ -72,40 +71,37 @@ export default function FitnessPage() {
 
   return (
     <div>
-      {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden bg-ink-900 py-16 text-cream-50 md:py-24">
+      {/* ============ HERO (light, matches other pages) ============ */}
+      <section className="relative overflow-hidden bg-cream-50 pb-16 pt-12 md:pb-24 md:pt-16">
         <div className="container-wide relative z-10">
           <div className="grid items-center gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
-              <p className="eyebrow mb-4 inline-flex items-center gap-2 text-cream-100/70">
-                <Dumbbell className="h-3 w-3" /> For people who train
-              </p>
-              <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter">
+              <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
                 Fuel your body.
                 <br />
-                <span className="text-sage-400">Eat with intention.</span>
+                <span className="text-sage-600">Eat with intention.</span>
               </h1>
-              <p className="mt-7 max-w-xl text-base leading-relaxed text-cream-100/80 sm:text-lg">
+              <p className="mt-7 max-w-xl text-base leading-relaxed text-ink-600 sm:text-lg">
                 A no-nonsense library for athletes, lifters, and anyone who treats
                 food as part of training. Macro-balanced recipes, meal plans,
                 workout-timed meals, and the cleanest fitness channels on YouTube.
               </p>
 
-              <div className="mt-7 grid max-w-md grid-cols-4 gap-2">
-                {HERO_STATS.map((s) => (
-                  <DarkStat key={s.label} top={s.value} bottom={s.label} />
-                ))}
-              </div>
-
-              <div className="mt-7 flex flex-wrap gap-3">
-                <a href="#calculator" className="inline-flex items-center gap-2 rounded-full bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-all hover:scale-[1.02]">
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href="#calculator" className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-sage-600">
                   <Flame className="h-4 w-4" />
                   Calculate my macros
                 </a>
-                <a href="#plans" className="inline-flex items-center gap-2 rounded-full border border-cream-50/30 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-cream-50/10">
+                <a href="#plans" className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900">
                   Pick a goal plan
                   <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
                 </a>
+              </div>
+
+              <div className="mt-10 grid max-w-md grid-cols-4 gap-2">
+                {HERO_STATS.map((s) => (
+                  <LightStat key={s.label} top={s.value} bottom={s.label} />
+                ))}
               </div>
             </div>
 
@@ -117,12 +113,12 @@ export default function FitnessPage() {
                   { icon: <Zap className="h-5 w-5" />, label: '2 hours', sub: 'pre-workout window' },
                   { icon: <Heart className="h-5 w-5" />, label: '25 to 38g', sub: 'fiber daily' },
                 ].map((c) => (
-                  <div key={c.sub} className="rounded-2xl border border-cream-50/15 bg-cream-50/5 p-5 backdrop-blur-sm">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sage-400/20 text-sage-400">
+                  <div key={c.sub} className="rounded-2xl border border-ink-100 bg-cream-50 p-5">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sage-50 text-sage-600">
                       {c.icon}
                     </div>
-                    <p className="mt-4 text-xl font-bold tracking-tighter text-cream-50 md:text-2xl">{c.label}</p>
-                    <p className="mt-1 text-[11px] uppercase tracking-widest text-cream-100/60">{c.sub}</p>
+                    <p className="mt-4 text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{c.label}</p>
+                    <p className="mt-1 text-[12px] tracking-tight text-ink-500">{c.sub}</p>
                   </div>
                 ))}
               </div>
@@ -130,8 +126,8 @@ export default function FitnessPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-sage-500/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-sage-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/10 blur-3xl" />
       </section>
 
       {/* ============ HIGH-PROTEIN RECIPES ============ */}
@@ -217,7 +213,7 @@ export default function FitnessPage() {
                 key={`${m.title}-${i}`}
                 className="rounded-2xl border border-ink-100 bg-cream-50 p-6 transition-colors hover:border-ink-900"
               >
-                <p className="eyebrow text-sage-600">{m.protein}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-sage-600">{m.protein}</p>
                 <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight md:text-xl">{m.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-ink-600">{m.body}</p>
               </article>
@@ -296,7 +292,7 @@ export default function FitnessPage() {
               </div>
 
               <div className="md:col-span-8">
-                <p className="eyebrow mb-4">Sample day</p>
+                <p className="mb-4 text-[12px] font-semibold uppercase tracking-widest text-ink-500">Sample day</p>
                 <ul className="space-y-3">
                   {currentPlan.sampleDay.map((m, i) => (
                     <li key={i} className="grid gap-2 rounded-2xl border border-ink-100 p-4 sm:grid-cols-[120px_1fr_auto] sm:items-center">
@@ -320,7 +316,7 @@ export default function FitnessPage() {
           title="Calculate your macros."
           body="A starting estimate based on the Mifflin-St Jeor equation, the most validated BMR formula for adults today. Adjust over 2 weeks by watching the scale."
         />
-        <MacroCalculator />
+        <MacroCalculator goal={activePlan} onGoalChange={setActivePlan} />
       </section>
 
       {/* ============ MACRO CHEAT SHEET ============ */}
@@ -438,7 +434,7 @@ export default function FitnessPage() {
                 key={`${s.title}-${i}`}
                 className="rounded-2xl border border-ink-100 bg-cream-50 p-5"
               >
-                <p className="eyebrow text-sage-600">{s.protein}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-sage-600">{s.protein}</p>
                 <h3 className="mt-2.5 text-base font-semibold leading-snug tracking-tight">{s.title}</h3>
                 <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{s.body}</p>
               </article>
@@ -552,23 +548,20 @@ export default function FitnessPage() {
   );
 }
 
-function SectionHead({ eyebrow, title, body, icon }: { eyebrow: string; title: string; body?: string; icon?: React.ReactNode }) {
+function SectionHead({ title, body }: { eyebrow?: string; title: string; body?: string; icon?: React.ReactNode }) {
   return (
     <div className="mb-10 max-w-3xl">
-      <p className="eyebrow mb-3 inline-flex items-center gap-2">
-        {icon} {eyebrow}
-      </p>
       <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">{title}</h2>
       {body && <p className="mt-3 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">{body}</p>}
     </div>
   );
 }
 
-function DarkStat({ top, bottom }: { top: string; bottom: string }) {
+function LightStat({ top, bottom }: { top: string; bottom: string }) {
   return (
-    <div className="rounded-2xl border border-cream-50/15 bg-cream-50/5 p-3 text-center backdrop-blur-sm">
-      <p className="text-xl font-bold tracking-tighter text-cream-50 md:text-2xl">{top}</p>
-      <p className="mt-1 text-[10px] uppercase tracking-widest text-cream-100/60">{bottom}</p>
+    <div className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
+      <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{top}</p>
+      <p className="mt-1 text-xs tracking-tight text-ink-500">{bottom}</p>
     </div>
   );
 }
