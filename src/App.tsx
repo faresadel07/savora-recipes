@@ -6,6 +6,8 @@ import SearchPage from './pages/SearchPage';
 import CategoryPage from './pages/CategoryPage';
 import FavoritesPage from './pages/FavoritesPage';
 import DonatePage from './pages/DonatePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import VideosPage from './pages/VideosPage';
 import LibraryPage from './pages/LibraryPage';
 import MagazinesPage from './pages/MagazinesPage';
@@ -40,6 +42,8 @@ export default function App() {
         <Route path="shorts" element={<ShortsLibraryPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

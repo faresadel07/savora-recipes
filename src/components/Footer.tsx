@@ -90,8 +90,8 @@ const CUISINES_AR = [
 
 const SUPPORT_LINKS: NavItem[] = [
   { to: '/donate', labelKey: 'footer.donate' },
-  { to: '/donate', labelKey: 'footer.about' },
-  { to: 'mailto:miggajigga6767@gmail.com', labelKey: 'footer.contact' },
+  { to: '/about', labelKey: 'footer.about' },
+  { to: '/contact', labelKey: 'footer.contact' },
 ];
 
 function FooterLink({ to, children }: { to: string; children: React.ReactNode }) {
