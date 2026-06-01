@@ -1,23 +1,64 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Heart, HeartHandshake, Menu, Moon, Search, Shuffle, Sun, X } from 'lucide-react';
+import {
+  Activity,
+  BookOpen,
+  ChefHat,
+  Film,
+  GraduationCap,
+  Heart,
+  HeartHandshake,
+  Home,
+  MapPin,
+  Menu,
+  Moon,
+  Newspaper,
+  Search,
+  Shuffle,
+  Star,
+  Sun,
+  Tv,
+  Utensils,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
 import { useFavorites } from '../hooks/useFavorites';
 import { useTheme } from '../hooks/useTheme';
 import { useSurpriseRecipe } from '../hooks/useSurpriseRecipe';
 import { useTranslation } from '../i18n';
 
-const NAV_ITEMS: { to: string; key: string }[] = [
-  { to: '/', key: 'nav.home' },
-  { to: '/recipes', key: 'nav.recipes' },
-  { to: '/arab-cuisine', key: 'nav.arabCuisine' },
-  { to: '/films', key: 'nav.films' },
-  { to: '/academy', key: 'nav.academy' },
-  { to: '/markets', key: 'nav.markets' },
-  { to: '/chefs', key: 'nav.chefs' },
-  { to: '/videos', key: 'nav.videos' },
-  { to: '/library', key: 'nav.library' },
-  { to: '/magazines', key: 'nav.magazines' },
-  { to: '/fitness', key: 'nav.fitness' },
+interface NavItem {
+  to: string;
+  key: string;
+  icon: LucideIcon;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { to: '/', key: 'nav.home', icon: Home },
+  { to: '/recipes', key: 'nav.recipes', icon: Utensils },
+  { to: '/arab-cuisine', key: 'nav.arabCuisine', icon: Star },
+  { to: '/films', key: 'nav.films', icon: Film },
+  { to: '/academy', key: 'nav.academy', icon: GraduationCap },
+  { to: '/markets', key: 'nav.markets', icon: MapPin },
+  { to: '/chefs', key: 'nav.chefs', icon: ChefHat },
+  { to: '/videos', key: 'nav.videos', icon: Tv },
+  { to: '/library', key: 'nav.library', icon: BookOpen },
+  { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
+  { to: '/fitness', key: 'nav.fitness', icon: Activity },
+];
+
+// Mobile menu groups the nav items into three editorial sections so the
+// drawer reads like a table of contents instead of one long list.
+const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
+  { titleKey: 'nav.browse', itemKeys: ['nav.home', 'nav.recipes'] },
+  {
+    titleKey: 'nav.curated',
+    itemKeys: ['nav.arabCuisine', 'nav.films', 'nav.academy', 'nav.markets', 'nav.chefs'],
+  },
+  {
+    titleKey: 'nav.more',
+    itemKeys: ['nav.videos', 'nav.library', 'nav.magazines', 'nav.fitness'],
+  },
 ];
 
 export default function Header() {
@@ -203,73 +244,126 @@ export default function Header() {
           }`}
         />
         <aside
-          className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-cream-50 px-7 py-5 shadow-2xl transition-transform duration-300 ${
+          className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-cream-50 shadow-2xl transition-transform duration-300 ${
             mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 text-xl font-semibold tracking-tighter">
-              <img src="/favicon.svg" alt="" width={20} height={20} />
-              Zaytoun
-            </span>
+          {/* Sticky header inside the drawer */}
+          <div className="flex flex-none items-center justify-between border-b border-ink-100 px-6 py-4">
+            <Link to="/" onClick={() => setMobileOpen(false)} className="inline-flex items-center gap-2.5">
+              <img src="/zaytoun-logo.jpg" alt="" width={28} height={28} className="h-7 w-7 rounded-full object-cover" />
+              <span className="text-xl font-semibold tracking-tighter text-ink-900">Zaytoun</span>
+            </Link>
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
-              className="rounded-full p-2 hover:bg-ink-900/5"
+              className="grid h-9 w-9 place-items-center rounded-full text-ink-700 transition-colors hover:bg-ink-900/5"
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" strokeWidth={1.8} />
             </button>
           </div>
 
-          <form onSubmit={submitSearch} className="mt-7 flex items-center gap-2 border-b border-ink-900 pb-2">
-            <Search className="h-4 w-4 text-ink-400" />
+          {/* Sticky search inside the drawer */}
+          <form
+            onSubmit={submitSearch}
+            className="flex flex-none items-center gap-2 border-b border-ink-100 px-6 py-3"
+          >
+            <Search className="h-4 w-4 flex-none text-ink-400" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder={t('common.searchRecipes')}
-              className="flex-1 bg-transparent py-1 placeholder:text-ink-400 focus:outline-none"
+              className="flex-1 bg-transparent py-1 text-[15px] placeholder:text-ink-400 focus:outline-none"
             />
           </form>
 
-          <nav className="mt-8 flex flex-col gap-0">
-            {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/'}
-                onClick={() => setMobileOpen(false)}
-                className={({ isActive }) =>
-                  `border-b border-ink-100/70 py-3.5 text-xl font-semibold tracking-tight transition-colors ${
-                    isActive ? 'text-terracotta-500' : 'text-ink-900'
-                  }`
-                }
-              >
-                {t(item.key)}
-              </NavLink>
+          {/* Scrollable nav body */}
+          <nav className="flex-1 overflow-y-auto px-6 py-5">
+            {MOBILE_GROUPS.map((group, gi) => (
+              <div key={group.titleKey} className={gi === 0 ? '' : 'mt-7'}>
+                <p className="px-3 text-[11px] font-medium uppercase tracking-widest text-ink-400">
+                  {t(group.titleKey)}
+                </p>
+                <ul className="mt-2 space-y-0.5">
+                  {group.itemKeys.map((key) => {
+                    const item = NAV_ITEMS.find((n) => n.key === key);
+                    if (!item) return null;
+                    const Icon = item.icon;
+                    return (
+                      <li key={item.to}>
+                        <NavLink
+                          to={item.to}
+                          end={item.to === '/'}
+                          onClick={() => setMobileOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[15px] font-medium tracking-tight transition-colors ${
+                              isActive
+                                ? 'bg-ink-900 text-cream-50'
+                                : 'text-ink-700 hover:bg-ink-100/70 hover:text-ink-900'
+                            }`
+                          }
+                        >
+                          {({ isActive }) => (
+                            <>
+                              <Icon className={`h-4 w-4 flex-none ${isActive ? 'text-gold-400' : 'text-ink-400'}`} strokeWidth={1.8} />
+                              <span className="flex-1">{t(item.key)}</span>
+                            </>
+                          )}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             ))}
-            <NavLink
-              to="/favorites"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-between border-b border-ink-100/70 py-3.5 text-xl font-semibold tracking-tight"
-            >
-              <span>{t('nav.favorites')}</span>
-              {favorites.length > 0 && (
-                <span className="rounded-full bg-terracotta-500 px-2 py-0.5 text-xs font-medium text-cream-50">
-                  {favorites.length}
-                </span>
-              )}
-            </NavLink>
+
+            <div className="mt-7">
+              <p className="px-3 text-[11px] font-medium uppercase tracking-widest text-ink-400">
+                {t('nav.personal')}
+              </p>
+              <ul className="mt-2 space-y-0.5">
+                <li>
+                  <NavLink
+                    to="/favorites"
+                    onClick={() => setMobileOpen(false)}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[15px] font-medium tracking-tight transition-colors ${
+                        isActive ? 'bg-ink-900 text-cream-50' : 'text-ink-700 hover:bg-ink-100/70 hover:text-ink-900'
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <Heart className={`h-4 w-4 flex-none ${isActive ? 'text-gold-400' : 'text-terracotta-500'}`} strokeWidth={1.8} />
+                        <span className="flex-1">{t('nav.favorites')}</span>
+                        {favorites.length > 0 && (
+                          <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                            isActive ? 'bg-cream-50/15 text-cream-50' : 'bg-terracotta-500 text-cream-50'
+                          }`}>
+                            {favorites.length}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          {/* Fixed bottom controls */}
+          <div className="flex-none border-t border-ink-100 bg-cream-50 px-6 pb-6 pt-4">
             <NavLink
               to="/donate"
               onClick={() => setMobileOpen(false)}
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-terracotta-500 py-3.5 text-sm font-medium tracking-tight text-cream-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-terracotta-500 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-600"
             >
               <HeartHandshake className="h-4 w-4" />
               {t('nav.supportSavora')}
             </NavLink>
 
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="mt-3 grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => {
@@ -277,30 +371,22 @@ export default function Header() {
                   surprise();
                 }}
                 disabled={surpriseLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 py-3 text-sm font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900 disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-cream-50 py-2.5 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-900 disabled:opacity-50"
               >
-                <Shuffle className={`h-4 w-4 ${surpriseLoading ? 'animate-spin' : ''}`} />
+                <Shuffle className={`h-3.5 w-3.5 ${surpriseLoading ? 'animate-spin' : ''}`} />
                 {t('common.surpriseMe')}
               </button>
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 py-3 text-sm font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-cream-50 py-2.5 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-900"
               >
-                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
                 {theme === 'dark' ? t('nav.light') : t('nav.dark')}
               </button>
-              {/* Mobile language toggle hidden until recipe-content translation lands.
-              <button
-                type="button"
-                onClick={toggleLanguage}
-                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-ink-200 py-3 text-[12px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
-              >
-                <Globe className="h-3.5 w-3.5" />
-                {language === 'ar' ? 'English' : 'العربية'}
-              </button> */}
+              {/* Mobile language toggle hidden until recipe-content translation lands. */}
             </div>
-          </nav>
+          </div>
         </aside>
       </div>
     </header>

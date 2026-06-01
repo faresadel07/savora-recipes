@@ -105,23 +105,6 @@ export const WORLD_MARKETS: FoodMarket[] = [
     channel: 'WANDERER',
   },
   {
-    id: 'mahane-yehuda',
-    name: 'Mahane Yehuda',
-    nameLocal: 'מחנה יהודה',
-    city: 'Jerusalem',
-    country: 'Israel and Palestine',
-    region: 'middle-east',
-    yearFounded: 1887,
-    marketType: 'Open-air produce and street food market',
-    signatureFoods: ['Halva', 'Marak temani (Yemeni soup)', 'Sabich', 'Kubaneh bread', 'Borekas'],
-    history:
-      "Late-Ottoman vegetable sellers laid the first stones of the shuk in the 1880s. Today it is Jerusalem's loudest, busiest, and most contested kitchen, a place where Iraqi, Yemeni, Moroccan, Russian, and Palestinian flavors meet over the same lamb skewer.",
-    blurb:
-      "By day a frantic produce market, by night a city-block restaurant. Every wave of Jewish migration brought a dish, and they all still cook side by side.",
-    videoId: 'rq1S3jXNM80',
-    channel: 'travelingisrael.com',
-  },
-  {
     id: 'souk-al-balad-amman',
     name: 'Souk al-Balad',
     nameLocal: 'سوق البلد',

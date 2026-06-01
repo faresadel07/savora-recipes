@@ -43,7 +43,7 @@ export const CHEFS: Chef[] = [
   {
     id: 'ottolenghi',
     name: 'Yotam Ottolenghi',
-    nationality: 'Israeli-British',
+    nationality: 'British',
     cuisine: 'Modern Middle Eastern',
     region: 'middle-east',
     restaurants: ['Ottolenghi Spitalfields', 'NOPI', 'Rovi'],

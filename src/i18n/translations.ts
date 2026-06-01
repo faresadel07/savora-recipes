@@ -84,6 +84,10 @@ export const en = {
     supportZaytoun: 'Support Zaytoun',
     light: 'Light',
     dark: 'Dark',
+    browse: 'Browse',
+    curated: 'Curated',
+    more: 'More',
+    personal: 'Personal',
   },
   footer: {
     blurb: 'A quiet, curated corner of the internet for recipes worth cooking. Hundreds of thousands of dishes from kitchens around the world, all in one place.',
@@ -445,6 +449,10 @@ export const ar: typeof en = {
     donate: 'تبرع',
     supportZaytoun: 'ادعم زيتون',
     light: 'نهاري',
+    browse: 'تصفّح',
+    curated: 'منتقاة',
+    more: 'المزيد',
+    personal: 'حسابك',
     dark: 'ليلي',
   },
   footer: {
