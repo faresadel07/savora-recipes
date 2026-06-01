@@ -15,6 +15,7 @@ import FilmLibraryPage from './pages/FilmLibraryPage';
 import SkillsAcademyPage from './pages/SkillsAcademyPage';
 import WorldMarketsPage from './pages/WorldMarketsPage';
 import ChefHallPage from './pages/ChefHallPage';
+import DrinksLibraryPage from './pages/DrinksLibraryPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="academy" element={<SkillsAcademyPage />} />
         <Route path="markets" element={<WorldMarketsPage />} />
         <Route path="chefs" element={<ChefHallPage />} />
+        <Route path="drinks" element={<DrinksLibraryPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
         <Route path="*" element={<NotFoundPage />} />

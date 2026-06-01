@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, BookOpen, ChefHat, Film, Globe2, GraduationCap, Heart, MapPin, PlayCircle, Sparkles, Star, Timer, Utensils } from 'lucide-react';
+import { ArrowUpRight, BookOpen, ChefHat, Film, GlassWater, Globe2, GraduationCap, Heart, MapPin, PlayCircle, Sparkles, Star, Timer, Utensils } from 'lucide-react';
 import { getRandomRecipe, getRandomRecipes, searchRecipes } from '../api';
 import { FAMOUS_DISHES, PALESTINIAN_DISHES } from '../data/arab-cuisine';
 import { FOOD_FILMS, FEATURED_FILMS } from '../data/food-films';
 import { COOKING_SKILLS, LEARNING_PATHS } from '../data/skills-academy';
 import { WORLD_MARKETS, FEATURED_MARKETS } from '../data/world-markets';
 import { CHEFS, FEATURED_CHEFS } from '../data/chef-hall';
+import { DRINKS, FEATURED_DRINKS } from '../data/drinks-library';
 import { HOME_CATEGORIES, WORLD_CUISINES } from '../lib/constants';
 import { useCollections } from '../hooks/useCollections';
 import { useTranslation } from '../i18n';
@@ -550,6 +551,18 @@ const SHOWCASE_SECTIONS = [
     icon: ChefHat,
     accent: 'sage' as const,
     imageVideoId: () => FEATURED_CHEFS[0]?.videoId,
+  },
+  {
+    to: '/drinks',
+    titleEn: 'Drinks Library',
+    titleAr: 'مكتبة المشروبات',
+    blurbEn: 'Hot and cold drinks from around the world. Arabic coffee, Vietnamese ca phe, Moroccan mint tea, jallab, karkadeh, and many more.',
+    blurbAr: 'مشروبات ساخنة وباردة من كل العالم. قهوة عربية، فيتنامية، شاي بالنعنع مغربي، جلاب، كركديه، وأكثر.',
+    stat: () => `${DRINKS.length} drinks`,
+    statAr: () => `${DRINKS.length} مشروب`,
+    icon: GlassWater,
+    accent: 'gold' as const,
+    imageVideoId: () => FEATURED_DRINKS[0]?.videoId,
   },
   {
     to: '/library',

@@ -5,6 +5,7 @@ import {
   BookOpen,
   ChefHat,
   Film,
+  GlassWater,
   GraduationCap,
   Heart,
   HeartHandshake,
@@ -42,6 +43,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/academy', key: 'nav.academy', icon: GraduationCap },
   { to: '/markets', key: 'nav.markets', icon: MapPin },
   { to: '/chefs', key: 'nav.chefs', icon: ChefHat },
+  { to: '/drinks', key: 'nav.drinks', icon: GlassWater },
   { to: '/videos', key: 'nav.videos', icon: Tv },
   { to: '/library', key: 'nav.library', icon: BookOpen },
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
@@ -54,7 +56,7 @@ const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   { titleKey: 'nav.browse', itemKeys: ['nav.home', 'nav.recipes'] },
   {
     titleKey: 'nav.curated',
-    itemKeys: ['nav.arabCuisine', 'nav.films', 'nav.academy', 'nav.markets', 'nav.chefs'],
+    itemKeys: ['nav.arabCuisine', 'nav.films', 'nav.academy', 'nav.markets', 'nav.chefs', 'nav.drinks'],
   },
   {
     titleKey: 'nav.more',

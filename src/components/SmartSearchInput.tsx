@@ -5,6 +5,7 @@ import {
   ChefHat,
   Clock,
   Film,
+  GlassWater,
   GraduationCap,
   Languages,
   Lightbulb,
@@ -37,6 +38,7 @@ const TYPE_META: Record<SearchResultType, { label: string; icon: LucideIcon }> =
   chef: { label: 'Chefs', icon: ChefHat },
   skill: { label: 'Skills', icon: GraduationCap },
   market: { label: 'Markets', icon: MapPin },
+  drink: { label: 'Drinks', icon: GlassWater },
 };
 
 interface Props {
@@ -410,6 +412,7 @@ export default function SmartSearchInput({
                   [
                     ['recipes', grouped.recipes],
                     ['arab', grouped.arab],
+                    ['drinks', grouped.drinks],
                     ['films', grouped.films],
                     ['chefs', grouped.chefs],
                     ['skills', grouped.skills],

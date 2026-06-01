@@ -5,7 +5,7 @@
  */
 import Fuse, { type IFuseOptions } from 'fuse.js';
 
-export type SearchResultType = 'recipe' | 'arab-dish' | 'film' | 'chef' | 'skill' | 'market';
+export type SearchResultType = 'recipe' | 'arab-dish' | 'film' | 'chef' | 'skill' | 'market' | 'drink';
 
 export interface UniversalResult {
   id: string;
@@ -34,6 +34,7 @@ interface IndexBundle {
   chef: Fuse<UniversalResult>;
   skill: Fuse<UniversalResult>;
   market: Fuse<UniversalResult>;
+  drink: Fuse<UniversalResult>;
   // Source arrays kept around for the "Did you mean?" fuzzy fallback so we
   // do not have to peek at Fuse internals.
   allItems: UniversalResult[];
@@ -56,13 +57,14 @@ export function loadUniversalIndex(): Promise<IndexBundle> {
   if (buildPromise) return buildPromise;
 
   buildPromise = (async () => {
-    const [mealdbMod, arabMod, filmsMod, chefsMod, skillsMod, marketsMod] = await Promise.all([
+    const [mealdbMod, arabMod, filmsMod, chefsMod, skillsMod, marketsMod, drinksMod] = await Promise.all([
       import('../data/mealdb-cache.json'),
       import('../data/arab-cuisine'),
       import('../data/food-films'),
       import('../data/chef-hall'),
       import('../data/skills-academy'),
       import('../data/world-markets'),
+      import('../data/drinks-library'),
     ]);
 
     const meals: RawMeal[] = (mealdbMod.default as { meals: RawMeal[] }).meals ?? [];
@@ -151,6 +153,16 @@ export function loadUniversalIndex(): Promise<IndexBundle> {
       ].join(' '),
     }));
 
+    const drinks: UniversalResult[] = drinksMod.DRINKS.map((d) => ({
+      id: d.id,
+      type: 'drink',
+      title: d.name,
+      subtitle: `${d.temp === 'hot' ? 'Hot' : 'Cold'} · ${d.origin.split('.')[0]}`,
+      image: `https://img.youtube.com/vi/${d.videoId}/hqdefault.jpg`,
+      href: `/drinks#drink-${d.id}`,
+      searchText: [d.name, d.nameAr ?? '', d.origin, d.story, ...d.ingredients].join(' '),
+    }));
+
     cached = {
       recipes: new Fuse(recipes, FUSE_OPTS),
       arab: new Fuse(arabDishes, FUSE_OPTS),
@@ -158,7 +170,8 @@ export function loadUniversalIndex(): Promise<IndexBundle> {
       chef: new Fuse(chefs, FUSE_OPTS),
       skill: new Fuse(skills, FUSE_OPTS),
       market: new Fuse(markets, FUSE_OPTS),
-      allItems: [...recipes, ...arabDishes, ...films, ...chefs, ...skills, ...markets],
+      drink: new Fuse(drinks, FUSE_OPTS),
+      allItems: [...recipes, ...arabDishes, ...films, ...chefs, ...skills, ...markets, ...drinks],
     };
     return cached;
   })();
@@ -173,13 +186,14 @@ export interface GroupedResults {
   chefs: UniversalResult[];
   skills: UniversalResult[];
   markets: UniversalResult[];
+  drinks: UniversalResult[];
   total: number;
 }
 
 export function searchUniversal(query: string, limitPerType = 3): GroupedResults | null {
   if (!cached) return null;
   if (!query || query.length < 2) {
-    return { recipes: [], arab: [], films: [], chefs: [], skills: [], markets: [], total: 0 };
+    return { recipes: [], arab: [], films: [], chefs: [], skills: [], markets: [], drinks: [], total: 0 };
   }
   const recipes = cached.recipes.search(query, { limit: limitPerType + 1 }).map((h) => h.item);
   const arab = cached.arab.search(query, { limit: limitPerType }).map((h) => h.item);
@@ -187,6 +201,7 @@ export function searchUniversal(query: string, limitPerType = 3): GroupedResults
   const chefs = cached.chef.search(query, { limit: limitPerType }).map((h) => h.item);
   const skills = cached.skill.search(query, { limit: limitPerType }).map((h) => h.item);
   const markets = cached.market.search(query, { limit: limitPerType }).map((h) => h.item);
+  const drinks = cached.drink.search(query, { limit: limitPerType }).map((h) => h.item);
   return {
     recipes,
     arab,
@@ -194,7 +209,8 @@ export function searchUniversal(query: string, limitPerType = 3): GroupedResults
     chefs,
     skills,
     markets,
-    total: recipes.length + arab.length + films.length + chefs.length + skills.length + markets.length,
+    drinks,
+    total: recipes.length + arab.length + films.length + chefs.length + skills.length + markets.length + drinks.length,
   };
 }
 
