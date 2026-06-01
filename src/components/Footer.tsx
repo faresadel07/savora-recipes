@@ -26,6 +26,7 @@ const CURATED_LINKS: NavItem[] = [
   { to: '/markets', labelKey: 'footer.worldMarkets' },
   { to: '/chefs', labelKey: 'footer.chefHall' },
   { to: '/drinks', labelKey: 'footer.drinksLibrary' },
+  { to: '/shorts', labelKey: 'footer.foodShorts' },
 ];
 
 const FITNESS_LINKS: NavItem[] = [

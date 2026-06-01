@@ -16,6 +16,7 @@ import SkillsAcademyPage from './pages/SkillsAcademyPage';
 import WorldMarketsPage from './pages/WorldMarketsPage';
 import ChefHallPage from './pages/ChefHallPage';
 import DrinksLibraryPage from './pages/DrinksLibraryPage';
+import ShortsLibraryPage from './pages/ShortsLibraryPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="markets" element={<WorldMarketsPage />} />
         <Route path="chefs" element={<ChefHallPage />} />
         <Route path="drinks" element={<DrinksLibraryPage />} />
+        <Route path="shorts" element={<ShortsLibraryPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
         <Route path="*" element={<NotFoundPage />} />
