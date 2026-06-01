@@ -735,6 +735,9 @@ function FeaturedTrio({ language }: { language: string }) {
   const film = FEATURED_FILMS[0];
   const chef = FEATURED_CHEFS[0];
   if (!path || !film || !chef) return null;
+  // Pull the first lesson's thumbnail to give the Path card a real image
+  // instead of an empty top half.
+  const firstLesson = COOKING_SKILLS.find((s) => s.id === path.skillIds[0]);
 
   return (
     <section className="mt-20 md:mt-28">
@@ -754,17 +757,23 @@ function FeaturedTrio({ language }: { language: string }) {
           {/* Path card */}
           <Link
             to="/academy#paths"
-            className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)] md:p-7"
+            className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
           >
-            <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-gold-500/15 px-2.5 py-1 text-[11px] font-medium tracking-tight text-gold-700">
-              <Sparkles className="h-3 w-3" /> {language === 'ar' ? 'مسار تعلّم' : 'Learning path'}
+            <div className="relative aspect-video bg-cream-200">
+              <ShowcaseImage videoId={firstLesson?.videoId} />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-900/40 via-transparent to-transparent" />
+              <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-gold-700 backdrop-blur">
+                <Sparkles className="h-3 w-3" /> {language === 'ar' ? 'مسار تعلّم' : 'Learning path'}
+              </div>
             </div>
-            <h3 className="mt-4 text-xl font-semibold tracking-tight md:text-2xl">{path.name}</h3>
-            <p className="mt-1 text-sm italic tracking-tight text-ink-500">{path.goal}</p>
-            <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-600">{path.blurb}</p>
-            <div className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:text-terracotta-500">
-              {language === 'ar' ? 'ابدأ المسار' : 'Start the path'}
-              <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            <div className="flex flex-1 flex-col p-6 md:p-7">
+              <h3 className="text-xl font-semibold tracking-tight md:text-2xl">{path.name}</h3>
+              <p className="mt-1 text-sm italic tracking-tight text-ink-500">{path.goal}</p>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-600">{path.blurb}</p>
+              <div className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:text-terracotta-500">
+                {language === 'ar' ? 'ابدأ المسار' : 'Start the path'}
+                <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </div>
             </div>
           </Link>
 
