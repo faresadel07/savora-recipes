@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
+  BookOpen,
   ChefHat,
   Film,
   GlassWater,
@@ -34,7 +35,7 @@ interface NavItem {
   icon: LucideIcon;
 }
 
-// Full nav catalog used by the mobile drawer.
+// Every route the user can reach via the chrome.
 const NAV_ITEMS: NavItem[] = [
   { to: '/', key: 'nav.home', icon: Home },
   { to: '/recipes', key: 'nav.recipes', icon: Utensils },
@@ -45,24 +46,10 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/chefs', key: 'nav.chefs', icon: ChefHat },
   { to: '/markets', key: 'nav.markets', icon: MapPin },
   { to: '/videos', key: 'nav.videos', icon: Tv },
+  { to: '/library', key: 'nav.library', icon: BookOpen },
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
   { to: '/fitness', key: 'nav.fitness', icon: Activity },
 ];
-
-// Desktop pill: only the highest-trafficked routes so the bar breathes.
-// Everything else stays one tap away in the mobile drawer or the footer.
-const DESKTOP_NAV_KEYS = new Set<string>([
-  'nav.home',
-  'nav.recipes',
-  'nav.arabCuisine',
-  'nav.drinks',
-  'nav.films',
-  'nav.academy',
-  'nav.chefs',
-  'nav.markets',
-]);
-
-const DESKTOP_NAV_ITEMS = NAV_ITEMS.filter((item) => DESKTOP_NAV_KEYS.has(item.key));
 
 // Mobile menu groups the nav items into editorial sections so the drawer
 // reads like a table of contents instead of one long list.
@@ -74,7 +61,7 @@ const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   },
   {
     titleKey: 'nav.more',
-    itemKeys: ['nav.videos', 'nav.magazines', 'nav.fitness'],
+    itemKeys: ['nav.videos', 'nav.library', 'nav.magazines', 'nav.fitness'],
   },
 ];
 
@@ -105,26 +92,26 @@ export default function Header() {
   return (
     <header className="sticky top-3 z-40 px-3 md:top-4 md:px-6">
       <div
-        className={`mx-auto max-w-7xl overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow duration-300 ${
+        className={`mx-auto max-w-[1480px] overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow duration-300 ${
           scrolled
             ? 'shadow-[0_12px_36px_-12px_rgba(0,0,0,0.18)]'
             : 'shadow-[0_4px_16px_-6px_rgba(0,0,0,0.08)]'
         }`}
       >
-      <div className="flex h-14 items-center gap-2 px-4 md:h-16 md:px-6">
+      <div className="flex h-14 items-center gap-2 px-4 md:h-16 md:px-5 xl:px-6">
         <Link to="/" className="flex flex-none items-center gap-2 group" aria-label="Zaytoun home">
           <img src="/zaytoun-logo.jpg" alt="" width={28} height={28} className="h-6 w-6 rounded-full object-cover md:h-7 md:w-7" />
           <span className="text-lg font-semibold tracking-tighter md:text-xl">Zaytoun</span>
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-          {DESKTOP_NAV_ITEMS.map((item) => (
+        <nav className="hidden flex-1 items-center justify-center gap-0.5 xl:gap-1 lg:flex">
+          {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `whitespace-nowrap rounded-full px-3.5 py-1.5 text-[13px] font-medium tracking-tight transition-all ${
+                `whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-medium tracking-tight transition-all xl:px-3.5 xl:text-[13px] ${
                   isActive
                     ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
                     : 'text-ink-500 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'

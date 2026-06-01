@@ -12,6 +12,7 @@ interface NavItem {
 const DISCOVER_LINKS: NavItem[] = [
   { to: '/recipes', labelKey: 'footer.allRecipes' },
   { to: '/videos', labelKey: 'footer.videoLibrary' },
+  { to: '/library', labelKey: 'footer.cookbookLibrary' },
   { to: '/magazines', labelKey: 'footer.magazineRack' },
   { to: '/favorites', labelKey: 'footer.yourFavorites' },
 ];
