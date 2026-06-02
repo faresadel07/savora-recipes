@@ -114,50 +114,111 @@ function RecipeActions({ dish }: { dish: ArabDish }) {
   async function handleDownload() {
     setPdfBusy(true);
     try {
-      const { default: jsPDF } = await import('jspdf');
-      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      const MARGIN = 48;
-      const W = doc.internal.pageSize.getWidth() - MARGIN * 2;
-      let y = MARGIN;
+      const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf'),
+      ]);
 
-      const writeWrapped = (text: string, size: number, weight: 'normal' | 'bold' = 'normal', spaceAfter = 6) => {
-        doc.setFont('helvetica', weight);
-        doc.setFontSize(size);
-        const lines = doc.splitTextToSize(text, W);
-        for (const ln of lines) {
-          if (y > doc.internal.pageSize.getHeight() - MARGIN) {
-            doc.addPage();
-            y = MARGIN;
-          }
-          doc.text(ln, MARGIN, y);
-          y += size + 2;
+      // Build an off-screen printable card. The browser handles Arabic shaping
+      // and RTL layout natively, so html2canvas captures it as a faithful
+      // image. We embed that image in jsPDF, which sidesteps jsPDF's lack of
+      // Arabic font support entirely.
+      const displayName = isAr ? dish.nameAr : dish.name;
+      const subName = isAr ? dish.name : dish.nameAr;
+      const fontStack = isAr
+        ? `'IBM Plex Sans Arabic', 'Geeza Pro', 'Segoe UI Arabic', system-ui, sans-serif`
+        : `'Inter', 'SF Pro Text', system-ui, sans-serif`;
+      const escapeHtml = (s: string) =>
+        s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const container = document.createElement('div');
+      container.style.cssText = [
+        'position: fixed',
+        'top: -10000px',
+        'left: 0',
+        'width: 780px',
+        'padding: 56px 48px',
+        'background: #fbf9f4',
+        'color: #1f1c18',
+        `font-family: ${fontStack}`,
+        `direction: ${isAr ? 'rtl' : 'ltr'}`,
+        `text-align: ${isAr ? 'right' : 'left'}`,
+      ].join('; ');
+      container.innerHTML = `
+        <h1 style="font-size: 46px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; color: #1f1c18; line-height: 1.05;">
+          ${escapeHtml(displayName)}
+        </h1>
+        <p style="font-size: 22px; font-weight: 500; color: #6c655c; margin: 0 0 18px; line-height: 1.2;">
+          ${escapeHtml(subName)}
+        </p>
+        <p style="font-size: 14px; font-weight: 500; color: #b8632e; margin: 0 0 22px; letter-spacing: 0.03em; text-transform: uppercase;">
+          ${escapeHtml(origin)}
+        </p>
+        <hr style="border: none; border-top: 1px solid #e6dfd1; margin: 0 0 22px;">
+        <p style="font-size: 16px; line-height: 1.7; color: #3a352e; margin: 0 0 36px;">
+          ${escapeHtml(story)}
+        </p>
+        <h2 style="font-size: 14px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b8632e; margin: 0 0 14px;">
+          ${labels.ingredients}
+        </h2>
+        <ul style="padding: 0; margin: 0 0 32px; list-style: none;">
+          ${ingredients
+            .map(
+              (i) =>
+                `<li style="padding: 6px 0; font-size: 15px; line-height: 1.55; color: #3a352e; border-bottom: 1px solid #efeae0;">
+                  <span style="color: #b8632e; font-weight: 700; ${isAr ? 'margin-left: 8px;' : 'margin-right: 8px;'}">•</span>${escapeHtml(i)}
+                </li>`,
+            )
+            .join('')}
+        </ul>
+        <h2 style="font-size: 14px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b8632e; margin: 0 0 14px;">
+          ${labels.method}
+        </h2>
+        <ol style="padding: 0; margin: 0 0 36px; list-style: none; counter-reset: zaytoun-step;">
+          ${steps
+            .map(
+              (s, idx) =>
+                `<li style="padding: 10px 0; font-size: 15px; line-height: 1.65; color: #3a352e; display: flex; gap: 14px; ${isAr ? 'flex-direction: row-reverse;' : ''}">
+                  <span style="flex: none; width: 26px; height: 26px; border-radius: 999px; background: #1f1c18; color: #fbf9f4; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">${idx + 1}</span>
+                  <span style="flex: 1; padding-top: 3px;">${escapeHtml(s)}</span>
+                </li>`,
+            )
+            .join('')}
+        </ol>
+        <hr style="border: none; border-top: 1px solid #e6dfd1; margin: 0 0 16px;">
+        <p style="font-size: 11px; color: #9a948a; margin: 0; letter-spacing: 0.04em;">
+          ${labels.video}: https://www.youtube.com/watch?v=${dish.videoId}
+        </p>
+        <p style="font-size: 11px; color: #9a948a; margin: 6px 0 0; letter-spacing: 0.04em;">
+          ${labels.from} · zaytoun.online
+        </p>
+      `;
+      document.body.appendChild(container);
+      try {
+        const canvas = await html2canvas(container, {
+          backgroundColor: '#fbf9f4',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+        const pageW = pdf.internal.pageSize.getWidth();
+        const pageH = pdf.internal.pageSize.getHeight();
+        const ratio = canvas.width / canvas.height;
+        const horizontalMargin = 28;
+        const verticalMargin = 28;
+        let imgW = pageW - horizontalMargin * 2;
+        let imgH = imgW / ratio;
+        if (imgH > pageH - verticalMargin * 2) {
+          imgH = pageH - verticalMargin * 2;
+          imgW = imgH * ratio;
         }
-        y += spaceAfter;
-      };
-
-      // Note: jsPDF default fonts do not support Arabic glyphs.
-      // For now keep the PDF in English text so it renders correctly.
-      // Arabic content shows in the on-page card, the read-aloud, and the copied clipboard text.
-      writeWrapped(dish.name, 26, 'bold', 4);
-      writeWrapped(dish.origin, 11, 'normal', 12);
-      doc.setDrawColor(220);
-      doc.line(MARGIN, y, MARGIN + W, y);
-      y += 16;
-
-      writeWrapped(dish.story, 11, 'normal', 16);
-
-      writeWrapped('INGREDIENTS', 12, 'bold', 6);
-      for (const ing of dish.ingredients) writeWrapped(`•  ${ing}`, 11, 'normal', 2);
-      y += 12;
-
-      writeWrapped('METHOD', 12, 'bold', 6);
-      dish.steps.forEach((s, i) => writeWrapped(`${i + 1}.  ${s}`, 11, 'normal', 6));
-
-      y += 16;
-      writeWrapped(`Video tutorial: https://www.youtube.com/watch?v=${dish.videoId}`, 9, 'normal', 2);
-      writeWrapped('From Zaytoun', 9, 'normal', 0);
-
-      doc.save(`${dish.name.replace(/\s+/g, '-').toLowerCase()}.pdf`);
+        pdf.addImage(imgData, 'JPEG', (pageW - imgW) / 2, verticalMargin, imgW, imgH);
+        const slug = (isAr ? dish.id : dish.name.replace(/\s+/g, '-').toLowerCase());
+        pdf.save(`${slug}.pdf`);
+      } finally {
+        document.body.removeChild(container);
+      }
     } finally {
       setPdfBusy(false);
     }
