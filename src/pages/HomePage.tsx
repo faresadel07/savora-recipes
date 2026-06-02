@@ -564,19 +564,6 @@ const SHOWCASE_SECTIONS = [
     accent: 'gold' as const,
     imageVideoId: () => FEATURED_DRINKS[0]?.videoId,
   },
-  {
-    to: '/library',
-    titleEn: 'Cookbook Library',
-    titleAr: 'مكتبة الكتب',
-    blurbEn: 'Public-domain cookbooks hosted on Internet Archive. Read inside the site, full pages, no downloads required.',
-    blurbAr: 'كتب طبخ بالمجال العام مستضافة على Internet Archive. اقرأها داخل الموقع، صفحات كاملة، بدون تحميل.',
-    stat: () => 'Read in place',
-    statAr: () => 'اقرأ مباشرة',
-    icon: BookOpen,
-    accent: 'terracotta' as const,
-    imageVideoId: () => undefined,
-    imageUrl: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=1200&h=900&fit=crop&q=80',
-  },
 ];
 
 function ShowcaseImage({ videoId, imageUrl }: { videoId?: string; imageUrl?: string }) {

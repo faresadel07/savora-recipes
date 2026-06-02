@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
-  BookOpen,
   ChefHat,
   Film,
   GlassWater,
@@ -50,7 +49,6 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/chefs', key: 'nav.chefs', icon: ChefHat },
   { to: '/markets', key: 'nav.markets', icon: MapPin },
   { to: '/videos', key: 'nav.videos', icon: Tv },
-  { to: '/library', key: 'nav.library', icon: BookOpen },
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
   { to: '/fitness', key: 'nav.fitness', icon: Activity },
 ];
@@ -65,7 +63,7 @@ const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   },
   {
     titleKey: 'nav.more',
-    itemKeys: ['nav.videos', 'nav.library', 'nav.magazines', 'nav.fitness'],
+    itemKeys: ['nav.videos', 'nav.magazines', 'nav.fitness'],
   },
 ];
 

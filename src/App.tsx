@@ -11,7 +11,6 @@ import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import VideosPage from './pages/VideosPage';
-import LibraryPage from './pages/LibraryPage';
 import MagazinesPage from './pages/MagazinesPage';
 import FitnessPage from './pages/FitnessPage';
 import ArabCuisinePage from './pages/ArabCuisinePage';
@@ -32,7 +31,6 @@ export default function App() {
         <Route path="recipe/:id" element={<RecipeDetailPage />} />
         <Route path="category/:slug" element={<CategoryPage />} />
         <Route path="videos" element={<VideosPage />} />
-        <Route path="library" element={<LibraryPage />} />
         <Route path="magazines" element={<MagazinesPage />} />
         <Route path="fitness" element={<FitnessPage />} />
         <Route path="arab-cuisine" element={<ArabCuisinePage />} />
