@@ -1,0 +1,17 @@
+# Robots policy for zaytoun.online
+# We are an editorial recipe and food culture platform. Crawl freely, every
+# page is meant to be indexable. There is no logged in area, no user data,
+# no rate sensitive endpoints.
+
+User-agent: *
+Allow: /
+
+# Aggressive crawlers we still trust (Bing, DuckDuckGo, Yandex, Baidu)
+# inherit the default rule. Specific blocks left out on purpose.
+
+# Where to find the index of every URL we want indexed.
+Sitemap: https://www.zaytoun.online/sitemap.xml
+
+# Host preference: the apex zaytoun.online redirects to www so this is the
+# canonical host Google should treat as the source of truth.
+Host: https://www.zaytoun.online

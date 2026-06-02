@@ -8,7 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#13110F" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
-    <meta name="description" content="Zaytoun. A hand-picked corner of the internet for recipes worth cooking." />
+    <meta name="description" content="Zaytoun is a bilingual cooking platform with 825 hand picked recipes, Arab cuisine, food films, a chef hall, world markets, a skills academy, drinks, shorts, and a fitness page with a macro calculator. Free, no ads, no tracking." />
+    <meta name="keywords" content="zaytoun, recipes, arab recipes, arabic recipes, food, cooking, mansaf, knafeh, baklava, hummus, falafel, shawarma, macro calculator, fitness recipes, food films, food markets, chefs, free recipes, no ads" />
+    <meta name="author" content="Faris Hamdan" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href="https://www.zaytoun.online/" />
+    <link rel="alternate" hreflang="en" href="https://www.zaytoun.online/" />
+    <link rel="alternate" hreflang="ar" href="https://www.zaytoun.online/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.zaytoun.online/" />
+
+    <!-- Google Search Console verification. Replace TOKEN with the value Google
+         gives you in Search Console once you add this site as a property. -->
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_VERIFICATION_TOKEN" />
+
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Zaytoun" />
@@ -18,8 +30,8 @@
     <meta property="og:site_name" content="Zaytoun" />
     <meta property="og:title" content="Zaytoun. Recipes Worth Cooking." />
     <meta property="og:description" content="A hand-picked corner of the internet for recipes worth cooking. Arab heritage, world films, a chef hall, and a skills academy." />
-    <meta property="og:url" content="https://zaytoun.online/" />
-    <meta property="og:image" content="https://zaytoun.online/og-image.jpg" />
+    <meta property="og:url" content="https://www.zaytoun.online/" />
+    <meta property="og:image" content="https://www.zaytoun.online/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Zaytoun logo on a warm cream background" />
@@ -30,9 +42,39 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Zaytoun. Recipes Worth Cooking." />
     <meta name="twitter:description" content="A hand-picked corner of the internet for recipes worth cooking." />
-    <meta name="twitter:image" content="https://zaytoun.online/og-image.jpg" />
+    <meta name="twitter:image" content="https://www.zaytoun.online/og-image.jpg" />
 
     <title>Zaytoun. Recipes Worth Cooking.</title>
+
+    <!-- Structured data so Google understands this is a recipe and food
+         culture website. The WebSite entity enables sitelinks search box. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Zaytoun",
+      "alternateName": "زيتون",
+      "url": "https://www.zaytoun.online/",
+      "description": "Bilingual cooking platform with 825 hand picked recipes, Arab cuisine, food films, a chef hall, world markets, a skills academy, drinks, shorts, and a fitness page with a macro calculator.",
+      "inLanguage": ["en", "ar"],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Zaytoun",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.zaytoun.online/icon-192.png"
+        }
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.zaytoun.online/recipes?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
