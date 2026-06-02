@@ -182,6 +182,9 @@ export const en = {
     statRecipes: 'Recipes',
     statCuisines: 'World cuisines',
     statSignUp: 'Sign-up needed',
+    quotesEyebrow: 'In their own words',
+    quotesTitle: 'What the great chefs say.',
+    quotesSubtitle: 'Short, sharp lines from the cooks who shaped how the world eats. Swipe through the wall.',
   },
   search: {
     eyebrow: 'Discover',
@@ -772,6 +775,9 @@ export const ar: typeof en = {
     statRecipes: 'وصفة',
     statCuisines: 'مطبخ عالمي',
     statSignUp: 'لا حاجة للتسجيل',
+    quotesEyebrow: 'بكلماتهم هم',
+    quotesTitle: 'ما يقوله كبار الشيفات.',
+    quotesSubtitle: 'جُمل قصيرة وحادّة من الطبّاخين الذين شكّلوا طريقة العالم في الأكل. اسحب لتقرأ.',
   },
   search: {
     eyebrow: 'اكتشف',

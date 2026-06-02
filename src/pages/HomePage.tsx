@@ -15,6 +15,7 @@ import { useTranslation } from '../i18n';
 import { CUISINE_AR } from '../i18n/data-translations';
 import RecipeCard from '../components/RecipeCard';
 import RecipeImage from '../components/RecipeImage';
+import ChefQuotesMarquee from '../components/ChefQuotesMarquee';
 import { RecipeGridSkeleton } from '../components/Skeleton';
 import ErrorState from '../components/ErrorState';
 
@@ -189,6 +190,9 @@ export default function HomePage() {
 
       {/* FEATURED CHEF SPOTLIGHT - editorial article rotation */}
       <FeaturedChef language={language} />
+
+      {/* CHEF QUOTES - horizontal marquee of famous chef sayings */}
+      <ChefQuotesMarquee />
 
       {/* FEATURED LEARNING PATH + EDITOR'S PICK FILM */}
       <FeaturedTrio language={language} />
