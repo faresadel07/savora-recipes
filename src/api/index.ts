@@ -1,5 +1,6 @@
 import type { Recipe, RecipeSummary, SearchFilters, SearchResponse } from '../types/recipe';
 import {
+  mdbAllSummaries,
   mdbFilterByArea,
   mdbFilterByCategory,
   mdbLookup,
@@ -98,10 +99,28 @@ export async function searchRecipes(filters: SearchFilters = {}): Promise<Search
   }
 
   if (!query) {
-    // No filters at all: surface a default set
+    // No filters at all: surface the whole catalogue. The cached MealDB ships
+    // ~668 recipes plus the local hand-curated set, so we have plenty to
+    // paginate through. Local recipes first since they are richest.
     try {
-      const meals = await mdbFilterByCategory('Chicken');
-      return paginate(sortResults(meals, filters.sort), filters);
+      const all = await mdbAllSummaries();
+      const localSummaries: RecipeSummary[] = LOCAL_RECIPES.map((r) => ({
+        id: r.id,
+        source: r.source,
+        title: r.title,
+        image: r.image,
+        category: r.category,
+        area: r.area,
+      }));
+      const seen = new Set<string>();
+      const merged: RecipeSummary[] = [];
+      for (const r of [...localSummaries, ...all]) {
+        if (!seen.has(r.id)) {
+          seen.add(r.id);
+          merged.push(r);
+        }
+      }
+      return paginate(sortResults(merged, filters.sort), filters);
     } catch (e) {
       throw new RecipeApiError(String(e), 'network');
     }

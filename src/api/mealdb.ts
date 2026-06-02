@@ -162,6 +162,16 @@ export async function mdbFilterByArea(area: string): Promise<RecipeSummary[]> {
     .map(adaptSummary);
 }
 
+/**
+ * Return summaries for every cached MealDB recipe. Used by the default
+ * "browse everything" view when the user has not entered a search query
+ * or selected a filter.
+ */
+export async function mdbAllSummaries(): Promise<RecipeSummary[]> {
+  const { meals } = await loadCache();
+  return meals.map(adaptSummary);
+}
+
 export async function mdbCategories(): Promise<{ name: string; description: string; image: string }[]> {
   // Categories metadata only — the live endpoint is tiny.
   try {
