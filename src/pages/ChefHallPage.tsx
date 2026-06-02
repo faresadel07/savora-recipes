@@ -9,6 +9,7 @@ import {
   type Chef,
   type ChefRegion,
 } from '../data/chef-hall';
+import { CHEF_ARTICLES } from '../data/chef-articles';
 
 type RegionFilter = 'all' | ChefRegion;
 
@@ -83,8 +84,9 @@ function ChefCard({ chef }: { chef: Chef }) {
   const cuisine = pl(chef.cuisine, chef.cuisineAr);
   const philosophy = pl(chef.philosophy, chef.philosophyAr);
   const bio = pl(chef.bio, chef.bioAr);
+  const article = CHEF_ARTICLES[chef.id];
   return (
-    <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
+    <article id={`chef-${chef.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
         <YoutubeLite videoId={chef.videoId} title={chef.name} />
       </div>
@@ -99,6 +101,27 @@ function ChefCard({ chef }: { chef: Chef }) {
           "{philosophy}"
         </p>
         <p className="mt-4 text-sm leading-relaxed text-ink-600">{bio}</p>
+
+        {article && (
+          <details className="group/article mt-5 border-t border-ink-100 pt-4">
+            <summary className="cursor-pointer list-none">
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-tight text-terracotta-500 hover:text-terracotta-600">
+                <BookOpen className="h-3 w-3" />
+                {isAr ? 'اقرأ المقال الكامل' : 'Read the full article'}
+                <span className="text-ink-400 transition-transform group-open/article:rotate-90">›</span>
+              </span>
+            </summary>
+            <div className="mt-4 space-y-4 text-[14px] leading-relaxed text-ink-700">
+              <p className="text-base italic text-ink-600">{isAr ? article.hookAr : article.hookEn}</p>
+              {(isAr ? article.bodyAr : article.bodyEn).split('\n\n').map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+              <p className="mt-4 text-[11px] uppercase tracking-widest text-ink-400">
+                {isAr ? article.dateAr : article.dateEn}
+              </p>
+            </div>
+          </details>
+        )}
 
         {chef.restaurants && chef.restaurants.length > 0 && (
           <div className="mt-5">

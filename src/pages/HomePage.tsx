@@ -7,6 +7,7 @@ import { FOOD_FILMS, FEATURED_FILMS } from '../data/food-films';
 import { COOKING_SKILLS, LEARNING_PATHS } from '../data/skills-academy';
 import { WORLD_MARKETS, FEATURED_MARKETS } from '../data/world-markets';
 import { CHEFS, FEATURED_CHEFS } from '../data/chef-hall';
+import { CHEF_ARTICLES, FEATURED_CHEF_IDS } from '../data/chef-articles';
 import { DRINKS, FEATURED_DRINKS } from '../data/drinks-library';
 import { HOME_CATEGORIES, WORLD_CUISINES } from '../lib/constants';
 import { useCollections } from '../hooks/useCollections';
@@ -185,6 +186,9 @@ export default function HomePage() {
 
       {/* RECIPE OF THE DAY */}
       <RecipeOfTheDay language={language} />
+
+      {/* FEATURED CHEF SPOTLIGHT - editorial article rotation */}
+      <FeaturedChef language={language} />
 
       {/* FEATURED LEARNING PATH + EDITOR'S PICK FILM */}
       <FeaturedTrio language={language} />
@@ -720,6 +724,84 @@ function RecipeOfTheDay({ language }: { language: string }) {
             </div>
           </div>
         </Link>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// FEATURED CHEF - rotates a long-form editorial article every day
+// ============================================================
+function FeaturedChef({ language }: { language: string }) {
+  const isAr = language === 'ar';
+  // Rotate based on day of year so the same chef appears for the whole day,
+  // and the rotation cycles through the full list before repeating.
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  const featuredId = FEATURED_CHEF_IDS[dayOfYear % FEATURED_CHEF_IDS.length];
+  const chef = CHEFS.find((c) => c.id === featuredId);
+  const article = CHEF_ARTICLES[featuredId];
+  if (!chef || !article) return null;
+
+  const hook = isAr ? article.hookAr : article.hookEn;
+  const body = isAr ? article.bodyAr : article.bodyEn;
+  const date = isAr ? article.dateAr : article.dateEn;
+  const cuisine = isAr ? chef.cuisineAr || chef.cuisine : chef.cuisine;
+  // The full article body is in the chef-articles file; here we show the
+  // opening two paragraphs as a teaser. The full article opens on the chef
+  // detail page when the visitor clicks through.
+  const paragraphs = body.split('\n\n');
+  const teaser = paragraphs.slice(0, 2).join('\n\n');
+
+  return (
+    <section className="mt-20 md:mt-28">
+      <div className="container-wide">
+        <div className="overflow-hidden rounded-3xl bg-ink-900 text-cream-50">
+          <div className="grid items-stretch md:grid-cols-12">
+            {/* Portrait side */}
+            <div className="relative aspect-[4/3] md:col-span-5 md:aspect-auto">
+              <RecipeImage
+                src={`https://img.youtube.com/vi/${chef.videoId}/maxresdefault.jpg`}
+                alt={chef.name}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent md:bg-gradient-to-r" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-terracotta-300">
+                  {date}
+                </p>
+              </div>
+            </div>
+            {/* Article side */}
+            <div className="md:col-span-7">
+              <div className="p-7 md:p-10 lg:p-12">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-terracotta-400">
+                  {isAr ? 'شيف الأسبوع' : 'Chef Spotlight'}
+                </p>
+                <h2 className="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+                  {chef.name}
+                </h2>
+                <p className="mt-1 text-sm font-medium tracking-tight text-gold-400">
+                  {cuisine}
+                </p>
+                <p className="mt-5 text-base italic leading-relaxed text-cream-50 md:text-lg">
+                  {hook}
+                </p>
+                <div className="mt-6 space-y-4 text-[14px] leading-relaxed text-cream-100/85 md:text-[15px]">
+                  {teaser.split('\n\n').map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+                <Link
+                  to={`/chefs#chef-${chef.id}`}
+                  className="mt-7 inline-flex items-center gap-2 rounded-full bg-cream-50 px-6 py-3 text-[13px] font-semibold tracking-tight text-ink-900 transition-all duration-300 hover:bg-terracotta-500 hover:text-cream-50 active:scale-[0.98]"
+                >
+                  {isAr ? 'اقرأ المقال كاملاً' : 'Read the full article'}
+                  <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

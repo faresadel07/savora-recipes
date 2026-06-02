@@ -38,6 +38,7 @@ import type { Recipe } from '../types/recipe';
 import RecipeCard from '../components/RecipeCard';
 import RecipeImage from '../components/RecipeImage';
 import YouTubeEmbed from '../components/YouTubeEmbed';
+import NutritionCard from '../components/NutritionCard';
 import Skeleton from '../components/Skeleton';
 import ErrorState from '../components/ErrorState';
 
@@ -480,6 +481,10 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
             )}
           </section>
         </div>
+      </div>
+
+      <div className="container-wide">
+        <NutritionCard ingredients={displayIngredients ?? []} servings={servings} />
       </div>
 
       {similar.length > 0 && (
