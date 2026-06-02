@@ -215,7 +215,94 @@ export const MODERN_SITE_AR: Record<string, { blurb: string; region: string; fre
   },
 };
 
-// ---------- Local recipes (LibraryPage + RecipeDetailPage) ----------
+// ---------- MealDB category and area lookup tables ----------
+export const MEALDB_CATEGORY_AR: Record<string, string> = {
+  Beef: 'لحم بقر',
+  Breakfast: 'فطور',
+  Chicken: 'دجاج',
+  Dessert: 'حلويات',
+  Goat: 'لحم ماعز',
+  Lamb: 'لحم خروف',
+  Miscellaneous: 'متنوّع',
+  Pasta: 'باستا',
+  Pork: 'لحم خنزير',
+  Seafood: 'مأكولات بحرية',
+  Side: 'طبق جانبي',
+  Starter: 'مقبّلات',
+  Vegan: 'نباتي صرف',
+  Vegetarian: 'نباتي',
+  Salad: 'سلطة',
+  Soup: 'حساء',
+  'Main course': 'طبق رئيسي',
+  Baking: 'مخبوزات',
+  Snack: 'وجبة خفيفة',
+};
+
+export const MEALDB_AREA_AR: Record<string, string> = {
+  Italian: 'إيطالي', French: 'فرنسي', France: 'فرنسي',
+  Chinese: 'صيني', Japanese: 'ياباني', Indian: 'هندي', India: 'هندي',
+  Mexican: 'مكسيكي', Thai: 'تايلندي', Vietnamese: 'فيتنامي',
+  Greek: 'يوناني', Spanish: 'إسباني', Turkish: 'تركي',
+  Moroccan: 'مغربي', Egyptian: 'مصري', Egypt: 'مصري',
+  Lebanese: 'لبناني', Jordanian: 'أردني', Palestinian: 'فلسطيني', Syrian: 'سوري',
+  British: 'بريطاني', 'United Kingdom': 'بريطاني',
+  American: 'أمريكي', 'United States': 'أمريكي',
+  Australian: 'أسترالي', Australia: 'أسترالي',
+  Canadian: 'كندي', Canada: 'كندي',
+  Irish: 'أيرلندي', Ireland: 'أيرلندي',
+  Polish: 'بولندي', Poland: 'بولندي',
+  Portuguese: 'برتغالي', Portugal: 'برتغالي',
+  Croatian: 'كرواتي', Croatia: 'كرواتي',
+  Russian: 'روسي', Russia: 'روسي',
+  Ukrainian: 'أوكراني', Ukraine: 'أوكراني',
+  Dutch: 'هولندي', Netherlands: 'هولندي',
+  Norwegian: 'نرويجي', Norway: 'نرويجي',
+  Swedish: 'سويدي', Sweden: 'سويدي',
+  German: 'ألماني', Germany: 'ألماني',
+  Austrian: 'نمساوي', Austria: 'نمساوي',
+  Hungarian: 'هنغاري', Hungary: 'هنغاري',
+  Czech: 'تشيكي',
+  Filipino: 'فلبيني', Philippines: 'فلبيني',
+  Malaysian: 'ماليزي', Malaysia: 'ماليزي',
+  Singaporean: 'سنغافوري',
+  Indonesian: 'إندونيسي', Indonesia: 'إندونيسي',
+  Cambodian: 'كمبودي', Cambodia: 'كمبودي',
+  Korean: 'كوري', 'South Korean': 'كوري جنوبي',
+  Kenyan: 'كيني', Kenya: 'كيني',
+  Nigerian: 'نيجيري', 'South African': 'جنوب أفريقي',
+  Brazilian: 'برازيلي', Brazil: 'برازيلي',
+  Argentine: 'أرجنتيني', Argentina: 'أرجنتيني',
+  Uruguayan: 'أوروغواي', Uruguay: 'أوروغواي',
+  Peruvian: 'بيروفي', Peru: 'بيروفي',
+  Venezuelan: 'فنزويلي', Venezuela: 'فنزويلي',
+  Colombian: 'كولومبي', Colombia: 'كولومبي',
+  Cuban: 'كوبي',
+  Jamaican: 'جامايكي', Jamaica: 'جامايكي',
+  Bahamian: 'باهامي',
+  Salvadoran: 'سلفادوري',
+  Algerian: 'جزائري', Algeria: 'جزائري',
+  Tunisian: 'تونسي', Tunisia: 'تونسي',
+  Libyan: 'ليبي', Sudanese: 'سوداني', Yemeni: 'يمني',
+  'Saudi Arabian': 'سعودي',
+  Emirati: 'إماراتي', Kuwaiti: 'كويتي', Bahraini: 'بحريني',
+  Qatari: 'قطري', Omani: 'عماني',
+  Iraqi: 'عراقي', Iranian: 'إيراني', Iran: 'إيراني',
+  Afghan: 'أفغاني', Pakistani: 'باكستاني', Bangladeshi: 'بنغالي',
+  'Sri Lankan': 'سريلانكي', Nepalese: 'نيبالي',
+  Mediterranean: 'متوسطي', Asian: 'آسيوي', African: 'أفريقي', European: 'أوروبي',
+};
+
+export function arCategory(category?: string): string | undefined {
+  if (!category) return undefined;
+  return MEALDB_CATEGORY_AR[category] || category;
+}
+
+export function arArea(area?: string): string | undefined {
+  if (!area) return undefined;
+  return MEALDB_AREA_AR[area] || area;
+}
+
+// ---------- Local recipes (RecipeDetailPage) ----------
 export const LOCAL_RECIPE_AR: Record<string, { title: string; blurb: string }> = {
   'lo-usda-oats': { title: 'شوفان منقوع بالتوت', blurb: 'تحضير خمس دقائق، فطور بدون طبخ. يستيقظ كريمي في الثلاجة.' },
   'lo-usda-tacos': { title: 'تاكو الفاصولياء السوداء والذرة', blurb: 'تاكو نباتي لأيام الأسبوع. عشر دقائق، مقلاة واحدة، ستة دولارات.' },

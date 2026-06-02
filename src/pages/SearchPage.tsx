@@ -35,7 +35,7 @@ const PEEK_RECIPES = LOCAL_RECIPES.slice(0, 4);
 const PAGE = 12;
 
 export default function SearchPage() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [params, setParams] = useSearchParams();
   const [draftQuery, setDraftQuery] = useState(params.get('q') ?? '');
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -144,29 +144,35 @@ export default function SearchPage() {
 
             <div className="md:col-span-5">
               <div className="grid grid-cols-2 gap-3">
-                {PEEK_RECIPES.map((r, i) => (
-                  <Link
-                    key={r.id}
-                    to={`/recipe/${r.id}`}
-                    className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)] transition-transform duration-500 hover:-translate-y-1"
-                    style={{ animationDelay: `${i * 60}ms` }}
-                  >
-                    <RecipeImage
-                      src={r.image}
-                      alt={r.title}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-3.5">
-                      <p className="text-[10px] uppercase tracking-widest text-cream-100/75">
-                        {r.category}
-                      </p>
-                      <p className="mt-1 text-sm font-semibold leading-tight tracking-tight text-cream-50">
-                        {r.title}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
+                {PEEK_RECIPES.map((r, i) => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const lr = r as any;
+                  const peekTitle = language === 'ar' ? (lr.titleAr || r.title) : r.title;
+                  const peekCategory = language === 'ar' ? (lr.categoryAr || r.category) : r.category;
+                  return (
+                    <Link
+                      key={r.id}
+                      to={`/recipe/${r.id}`}
+                      className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)] transition-transform duration-500 hover:-translate-y-1"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
+                      <RecipeImage
+                        src={r.image}
+                        alt={peekTitle}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5">
+                        <p className="text-[10px] uppercase tracking-widest text-cream-100/75">
+                          {peekCategory}
+                        </p>
+                        <p className="mt-1 text-sm font-semibold leading-tight tracking-tight text-cream-50">
+                          {peekTitle}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

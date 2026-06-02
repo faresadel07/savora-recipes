@@ -3,6 +3,9 @@ import { Clock, Heart, Users } from 'lucide-react';
 import type { RecipeSummary } from '../types/recipe';
 import { useFavorites } from '../hooks/useFavorites';
 import { minutesToText } from '../lib/format';
+import { useTranslation } from '../i18n';
+import { LOCAL_RECIPE_AR, arArea, arCategory } from '../i18n/data-translations';
+import { LOCAL_RECIPES } from '../data/local-recipes';
 import RecipeImage from './RecipeImage';
 
 interface Props {
@@ -12,21 +15,43 @@ interface Props {
   eager?: boolean;
 }
 
+function getArabicTitle(recipe: RecipeSummary): string | undefined {
+  // Local recipes carry titleAr embedded in their record (Phase 4 translation).
+  if (recipe.id.startsWith('lo-')) {
+    const local = LOCAL_RECIPES.find((r) => r.id === recipe.id);
+    if (local) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lr = local as any;
+      return lr.titleAr || LOCAL_RECIPE_AR[recipe.id]?.title;
+    }
+  }
+  // Forkify and MealDB titles are food names like "Chicken Tikka Masala" and
+  // translating them word-by-word usually reads worse than leaving them in
+  // English. We let the title stand and just translate the metadata below.
+  return undefined;
+}
+
 export default function RecipeCard({ recipe, variant = 'default', index = 0, eager = false }: Props) {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(recipe.id);
-  const meta = recipe.area || recipe.category;
+  const titleAr = isAr ? getArabicTitle(recipe) : undefined;
+  const displayTitle = titleAr || recipe.title;
+  const areaDisplay = isAr ? arArea(recipe.area) : recipe.area;
+  const categoryDisplay = isAr ? arCategory(recipe.category) : recipe.category;
+  const meta = areaDisplay || categoryDisplay;
 
   if (variant === 'horizontal') {
     return (
       <article className="group grid grid-cols-[112px_1fr] gap-4 sm:grid-cols-[160px_1fr] sm:gap-5" style={{ animationDelay: `${index * 40}ms` }}>
         <Link to={`/recipe/${recipe.id}`} className="relative aspect-square overflow-hidden rounded-xl bg-cream-200">
-          <RecipeImage src={recipe.image} alt={recipe.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <RecipeImage src={recipe.image} alt={displayTitle} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         </Link>
         <div className="flex flex-col justify-center">
           <Link to={`/recipe/${recipe.id}`}>
             <h3 className="text-base font-semibold leading-snug tracking-tight transition-colors group-hover:text-terracotta-500 sm:text-lg">
-              {recipe.title}
+              {displayTitle}
             </h3>
           </Link>
           {meta && (
@@ -50,7 +75,7 @@ export default function RecipeCard({ recipe, variant = 'default', index = 0, eag
       >
         <RecipeImage
           src={recipe.image}
-          alt={recipe.title}
+          alt={displayTitle}
           eager={eager}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.06]"
         />
@@ -99,7 +124,7 @@ export default function RecipeCard({ recipe, variant = 'default', index = 0, eag
               isLarge ? 'text-xl md:text-2xl' : isCompact ? 'text-sm md:text-base' : 'text-base md:text-lg'
             }`}
           >
-            {recipe.title}
+            {displayTitle}
           </h3>
         </Link>
       </div>
