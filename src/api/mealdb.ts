@@ -21,6 +21,25 @@ interface CacheShape {
   fetchedAt: string;
 }
 
+/**
+ * Arabic translation cache, keyed by MealDB idMeal. Each entry mirrors the
+ * MealDB shape but with title / category / area / instructions and the
+ * ingredient + step arrays all pre-translated by the build-time script.
+ * Loading this is optional: we only fetch when the user is in Arabic mode.
+ */
+export interface MealArEntry {
+  idMeal: string;
+  title: string;
+  category: string;
+  area: string;
+  country?: string;
+  instructions: string;
+  steps: string[];
+  ingredients: { index: number; name: string; measure?: string; original: string }[];
+}
+
+type MealArMap = Record<string, MealArEntry>;
+
 const client = axios.create({ baseURL: BASE, timeout: 12_000 });
 
 /**
@@ -34,6 +53,29 @@ function loadCache(): Promise<CacheShape> {
     cachePromise = import('../data/mealdb-cache.json').then((m) => m.default as CacheShape);
   }
   return cachePromise;
+}
+
+let arCachePromise: Promise<MealArMap> | null = null;
+function loadArCache(): Promise<MealArMap> {
+  if (!arCachePromise) {
+    arCachePromise = import('../data/mealdb-cache-ar.json')
+      .then((m) => m.default as MealArMap)
+      .catch(() => ({} as MealArMap));
+  }
+  return arCachePromise;
+}
+
+export async function mdbArLookup(idOrPrefixedId: string): Promise<MealArEntry | null> {
+  const numericId = idOrPrefixedId.startsWith('mdb-')
+    ? idOrPrefixedId.slice(4)
+    : idOrPrefixedId;
+  const map = await loadArCache();
+  return map[numericId] ?? null;
+}
+
+export async function mdbArTitle(idOrPrefixedId: string): Promise<string | null> {
+  const entry = await mdbArLookup(idOrPrefixedId);
+  return entry?.title ?? null;
 }
 
 function adaptSummary(m: MealRaw): RecipeSummary {

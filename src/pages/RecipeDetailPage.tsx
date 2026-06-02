@@ -32,7 +32,7 @@ import { LOCAL_RECIPE_AR } from '../i18n/data-translations';
 import { transformMeasure } from '../lib/scale';
 import { buildRecipeSchema, injectSchema } from '../lib/schema';
 import { createVoiceController, isVoiceSupported, type VoiceState } from '../lib/voice';
-import { translateRecipe } from '../lib/recipe-translator';
+import { mdbArLookup } from '../api/mealdb';
 import { detectTimers, fmtRemaining, type DetectedTimer } from '../lib/timer';
 import type { Recipe } from '../types/recipe';
 import RecipeCard from '../components/RecipeCard';
@@ -85,25 +85,34 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const lr = r as any;
 
-  // Auto-translate TheMealDB / Forkify recipes on the fly. They ship English
-  // only from the upstream API. When the user is in Arabic mode and the
-  // recipe doesn't already have a curated Arabic field, run the text through
-  // our cooking dictionary. Memo so we don't translate on every render.
-  const autoAr: Recipe | null = useMemo(() => {
-    if (!isAr) return null;
-    if (lr.titleAr || lr.ingredientsAr || lr.stepsAr) return null;
-    if (r.source !== 'mealdb' && r.source !== 'forkify') return null;
-    return translateRecipe(r);
-  }, [isAr, r, lr.titleAr, lr.ingredientsAr, lr.stepsAr]);
+  // For MealDB recipes, fetch the pre-translated Arabic version from the
+  // bundled mealdb-cache-ar.json. The build-time script translated every
+  // field through Google Translate so the result is grammatical Arabic
+  // rather than the half-translated regex output we used to produce.
+  const mealdbArQ = useQuery({
+    queryKey: ['mealdb-ar', r.id],
+    queryFn: () => mdbArLookup(r.id),
+    enabled: isAr && r.source === 'mealdb',
+    staleTime: Infinity,
+  });
+  const mealdbAr = mealdbArQ.data;
 
-  const displayTitle = isAr ? lr.titleAr || localAr?.title || r.title : r.title;
-  const displayCategory = isAr ? lr.categoryAr || r.category : r.category;
-  const displayArea = isAr ? lr.areaAr || r.area : r.area;
+  const displayTitle = isAr
+    ? lr.titleAr || localAr?.title || mealdbAr?.title || r.title
+    : r.title;
+  const displayCategory = isAr
+    ? lr.categoryAr || mealdbAr?.category || r.category
+    : r.category;
+  const displayArea = isAr ? lr.areaAr || mealdbAr?.area || r.area : r.area;
   const displayIngredients = isAr
-    ? lr.ingredientsAr || autoAr?.ingredients || r.ingredients
+    ? lr.ingredientsAr || mealdbAr?.ingredients || r.ingredients
     : r.ingredients;
-  const displaySteps = isAr ? lr.stepsAr || autoAr?.steps || r.steps : r.steps;
-  const displayInstructions = isAr ? lr.instructionsAr || autoAr?.instructions || r.instructions : r.instructions;
+  const displaySteps = isAr
+    ? lr.stepsAr || mealdbAr?.steps || r.steps
+    : r.steps;
+  const displayInstructions = isAr
+    ? lr.instructionsAr || mealdbAr?.instructions || r.instructions
+    : r.instructions;
   void displayInstructions;
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(r.id);
