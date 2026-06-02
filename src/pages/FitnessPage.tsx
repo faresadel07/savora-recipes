@@ -136,7 +136,7 @@ export default function FitnessPage() {
           eyebrow="From the library"
           icon={<Beef className="h-3 w-3" />}
           title="High-protein recipes."
-          body="Pulled from our cache of 700+ recipes. Filter by protein source — every recipe has full ingredient lists and step-by-step instructions."
+          body="Pulled from our cache of 825+ recipes. Filter by protein source, every recipe has full ingredient lists and step-by-step instructions."
         />
 
         <div className="mb-8 flex flex-wrap gap-2">

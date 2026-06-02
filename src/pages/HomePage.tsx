@@ -49,8 +49,8 @@ export default function HomePage() {
   });
 
   const homepageStats = [
-    { value: '700+', label: t('home.statRecipes') },
-    { value: '24', label: t('home.statCuisines') },
+    { value: '825+', label: t('home.statRecipes') },
+    { value: '29', label: t('home.statCuisines') },
     { value: '100%', label: t('common.freeAlways') },
     { value: '0', label: t('home.statSignUp') },
   ];
