@@ -143,14 +143,35 @@ export default function Footer() {
             </p>
           </div>
           <div className="md:col-span-5 md:text-right">
-            <Link
-              to="/donate"
-              className="inline-flex items-center gap-2 rounded-full border border-cream-100/20 bg-cream-50/5 px-5 py-2.5 text-[12px] font-medium tracking-tight text-cream-50 transition-colors hover:border-terracotta-500 hover:bg-terracotta-500 hover:text-cream-50"
-            >
-              <Heart className="h-3.5 w-3.5" fill="currentColor" />
-              {t('footer.supportProject')}
-              <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
-            </Link>
+            <div className="flex flex-wrap items-center gap-3 md:justify-end">
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-2 rounded-full border border-cream-100/20 bg-cream-50/5 px-5 py-2.5 text-[12px] font-medium tracking-tight text-cream-50 transition-colors hover:border-terracotta-500 hover:bg-terracotta-500 hover:text-cream-50"
+              >
+                <Heart className="h-3.5 w-3.5" fill="currentColor" />
+                {t('footer.supportProject')}
+                <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
+              </Link>
+              <a
+                href="https://www.instagram.com/zaytounonline"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow Zaytoun on Instagram"
+                className="group inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-tight text-white shadow-sm transition-transform hover:-translate-y-0.5"
+                style={{
+                  background:
+                    'linear-gradient(45deg, #F58529 0%, #DD2A7B 35%, #8134AF 70%, #515BD4 100%)',
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                @zaytounonline
+                <ArrowUpRight className="rtl-flip h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </div>
           </div>
         </div>
 
@@ -237,6 +258,21 @@ export default function Footer() {
                   <FooterLink to={item.to}>{t(item.labelKey)}</FooterLink>
                 </li>
               ))}
+              <li>
+                <a
+                  href="https://www.instagram.com/zaytounonline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline inline-flex items-center gap-1.5 text-cream-50/90 transition-colors hover:text-cream-50"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  </svg>
+                  Instagram
+                </a>
+              </li>
               <li>
                 <button
                   type="button"
