@@ -72,7 +72,7 @@ function QuoteCard({ quote }: { quote: ChefQuote }) {
         <PortraitAvatar quote={quote} isAr={isAr} />
         <div className="min-w-0 flex-1">
           <p className="font-display text-[15px] italic leading-snug text-ink-900 md:text-base">
-            &ldquo;{text}&rdquo;
+            {text}
           </p>
           <div className="mt-3 border-t border-ink-900/10 pt-3">
             <p className="text-sm font-semibold tracking-tight text-ink-900">{name}</p>
