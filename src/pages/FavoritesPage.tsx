@@ -112,8 +112,8 @@ export default function FavoritesPage() {
             <p className="mx-auto mt-3 max-w-md text-sm tracking-tight text-ink-400">
               {t('favorites.noFavoritesBody')}
             </p>
-            <Link to="/library" className="btn-primary mt-7">
-              {t('favorites.openLibrary')}
+            <Link to="/recipes" className="btn-primary mt-7">
+              {t('favorites.browseRecipes')}
               <ArrowUpRight className="rtl-flip h-4 w-4" />
             </Link>
           </div>
