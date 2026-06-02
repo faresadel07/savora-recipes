@@ -67,7 +67,6 @@ function QuoteCard({ quote }: { quote: ChefQuote }) {
 
   return (
     <article className="relative w-[88vw] max-w-[480px] shrink-0 snap-start overflow-hidden rounded-2xl border border-ink-900/8 bg-cream-50 p-5 shadow-sm transition-shadow hover:shadow-md md:w-[480px] md:p-6">
-      <Quote className="rtl-flip absolute end-4 top-4 h-7 w-7 text-cream-300" strokeWidth={1.5} />
       <div className="flex items-start gap-4">
         <PortraitAvatar quote={quote} isAr={isAr} />
         <div className="min-w-0 flex-1">
