@@ -199,59 +199,202 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange }: 
     if (!result) return;
     setPdfBusy(true);
     try {
-      const { default: jsPDF } = await import('jspdf');
-      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      const MARGIN = 56;
-      const W = doc.internal.pageSize.getWidth() - MARGIN * 2;
-      let y = MARGIN;
+      const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf'),
+      ]);
 
-      const writeLine = (text: string, size: number, weight: 'normal' | 'bold' = 'normal', spaceAfter = 6) => {
-        doc.setFont('helvetica', weight);
-        doc.setFontSize(size);
-        const lines = doc.splitTextToSize(text, W);
-        for (const ln of lines) {
-          if (y > doc.internal.pageSize.getHeight() - MARGIN) {
-            doc.addPage();
-            y = MARGIN;
+      const isAr = typeof document !== 'undefined' && document.documentElement.lang === 'ar';
+      const fontStack = isAr
+        ? "'IBM Plex Sans Arabic', 'Geeza Pro', 'Segoe UI Arabic', system-ui, sans-serif"
+        : "'Inter', 'SF Pro Text', system-ui, sans-serif";
+      const labels = isAr
+        ? {
+            title: 'الماكروز اليومية',
+            inputs: 'بياناتك',
+            sex: 'الجنس',
+            male: 'ذكر',
+            female: 'أنثى',
+            age: 'العمر',
+            years: 'سنة',
+            weight: 'الوزن',
+            height: 'الطول',
+            bodyFat: 'نسبة الدهون',
+            activity: 'مستوى النشاط',
+            goal: 'الهدف',
+            split: 'توزيع الماكروز',
+            targets: 'أهدافك',
+            bmr: 'معدّل الأيض الأساسي',
+            bmrSuffix: 'كيلوكالوري',
+            method: 'الطريقة',
+            tdee: 'الإنفاق الكلي',
+            tdeeSuffix: 'كيلوكالوري بعد ضرب النشاط',
+            dailyTarget: 'الهدف اليومي',
+            kcal: 'كيلوكالوري',
+            protein: 'بروتين',
+            carbs: 'كربوهيدرات',
+            fats: 'دهون',
+            grams: 'جرام',
+            water: 'الماء',
+            liters: 'لتر',
+            disclaimer: 'نقطة بداية مفيدة، ليست وصفة طبية. عدّل خلال أسبوعين بمراقبة الميزان وكيف تشعر في التمرين.',
+            from: 'من زيتون',
           }
-          doc.text(ln, MARGIN, y);
-          y += size + 2;
+        : {
+            title: 'Your Daily Macros',
+            inputs: 'YOUR INPUTS',
+            sex: 'Sex',
+            male: 'Male',
+            female: 'Female',
+            age: 'Age',
+            years: 'years',
+            weight: 'Weight',
+            height: 'Height',
+            bodyFat: 'Body fat',
+            activity: 'Activity',
+            goal: 'Goal',
+            split: 'Macro split',
+            targets: 'YOUR TARGETS',
+            bmr: 'BMR',
+            bmrSuffix: 'kcal',
+            method: 'method',
+            tdee: 'TDEE',
+            tdeeSuffix: 'kcal after activity multiplier',
+            dailyTarget: 'Daily target',
+            kcal: 'kcal',
+            protein: 'Protein',
+            carbs: 'Carbs',
+            fats: 'Fats',
+            grams: 'g',
+            water: 'Water target',
+            liters: 'L',
+            disclaimer:
+              'A useful starting point, not a prescription. Adjust over 2 weeks by watching the scale and how you feel in training.',
+            from: 'From Zaytoun',
+          };
+
+      const today = new Date().toLocaleDateString(isAr ? 'ar-EG' : 'en-GB', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+
+      const escape = (s: string) =>
+        s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+      const row = (label: string, value: string) =>
+        `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #efeae0; font-size:14px;">
+          <span style="color:#6c655c;">${escape(label)}</span>
+          <span style="color:#1f1c18; font-weight:600;">${escape(value)}</span>
+        </div>`;
+
+      const container = document.createElement('div');
+      container.style.cssText = [
+        'position: fixed',
+        'top: -10000px',
+        'left: 0',
+        'width: 780px',
+        'padding: 56px 48px',
+        'background: #fbf9f4',
+        'color: #1f1c18',
+        `font-family: ${fontStack}`,
+        `direction: ${isAr ? 'rtl' : 'ltr'}`,
+        `text-align: ${isAr ? 'right' : 'left'}`,
+      ].join('; ');
+
+      container.innerHTML = `
+        <h1 style="font-size: 42px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 4px; color: #1f1c18; line-height: 1.05;">
+          ${escape(labels.title)}
+        </h1>
+        <p style="font-size: 13px; color: #9a948a; margin: 0 0 26px;">${escape(today)}</p>
+        <hr style="border: none; border-top: 1px solid #e6dfd1; margin: 0 0 24px;">
+
+        <h2 style="font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b8632e; margin: 0 0 10px;">
+          ${escape(labels.inputs)}
+        </h2>
+        <div style="margin-bottom: 32px;">
+          ${row(labels.sex, sex === 'male' ? labels.male : labels.female)}
+          ${row(labels.age, `${age} ${labels.years}`)}
+          ${row(labels.weight, `${weight} ${unit === 'metric' ? 'kg' : 'lb'}`)}
+          ${row(labels.height, `${height} ${unit === 'metric' ? 'cm' : 'in'}`)}
+          ${bodyFat && !bodyFatError ? row(labels.bodyFat, `${bodyFat}%`) : ''}
+          ${row(labels.activity, activity.replace('_', ' '))}
+          ${row(labels.goal, goal)}
+          ${row(labels.split, split)}
+        </div>
+
+        <h2 style="font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b8632e; margin: 0 0 10px;">
+          ${escape(labels.targets)}
+        </h2>
+        <div>
+          ${row(labels.bmr, `${result.bmr.toLocaleString()} ${labels.bmrSuffix} (${labels.method}: ${result.method})`)}
+          ${row(labels.tdee, `${result.tdee.toLocaleString()} ${labels.tdeeSuffix}`)}
+        </div>
+
+        <div style="margin: 28px 0; padding: 24px; border-radius: 18px; background: #1f1c18; color: #fbf9f4; text-align: center;">
+          <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #b8632e;">${escape(labels.dailyTarget)}</p>
+          <p style="margin: 0; font-size: 44px; font-weight: 700; letter-spacing: -0.02em;">
+            ${result.targetCal.toLocaleString()} <span style="font-size: 18px; color: #d9d1c2;">${escape(labels.kcal)}</span>
+          </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 28px;">
+          <div style="padding: 18px; border-radius: 14px; background: #fff;">
+            <p style="margin: 0; font-size: 11px; color: #b8632e; letter-spacing: 0.16em; text-transform: uppercase;">${escape(labels.protein)}</p>
+            <p style="margin: 6px 0 0; font-size: 26px; font-weight: 700;">${result.proteinG}<span style="font-size: 14px; color: #6c655c;"> ${escape(labels.grams)}</span></p>
+            <p style="margin: 4px 0 0; font-size: 11px; color: #9a948a;">${result.proteinG * 4} ${escape(labels.kcal)}</p>
+          </div>
+          <div style="padding: 18px; border-radius: 14px; background: #fff;">
+            <p style="margin: 0; font-size: 11px; color: #7a9362; letter-spacing: 0.16em; text-transform: uppercase;">${escape(labels.carbs)}</p>
+            <p style="margin: 6px 0 0; font-size: 26px; font-weight: 700;">${result.carbsG}<span style="font-size: 14px; color: #6c655c;"> ${escape(labels.grams)}</span></p>
+            <p style="margin: 4px 0 0; font-size: 11px; color: #9a948a;">${result.carbsG * 4} ${escape(labels.kcal)}</p>
+          </div>
+          <div style="padding: 18px; border-radius: 14px; background: #fff;">
+            <p style="margin: 0; font-size: 11px; color: #c89a3a; letter-spacing: 0.16em; text-transform: uppercase;">${escape(labels.fats)}</p>
+            <p style="margin: 6px 0 0; font-size: 26px; font-weight: 700;">${result.fatG}<span style="font-size: 14px; color: #6c655c;"> ${escape(labels.grams)}</span></p>
+            <p style="margin: 4px 0 0; font-size: 11px; color: #9a948a;">${result.fatG * 9} ${escape(labels.kcal)}</p>
+          </div>
+        </div>
+
+        <div style="padding: 14px 18px; border-radius: 12px; background: #eef3ea; color: #4a5d3a; font-size: 14px; margin-bottom: 24px;">
+          <strong>${escape(labels.water)}:</strong> ${(result.waterMl / 1000).toFixed(1)} ${escape(labels.liters)}
+        </div>
+
+        <hr style="border: none; border-top: 1px solid #e6dfd1; margin: 0 0 14px;">
+        <p style="font-size: 11px; color: #9a948a; line-height: 1.6; margin: 0 0 6px;">
+          ${escape(labels.disclaimer)}
+        </p>
+        <p style="font-size: 11px; color: #9a948a; margin: 0;">
+          ${escape(labels.from)} · zaytoun.online
+        </p>
+      `;
+
+      document.body.appendChild(container);
+      try {
+        const canvas = await html2canvas(container, {
+          backgroundColor: '#fbf9f4',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+        const pageW = pdf.internal.pageSize.getWidth();
+        const pageH = pdf.internal.pageSize.getHeight();
+        const ratio = canvas.width / canvas.height;
+        const m = 28;
+        let imgW = pageW - m * 2;
+        let imgH = imgW / ratio;
+        if (imgH > pageH - m * 2) {
+          imgH = pageH - m * 2;
+          imgW = imgH * ratio;
         }
-        y += spaceAfter;
-      };
-
-      writeLine('Your Daily Macros', 28, 'bold', 4);
-      writeLine(new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }), 11, 'normal', 18);
-
-      doc.setDrawColor(220);
-      doc.line(MARGIN, y, MARGIN + W, y);
-      y += 18;
-
-      writeLine('YOUR INPUTS', 11, 'bold', 4);
-      writeLine(`Sex:    ${sex === 'male' ? 'Male' : 'Female'}`, 11, 'normal', 2);
-      writeLine(`Age:    ${age} years`, 11, 'normal', 2);
-      writeLine(`Weight: ${weight} ${unit === 'metric' ? 'kg' : 'lb'}`, 11, 'normal', 2);
-      writeLine(`Height: ${height} ${unit === 'metric' ? 'cm' : 'in'}`, 11, 'normal', 2);
-      if (bodyFat && !bodyFatError) writeLine(`Body fat: ${bodyFat}%`, 11, 'normal', 2);
-      writeLine(`Activity: ${activity.replace('_', ' ')}`, 11, 'normal', 2);
-      writeLine(`Goal: ${goal}`, 11, 'normal', 2);
-      writeLine(`Macro split: ${split}`, 11, 'normal', 14);
-
-      writeLine('YOUR TARGETS', 11, 'bold', 4);
-      writeLine(`BMR:  ${result.bmr.toLocaleString()} kcal (basal rate, ${result.method})`, 11, 'normal', 2);
-      writeLine(`TDEE: ${result.tdee.toLocaleString()} kcal (after activity multiplier)`, 11, 'normal', 2);
-      writeLine(`Daily target: ${result.targetCal.toLocaleString()} kcal`, 14, 'bold', 12);
-
-      writeLine(`Protein: ${result.proteinG} g  (${result.proteinG * 4} kcal)`, 11, 'normal', 2);
-      writeLine(`Carbs:   ${result.carbsG} g  (${result.carbsG * 4} kcal)`, 11, 'normal', 2);
-      writeLine(`Fats:    ${result.fatG} g  (${result.fatG * 9} kcal)`, 11, 'normal', 14);
-
-      writeLine(`Water target: ${(result.waterMl / 1000).toFixed(1)} L`, 11, 'bold', 14);
-
-      writeLine('A useful starting point, not a prescription. Adjust over 2 weeks by watching the scale and how you feel in training.', 9, 'normal', 2);
-      writeLine('From Zaytoun.', 9, 'normal');
-
-      doc.save('zaytoun-macros.pdf');
+        pdf.addImage(imgData, 'JPEG', (pageW - imgW) / 2, m, imgW, imgH);
+        pdf.save('zaytoun-macros.pdf');
+      } finally {
+        document.body.removeChild(container);
+      }
     } finally {
       setPdfBusy(false);
     }

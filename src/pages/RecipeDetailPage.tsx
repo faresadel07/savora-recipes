@@ -32,6 +32,7 @@ import { LOCAL_RECIPE_AR } from '../i18n/data-translations';
 import { transformMeasure } from '../lib/scale';
 import { buildRecipeSchema, injectSchema } from '../lib/schema';
 import { createVoiceController, isVoiceSupported, type VoiceState } from '../lib/voice';
+import { translateRecipe } from '../lib/recipe-translator';
 import { detectTimers, fmtRemaining, type DetectedTimer } from '../lib/timer';
 import type { Recipe } from '../types/recipe';
 import RecipeCard from '../components/RecipeCard';
@@ -83,11 +84,27 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
   // Embedded Ar fields on LocalRecipe (Phase 4 translation)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const lr = r as any;
+
+  // Auto-translate TheMealDB / Forkify recipes on the fly. They ship English
+  // only from the upstream API. When the user is in Arabic mode and the
+  // recipe doesn't already have a curated Arabic field, run the text through
+  // our cooking dictionary. Memo so we don't translate on every render.
+  const autoAr: Recipe | null = useMemo(() => {
+    if (!isAr) return null;
+    if (lr.titleAr || lr.ingredientsAr || lr.stepsAr) return null;
+    if (r.source !== 'mealdb' && r.source !== 'forkify') return null;
+    return translateRecipe(r);
+  }, [isAr, r, lr.titleAr, lr.ingredientsAr, lr.stepsAr]);
+
   const displayTitle = isAr ? lr.titleAr || localAr?.title || r.title : r.title;
   const displayCategory = isAr ? lr.categoryAr || r.category : r.category;
   const displayArea = isAr ? lr.areaAr || r.area : r.area;
-  const displayIngredients = isAr && lr.ingredientsAr ? lr.ingredientsAr : r.ingredients;
-  const displaySteps = isAr && lr.stepsAr ? lr.stepsAr : r.steps;
+  const displayIngredients = isAr
+    ? lr.ingredientsAr || autoAr?.ingredients || r.ingredients
+    : r.ingredients;
+  const displaySteps = isAr ? lr.stepsAr || autoAr?.steps || r.steps : r.steps;
+  const displayInstructions = isAr ? lr.instructionsAr || autoAr?.instructions || r.instructions : r.instructions;
+  void displayInstructions;
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(r.id);
 
