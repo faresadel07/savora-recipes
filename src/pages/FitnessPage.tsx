@@ -34,6 +34,15 @@ import {
 } from '../data/fitness-content';
 import RecipeCard from '../components/RecipeCard';
 import MacroCalculator from '../components/MacroCalculator';
+import FitnessRecipeCard from '../components/FitnessRecipeCard';
+import FitnessRecipeModal from '../components/FitnessRecipeModal';
+import {
+  FITNESS_RECIPES,
+  FITNESS_RECIPE_CATEGORIES,
+  type FitnessRecipe,
+  type FitnessRecipeCategory,
+} from '../data/fitness-recipes';
+import { useTranslation } from '../i18n';
 
 const PROTEIN_CATEGORIES = ['Chicken', 'Seafood', 'Beef', 'Lamb', 'Pork'] as const;
 
@@ -45,11 +54,20 @@ const HERO_STATS = [
 ];
 
 export default function FitnessPage() {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
   const [activeCategory, setActiveCategory] = useState<(typeof PROTEIN_CATEGORIES)[number]>('Chicken');
   const [drinkFilter, setDrinkFilter] = useState<'all' | 'pre' | 'post' | 'anytime' | 'meal-replace'>('all');
   const [sourceFilter, setSourceFilter] = useState<'all' | 'meat' | 'fish' | 'dairy' | 'eggs' | 'plant' | 'supplement'>('all');
   const [activePlan, setActivePlan] = useState<'cut' | 'maintain' | 'bulk'>('maintain');
   const [workoutTab, setWorkoutTab] = useState<'pre' | 'post' | 'recovery'>('pre');
+  const [fitnessCat, setFitnessCat] = useState<'all' | FitnessRecipeCategory>('all');
+  const [openRecipe, setOpenRecipe] = useState<FitnessRecipe | null>(null);
+
+  const filteredFitnessRecipes = useMemo(
+    () => (fitnessCat === 'all' ? FITNESS_RECIPES : FITNESS_RECIPES.filter((r) => r.category === fitnessCat)),
+    [fitnessCat],
+  );
 
   const recipesQ = useQuery({
     queryKey: ['fitness-recipes', activeCategory],
@@ -130,50 +148,108 @@ export default function FitnessPage() {
         <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/10 blur-3xl" />
       </section>
 
-      {/* ============ HIGH-PROTEIN RECIPES ============ */}
+      {/* ============ FITNESS RECIPE LIBRARY (curated, 50+ entries) ============ */}
       <section id="recipes" className="container-wide py-16 md:py-24">
         <SectionHead
-          eyebrow="From the library"
+          eyebrow={isAr ? 'مكتبة الفتنس' : 'Fitness recipe library'}
           icon={<Beef className="h-3 w-3" />}
-          title="High-protein recipes."
-          body="Pulled from our cache of 825+ recipes. Filter by protein source, every recipe has full ingredient lists and step-by-step instructions."
+          title={isAr ? `${FITNESS_RECIPES.length} وصفة عالية البروتين.` : `${FITNESS_RECIPES.length} high-protein recipes.`}
+          body={
+            isAr
+              ? 'كل وصفة تشمل المكوّنات الكاملة والخطوات والماكروز وفيديو تحضير لبعضها. حمّل أي وصفة كـPDF أو شاركها برابط.'
+              : 'Every recipe ships with full ingredients, step-by-step method, exact macros, and a technique video on many of them. Download as PDF or share by link.'
+          }
         />
 
         <div className="mb-8 flex flex-wrap gap-2">
-          {PROTEIN_CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActiveCategory(cat)}
-              className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
-                activeCategory === cat
-                  ? 'border-ink-900 bg-ink-900 text-cream-50'
-                  : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
-              }`}
-            >
-              {cat}
-            </button>
+          <button
+            type="button"
+            onClick={() => setFitnessCat('all')}
+            className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+              fitnessCat === 'all'
+                ? 'border-ink-900 bg-ink-900 text-cream-50'
+                : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+            }`}
+          >
+            {isAr ? `الكل (${FITNESS_RECIPES.length})` : `All (${FITNESS_RECIPES.length})`}
+          </button>
+          {FITNESS_RECIPE_CATEGORIES.map((cat) => {
+            const count = FITNESS_RECIPES.filter((r) => r.category === cat.id).length;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setFitnessCat(cat.id)}
+                className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+                  fitnessCat === cat.id
+                    ? 'border-ink-900 bg-ink-900 text-cream-50'
+                    : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                }`}
+              >
+                {isAr ? cat.nameAr : cat.nameEn} ({count})
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-5 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+          {filteredFitnessRecipes.map((r, i) => (
+            <FitnessRecipeCard key={r.id} recipe={r} onOpen={setOpenRecipe} index={i} />
           ))}
         </div>
 
-        {recipesQ.isLoading && (
-          <div className="grid grid-cols-2 gap-x-5 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="aspect-[4/5] rounded-2xl bg-cream-200" />
-                <div className="mt-4 h-4 w-3/4 rounded bg-cream-200" />
-              </div>
+        {/* MealDB protein category strip - kept as supplementary "more recipes" */}
+        <div className="mt-20 border-t border-ink-100 pt-16">
+          <SectionHead
+            eyebrow={isAr ? 'من مكتبة الوصفات' : 'From the main library'}
+            icon={<Sparkles className="h-3 w-3" />}
+            title={isAr ? 'وصفات إضافية حسب البروتين.' : 'More protein-rich ideas.'}
+            body={
+              isAr
+                ? 'مزيد من الوصفات من مكتبتنا الكاملة، مصنّفة حسب نوع البروتين.'
+                : 'More ideas from the full Zaytoun catalogue, grouped by protein source.'
+            }
+          />
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {PROTEIN_CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+                  activeCategory === cat
+                    ? 'border-ink-900 bg-ink-900 text-cream-50'
+                    : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                }`}
+              >
+                {cat}
+              </button>
             ))}
           </div>
-        )}
-        {recipesQ.data && (
-          <div className="grid grid-cols-2 gap-x-5 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
-            {recipesQ.data.results.slice(0, 12).map((r, i) => (
-              <RecipeCard key={r.id} recipe={r} index={i} />
-            ))}
-          </div>
-        )}
+
+          {recipesQ.isLoading && (
+            <div className="grid grid-cols-2 gap-x-5 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[4/5] rounded-2xl bg-cream-200" />
+                  <div className="mt-4 h-4 w-3/4 rounded bg-cream-200" />
+                </div>
+              ))}
+            </div>
+          )}
+          {recipesQ.data && (
+            <div className="grid grid-cols-2 gap-x-5 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+              {recipesQ.data.results.slice(0, 8).map((r, i) => (
+                <RecipeCard key={r.id} recipe={r} index={i} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
+
+      {/* Modal for fitness recipe detail */}
+      <FitnessRecipeModal recipe={openRecipe} onClose={() => setOpenRecipe(null)} />
 
       {/* ============ WORKOUT MEALS ============ */}
       <section id="workout" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
