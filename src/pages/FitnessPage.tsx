@@ -33,7 +33,8 @@ import {
   SNACKS,
 } from '../data/fitness-content';
 import RecipeCard from '../components/RecipeCard';
-import MacroCalculator from '../components/MacroCalculator';
+import MacroCalculator, { type MacroTargetsSnapshot } from '../components/MacroCalculator';
+import MealPlanPanel from '../components/MealPlanPanel';
 import FitnessRecipeCard from '../components/FitnessRecipeCard';
 import FitnessRecipeModal from '../components/FitnessRecipeModal';
 import {
@@ -60,6 +61,7 @@ export default function FitnessPage() {
   const [drinkFilter, setDrinkFilter] = useState<'all' | 'pre' | 'post' | 'anytime' | 'meal-replace'>('all');
   const [sourceFilter, setSourceFilter] = useState<'all' | 'meat' | 'fish' | 'dairy' | 'eggs' | 'plant' | 'supplement'>('all');
   const [activePlan, setActivePlan] = useState<'cut' | 'maintain' | 'bulk'>('maintain');
+  const [mealPlanTargets, setMealPlanTargets] = useState<MacroTargetsSnapshot | null>(null);
   const [workoutTab, setWorkoutTab] = useState<'pre' | 'post' | 'recovery'>('pre');
   const [fitnessCat, setFitnessCat] = useState<'all' | FitnessRecipeCategory>('all');
   const [openRecipe, setOpenRecipe] = useState<FitnessRecipe | null>(null);
@@ -392,7 +394,12 @@ export default function FitnessPage() {
           title="Calculate your macros."
           body="A starting estimate based on the Mifflin-St Jeor equation, the most validated BMR formula for adults today. Adjust over 2 weeks by watching the scale."
         />
-        <MacroCalculator goal={activePlan} onGoalChange={setActivePlan} />
+        <MacroCalculator
+          goal={activePlan}
+          onGoalChange={setActivePlan}
+          onTargetsComputed={setMealPlanTargets}
+        />
+        {mealPlanTargets && <MealPlanPanel targets={mealPlanTargets} />}
       </section>
 
       {/* ============ MACRO CHEAT SHEET ============ */}

@@ -17,6 +17,28 @@ import {
   cdbSearchByName,
 } from './cocktaildb';
 import { LOCAL_RECIPES, getLocalRecipe } from '../data/local-recipes';
+import { FITNESS_RECIPES, type FitnessRecipe } from '../data/fitness-recipes';
+
+function adaptFitnessRecipe(r: FitnessRecipe): Recipe {
+  return {
+    id: `fr-${r.id}`,
+    source: 'local',
+    title: r.title,
+    image: r.image,
+    category: r.category,
+    area: 'Fitness',
+    publisher: 'Zaytoun Editorial',
+    sourceName: 'Zaytoun Fitness',
+    sourceUrl: `https://www.zaytoun.online/fitness#${r.id}`,
+    servings: r.servings,
+    readyInMinutes: r.minutes,
+    instructions: r.steps.join(' '),
+    steps: r.steps,
+    ingredients: r.ingredients.map((line) => ({ name: line, original: line })),
+    tags: [r.category, 'fitness'],
+    youtube: r.videoId || undefined,
+  };
+}
 
 /**
  * Friendly error so UI can show a consistent error state.
@@ -65,6 +87,12 @@ export async function getRecipeById(id: string): Promise<Recipe> {
       const r = getLocalRecipe(id);
       if (!r) throw new RecipeApiError('Recipe not found', 'not-found');
       return r;
+    }
+    if (id.startsWith('fr-')) {
+      const bare = id.slice(3);
+      const fr = FITNESS_RECIPES.find((r) => r.id === bare);
+      if (!fr) throw new RecipeApiError('Recipe not found', 'not-found');
+      return adaptFitnessRecipe(fr);
     }
     if (id.startsWith('fk-')) {
       const r = await fkLookup(id);

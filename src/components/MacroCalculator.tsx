@@ -100,14 +100,27 @@ function loadSaved(): Partial<SavedMacros> {
   }
 }
 
+export interface MacroTargetsSnapshot {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  bmr: number;
+  tdee: number;
+  waterMl: number;
+}
+
 interface Props {
   /** When provided, the goal is controlled by the parent so the Goal Plans
    *  section and the Calculator stay in sync. */
   goal?: Goal;
   onGoalChange?: (g: Goal) => void;
+  /** Fires whenever the calculator produces fresh targets, including the
+   *  initial result. Parents use it to mount the Meal Plan panel below. */
+  onTargetsComputed?: (snapshot: MacroTargetsSnapshot | null) => void;
 }
 
-export default function MacroCalculator({ goal: controlledGoal, onGoalChange }: Props) {
+export default function MacroCalculator({ goal: controlledGoal, onGoalChange, onTargetsComputed }: Props) {
   const initial = loadSaved();
 
   const [sex, setSex] = useState<Sex>(initial.sex ?? 'male');
@@ -173,6 +186,26 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange }: 
       heightCm,
     };
   }, [age, weight, height, bodyFat, sex, unit, activity, goal, split, ageNum, weightNum, heightNum, bodyFatNum, ageError, weightError, heightError, bodyFatError, bodyFatBounds.min, bodyFatBounds.max]);
+
+  // Expose the freshly computed targets to the parent so it can mount a
+  // Meal Plan generator below the Calculator. Fires with null when input
+  // is incomplete so the parent can hide the meal plan section.
+  useEffect(() => {
+    if (!onTargetsComputed) return;
+    if (!result) {
+      onTargetsComputed(null);
+      return;
+    }
+    onTargetsComputed({
+      calories: result.targetCal,
+      protein: result.proteinG,
+      carbs: result.carbsG,
+      fat: result.fatG,
+      bmr: result.bmr,
+      tdee: result.tdee,
+      waterMl: result.waterMl,
+    });
+  }, [result, onTargetsComputed]);
 
   // Debounced auto-save on every meaningful change once we have valid input.
   const saveTimer = useRef<number | null>(null);
