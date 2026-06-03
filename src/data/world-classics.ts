@@ -62,7 +62,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 15,
     tags: ['Pasta', 'Italian', 'Vegetarian', 'Quick'],
-    youtube: 'Vp4iqLrEUFI',
+    youtube: '',
     ingredients: [
       { name: 'tonnarelli or spaghetti', measure: '400 g', original: '400 g tonnarelli or spaghetti' },
       { name: 'pecorino romano, finely grated', measure: '150 g', original: '150 g pecorino romano, finely grated' },
@@ -92,7 +92,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 200,
     tags: ['Pasta', 'Italian', 'Slow cooked', 'Comfort food'],
-    youtube: 'U0sLP1XbI4Q',
+    youtube: '',
     ingredients: [
       { name: 'ground beef chuck', measure: '500 g', original: '500 g ground beef chuck' },
       { name: 'pancetta, finely chopped', measure: '150 g', original: '150 g pancetta, finely chopped' },
@@ -165,7 +165,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 35,
     tags: ['Rice', 'Italian', 'Vegetarian'],
-    youtube: 'u_dvm-IXyak',
+    youtube: '',
     ingredients: [
       { name: 'carnaroli or arborio rice', measure: '320 g', original: '320 g carnaroli or arborio rice' },
       { name: 'dry white wine', measure: '120 ml', original: '120 ml dry white wine' },
@@ -201,7 +201,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 8,
     readyInMinutes: 30,
     tags: ['Dessert', 'Italian', 'No bake', 'Make ahead'],
-    youtube: '1jANZuT8hPY',
+    youtube: '',
     ingredients: [
       { name: 'large egg yolks', measure: '6', original: '6 large egg yolks' },
       { name: 'caster sugar', measure: '100 g', original: '100 g caster sugar' },
@@ -237,7 +237,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 120,
     tags: ['Chicken', 'French', 'Braise', 'Comfort food'],
-    youtube: 'L0M2BhVgKHU',
+    youtube: '',
     ingredients: [
       { name: 'bone in skin on chicken pieces', measure: '1.5 kg', original: '1.5 kg bone in skin on chicken pieces' },
       { name: 'smoked lardons or thick cut bacon', measure: '150 g', original: '150 g smoked lardons or thick cut bacon' },
@@ -278,7 +278,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 210,
     tags: ['Beef', 'French', 'Slow cooked', 'Make ahead'],
-    youtube: 'ujmkvxPm0Wo',
+    youtube: '',
     ingredients: [
       { name: 'chuck roast, cut in 5 cm pieces', measure: '1.2 kg', original: '1.2 kg chuck roast, cut in 5 cm pieces' },
       { name: 'smoked bacon, cut in lardons', measure: '200 g', original: '200 g smoked bacon, cut in lardons' },
@@ -319,7 +319,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 75,
     tags: ['Vegetarian', 'Vegan', 'French', 'Side'],
-    youtube: 'vKzGdaPHevg',
+    youtube: '',
     ingredients: [
       { name: 'eggplant, cut in 2 cm cubes', measure: '2 medium', original: '2 medium eggplant, cut in 2 cm cubes' },
       { name: 'zucchini, cut in 2 cm cubes', measure: '3 medium', original: '3 medium zucchini, cut in 2 cm cubes' },
@@ -356,7 +356,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 60,
     tags: ['Dessert', 'French', 'Make ahead'],
-    youtube: '8gIgNlhz6_o',
+    youtube: '',
     ingredients: [
       { name: 'heavy cream', measure: '600 ml', original: '600 ml heavy cream' },
       { name: 'vanilla bean, split and scraped', measure: '1', original: '1 vanilla bean, split and scraped' },
@@ -430,7 +430,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 120,
     tags: ['Chicken', 'Indian', 'Rice', 'Feast'],
-    youtube: 'RpAR48jKuMc',
+    youtube: '',
     ingredients: [
       { name: 'bone in chicken pieces', measure: '1 kg', original: '1 kg bone in chicken pieces' },
       { name: 'basmati rice, soaked 30 minutes', measure: '500 g', original: '500 g basmati rice, soaked 30 minutes' },
@@ -471,7 +471,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 45,
     tags: ['Vegetarian', 'Indian', 'Curry'],
-    youtube: 'iCJF0qbJ0XQ',
+    youtube: '',
     ingredients: [
       { name: 'fresh spinach', measure: '400 g', original: '400 g fresh spinach' },
       { name: 'mustard greens, optional', measure: '200 g', original: '200 g mustard greens, optional' },
@@ -510,7 +510,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 25,
     tags: ['Chicken', 'Chinese', 'Stir fry', 'Quick'],
-    youtube: '0kkdNZrYJrM',
+    youtube: '',
     ingredients: [
       { name: 'boneless chicken thighs, cut in 2 cm cubes', measure: '500 g', original: '500 g boneless chicken thighs, cut in 2 cm cubes' },
       { name: 'shaoxing wine', measure: '1 tablespoon', original: '1 tablespoon shaoxing wine' },
@@ -552,7 +552,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 30,
     tags: ['Tofu', 'Chinese', 'Spicy'],
-    youtube: 'QGSMRGQq-h8',
+    youtube: '',
     ingredients: [
       { name: 'silken tofu, drained and cut in 2 cm cubes', measure: '500 g', original: '500 g silken tofu, drained and cut in 2 cm cubes' },
       { name: 'ground pork', measure: '150 g', original: '150 g ground pork' },
@@ -592,7 +592,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 15,
     tags: ['Rice', 'Chinese', 'Quick'],
-    youtube: 'ZhTBkAhhgIo',
+    youtube: '',
     ingredients: [
       { name: 'cooked jasmine rice, day old and broken up', measure: '600 g', original: '600 g cooked jasmine rice, day old and broken up' },
       { name: 'large eggs, beaten', measure: '3', original: '3 large eggs, beaten' },
@@ -627,7 +627,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 90,
     tags: ['Noodles', 'Japanese', 'Soup'],
-    youtube: 'RfhANmH6oWI',
+    youtube: '',
     ingredients: [
       { name: 'chicken stock', measure: '1.5 litres', original: '1.5 litres chicken stock' },
       { name: 'kombu sheet', measure: '10 g', original: '10 g kombu sheet' },
@@ -667,7 +667,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 30,
     tags: ['Japanese', 'Vegetarian', 'Fried'],
-    youtube: 'wpyiBFEbU2g',
+    youtube: '',
     ingredients: [
       { name: 'ice cold sparkling water', measure: '200 ml', original: '200 ml ice cold sparkling water' },
       { name: 'cake flour, plus more for dredging', measure: '120 g', original: '120 g cake flour, plus more for dredging' },
@@ -707,7 +707,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 2,
     readyInMinutes: 25,
     tags: ['Noodles', 'Thai', 'Stir fry', 'Quick'],
-    youtube: 'nE7lTKReWtg',
+    youtube: '',
     ingredients: [
       { name: 'dried rice stick noodles', measure: '200 g', original: '200 g dried rice stick noodles' },
       { name: 'medium shrimp, peeled', measure: '200 g', original: '200 g medium shrimp, peeled' },
@@ -749,7 +749,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 30,
     tags: ['Soup', 'Thai', 'Spicy'],
-    youtube: 'GwUOY5RKAjk',
+    youtube: '',
     ingredients: [
       { name: 'head on shrimp', measure: '500 g', original: '500 g head on shrimp' },
       { name: 'water', measure: '1.5 litres', original: '1.5 litres water' },
@@ -788,7 +788,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 35,
     tags: ['Curry', 'Thai', 'Chicken'],
-    youtube: 'lhdovpEpaQg',
+    youtube: '',
     ingredients: [
       { name: 'boneless chicken thighs, sliced', measure: '500 g', original: '500 g boneless chicken thighs, sliced' },
       { name: 'Thai green curry paste', measure: '4 tablespoons', original: '4 tablespoons Thai green curry paste' },
@@ -827,7 +827,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 75,
     tags: ['Pork', 'Mexican', 'Street food'],
-    youtube: '9_jBjjvjRoo',
+    youtube: '',
     ingredients: [
       { name: 'boneless pork shoulder, thinly sliced', measure: '1 kg', original: '1 kg boneless pork shoulder, thinly sliced' },
       { name: 'dried guajillo chilies, stemmed and seeded', measure: '4', original: '4 dried guajillo chilies, stemmed and seeded' },
@@ -868,7 +868,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 150,
     tags: ['Chicken', 'Mexican', 'Slow cooked'],
-    youtube: 'QnBLeF1mRwk',
+    youtube: '',
     ingredients: [
       { name: 'dried ancho chilies, seeded', measure: '4', original: '4 dried ancho chilies, seeded' },
       { name: 'dried mulato chilies, seeded', measure: '4', original: '4 dried mulato chilies, seeded' },
@@ -912,7 +912,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 10,
     tags: ['Vegetarian', 'Vegan', 'Mexican', 'Quick'],
-    youtube: 'L4o89oxrLPo',
+    youtube: '',
     ingredients: [
       { name: 'ripe Hass avocados', measure: '3', original: '3 ripe Hass avocados' },
       { name: 'white onion, very finely chopped', measure: '60 g', original: '60 g white onion, very finely chopped' },
@@ -943,7 +943,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 2,
     readyInMinutes: 50,
     tags: ['Rice', 'Korean', 'Bowl'],
-    youtube: 'DohDcKx9pCs',
+    youtube: '',
     ingredients: [
       { name: 'short grain rice, cooked', measure: '400 g', original: '400 g short grain rice, cooked' },
       { name: 'ground beef', measure: '200 g', original: '200 g ground beef' },
@@ -984,7 +984,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 40,
     tags: ['Beef', 'Korean', 'Grilled'],
-    youtube: 'P5GTSzy8h6c',
+    youtube: '',
     ingredients: [
       { name: 'ribeye or sirloin, sliced paper thin', measure: '600 g', original: '600 g ribeye or sirloin, sliced paper thin' },
       { name: 'Asian pear, grated', measure: '1/2', original: '1/2 Asian pear, grated' },
@@ -1022,7 +1022,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 240,
     tags: ['Soup', 'Vietnamese', 'Slow cooked'],
-    youtube: 'vYsy5GznoJ4',
+    youtube: '',
     ingredients: [
       { name: 'beef marrow bones', measure: '1.5 kg', original: '1.5 kg beef marrow bones' },
       { name: 'oxtail or beef shank', measure: '500 g', original: '500 g oxtail or beef shank' },
@@ -1104,7 +1104,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 60,
     tags: ['Chicken', 'American', 'Spicy', 'Game day'],
-    youtube: 'lFNAyOAvSh4',
+    youtube: '',
     ingredients: [
       { name: 'chicken wings, split at the joint, tips reserved for stock', measure: '1 kg', original: '1 kg chicken wings, split at the joint, tips reserved for stock' },
       { name: 'baking powder', measure: '1 tablespoon', original: '1 tablespoon baking powder' },
@@ -1138,7 +1138,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 60,
     tags: ['Fish', 'British', 'Fried'],
-    youtube: 'EuS83fOZAW4',
+    youtube: '',
     ingredients: [
       { name: 'skinless cod fillets, in 4 pieces', measure: '600 g', original: '600 g skinless cod fillets, in 4 pieces' },
       { name: 'Maris Piper or russet potatoes, cut in 1 cm chips', measure: '1 kg', original: '1 kg Maris Piper or russet potatoes, cut in 1 cm chips' },
@@ -1174,7 +1174,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 90,
     tags: ['Lamb', 'British', 'Comfort food'],
-    youtube: 'FbCJBXi4UNI',
+    youtube: '',
     ingredients: [
       { name: 'ground lamb', measure: '700 g', original: '700 g ground lamb' },
       { name: 'yellow onion, diced', measure: '1', original: '1 yellow onion, diced' },
@@ -1217,7 +1217,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 8,
     readyInMinutes: 150,
     tags: ['Lamb', 'Greek', 'Baked'],
-    youtube: 'kSyOzNW3eP0',
+    youtube: '',
     ingredients: [
       { name: 'eggplants, sliced 1 cm thick', measure: '3 large', original: '3 large eggplants, sliced 1 cm thick' },
       { name: 'ground lamb', measure: '700 g', original: '700 g ground lamb' },
@@ -1262,7 +1262,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 75,
     tags: ['Rice', 'Spanish', 'Feast'],
-    youtube: 'F_qWvN3HzKw',
+    youtube: '',
     ingredients: [
       { name: 'bomba rice', measure: '400 g', original: '400 g bomba rice' },
       { name: 'rabbit pieces', measure: '500 g', original: '500 g rabbit pieces' },
@@ -1301,7 +1301,7 @@ export const WORLD_CLASSICS: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 40,
     tags: ['Noodles', 'Korean', 'Stir fry'],
-    youtube: 'p_R8-zoNu5w',
+    youtube: '',
     ingredients: [
       { name: 'sweet potato glass noodles (dangmyeon)', measure: '250 g', original: '250 g sweet potato glass noodles (dangmyeon)' },
       { name: 'ribeye, sliced thin', measure: '200 g', original: '200 g ribeye, sliced thin' },

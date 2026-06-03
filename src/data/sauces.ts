@@ -25,7 +25,7 @@ export const SAUCES: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 20,
     tags: ['Sauce', 'French', 'Mother sauce', 'Vegetarian'],
-    youtube: 'Y2-9ARw-vog',
+    youtube: '',
     ingredients: [
       { name: 'unsalted butter', measure: '50 g', original: '50 g unsalted butter' },
       { name: 'plain flour', measure: '50 g', original: '50 g plain flour' },
@@ -89,7 +89,7 @@ export const SAUCES: LocalRecipe[] = [
     servings: 4,
     readyInMinutes: 15,
     tags: ['Sauce', 'French', 'Mother sauce', 'Vegetarian'],
-    youtube: 'JZuJk0M53fE',
+    youtube: '',
     ingredients: [
       { name: 'large egg yolks', measure: '3', original: '3 large egg yolks' },
       { name: 'lemon juice, freshly squeezed', measure: '1 tablespoon', original: '1 tablespoon lemon juice, freshly squeezed' },
@@ -282,7 +282,7 @@ export const SAUCES: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 25,
     tags: ['Sauce', 'Italian', 'Vegan', 'Quick'],
-    youtube: 'OPCcwDvfBxA',
+    youtube: '',
     ingredients: [
       { name: 'canned San Marzano tomatoes, crushed', measure: '800 g', original: '800 g canned San Marzano tomatoes, crushed' },
       { name: 'garlic cloves, sliced', measure: '6', original: '6 garlic cloves, sliced' },
@@ -345,7 +345,7 @@ export const SAUCES: LocalRecipe[] = [
     servings: 6,
     readyInMinutes: 10,
     tags: ['Sauce', 'Italian', 'Vegetarian', 'Raw', 'No cook'],
-    youtube: 'n76l-PNbz3I',
+    youtube: '',
     ingredients: [
       { name: 'fresh basil leaves, packed', measure: '60 g', original: '60 g fresh basil leaves, packed' },
       { name: 'pine nuts, lightly toasted', measure: '30 g', original: '30 g pine nuts, lightly toasted' },
