@@ -490,6 +490,9 @@ export default function DrinksLibraryPage() {
         </div>
       </section>
 
+      {/* ============ MOCKTAIL CATALOG ============ */}
+      <MocktailCatalog />
+
       {/* ============ CLOSING ============ */}
       <section className="container-wide pb-20 pt-16">
         <div className="overflow-hidden rounded-3xl bg-ink-900 px-7 py-14 text-center text-cream-50 md:px-16 md:py-20">
@@ -513,5 +516,72 @@ export default function DrinksLibraryPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+// ============================================================
+// MocktailCatalog: surface the 40 non-alcoholic cocktails from
+// TheCocktailDB cache as a grid below the curated editorial drinks.
+// ============================================================
+
+import cocktails from '../data/cocktaildb-cache.json';
+
+interface CocktailEntry {
+  id: string;
+  title: string;
+  image: string;
+  category: string;
+  calories: number;
+}
+
+function MocktailCatalog() {
+  const list = cocktails as CocktailEntry[];
+  if (!list.length) return null;
+  return (
+    <section className="container-wide pt-20">
+      <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="eyebrow mb-3 inline-flex items-center gap-2">
+            <Sparkles className="h-3 w-3" strokeWidth={2} />
+            Mocktail catalog
+          </p>
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+            More from the catalog.
+          </h2>
+          <p className="mt-2 max-w-xl text-sm tracking-tight text-ink-500 md:text-base">
+            Forty alcohol free cocktails and mocktails sourced from TheCocktailDB. Photos, full
+            ingredients, calories, and step by step method.
+          </p>
+        </div>
+        <p className="text-sm tracking-tight text-ink-500">{list.length} mocktails</p>
+      </div>
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {list.map((c) => (
+          <Link
+            key={c.id}
+            to={`/recipe/${c.id}`}
+            className="group flex overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow hover:shadow-[0_12px_36px_-12px_rgba(0,0,0,0.15)]"
+          >
+            <div className="relative aspect-square w-32 flex-shrink-0 overflow-hidden bg-cream-200 md:w-36">
+              <img
+                src={c.image}
+                alt={c.title}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-1 flex-col justify-center gap-1 p-4">
+              <p className="text-[10px] font-medium uppercase tracking-widest text-terracotta-500">
+                {c.category}
+              </p>
+              <h3 className="text-base font-semibold leading-snug tracking-tight text-ink-900 group-hover:text-terracotta-500">
+                {c.title}
+              </h3>
+              <p className="text-xs tracking-tight text-ink-500">{c.calories} kcal per serving</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }

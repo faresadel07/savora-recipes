@@ -19,6 +19,7 @@ import SkillsAcademyPage from './pages/SkillsAcademyPage';
 import WorldMarketsPage from './pages/WorldMarketsPage';
 import ChefHallPage from './pages/ChefHallPage';
 import DrinksLibraryPage from './pages/DrinksLibraryPage';
+import SaucesLibraryPage from './pages/SaucesLibraryPage';
 import ShortsLibraryPage from './pages/ShortsLibraryPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="markets" element={<WorldMarketsPage />} />
         <Route path="chefs" element={<ChefHallPage />} />
         <Route path="drinks" element={<DrinksLibraryPage />} />
+        <Route path="sauces" element={<SaucesLibraryPage />} />
         <Route path="shorts" element={<ShortsLibraryPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />

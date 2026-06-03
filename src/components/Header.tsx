@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
   ChefHat,
+  Droplets,
   Film,
   GlassWater,
   GraduationCap,
@@ -43,6 +44,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/recipes', key: 'nav.recipes', icon: Utensils },
   { to: '/arab-cuisine', key: 'nav.arabCuisine', icon: Star },
   { to: '/drinks', key: 'nav.drinks', icon: GlassWater },
+  { to: '/sauces', key: 'nav.sauces', icon: Droplets },
   { to: '/shorts', key: 'nav.shorts', icon: Zap },
   { to: '/films', key: 'nav.films', icon: Film },
   { to: '/academy', key: 'nav.academy', icon: GraduationCap },
@@ -59,7 +61,7 @@ const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   { titleKey: 'nav.browse', itemKeys: ['nav.home', 'nav.recipes'] },
   {
     titleKey: 'nav.curated',
-    itemKeys: ['nav.arabCuisine', 'nav.drinks', 'nav.shorts', 'nav.films', 'nav.academy', 'nav.chefs', 'nav.markets'],
+    itemKeys: ['nav.arabCuisine', 'nav.drinks', 'nav.sauces', 'nav.shorts', 'nav.films', 'nav.academy', 'nav.chefs', 'nav.markets'],
   },
   {
     titleKey: 'nav.more',
