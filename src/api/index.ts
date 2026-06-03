@@ -59,7 +59,9 @@ export async function getRandomRecipes(count: number): Promise<Recipe[]> {
  */
 export async function getRecipeById(id: string): Promise<Recipe> {
   try {
-    if (id.startsWith('lo-')) {
+    // Any locally-bundled recipe: USDA, vintage, world classics, sauces.
+    // They all live inside LOCAL_RECIPES and getLocalRecipe finds them by id.
+    if (id.startsWith('lo-') || id.startsWith('wc-') || id.startsWith('sa-')) {
       const r = getLocalRecipe(id);
       if (!r) throw new RecipeApiError('Recipe not found', 'not-found');
       return r;
