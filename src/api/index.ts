@@ -10,6 +10,12 @@ import {
   mdbSearchByName,
 } from './mealdb';
 import { fkLookup, fkSearch } from './forkify';
+import {
+  cdbAllSummaries,
+  cdbLookup,
+  cdbSearchByIngredient,
+  cdbSearchByName,
+} from './cocktaildb';
 import { LOCAL_RECIPES, getLocalRecipe } from '../data/local-recipes';
 
 /**
@@ -63,6 +69,11 @@ export async function getRecipeById(id: string): Promise<Recipe> {
       if (!r) throw new RecipeApiError('Recipe not found', 'not-found');
       return r;
     }
+    if (id.startsWith('cdb-')) {
+      const r = await cdbLookup(id);
+      if (!r) throw new RecipeApiError('Recipe not found', 'not-found');
+      return r;
+    }
     const r = await mdbLookup(id);
     if (!r) throw new RecipeApiError('Recipe not found', 'not-found');
     return r;
@@ -103,7 +114,10 @@ export async function searchRecipes(filters: SearchFilters = {}): Promise<Search
     // ~668 recipes plus the local hand-curated set, so we have plenty to
     // paginate through. Local recipes first since they are richest.
     try {
-      const all = await mdbAllSummaries();
+      const [all, cocktails] = await Promise.all([
+        mdbAllSummaries(),
+        cdbAllSummaries().catch(() => [] as RecipeSummary[]),
+      ]);
       const localSummaries: RecipeSummary[] = LOCAL_RECIPES.map((r) => ({
         id: r.id,
         source: r.source,
@@ -114,7 +128,7 @@ export async function searchRecipes(filters: SearchFilters = {}): Promise<Search
       }));
       const seen = new Set<string>();
       const merged: RecipeSummary[] = [];
-      for (const r of [...localSummaries, ...all]) {
+      for (const r of [...localSummaries, ...all, ...cocktails]) {
         if (!seen.has(r.id)) {
           seen.add(r.id);
           merged.push(r);
@@ -139,9 +153,11 @@ export async function searchRecipes(filters: SearchFilters = {}): Promise<Search
       );
     });
 
-    const [byName, byIngredient, fk] = await Promise.all([
+    const [byName, byIngredient, cdbName, cdbIng, fk] = await Promise.all([
       mdbSearchByName(query).catch(() => [] as RecipeSummary[]),
       mdbSearchByIngredient(query).catch(() => [] as RecipeSummary[]),
+      cdbSearchByName(query).catch(() => [] as RecipeSummary[]),
+      cdbSearchByIngredient(query).catch(() => [] as RecipeSummary[]),
       fkSearch(query, Math.max(1, Math.floor((filters.offset ?? 0) / 12) + 1)).catch(() => ({
         results: [] as RecipeSummary[],
         total: 0,
@@ -150,7 +166,7 @@ export async function searchRecipes(filters: SearchFilters = {}): Promise<Search
 
     const merged: RecipeSummary[] = [];
     const seen = new Set<string>();
-    for (const r of [...localHits, ...byName, ...byIngredient, ...fk.results]) {
+    for (const r of [...localHits, ...byName, ...byIngredient, ...cdbName, ...cdbIng, ...fk.results]) {
       if (!seen.has(r.id)) {
         seen.add(r.id);
         merged.push(r);
