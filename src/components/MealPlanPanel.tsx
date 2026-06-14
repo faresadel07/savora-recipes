@@ -11,21 +11,26 @@ import {
   Pin,
   PinOff,
   RefreshCw,
+  Replace,
   Sparkles,
+  ThumbsDown,
   Trash2,
   Utensils,
 } from 'lucide-react';
 import { useTranslation } from '../i18n';
 import {
+  dislikeAndSwap,
   generateMealPlan,
   regenerateAll,
   regenerateSlot,
+  swapSlotByProtein,
   togglePinned,
   type DietFlag,
   type MealPlan,
   type MealSlot,
   type PlannedDay,
   type PlannedMeal,
+  type ProteinSource,
   SLOT_LABEL_AR,
   SLOT_LABEL_EN,
   DIET_LABEL_AR,
@@ -136,6 +141,22 @@ export default function MealPlanPanel({ targets }: Props) {
     (dayIndex: number, slot: MealSlot) => {
       if (!plan) return;
       setPlan(togglePinned(plan, dayIndex, slot));
+    },
+    [plan],
+  );
+
+  const handleDislikeSwap = useCallback(
+    (dayIndex: number, slot: MealSlot) => {
+      if (!plan) return;
+      setPlan(dislikeAndSwap(plan, dayIndex, slot));
+    },
+    [plan],
+  );
+
+  const handleSwapByProtein = useCallback(
+    (dayIndex: number, slot: MealSlot, protein: ProteinSource) => {
+      if (!plan) return;
+      setPlan(swapSlotByProtein(plan, dayIndex, slot, protein));
     },
     [plan],
   );
@@ -401,6 +422,8 @@ export default function MealPlanPanel({ targets }: Props) {
               isAr={isAr}
               onRegenSlot={(slot) => handleRegenSlot(day.index, slot)}
               onTogglePin={(slot) => handleTogglePin(day.index, slot)}
+              onDislikeSwap={(slot) => handleDislikeSwap(day.index, slot)}
+              onSwapByProtein={(slot, protein) => handleSwapByProtein(day.index, slot, protein)}
             />
           ))}
         </div>
@@ -420,6 +443,8 @@ function DayCard({
   isAr,
   onRegenSlot,
   onTogglePin,
+  onDislikeSwap,
+  onSwapByProtein,
 }: {
   day: PlannedDay;
   targets: { calories: number; protein: number; carbs: number; fat: number };
@@ -427,6 +452,8 @@ function DayCard({
   isAr: boolean;
   onRegenSlot: (slot: MealSlot) => void;
   onTogglePin: (slot: MealSlot) => void;
+  onDislikeSwap: (slot: MealSlot) => void;
+  onSwapByProtein: (slot: MealSlot, protein: ProteinSource) => void;
 }) {
   return (
     <article className="overflow-hidden rounded-3xl border border-ink-100 bg-cream-50">
@@ -453,6 +480,8 @@ function DayCard({
             isAr={isAr}
             onRegen={() => onRegenSlot(meal.slot)}
             onTogglePin={() => onTogglePin(meal.slot)}
+            onDislikeSwap={() => onDislikeSwap(meal.slot)}
+            onSwapByProtein={(p) => onSwapByProtein(meal.slot, p)}
           />
         ))}
       </div>
@@ -495,12 +524,25 @@ function MealRow({
   isAr,
   onRegen,
   onTogglePin,
+  onDislikeSwap,
+  onSwapByProtein,
 }: {
   meal: PlannedMeal;
   isAr: boolean;
   onRegen: () => void;
   onTogglePin: () => void;
+  onDislikeSwap: () => void;
+  onSwapByProtein: (p: ProteinSource) => void;
 }) {
+  const [proteinMenuOpen, setProteinMenuOpen] = useState(false);
+  const proteinOptions: { id: ProteinSource; label: string; labelAr: string; emoji: string }[] = [
+    { id: 'chicken', label: 'Chicken', labelAr: 'دجاج', emoji: '🐔' },
+    { id: 'beef',    label: 'Beef',    labelAr: 'لحم',  emoji: '🥩' },
+    { id: 'fish',    label: 'Fish',    labelAr: 'سمك',  emoji: '🐟' },
+    { id: 'plant',   label: 'Plant',   labelAr: 'نباتي', emoji: '🌱' },
+    { id: 'egg',     label: 'Egg',     labelAr: 'بيض',  emoji: '🥚' },
+    { id: 'dairy',   label: 'Dairy',   labelAr: 'ألبان', emoji: '🥛' },
+  ];
   const slotLabel = isAr ? SLOT_LABEL_AR[meal.slot] : SLOT_LABEL_EN[meal.slot];
   const title = isAr ? meal.recipe.titleAr : meal.recipe.title;
   return (
@@ -537,7 +579,7 @@ function MealRow({
           <span className="rounded-full bg-sage-50 px-2 py-0.5 text-sage-600">F {meal.fat}g</span>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="relative flex flex-col items-center gap-1.5">
         <button
           type="button"
           onClick={onTogglePin}
@@ -560,6 +602,47 @@ function MealRow({
         >
           {meal.pinned ? <Lock className="h-3.5 w-3.5" strokeWidth={2.2} /> : <RefreshCw className="h-3.5 w-3.5" strokeWidth={2.2} />}
         </button>
+        <button
+          type="button"
+          onClick={() => setProteinMenuOpen((v) => !v)}
+          disabled={meal.pinned}
+          aria-label="Swap by protein"
+          title="Swap by protein source"
+          className="grid h-8 w-8 place-items-center rounded-full border border-ink-100 bg-cream-50 text-ink-500 transition-colors hover:border-ink-300 hover:text-ink-900 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <Replace className="h-3.5 w-3.5" strokeWidth={2.2} />
+        </button>
+        <button
+          type="button"
+          onClick={onDislikeSwap}
+          disabled={meal.pinned}
+          aria-label="Dislike and swap"
+          title="Permanently dislike this recipe and swap it"
+          className="grid h-8 w-8 place-items-center rounded-full border border-ink-100 bg-cream-50 text-ink-500 transition-colors hover:border-terracotta-500 hover:text-terracotta-500 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <ThumbsDown className="h-3.5 w-3.5" strokeWidth={2.2} />
+        </button>
+        {proteinMenuOpen && (
+          <div className="absolute end-10 top-0 z-30 w-44 overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 shadow-lg">
+            <div className="border-b border-ink-100 px-3 py-2 text-[10px] font-semibold uppercase tracking-widest text-ink-500">
+              {isAr ? 'بدّل لـ' : 'Swap to'}
+            </div>
+            {proteinOptions.map((opt) => (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => {
+                  setProteinMenuOpen(false);
+                  onSwapByProtein(opt.id);
+                }}
+                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm tracking-tight text-ink-700 hover:bg-cream-100"
+              >
+                <span className="text-base">{opt.emoji}</span>
+                {isAr ? opt.labelAr : opt.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

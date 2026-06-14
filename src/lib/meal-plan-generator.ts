@@ -28,6 +28,11 @@ export type DietFlag =
   | 'nut-free'
   | 'egg-free';
 
+/** A coarse protein source classification used by the swap-by-protein
+ *  feature and the same-day-variety scorer. Detected at runtime from
+ *  the recipe's title and ingredient list. */
+export type ProteinSource = 'chicken' | 'beef' | 'fish' | 'pork' | 'plant' | 'egg' | 'dairy' | 'mixed';
+
 export type MealSlot = 'breakfast' | 'lunch' | 'dinner' | 'snack-1' | 'snack-2';
 
 export interface MacroTargets {
@@ -108,11 +113,41 @@ const EGG_KEYWORDS = [
   'egg ', 'eggs', 'omelette', 'omelet', 'meringue', 'mayonnaise',
 ];
 
+const CHICKEN_KEYWORDS = ['chicken', 'turkey', 'poultry', 'shawarma'];
+const BEEF_KEYWORDS    = ['beef', 'steak', 'ribeye', 'bulgogi', 'lamb', 'mutton', 'kofta', 'kibbeh', 'mansaf'];
+const FISH_KEYWORDS    = ['fish', 'salmon', 'tuna', 'tilapia', 'cod', 'shrimp', 'prawn', 'crab', 'lobster', 'tilapia', 'sea bass', 'halibut', 'sardine', 'anchovy'];
+const PLANT_PROTEIN    = ['tofu', 'tempeh', 'seitan', 'lentil', 'chickpea', 'edamame', 'bean', 'pea protein', 'plant protein', 'quinoa'];
+const EGG_PRIMARY      = ['egg ', 'eggs', 'omelette', 'omelet', 'frittata', 'shakshuka', 'menemen', 'tamago'];
+const DAIRY_PRIMARY    = ['yogurt', 'labneh', 'cottage cheese', 'paneer', 'ricotta', 'cheese'];
+
 function hayContains(hay: string, needles: string[]): boolean {
   for (const n of needles) {
     if (hay.includes(n)) return true;
   }
   return false;
+}
+
+/**
+ * Best-guess protein source label for a recipe. Used to spread protein
+ * variety across the day and to power the "swap by protein" button.
+ * Order of checks favors meat first because most recipes that contain
+ * chicken AND yogurt should be classified as chicken.
+ */
+export function detectProteinSource(recipe: FitnessRecipe): ProteinSource {
+  const hay = (
+    recipe.title + ' ' +
+    recipe.ingredients.join(' ') + ' ' +
+    recipe.steps.join(' ')
+  ).toLowerCase();
+
+  if (hayContains(hay, FISH_KEYWORDS))    return 'fish';
+  if (hayContains(hay, CHICKEN_KEYWORDS)) return 'chicken';
+  if (hayContains(hay, BEEF_KEYWORDS))    return 'beef';
+  if (hayContains(hay, PORK_KEYWORDS))    return 'pork';
+  if (hayContains(hay, EGG_PRIMARY))      return 'egg';
+  if (hayContains(hay, PLANT_PROTEIN))    return 'plant';
+  if (hayContains(hay, DAIRY_PRIMARY))    return 'dairy';
+  return 'mixed';
 }
 
 /**
@@ -200,6 +235,7 @@ const SLOT_CATEGORIES: Record<MealSlot, FitnessRecipe['category'][]> = {
 interface Candidate {
   recipe: FitnessRecipe;
   flags: Set<DietFlag>;
+  protein: ProteinSource;
 }
 
 let CANDIDATES: Candidate[] | null = null;
@@ -208,9 +244,49 @@ function getCandidates(): Candidate[] {
     CANDIDATES = FITNESS_RECIPES.map((r) => ({
       recipe: r,
       flags: detectDietFlags(r),
+      protein: detectProteinSource(r),
     }));
   }
   return CANDIDATES;
+}
+
+const DISLIKE_KEY = 'zaytoun:mealplan:disliked:v1';
+
+/** Return the user's persisted list of disliked recipe ids. */
+export function loadDisliked(): Set<string> {
+  if (typeof localStorage === 'undefined') return new Set();
+  try {
+    const raw = localStorage.getItem(DISLIKE_KEY);
+    if (!raw) return new Set();
+    const arr = JSON.parse(raw) as string[];
+    return new Set(arr);
+  } catch {
+    return new Set();
+  }
+}
+
+/** Permanently block a recipe id from appearing in future plans. */
+export function dislikeRecipe(recipeId: string): void {
+  if (typeof localStorage === 'undefined') return;
+  const set = loadDisliked();
+  set.add(recipeId);
+  try {
+    localStorage.setItem(DISLIKE_KEY, JSON.stringify([...set]));
+  } catch {
+    // ignore quota errors
+  }
+}
+
+/** Un-block a previously disliked recipe id. */
+export function undislikeRecipe(recipeId: string): void {
+  if (typeof localStorage === 'undefined') return;
+  const set = loadDisliked();
+  set.delete(recipeId);
+  try {
+    localStorage.setItem(DISLIKE_KEY, JSON.stringify([...set]));
+  } catch {
+    // ignore
+  }
 }
 
 function passesDiet(candidate: Candidate, requested: DietFlag[]): boolean {
@@ -257,6 +333,12 @@ interface PickOptions {
   diet: DietFlag[];
   maxMinutes?: number;
   recentRecipeIds: Set<string>;
+  /** Recipe ids the user has permanently blocked. */
+  disliked?: Set<string>;
+  /** Protein sources already used today; reused sources cost more score. */
+  proteinsUsedToday?: Set<ProteinSource>;
+  /** When set, only candidates with this protein source are eligible. */
+  requireProtein?: ProteinSource;
   iterations?: number;
 }
 
@@ -275,11 +357,16 @@ interface PickResult {
 function pickMealForSlot(opts: PickOptions): PickResult | null {
   const iterations = opts.iterations ?? 300;
   const cats = SLOT_CATEGORIES[opts.slot];
+  const disliked = opts.disliked ?? new Set<string>();
+  const proteinsUsed = opts.proteinsUsedToday ?? new Set<ProteinSource>();
+
   const pool = getCandidates().filter(
     (c) =>
       cats.includes(c.recipe.category) &&
       passesDiet(c, opts.diet) &&
-      passesTime(c.recipe, opts.maxMinutes),
+      passesTime(c.recipe, opts.maxMinutes) &&
+      !disliked.has(c.recipe.id) &&
+      (opts.requireProtein ? c.protein === opts.requireProtein : true),
   );
   if (pool.length === 0) return null;
 
@@ -299,6 +386,9 @@ function pickMealForSlot(opts: PickOptions): PickResult | null {
 
     let s = scoreMeal(recipe, portion, opts.target);
     if (opts.recentRecipeIds.has(recipe.id)) s += 600; // strong dislike for repeats
+    if (proteinsUsed.has(candidate.protein) && candidate.protein !== 'mixed') {
+      s += 250; // soft penalty for repeating the same protein source same day
+    }
 
     if (!best || s < best.score) {
       best = { recipe, portion, score: s };
@@ -327,8 +417,17 @@ function buildDay(
   preferences: MealPreferences,
   pinnedForDay: Map<MealSlot, PlannedMeal>,
   recentRecipeIds: Set<string>,
+  disliked: Set<string> = loadDisliked(),
 ): PlannedDay {
   const slots = SLOT_PLANS[preferences.mealsPerDay];
+  const proteinsUsedToday = new Set<ProteinSource>();
+  const candByRecipe = new Map(getCandidates().map((c) => [c.recipe.id, c]));
+
+  // Pinned meals: count their protein toward the day's variety budget.
+  for (const meal of pinnedForDay.values()) {
+    const c = candByRecipe.get(meal.recipe.id);
+    if (c) proteinsUsedToday.add(c.protein);
+  }
 
   // Subtract pinned macros from the day's target before allocating.
   let remainingCal = targets.calories;
@@ -373,6 +472,8 @@ function buildDay(
       diet: preferences.diet,
       maxMinutes: preferences.maxMinutesPerMeal,
       recentRecipeIds,
+      disliked,
+      proteinsUsedToday,
     });
 
     if (!pick) {
@@ -393,6 +494,8 @@ function buildDay(
     };
     meals.push(meal);
     recentRecipeIds.add(meal.recipe.id);
+    const cand = candByRecipe.get(meal.recipe.id);
+    if (cand && cand.protein !== 'mixed') proteinsUsedToday.add(cand.protein);
   }
 
   const totals: MacroTargets = meals.reduce(
@@ -487,6 +590,94 @@ export function togglePinned(
       };
     }),
   };
+}
+
+/** Swap a single slot for a recipe whose primary protein matches the
+ *  requested source (chicken / beef / fish / plant / etc.). Pinned and
+ *  disliked recipes are respected. Returns the original plan unchanged
+ *  if no recipe matches the criteria.
+ */
+export function swapSlotByProtein(
+  plan: MealPlan,
+  dayIndex: number,
+  slot: MealSlot,
+  protein: ProteinSource,
+): MealPlan {
+  const day = plan.days.find((d) => d.index === dayIndex);
+  if (!day) return plan;
+
+  // Recompute the slot's calorie target from the day's allocation.
+  const slotDef = SLOT_PLANS[plan.preferences.mealsPerDay].find((s) => s.slot === slot);
+  if (!slotDef) return plan;
+
+  const slotTarget: MacroTargets = {
+    calories: Math.round(plan.targets.calories * slotDef.ratio),
+    protein: Math.round(plan.targets.protein * slotDef.ratio),
+    carbs: Math.round(plan.targets.carbs * slotDef.ratio),
+    fat: Math.round(plan.targets.fat * slotDef.ratio),
+  };
+
+  const pick = pickMealForSlot({
+    slot,
+    target: slotTarget,
+    diet: plan.preferences.diet,
+    maxMinutes: plan.preferences.maxMinutesPerMeal,
+    recentRecipeIds: new Set(day.meals.map((m) => m.recipe.id)),
+    disliked: loadDisliked(),
+    requireProtein: protein,
+    iterations: 200,
+  });
+
+  if (!pick) return plan;
+
+  const replacementMeal: PlannedMeal = {
+    slot,
+    recipe: pick.recipe,
+    portion: pick.portion,
+    calories: Math.round(pick.recipe.calories * pick.portion),
+    protein: Math.round(pick.recipe.protein * pick.portion * 10) / 10,
+    carbs: Math.round(pick.recipe.carbs * pick.portion * 10) / 10,
+    fat: Math.round(pick.recipe.fat * pick.portion * 10) / 10,
+    pinned: false,
+  };
+
+  const updatedMeals = day.meals.map((m) => (m.slot === slot ? replacementMeal : m));
+  const totals = updatedMeals.reduce(
+    (acc, m) => ({
+      calories: acc.calories + m.calories,
+      protein: acc.protein + m.protein,
+      carbs: acc.carbs + m.carbs,
+      fat: acc.fat + m.fat,
+    }),
+    { calories: 0, protein: 0, carbs: 0, fat: 0 },
+  );
+  const diff: MacroTargets = {
+    calories: totals.calories - plan.targets.calories,
+    protein: Math.round((totals.protein - plan.targets.protein) * 10) / 10,
+    carbs: Math.round((totals.carbs - plan.targets.carbs) * 10) / 10,
+    fat: Math.round((totals.fat - plan.targets.fat) * 10) / 10,
+  };
+
+  return {
+    ...plan,
+    days: plan.days.map((d) =>
+      d.index === dayIndex ? { ...d, meals: updatedMeals, totals, diff } : d,
+    ),
+  };
+}
+
+/** Dislike a meal AND swap it for a different recipe in one step.
+ *  Combines the dislike persistence with regenerateSlot.
+ */
+export function dislikeAndSwap(
+  plan: MealPlan,
+  dayIndex: number,
+  slot: MealSlot,
+): MealPlan {
+  const day = plan.days.find((d) => d.index === dayIndex);
+  const target = day?.meals.find((m) => m.slot === slot);
+  if (target) dislikeRecipe(target.recipe.id);
+  return regenerateSlot(plan, dayIndex, slot);
 }
 
 /** Regenerate every non-pinned slot. */
