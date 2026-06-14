@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
   ChefHat,
+  ChevronDown,
   Droplets,
   Film,
   GlassWater,
@@ -53,6 +54,13 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
   { to: '/fitness', key: 'nav.fitness', icon: Activity },
 ];
+
+// Items always visible in the top bar (the core editorial pillars).
+const CORE_NAV_KEYS = new Set([
+  'nav.home', 'nav.recipes', 'nav.arabCuisine', 'nav.drinks', 'nav.sauces', 'nav.fitness',
+]);
+const CORE_NAV = NAV_ITEMS.filter((n) => CORE_NAV_KEYS.has(n.key));
+const MORE_NAV = NAV_ITEMS.filter((n) => !CORE_NAV_KEYS.has(n.key));
 
 // Mobile menu groups the nav items into editorial sections so the drawer
 // reads like a table of contents instead of one long list.
@@ -108,13 +116,13 @@ export default function Header() {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-0.5 xl:gap-1 lg:flex">
-          {NAV_ITEMS.map((item) => (
+          {CORE_NAV.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-medium tracking-tight transition-all xl:px-3.5 xl:text-[13px] ${
+                `whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium tracking-tight transition-all xl:px-4 ${
                   isActive
                     ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
                     : 'text-ink-500 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'
@@ -124,6 +132,7 @@ export default function Header() {
               {t(item.key)}
             </NavLink>
           ))}
+          <MoreNav items={MORE_NAV} />
         </nav>
 
         <div className="flex flex-none items-center gap-0.5 sm:gap-1">
@@ -412,5 +421,88 @@ export default function Header() {
         </aside>
       </div>
     </header>
+  );
+}
+
+// ============================================================
+// MoreNav: dropdown that surfaces secondary nav items on desktop
+// so the top bar stays clean and readable on iPad-sized screens.
+// ============================================================
+
+function MoreNav({ items }: { items: NavItem[] }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  // Close on click outside or on Escape.
+  useEffect(() => {
+    if (!open) return;
+    function onDocClick(e: MouseEvent) {
+      if (!wrapperRef.current) return;
+      if (!wrapperRef.current.contains(e.target as Node)) setOpen(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  // If we're on a route that lives inside the More menu, mark the trigger
+  // active so the user always knows where they are.
+  const here = window.location.pathname;
+  const isActive = items.some((it) => it.to === here);
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium tracking-tight transition-all xl:px-4 ${
+          isActive || open
+            ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
+            : 'text-ink-500 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'
+        }`}
+      >
+        {t('nav.more')}
+        <ChevronDown className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`} strokeWidth={2.5} />
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute end-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 shadow-[0_24px_48px_-16px_rgba(0,0,0,0.18)] dark:border-cream-50/10 dark:bg-ink-800"
+        >
+          <ul className="grid grid-cols-1 py-2">
+            {items.map((item) => {
+              const Icon = item.icon;
+              return (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive: navActive }) =>
+                      `flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium tracking-tight transition-colors ${
+                        navActive
+                          ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
+                          : 'text-ink-700 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-200 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'
+                      }`
+                    }
+                  >
+                    <Icon className="h-4 w-4 text-ink-300" strokeWidth={1.8} />
+                    {t(item.key)}
+                  </NavLink>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
