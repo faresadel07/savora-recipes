@@ -140,6 +140,16 @@ export const en = {
     yourFavorites: 'Your favorites',
     donate: 'Donate',
   },
+  health: {
+    eyebrow: 'Body and lift',
+    title: 'Health calculators.',
+    subtitle: 'BMI, ideal weight, one-rep max, and US Navy body fat. All offline, all open formulas.',
+  },
+  macroFilter: {
+    eyebrow: 'Find by macros',
+    title: 'The macro filter.',
+    subtitle: 'Tell us your macro window and we pull the matching recipes from the fitness library.',
+  },
   mealplan: {
     eyebrow: 'New',
     title: 'Build my meal plan',
@@ -752,6 +762,16 @@ export const ar: typeof en = {
     randomRecipe: 'وصفة عشوائية',
     yourFavorites: 'مفضلاتك',
     donate: 'تبرع',
+  },
+  health: {
+    eyebrow: 'الجسم والرفع',
+    title: 'حاسبات صحية.',
+    subtitle: 'مؤشر كتلة الجسم، الوزن المثالي، الحد الأقصى للرفعة، ونسبة الدهون بطريقة البحرية الأمريكية. كله بدون إنترنت، كله صيغ علمية مفتوحة.',
+  },
+  macroFilter: {
+    eyebrow: 'بحث بالماكروز',
+    title: 'فلتر الماكروز.',
+    subtitle: 'حدّد نطاق الماكروز اللي بدك، وبنرجعلك الوصفات المتطابقة من مكتبة الفيتنس.',
   },
   mealplan: {
     eyebrow: 'جديد',

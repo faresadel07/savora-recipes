@@ -35,6 +35,8 @@ import {
 import RecipeCard from '../components/RecipeCard';
 import MacroCalculator, { type MacroTargetsSnapshot } from '../components/MacroCalculator';
 import MealPlanPanel from '../components/MealPlanPanel';
+import HealthCalculators from '../components/HealthCalculators';
+import RecipeMacroFilter from '../components/RecipeMacroFilter';
 import FitnessRecipeCard from '../components/FitnessRecipeCard';
 import FitnessRecipeModal from '../components/FitnessRecipeModal';
 import {
@@ -401,6 +403,12 @@ export default function FitnessPage() {
         />
         {mealPlanTargets && <MealPlanPanel targets={mealPlanTargets} />}
       </section>
+
+      {/* ============ HEALTH CALCULATORS ============ */}
+      <HealthCalculators />
+
+      {/* ============ RECIPE MACRO FILTER ============ */}
+      <RecipeMacroFilter />
 
       {/* ============ MACRO CHEAT SHEET ============ */}
       <section className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
