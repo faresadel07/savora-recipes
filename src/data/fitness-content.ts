@@ -57,6 +57,41 @@ export const PROTEIN_101: ProteinTopic[] = [
     highlight: 'Fiber: 25 to 38g/day. Fats: at least 1g/kg of body weight',
     source: 'US Dietary Guidelines for Americans, 2020-2025',
   },
+  {
+    id: 'ramadan-bulking',
+    title: 'How to bulk or maintain during Ramadan',
+    body: 'Two protein-heavy meals — Iftar and Suhoor — are enough to hit a daily protein target. Front-load carbs and fluids at Iftar, then a slow-digesting protein at Suhoor (Greek yogurt, cottage cheese, eggs). Schedule training 60 to 90 minutes before Iftar so you can refuel immediately. Avoid heavy lifting at Suhoor: the body is depleted, the day is starting.',
+    highlight: 'Hit 0.8 to 1g of protein per pound across Iftar and Suhoor. Train just before Iftar.',
+    source: 'Trabelsi et al., Sports Nutrition for Ramadan, 2018',
+  },
+  {
+    id: 'creatine-101',
+    title: 'Creatine monohydrate is the safest, most researched supplement',
+    body: 'Creatine monohydrate is the most studied sports supplement in history. 3 to 5g daily, taken at any time, raises muscle phosphocreatine stores so you can produce slightly more force per set. Effects are visible within 4 to 6 weeks: about 1 to 2kg lean muscle gain and 5 to 15 percent strength improvement. Safe for healthy kidneys per 200+ trials. Halal versions are widely available.',
+    highlight: '3 to 5g per day, any time. Halal monohydrate is cheapest and identical to expensive blends.',
+    source: 'Kreider et al., Journal of the International Society of Sports Nutrition, 2017',
+  },
+  {
+    id: 'cut-without-losing-muscle',
+    title: 'Cut without losing muscle: 4 rules',
+    body: 'During a cut, drop calories by 300 to 500 per day (not more). Keep protein above 1g per pound of body weight to spare lean tissue. Lift heavy at least 3 times per week — strength training tells the body to keep the muscle it has. Sleep 7 to 9 hours nightly: poor sleep doubles muscle loss in a deficit. The result: 0.4 to 0.7kg fat loss per week with no strength drop.',
+    highlight: 'Deficit 300 to 500 kcal · Protein 1g/lb · Lift 3x/week · Sleep 7 to 9 hours',
+    source: 'Helms et al., Evidence-Based Recommendations for Natural Bodybuilding, 2014',
+  },
+  {
+    id: 'sleep-and-recovery',
+    title: 'Sleep is the most underrated training variable',
+    body: 'Growth hormone peaks during deep sleep. Most muscle protein synthesis happens in the night. Athletes who sleep less than 6 hours nightly recover 30 percent slower and lose 60 percent more muscle in a deficit. Practical rule: protect 7 to 9 hours of dark, cool, quiet sleep. Caffeine cut-off 8 hours before bed. Phone out of the bedroom.',
+    highlight: '7 to 9 hours, dark and cool. Caffeine cut-off 8 hours pre-bed.',
+    source: 'Walker, Why We Sleep, and Dattilo et al., Medical Hypotheses, 2011',
+  },
+  {
+    id: 'progressive-overload',
+    title: 'Progressive overload: the only rule that grows muscle',
+    body: 'A muscle only grows when forced past what it already does. Each week, add weight, reps, or a quality set. If last week was 60kg bench for 8 reps, this week try 60 for 9 or 62.5 for 8. Without progression, you maintain. Track it in a notes app: exercise, weight, reps, RPE. Without writing it down, you will not see the trend.',
+    highlight: 'Add weight, reps, or sets each week. Track every session.',
+    source: 'Schoenfeld, The M.A.X. Muscle Plan, 2013',
+  },
 ];
 
 // ============ MACRO CHEAT SHEET ============

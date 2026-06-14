@@ -10,7 +10,7 @@ export interface FitnessChannel {
   handle: string;
   url: string;
   blurb: string;
-  vibe: 'protein' | 'science' | 'plant' | 'meal-prep' | 'cutting';
+  vibe: 'protein' | 'science' | 'plant' | 'meal-prep' | 'cutting' | 'modest' | 'ramadan' | 'home' | 'yoga' | 'strength';
   accent: 'terracotta' | 'sage' | 'gold' | 'ink';
 }
 
@@ -122,5 +122,99 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Alyssia Sheikh on meal-prep, intermittent fasting, and budget healthy cooking.',
     vibe: 'meal-prep',
     accent: 'gold',
+  },
+
+  // Muslim and Arab fitness creators (modest content, halal focus)
+  {
+    id: 'amanah-fitness',
+    name: 'Amanah Fitness',
+    handle: '@AmanahFitness',
+    url: 'https://www.youtube.com/@AmanahFitness',
+    blurb: 'Amina Khan trains Muslim women with modest-friendly home workouts and pregnancy programs.',
+    vibe: 'modest',
+    accent: 'sage',
+  },
+  {
+    id: 'eslam-hamouda',
+    name: 'Eslam Hamouda',
+    handle: '@EslamHamoudaFit',
+    url: 'https://www.youtube.com/@EslamHamoudaFit',
+    blurb: 'Arabic high protein cooking and gym nutrition. Halal recipes, gym kitchen energy.',
+    vibe: 'protein',
+    accent: 'terracotta',
+  },
+  {
+    id: 'mostafa-mohammad-fitness',
+    name: 'Mostafa Mohammad Fitness',
+    handle: '@MostafaMohammadFitness',
+    url: 'https://www.youtube.com/@MostafaMohammadFitness',
+    blurb: 'Arabic fitness coaching, training breakdowns, and Egyptian high-protein meals.',
+    vibe: 'science',
+    accent: 'ink',
+  },
+  {
+    id: 'fit-nest',
+    name: 'The Fit Nest',
+    handle: '@TheFitNest',
+    url: 'https://www.youtube.com/@TheFitNest',
+    blurb: 'Modest-friendly strength and conditioning. Beginner programs designed for Muslim women.',
+    vibe: 'modest',
+    accent: 'gold',
+  },
+
+  // Ramadan and home-friendly creators
+  {
+    id: 'yoga-with-adriene',
+    name: 'Yoga With Adriene',
+    handle: '@yogawithadriene',
+    url: 'https://www.youtube.com/@yogawithadriene',
+    blurb: 'Free, gentle yoga for every level. The all-time most-watched home yoga channel.',
+    vibe: 'yoga',
+    accent: 'sage',
+  },
+  {
+    id: 'fitness-blender',
+    name: 'Fitness Blender',
+    handle: '@FitnessBlender',
+    url: 'https://www.youtube.com/@FitnessBlender',
+    blurb: '600+ free full-length home workouts. HIIT, strength, low impact. Modest workout gear.',
+    vibe: 'home',
+    accent: 'ink',
+  },
+  {
+    id: 'madfit',
+    name: 'MadFit',
+    handle: '@MadFit',
+    url: 'https://www.youtube.com/@MadFit',
+    blurb: 'Apartment-friendly home workouts, no jumping, no equipment. Calm and quiet routines.',
+    vibe: 'home',
+    accent: 'terracotta',
+  },
+  {
+    id: 'heather-robertson',
+    name: 'Heather Robertson',
+    handle: '@HeatherRobertson',
+    url: 'https://www.youtube.com/@HeatherRobertson',
+    blurb: 'Free 12-week workout programs with full-body strength and HIIT. Modest training fits.',
+    vibe: 'strength',
+    accent: 'gold',
+  },
+  {
+    id: 'caroline-girvan',
+    name: 'Caroline Girvan',
+    handle: '@CarolineGirvan',
+    url: 'https://www.youtube.com/@CarolineGirvan',
+    blurb: 'No-music dumbbell strength workouts. Disciplined coaching for serious home training.',
+    vibe: 'strength',
+    accent: 'ink',
+  },
+  {
+    id: 'sydney-cummings',
+    name: 'Sydney Cummings',
+    handle: '@SydneyCummings',
+    url: 'https://www.youtube.com/@SydneyCummings',
+    blurb: 'A fresh full-body workout every single day. Strength, HIIT, mobility, all free.',
+    vibe: 'home',
+    accent: 'sage',
   },
 ];

@@ -37,6 +37,7 @@ import MacroCalculator, { type MacroTargetsSnapshot } from '../components/MacroC
 import MealPlanPanel from '../components/MealPlanPanel';
 import HealthCalculators from '../components/HealthCalculators';
 import RecipeMacroFilter from '../components/RecipeMacroFilter';
+import FitnessTrackers from '../components/FitnessTrackers';
 import FitnessRecipeCard from '../components/FitnessRecipeCard';
 import FitnessRecipeModal from '../components/FitnessRecipeModal';
 import {
@@ -169,6 +170,9 @@ export default function FitnessPage() {
         />
         {mealPlanTargets && <MealPlanPanel targets={mealPlanTargets} />}
       </section>
+
+      {/* ============ DAILY TRACKERS (hydration + macros + streak) ============ */}
+      <FitnessTrackers targets={mealPlanTargets} />
 
       {/* ============ RECIPE MACRO FILTER (paired with calculator) ============ */}
       <RecipeMacroFilter />
@@ -682,7 +686,12 @@ function FitnessChannelCard({ channel: c, index }: { channel: (typeof FITNESS_CH
     : c.vibe === 'science' ? 'Science-based'
     : c.vibe === 'plant' ? 'Plant-based'
     : c.vibe === 'meal-prep' ? 'Meal prep'
-    : 'Cutting / fat loss';
+    : c.vibe === 'cutting' ? 'Cutting / fat loss'
+    : c.vibe === 'modest' ? 'Modest / halal'
+    : c.vibe === 'ramadan' ? 'Ramadan friendly'
+    : c.vibe === 'home' ? 'Home workouts'
+    : c.vibe === 'yoga' ? 'Yoga / mobility'
+    : 'Strength training';
 
   return (
     <a

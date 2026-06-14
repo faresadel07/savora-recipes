@@ -146,6 +146,11 @@ export const en = {
     title: 'Health calculators.',
     subtitle: 'BMI, ideal weight, one-rep max, and US Navy body fat. All offline, all open formulas.',
   },
+  trackers: {
+    eyebrow: 'Daily trackers',
+    title: 'Track your day.',
+    subtitle: 'Hydration cups, logged meals, and your daily streak. Saved on your device, never sent anywhere.',
+  },
   macroFilter: {
     eyebrow: 'Find by macros',
     title: 'The macro filter.',
@@ -769,6 +774,11 @@ export const ar: typeof en = {
     eyebrow: 'الجسم والرفع',
     title: 'حاسبات صحية.',
     subtitle: 'مؤشر كتلة الجسم، الوزن المثالي، الحد الأقصى للرفعة، ونسبة الدهون بطريقة البحرية الأمريكية. كله بدون إنترنت، كله صيغ علمية مفتوحة.',
+  },
+  trackers: {
+    eyebrow: 'متعقبات يومية',
+    title: 'تتبّع يومك.',
+    subtitle: 'كاسات الماء، الوجبات المسجّلة، وسلسلتك اليومية. كله محفوظ بجهازك ولا يُرسل لأي مكان.',
   },
   macroFilter: {
     eyebrow: 'بحث بالماكروز',
