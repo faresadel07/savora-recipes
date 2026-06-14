@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Activity, Dumbbell, Filter, RefreshCw, Search, Sparkles, X } from 'lucide-react';
 import { useTranslation } from '../i18n';
+import WorkoutProgramSection from '../components/WorkoutProgramSection';
+import NippardVideoSection from '../components/NippardVideoSection';
+import FitnessCoachesSection from '../components/FitnessCoachesSection';
 import {
   CATEGORY_LABEL_AR,
   DEFAULT_FILTERS,
@@ -56,7 +59,7 @@ export default function WorkoutLibraryPage() {
             {isAr ? 'مكتبة التمارين' : 'Workout library'}
           </p>
           <h1 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-tighter">
-            {isAr ? '٨٧٣ تمرين، مع صور وتعليمات.' : '873 exercises, with images and instructions.'}
+            {isAr ? '٨٧٣ تمرين + ١٣ برنامج جاهز.' : '873 exercises + 13 ready programs.'}
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-cream-100/70 md:text-lg">
             {isAr
@@ -231,6 +234,15 @@ export default function WorkoutLibraryPage() {
           </div>
         )}
       </section>
+
+      {/* ============ WORKOUT PROGRAMS ============ */}
+      <WorkoutProgramSection />
+
+      {/* ============ JEFF NIPPARD VIDEOS ============ */}
+      <NippardVideoSection />
+
+      {/* ============ COACHES ============ */}
+      <FitnessCoachesSection />
 
       {/* ============ DETAIL MODAL ============ */}
       {openExercise && (
