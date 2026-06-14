@@ -152,6 +152,30 @@ export default function FitnessPage() {
         <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/10 blur-3xl" />
       </section>
 
+      {/* ============ MACRO CALCULATOR + MEAL PLAN (centerpiece) ============ */}
+      <section id="calculator" className="container-wide py-16 md:py-24">
+        <SectionHead
+          eyebrow={isAr ? 'هدفك الشخصي' : 'Personal targets'}
+          icon={<Flame className="h-3 w-3" />}
+          title={isAr ? 'احسب ماكروزك.' : 'Calculate your macros.'}
+          body={isAr
+            ? 'تقدير مبدئي مبني على معادلة Mifflin-St Jeor. عدّل عبر مراقبة الميزان لأسبوعين.'
+            : 'A starting estimate based on the Mifflin-St Jeor equation, the most validated BMR formula for adults today. Adjust over 2 weeks by watching the scale.'}
+        />
+        <MacroCalculator
+          goal={activePlan}
+          onGoalChange={setActivePlan}
+          onTargetsComputed={setMealPlanTargets}
+        />
+        {mealPlanTargets && <MealPlanPanel targets={mealPlanTargets} />}
+      </section>
+
+      {/* ============ RECIPE MACRO FILTER (paired with calculator) ============ */}
+      <RecipeMacroFilter />
+
+      {/* ============ HEALTH CALCULATORS ============ */}
+      <HealthCalculators />
+
       {/* ============ FITNESS RECIPE LIBRARY (curated, 50+ entries) ============ */}
       <section id="recipes" className="container-wide py-16 md:py-24">
         <SectionHead
@@ -387,28 +411,6 @@ export default function FitnessPage() {
           </div>
         </div>
       </section>
-
-      {/* ============ MACRO CALCULATOR ============ */}
-      <section id="calculator" className="container-wide py-16 md:py-24">
-        <SectionHead
-          eyebrow="Personal targets"
-          icon={<Flame className="h-3 w-3" />}
-          title="Calculate your macros."
-          body="A starting estimate based on the Mifflin-St Jeor equation, the most validated BMR formula for adults today. Adjust over 2 weeks by watching the scale."
-        />
-        <MacroCalculator
-          goal={activePlan}
-          onGoalChange={setActivePlan}
-          onTargetsComputed={setMealPlanTargets}
-        />
-        {mealPlanTargets && <MealPlanPanel targets={mealPlanTargets} />}
-      </section>
-
-      {/* ============ HEALTH CALCULATORS ============ */}
-      <HealthCalculators />
-
-      {/* ============ RECIPE MACRO FILTER ============ */}
-      <RecipeMacroFilter />
 
       {/* ============ MACRO CHEAT SHEET ============ */}
       <section className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">

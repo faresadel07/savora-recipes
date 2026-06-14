@@ -221,6 +221,49 @@ export default function MealPlanPanel({ targets }: Props) {
           )}
         </div>
 
+        {/* ============ QUICK START PRESETS ============ */}
+        {!plan && (
+          <div className="mt-7 border-t border-ink-100 pt-7">
+            <p className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-500">
+              {isAr ? 'بداية سريعة' : 'Quick start'}
+            </p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {(
+                [
+                  { id: 'lean3',   labelEn: 'Lean 3 day',    labelAr: 'تنشيف 3 أيام',   blurbEn: '4 meals · cut',    blurbAr: '4 وجبات · تنشيف', mealsPerDay: 4 as const, days: 3 as const, emoji: '🥗' },
+                  { id: 'bulk7',   labelEn: 'Bulk 7 day',    labelAr: 'تضخيم 7 أيام',   blurbEn: '5 meals · gain',    blurbAr: '5 وجبات · تضخيم', mealsPerDay: 5 as const, days: 7 as const, emoji: '🥩' },
+                  { id: 'maint3',  labelEn: 'Maintain 3 day', labelAr: 'محافظة 3 أيام', blurbEn: '3 meals · balance', blurbAr: '3 وجبات · توازن', mealsPerDay: 3 as const, days: 3 as const, emoji: '⚖️' },
+                ] as const
+              ).map((preset) => (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => {
+                    setMealsPerDay(preset.mealsPerDay);
+                    setDays(preset.days);
+                    setDiet(['halal']);
+                    setMaxMinutes(null);
+                    // Defer so state flushes before generate fires.
+                    setTimeout(() => handleGenerate(), 50);
+                  }}
+                  className="group relative overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 p-5 text-left transition-all hover:border-ink-900 hover:shadow-md"
+                >
+                  <div className="text-2xl">{preset.emoji}</div>
+                  <div className="mt-3 text-base font-semibold tracking-tight text-ink-900">
+                    {isAr ? preset.labelAr : preset.labelEn}
+                  </div>
+                  <div className="mt-1 text-xs tracking-tight text-ink-500">
+                    {isAr ? preset.blurbAr : preset.blurbEn}
+                  </div>
+                  <div className="absolute end-3 top-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-cream-100 text-ink-300 transition-colors group-hover:bg-ink-900 group-hover:text-cream-50">
+                    →
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ============ OPTIONS PANEL ============ */}
         {(optionsOpen || !plan) && (
           <div className="mt-7 grid gap-6 border-t border-ink-100 pt-7 md:grid-cols-2">
