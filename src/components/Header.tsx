@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
@@ -432,14 +433,42 @@ export default function Header() {
 function MoreNav({ items }: { items: NavItem[] }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [coords, setCoords] = useState<{ top: number; right: number; left: number } | null>(null);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  function recalcCoords() {
+    if (!btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    const isRtl = document.documentElement.dir === 'rtl';
+    setCoords({
+      top: rect.bottom + 8,
+      right: window.innerWidth - rect.right,
+      left: isRtl ? rect.left : rect.left, // fallback when caller prefers left anchor
+    });
+  }
+
+  // Re-compute on open, on scroll, on resize so the dropdown stays glued
+  // to the trigger even with sticky headers and orientation changes.
+  useEffect(() => {
+    if (!open) return;
+    recalcCoords();
+    window.addEventListener('scroll', recalcCoords, true);
+    window.addEventListener('resize', recalcCoords);
+    return () => {
+      window.removeEventListener('scroll', recalcCoords, true);
+      window.removeEventListener('resize', recalcCoords);
+    };
+  }, [open]);
 
   // Close on click outside or on Escape.
   useEffect(() => {
     if (!open) return;
     function onDocClick(e: MouseEvent) {
-      if (!wrapperRef.current) return;
-      if (!wrapperRef.current.contains(e.target as Node)) setOpen(false);
+      const target = e.target as Node;
+      if (btnRef.current?.contains(target)) return;
+      if (menuRef.current?.contains(target)) return;
+      setOpen(false);
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') setOpen(false);
@@ -452,14 +481,52 @@ function MoreNav({ items }: { items: NavItem[] }) {
     };
   }, [open]);
 
-  // If we're on a route that lives inside the More menu, mark the trigger
-  // active so the user always knows where they are.
   const here = window.location.pathname;
   const isActive = items.some((it) => it.to === here);
+  const isRtl = typeof document !== 'undefined' && document.documentElement.dir === 'rtl';
+
+  const dropdown = open && coords ? (
+    <div
+      ref={menuRef}
+      role="menu"
+      style={{
+        position: 'fixed',
+        top: coords.top,
+        ...(isRtl ? { left: coords.left } : { right: coords.right }),
+        zIndex: 100,
+      }}
+      className="w-64 overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 shadow-[0_24px_48px_-16px_rgba(0,0,0,0.25)] dark:border-cream-50/10 dark:bg-ink-800"
+    >
+      <ul className="grid grid-cols-1 py-2">
+        {items.map((item) => {
+          const Icon = item.icon;
+          return (
+            <li key={item.to}>
+              <NavLink
+                to={item.to}
+                onClick={() => setOpen(false)}
+                className={({ isActive: navActive }) =>
+                  `flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium tracking-tight transition-colors ${
+                    navActive
+                      ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
+                      : 'text-ink-700 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-200 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'
+                  }`
+                }
+              >
+                <Icon className="h-4 w-4 text-ink-300" strokeWidth={1.8} />
+                {t(item.key)}
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  ) : null;
 
   return (
-    <div ref={wrapperRef} className="relative">
+    <>
       <button
+        ref={btnRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
@@ -473,36 +540,7 @@ function MoreNav({ items }: { items: NavItem[] }) {
         {t('nav.more')}
         <ChevronDown className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`} strokeWidth={2.5} />
       </button>
-      {open && (
-        <div
-          role="menu"
-          className="absolute end-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 shadow-[0_24px_48px_-16px_rgba(0,0,0,0.18)] dark:border-cream-50/10 dark:bg-ink-800"
-        >
-          <ul className="grid grid-cols-1 py-2">
-            {items.map((item) => {
-              const Icon = item.icon;
-              return (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className={({ isActive: navActive }) =>
-                      `flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium tracking-tight transition-colors ${
-                        navActive
-                          ? 'bg-ink-100 text-ink-900 dark:bg-cream-50/10 dark:text-cream-50'
-                          : 'text-ink-700 hover:bg-ink-100/60 hover:text-ink-900 dark:text-ink-200 dark:hover:bg-cream-50/5 dark:hover:text-cream-50'
-                      }`
-                    }
-                  >
-                    <Icon className="h-4 w-4 text-ink-300" strokeWidth={1.8} />
-                    {t(item.key)}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-    </div>
+      {dropdown && createPortal(dropdown, document.body)}
+    </>
   );
 }
