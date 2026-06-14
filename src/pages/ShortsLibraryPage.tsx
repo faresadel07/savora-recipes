@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Pause, Play, Shuffle, Sparkles, VolumeX, X } from 'lucide-react';
+import { ArrowUpRight, Pause, Play, Shuffle, Sparkles, X } from 'lucide-react';
 import { SHORT_CATEGORIES, SHORTS, type ShortCategory, type ShortVideo } from '../data/shorts-library';
+import YouTubeShortPlayer from '../components/YouTubeShortPlayer';
 
 type Filter = 'all' | ShortCategory;
 
@@ -126,11 +127,6 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
         <X className="h-4 w-4" />
       </button>
 
-      <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-cream-50/15 px-3 py-1.5 text-[11px] font-medium tracking-tight text-cream-50 backdrop-blur">
-        <VolumeX className="h-3 w-3" />
-        Click on the video to unmute
-      </div>
-
       <div
         ref={containerRef}
         className="hide-scrollbar h-full w-full snap-y snap-mandatory overflow-y-auto"
@@ -144,26 +140,13 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
               data-index={i}
               className="flex h-full w-full snap-start items-center justify-center px-2 py-4 md:px-6"
             >
-              <div className="relative aspect-[9/16] h-full max-h-[88vh] w-auto max-w-full overflow-hidden rounded-3xl bg-ink-800 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
-                {showIframe ? (
-                  <iframe
-                    key={`if-${s.id}-${i === index ? 'active' : 'idle'}`}
-                    src={`https://www.youtube-nocookie.com/embed/${s.id}?autoplay=${i === index ? 1 : 0}&mute=1&playsinline=1&loop=1&playlist=${s.id}&modestbranding=1&rel=0`}
-                    title="short"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full"
-                  />
-                ) : (
-                  <img
-                    src={`https://img.youtube.com/vi/${s.id}/hqdefault.jpg`}
-                    alt=""
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                )}
-              </div>
+              <YouTubeShortPlayer
+                key={s.id}
+                videoId={s.id}
+                active={showIframe && i === index}
+                className="aspect-[9/16] h-full max-h-[88vh] w-auto max-w-full rounded-3xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+              />
+              {!(showIframe && i === index) && distance > 1 && null}
             </div>
           );
         })}
