@@ -235,11 +235,7 @@ export default function AboutPage() {
           {t('about.ctaQuote')}
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Link to="/contact" className="btn-primary">
-            {t('about.ctaContact')}
-            <ArrowUpRight className="rtl-flip h-4 w-4" />
-          </Link>
-          <Link to="/donate" className="btn-outline">
+          <Link to="/donate" className="btn-primary">
             {t('about.ctaSupport')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>

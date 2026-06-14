@@ -7,7 +7,6 @@ import CategoryPage from './pages/CategoryPage';
 import FavoritesPage from './pages/FavoritesPage';
 import DonatePage from './pages/DonatePage';
 import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import VideosPage from './pages/VideosPage';
@@ -45,7 +44,6 @@ export default function App() {
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
         <Route path="about" element={<AboutPage />} />
-        <Route path="contact" element={<ContactPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
         <Route path="*" element={<NotFoundPage />} />

@@ -90,7 +90,6 @@ const CUISINES_AR = [
 const SUPPORT_LINKS: NavItem[] = [
   { to: '/donate', labelKey: 'footer.donate' },
   { to: '/about', labelKey: 'footer.about' },
-  { to: '/contact', labelKey: 'footer.contact' },
   { to: '/privacy', labelKey: 'footer.privacy' },
   { to: '/terms', labelKey: 'footer.terms' },
 ];

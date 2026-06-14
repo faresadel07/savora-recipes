@@ -268,11 +268,7 @@ export default function PrivacyPage() {
           {t('privacy.ctaQuote')}
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Link to="/contact" className="btn-primary">
-            {t('privacy.ctaContact')}
-            <ArrowUpRight className="rtl-flip h-4 w-4" />
-          </Link>
-          <Link to="/terms" className="btn-outline">
+          <Link to="/terms" className="btn-primary">
             {t('privacy.ctaTerms')}
             <Globe className="h-4 w-4" />
           </Link>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, FileText, Scale, Shield } from 'lucide-react';
+import { FileText, Scale, Shield } from 'lucide-react';
 import { useTranslation } from '../i18n';
 
 const SECTIONS = [
@@ -90,11 +90,7 @@ export default function TermsPage() {
           {t('terms.ctaQuote')}
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Link to="/contact" className="btn-primary">
-            {t('terms.ctaContact')}
-            <ArrowUpRight className="rtl-flip h-4 w-4" />
-          </Link>
-          <Link to="/privacy" className="btn-outline">
+          <Link to="/privacy" className="btn-primary">
             {t('terms.ctaPrivacy')}
             <Shield className="h-4 w-4" />
           </Link>

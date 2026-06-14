@@ -11,7 +11,6 @@ import {
   HeartHandshake,
   Home,
   Info,
-  Mail,
   MapPin,
   Zap,
   Menu,
@@ -366,29 +365,6 @@ export default function Header() {
                       />
                       <span className="text-[11px] font-medium leading-tight tracking-tight">
                         {t('nav.about')}
-                      </span>
-                    </>
-                  )}
-                </NavLink>
-                <NavLink
-                  to="/contact"
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    `flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center transition-all ${
-                      isActive
-                        ? 'border-ink-900 bg-ink-900 text-cream-50 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)]'
-                        : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-300 hover:bg-cream-100'
-                    }`
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      <Mail
-                        className={`h-5 w-5 ${isActive ? 'text-gold-400' : 'text-ink-500'}`}
-                        strokeWidth={1.8}
-                      />
-                      <span className="text-[11px] font-medium leading-tight tracking-tight">
-                        {t('nav.contact')}
                       </span>
                     </>
                   )}
