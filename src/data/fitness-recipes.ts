@@ -2461,3 +2461,9 @@ export const FITNESS_RECIPES: FitnessRecipe[] = [
 // generation and recipe browsing see one combined catalog.
 import { FITNESS_RECIPES_EXTRA } from './fitness-recipes-extra';
 FITNESS_RECIPES.push(...FITNESS_RECIPES_EXTRA);
+
+// 192 wave-3 fitness recipes scraped from USDA MyPlate Kitchen (public
+// domain) and Skinnytaste (JSON-LD via recipe-scrapers). Halal-filtered,
+// images cached locally, Arabic translated via Google Translate batch.
+import { FITNESS_RECIPES_V3 } from './fitness-recipes-v3';
+FITNESS_RECIPES.push(...FITNESS_RECIPES_V3);
