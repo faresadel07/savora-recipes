@@ -20,6 +20,7 @@ import ChefHallPage from './pages/ChefHallPage';
 import DrinksLibraryPage from './pages/DrinksLibraryPage';
 import SaucesLibraryPage from './pages/SaucesLibraryPage';
 import ShortsLibraryPage from './pages/ShortsLibraryPage';
+import WorkoutLibraryPage from './pages/WorkoutLibraryPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="drinks" element={<DrinksLibraryPage />} />
         <Route path="sauces" element={<SaucesLibraryPage />} />
         <Route path="shorts" element={<ShortsLibraryPage />} />
+        <Route path="workouts" element={<WorkoutLibraryPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
         <Route path="about" element={<AboutPage />} />

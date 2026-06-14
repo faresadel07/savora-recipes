@@ -171,3 +171,107 @@ export function bodyFatUsNavy(
 function log10(x: number): number {
   return Math.log(x) / Math.LN10;
 }
+
+// ============================================================
+// Water intake (NIH + IOM recommendation, with activity bonus)
+// ============================================================
+
+export interface WaterResult {
+  litres: number;
+  cups: number;
+  baseMl: number;
+  bonusMl: number;
+}
+
+export function waterIntake(
+  weightKg: number,
+  activityMinutes: number,
+  climate: 'normal' | 'hot' = 'normal',
+): WaterResult | null {
+  if (weightKg <= 0) return null;
+  // Baseline 35 ml per kg matches Mayo Clinic guidance for adults.
+  const baseMl = Math.round(weightKg * 35);
+  // ~500 ml extra per 30 minutes of training, plus 500 ml in hot climate.
+  const bonusMl = Math.round(
+    (activityMinutes / 30) * 500 + (climate === 'hot' ? 500 : 0),
+  );
+  const totalMl = baseMl + bonusMl;
+  return {
+    litres: Math.round((totalMl / 1000) * 10) / 10,
+    cups: Math.round(totalMl / 250),
+    baseMl,
+    bonusMl,
+  };
+}
+
+// ============================================================
+// Plate calculator (gym math)
+// ============================================================
+
+export interface PlateLoad {
+  /** Plates that go on ONE side of the bar. */
+  plates: number[];
+  /** True when the target cannot be made exactly with the given plates. */
+  exact: boolean;
+  /** Whatever weight we could not load. */
+  remainingKg: number;
+}
+
+const STANDARD_PLATES_KG = [25, 20, 15, 10, 5, 2.5, 1.25, 0.5];
+
+export function platesNeeded(
+  targetKg: number,
+  barKg: number = 20,
+  plates: number[] = STANDARD_PLATES_KG,
+): PlateLoad {
+  if (targetKg < barKg) {
+    return { plates: [], exact: targetKg === barKg, remainingKg: barKg - targetKg };
+  }
+  const perSide = (targetKg - barKg) / 2;
+  const out: number[] = [];
+  let rem = perSide;
+  for (const p of plates) {
+    while (rem >= p - 0.01) {
+      out.push(p);
+      rem -= p;
+    }
+  }
+  return {
+    plates: out,
+    exact: rem < 0.05,
+    remainingKg: Math.round(rem * 100) / 100,
+  };
+}
+
+// ============================================================
+// Macro splits visualizer (3 diets at fixed TDEE)
+// ============================================================
+
+export interface MacroSplitResult {
+  name: 'Standard' | 'High protein' | 'Keto';
+  protein: number;
+  carbs: number;
+  fat: number;
+}
+
+export function compareSplits(tdee: number, weightKg: number): MacroSplitResult[] | null {
+  if (tdee <= 0 || weightKg <= 0) return null;
+  return [
+    splitFor('Standard',     tdee, weightKg, 1.8, 0.25),
+    splitFor('High protein', tdee, weightKg, 2.4, 0.20),
+    splitFor('Keto',         tdee, weightKg, 1.6, 0.70),
+  ];
+}
+
+function splitFor(
+  name: MacroSplitResult['name'],
+  tdee: number,
+  weightKg: number,
+  proteinPerKg: number,
+  fatPct: number,
+): MacroSplitResult {
+  const protein = Math.round(weightKg * proteinPerKg);
+  const fatG = Math.round((tdee * fatPct) / 9);
+  const carbsG = Math.max(0, Math.round((tdee - protein * 4 - fatG * 9) / 4));
+  return { name, protein, carbs: carbsG, fat: fatG };
+}

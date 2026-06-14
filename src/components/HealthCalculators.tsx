@@ -1,22 +1,28 @@
 import { useState } from 'react';
-import { Activity, Dumbbell, Heart, Scale, Sparkles } from 'lucide-react';
+import { Activity, BarChart3, Droplet, Dumbbell, Heart, Layers, Scale, Sparkles } from 'lucide-react';
 import { useTranslation } from '../i18n';
 import {
   bmi,
   bodyFatUsNavy,
+  compareSplits,
   idealWeight,
   oneRepMax,
+  platesNeeded,
+  waterIntake,
   RM_PERCENTAGES,
   type Sex,
 } from '../lib/health-calculators';
 
-type Tab = 'bmi' | 'ideal' | '1rm' | 'bodyfat';
+type Tab = 'bmi' | 'ideal' | '1rm' | 'bodyfat' | 'water' | 'plates' | 'splits';
 
 const TABS: { id: Tab; labelEn: string; labelAr: string; icon: typeof Heart }[] = [
   { id: 'bmi',     labelEn: 'BMI',          labelAr: 'مؤشر كتلة الجسم', icon: Scale },
   { id: 'ideal',   labelEn: 'Ideal weight', labelAr: 'الوزن المثالي',  icon: Heart },
   { id: '1rm',     labelEn: 'One-rep max',  labelAr: 'الحد الأقصى',    icon: Dumbbell },
   { id: 'bodyfat', labelEn: 'Body fat',     labelAr: 'نسبة الدهون',     icon: Activity },
+  { id: 'water',   labelEn: 'Water intake', labelAr: 'احتياج الماء',     icon: Droplet },
+  { id: 'plates',  labelEn: 'Plate math',   labelAr: 'حساب البلت',      icon: Layers },
+  { id: 'splits',  labelEn: 'Macro splits', labelAr: 'تقسيمات الماكروز', icon: BarChart3 },
 ];
 
 export default function HealthCalculators() {
@@ -65,7 +71,182 @@ export default function HealthCalculators() {
       {tab === 'ideal'   && <IdealWeightCalculator isAr={isAr} />}
       {tab === '1rm'     && <OneRMCalculator isAr={isAr} />}
       {tab === 'bodyfat' && <BodyFatCalculator isAr={isAr} />}
+      {tab === 'water'   && <WaterCalculator isAr={isAr} />}
+      {tab === 'plates'  && <PlateCalculator isAr={isAr} />}
+      {tab === 'splits'  && <MacroSplitsCalculator isAr={isAr} />}
     </section>
+  );
+}
+
+// ============================================================
+// Water intake
+// ============================================================
+
+function WaterCalculator({ isAr }: { isAr: boolean }) {
+  const [weight, setWeight] = useState('');
+  const [activity, setActivity] = useState('45');
+  const [climate, setClimate] = useState<'normal' | 'hot'>('normal');
+  const result = waterIntake(Number(weight), Number(activity), climate);
+
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <div className="rounded-3xl border border-ink-100 bg-cream-50 p-6">
+        <h3 className="mb-4 text-base font-semibold tracking-tight text-ink-900">
+          {isAr ? 'أدخل بياناتك' : 'Enter your details'}
+        </h3>
+        <div className="space-y-4">
+          <Input label={isAr ? 'الوزن (كغ)' : 'Weight (kg)'} value={weight} onChange={setWeight} placeholder="70" />
+          <Input label={isAr ? 'نشاط/تمرين (دقيقة باليوم)' : 'Activity (min per day)'} value={activity} onChange={setActivity} placeholder="45" />
+          <ToggleRow
+            label={isAr ? 'المناخ' : 'Climate'}
+            value={climate}
+            options={[
+              { v: 'normal' as const, label: isAr ? 'معتدل' : 'Normal' },
+              { v: 'hot'    as const, label: isAr ? 'حار'   : 'Hot' },
+            ]}
+            onChange={setClimate}
+          />
+        </div>
+      </div>
+      <div className="rounded-3xl bg-ink-900 p-6 text-cream-50">
+        <p className="text-[11px] font-medium uppercase tracking-widest text-cream-100/60">
+          {isAr ? 'الهدف اليومي للماء' : 'Daily water target'}
+        </p>
+        {result ? (
+          <>
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="text-5xl font-semibold tracking-tighter">{result.litres}</span>
+              <span className="text-base text-cream-100/55">L</span>
+              <span className="ms-3 text-base text-cream-100/55">≈ {result.cups} {isAr ? 'كاسات' : 'cups'}</span>
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
+              <Cell label={isAr ? 'الأساس' : 'Base'} value={`${(result.baseMl / 1000).toFixed(1)} L`} />
+              <Cell label={isAr ? 'إضافي للنشاط' : 'Activity bonus'} value={`${(result.bonusMl / 1000).toFixed(1)} L`} />
+            </div>
+            <p className="mt-5 text-xs text-cream-100/55">
+              {isAr
+                ? 'في رمضان: قسّم الكمية على ساعات الإفطار من المغرب للسحور.'
+                : 'During Ramadan: split this between Iftar and Suhoor windows.'}
+            </p>
+          </>
+        ) : (
+          <p className="mt-3 text-sm text-cream-100/50">{isAr ? 'أدخل وزنك' : 'Enter your weight'}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// Plate calculator
+// ============================================================
+
+function PlateCalculator({ isAr }: { isAr: boolean }) {
+  const [target, setTarget] = useState('');
+  const [bar, setBar] = useState('20');
+  const result = platesNeeded(Number(target), Number(bar));
+
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <div className="rounded-3xl border border-ink-100 bg-cream-50 p-6">
+        <h3 className="mb-4 text-base font-semibold tracking-tight text-ink-900">
+          {isAr ? 'الوزن المستهدف' : 'Target weight'}
+        </h3>
+        <div className="space-y-4">
+          <Input label={isAr ? 'الوزن الإجمالي (كغ)' : 'Total weight (kg)'} value={target} onChange={setTarget} placeholder="100" />
+          <Input label={isAr ? 'وزن البار (كغ)' : 'Bar weight (kg)'} value={bar} onChange={setBar} placeholder="20" />
+        </div>
+        <p className="mt-4 text-xs text-ink-500">
+          {isAr
+            ? 'بلتات قياسية: 25, 20, 15, 10, 5, 2.5, 1.25, 0.5 كغ'
+            : 'Standard plates: 25, 20, 15, 10, 5, 2.5, 1.25, 0.5 kg'}
+        </p>
+      </div>
+      <div className="rounded-3xl bg-ink-900 p-6 text-cream-50">
+        <p className="text-[11px] font-medium uppercase tracking-widest text-cream-100/60">
+          {isAr ? 'البلتات لكل جانب' : 'Plates per side'}
+        </p>
+        {result.plates.length > 0 ? (
+          <>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {result.plates.map((p, i) => (
+                <div key={i} className="grid h-14 w-14 place-items-center rounded-full bg-terracotta-500 text-sm font-semibold">
+                  {p}
+                </div>
+              ))}
+            </div>
+            <p className="mt-5 text-sm text-cream-100/70">
+              {isAr
+                ? `${result.plates.length} بلتات على كل جانب من البار.`
+                : `${result.plates.length} plates loaded on each side of the bar.`}
+            </p>
+            {!result.exact && (
+              <p className="mt-2 text-xs text-terracotta-400">
+                {isAr ? `الفرق: ${result.remainingKg} كغ` : `Off by: ${result.remainingKg} kg`}
+              </p>
+            )}
+          </>
+        ) : (
+          <p className="mt-3 text-sm text-cream-100/50">
+            {isAr ? 'أدخل الوزن المستهدف' : 'Enter target weight'}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// Macro splits comparison
+// ============================================================
+
+function MacroSplitsCalculator({ isAr }: { isAr: boolean }) {
+  const [tdee, setTdee] = useState('');
+  const [weight, setWeight] = useState('');
+  const splits = compareSplits(Number(tdee), Number(weight));
+
+  return (
+    <div className="grid gap-6">
+      <div className="rounded-3xl border border-ink-100 bg-cream-50 p-6 md:max-w-md">
+        <h3 className="mb-4 text-base font-semibold tracking-tight text-ink-900">
+          {isAr ? 'قارن 3 تقسيمات' : 'Compare 3 splits'}
+        </h3>
+        <div className="space-y-4">
+          <Input label={isAr ? 'الإنفاق اليومي (TDEE kcal)' : 'TDEE (daily kcal)'} value={tdee} onChange={setTdee} placeholder="2500" />
+          <Input label={isAr ? 'الوزن (كغ)' : 'Weight (kg)'} value={weight} onChange={setWeight} placeholder="75" />
+        </div>
+      </div>
+      {splits && (
+        <div className="grid gap-4 md:grid-cols-3">
+          {splits.map((s) => (
+            <div key={s.name} className="rounded-3xl bg-ink-900 p-6 text-cream-50">
+              <p className="text-[11px] font-medium uppercase tracking-widest text-cream-100/60">
+                {s.name === 'Standard' && (isAr ? 'قياسي' : 'Standard')}
+                {s.name === 'High protein' && (isAr ? 'بروتين عالي' : 'High protein')}
+                {s.name === 'Keto' && (isAr ? 'كيتو' : 'Keto')}
+              </p>
+              <div className="mt-3 space-y-2">
+                <Macro label={isAr ? 'بروتين' : 'Protein'} value={`${s.protein}g`} color="bg-terracotta-500" />
+                <Macro label={isAr ? 'كاربس' : 'Carbs'}  value={`${s.carbs}g`}   color="bg-gold-500" />
+                <Macro label={isAr ? 'دهون' : 'Fat'}     value={`${s.fat}g`}     color="bg-sage-500" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Macro({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3 text-sm">
+      <span className="inline-flex items-center gap-2">
+        <span className={`h-2 w-2 rounded-full ${color}`} />
+        {label}
+      </span>
+      <span className="font-semibold tracking-tighter">{value}</span>
+    </div>
   );
 }
 

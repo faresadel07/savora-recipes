@@ -6,6 +6,7 @@ import {
   ChefHat,
   ChevronDown,
   Droplets,
+  Dumbbell,
   Film,
   GlassWater,
   GraduationCap,
@@ -54,6 +55,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/videos', key: 'nav.videos', icon: Tv },
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
   { to: '/fitness', key: 'nav.fitness', icon: Activity },
+  { to: '/workouts', key: 'nav.workouts', icon: Dumbbell },
 ];
 
 // Items always visible in the top bar (the core editorial pillars).
