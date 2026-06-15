@@ -10,6 +10,7 @@ import {
   HelpCircle,
   Wheat,
 } from 'lucide-react';
+import { useTranslation } from '../i18n';
 
 type Sex = 'male' | 'female';
 type Activity = 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
@@ -121,6 +122,7 @@ interface Props {
 }
 
 export default function MacroCalculator({ goal: controlledGoal, onGoalChange, onTargetsComputed }: Props) {
+  const { t } = useTranslation();
   const initial = loadSaved();
 
   const [sex, setSex] = useState<Sex>(initial.sex ?? 'male');
@@ -439,25 +441,25 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
         {/* INPUTS */}
         <div className="md:col-span-7">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Sex">
+            <Field label={t('macros.sex')}>
               <SegmentedToggle
                 value={sex}
                 onChange={setSex}
-                options={[{ id: 'male', label: 'Male' }, { id: 'female', label: 'Female' }]}
+                options={[{ id: 'male', label: t('macros.male') }, { id: 'female', label: t('macros.female') }]}
               />
             </Field>
-            <Field label="Units">
+            <Field label={t('macros.units')}>
               <SegmentedToggle
                 value={unit}
                 onChange={setUnit}
-                options={[{ id: 'metric', label: 'Metric' }, { id: 'imperial', label: 'Imperial' }]}
+                options={[{ id: 'metric', label: t('macros.metric') }, { id: 'imperial', label: t('macros.imperial') }]}
               />
             </Field>
 
             <Field
-              label="Age"
-              hint="years"
-              error={ageError ? `Must be between ${ageBounds.min} and ${ageBounds.max}` : null}
+              label={t('macros.age')}
+              hint={t('macros.years')}
+              error={ageError ? t('macros.rangeBetween', { min: ageBounds.min, max: ageBounds.max }) : null}
             >
               <NumberInput
                 value={age}
@@ -468,9 +470,9 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
             </Field>
 
             <Field
-              label={`Weight (${weightBounds.unit})`}
-              hint={`${weightBounds.min} to ${weightBounds.max} ${weightBounds.unit}`}
-              error={weightError ? `Must be between ${weightBounds.min} and ${weightBounds.max} ${weightBounds.unit}` : null}
+              label={`${t('macros.weight')} (${weightBounds.unit})`}
+              hint={t('macros.hintRange', { min: weightBounds.min, max: weightBounds.max, unit: weightBounds.unit })}
+              error={weightError ? t('macros.rangeBetweenUnit', { min: weightBounds.min, max: weightBounds.max, unit: weightBounds.unit }) : null}
             >
               <NumberInput
                 value={weight}
@@ -481,9 +483,9 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
             </Field>
 
             <Field
-              label={`Height (${heightBounds.unit})`}
-              hint={`${heightBounds.min} to ${heightBounds.max} ${heightBounds.unit}`}
-              error={heightError ? `Must be between ${heightBounds.min} and ${heightBounds.max} ${heightBounds.unit}` : null}
+              label={`${t('macros.height')} (${heightBounds.unit})`}
+              hint={t('macros.hintRange', { min: heightBounds.min, max: heightBounds.max, unit: heightBounds.unit })}
+              error={heightError ? t('macros.rangeBetweenUnit', { min: heightBounds.min, max: heightBounds.max, unit: heightBounds.unit }) : null}
             >
               <NumberInput
                 value={height}
@@ -494,41 +496,41 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
             </Field>
 
             <Field
-              label="Body fat (optional)"
-              hint="for Katch-McArdle"
-              tooltip="If you know your body-fat percentage, we use the Katch-McArdle formula which is more accurate than Mifflin-St Jeor."
-              error={bodyFatError ? `Must be between ${bodyFatBounds.min} and ${bodyFatBounds.max}%` : null}
+              label={t('macros.bodyFatLabel')}
+              hint={t('macros.bodyFatHint')}
+              tooltip={t('macros.bodyFatTooltip')}
+              error={bodyFatError ? t('macros.rangeBetweenPercent', { min: bodyFatBounds.min, max: bodyFatBounds.max }) : null}
             >
               <NumberInput
                 value={bodyFat}
                 onChange={setBodyFat}
-                placeholder="leave empty"
+                placeholder={t('macros.bodyFatPlaceholder')}
                 error={Boolean(bodyFatError)}
               />
             </Field>
 
-            <Field label="Activity level" tooltip="How many times a week you train. Sedentary = desk job, no exercise. Very active = two-a-days." className="sm:col-span-2">
+            <Field label={t('macros.activity')} tooltip={t('macros.activityTooltip')} className="sm:col-span-2">
               <select
                 value={activity}
                 onChange={(e) => setActivity(e.target.value as Activity)}
                 className="w-full rounded-full border border-ink-200 bg-cream-50 px-4 py-2.5 text-[14px] tracking-tight focus:border-ink-900 focus:outline-none"
               >
-                <option value="sedentary">Sedentary (desk job, no exercise)</option>
-                <option value="light">Light (1 to 3 days a week)</option>
-                <option value="moderate">Moderate (3 to 5 days a week)</option>
-                <option value="active">Active (6 to 7 days a week)</option>
-                <option value="very_active">Very active (2x a day, or heavy labor)</option>
+                <option value="sedentary">{t('macros.activitySedentary')}</option>
+                <option value="light">{t('macros.activityLight')}</option>
+                <option value="moderate">{t('macros.activityModerate')}</option>
+                <option value="active">{t('macros.activityActive')}</option>
+                <option value="very_active">{t('macros.activityVeryActive')}</option>
               </select>
             </Field>
           </div>
 
           <div className="mt-6">
-            <Label>Goal</Label>
+            <Label>{t('macros.goal')}</Label>
             <div className="grid grid-cols-3 gap-2">
               {([
-                { id: 'cut', label: 'Cut', sub: '−500 kcal' },
-                { id: 'maintain', label: 'Maintain', sub: '±0' },
-                { id: 'bulk', label: 'Bulk', sub: '+400 kcal' },
+                { id: 'cut', label: t('macros.goalCut'), sub: t('macros.goalCutSub') },
+                { id: 'maintain', label: t('macros.goalMaintain'), sub: t('macros.goalMaintainSub') },
+                { id: 'bulk', label: t('macros.goalBulk'), sub: t('macros.goalBulkSub') },
               ] as { id: Goal; label: string; sub: string }[]).map((g) => (
                 <button
                   key={g.id}
@@ -548,12 +550,12 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
           </div>
 
           <div className="mt-6">
-            <Label tooltip="Standard mixes protein, carbs, and fats. High Protein bumps protein for hard-trainers. Keto keeps carbs near zero.">Macro split</Label>
+            <Label tooltip={t('macros.macroSplitTooltip')}>{t('macros.macroSplit')}</Label>
             <div className="grid grid-cols-3 gap-2">
               {([
-                { id: 'standard', label: 'Standard', sub: 'Balanced' },
-                { id: 'high-protein', label: 'High Protein', sub: '2.2 to 2.6g/kg' },
-                { id: 'keto', label: 'Keto', sub: '70% fat' },
+                { id: 'standard', label: t('macros.splitStandard'), sub: t('macros.splitStandardSub') },
+                { id: 'high-protein', label: t('macros.splitHighProtein'), sub: t('macros.splitHighProteinSub') },
+                { id: 'keto', label: t('macros.splitKeto'), sub: t('macros.splitKetoSub') },
               ] as { id: Split; label: string; sub: string }[]).map((s) => (
                 <button
                   key={s.id}
@@ -580,39 +582,39 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
               <EmptyState />
             ) : (
               <>
-                <p className="text-[11px] font-medium uppercase tracking-widest text-cream-100/60">Daily target</p>
+                <p className="text-[11px] font-medium uppercase tracking-widest text-cream-100/60">{t('macros.dailyTarget')}</p>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-5xl font-bold tracking-tighter">{result.targetCal.toLocaleString()}</span>
-                  <span className="text-sm tracking-tight text-cream-100/70">kcal</span>
+                  <span className="text-sm tracking-tight text-cream-100/70">{t('macros.kcal')}</span>
                 </div>
                 <p className="mt-2 text-[11px] tracking-tight text-cream-100/50">
-                  <span title="Basal metabolic rate, the calories you burn just being alive.">BMR</span>{' '}
+                  <span title={t('macros.bmrTooltip')}>{t('macros.bmrLabel')}</span>{' '}
                   {result.bmr.toLocaleString()}
                   {' · '}
-                  <span title="Total daily energy expenditure: BMR multiplied by your activity factor.">TDEE</span>{' '}
+                  <span title={t('macros.tdeeTooltip')}>{t('macros.tdeeLabel')}</span>{' '}
                   {result.tdee.toLocaleString()}
                   <span className="ml-2 text-cream-100/35">({result.method})</span>
                 </p>
 
                 <div className="mt-6 space-y-3">
-                  <MacroBar icon={<Beef className="h-4 w-4" />} label="Protein" value={result.proteinG} unit="g" color="terracotta" max={result.proteinG * 1.3} />
-                  <MacroBar icon={<Wheat className="h-4 w-4" />} label="Carbs" value={result.carbsG} unit="g" color="gold" max={Math.max(1, result.carbsG * 1.3)} />
-                  <MacroBar icon={<Droplet className="h-4 w-4" />} label="Fats" value={result.fatG} unit="g" color="sage" max={result.fatG * 1.3} />
+                  <MacroBar icon={<Beef className="h-4 w-4" />} label={t('macros.proteinLabel')} value={result.proteinG} unit={t('macros.gramsShort')} color="terracotta" max={result.proteinG * 1.3} />
+                  <MacroBar icon={<Wheat className="h-4 w-4" />} label={t('macros.carbsLabel')} value={result.carbsG} unit={t('macros.gramsShort')} color="gold" max={Math.max(1, result.carbsG * 1.3)} />
+                  <MacroBar icon={<Droplet className="h-4 w-4" />} label={t('macros.fatsLabel')} value={result.fatG} unit={t('macros.gramsShort')} color="sage" max={result.fatG * 1.3} />
                 </div>
 
                 <div className="mt-5 grid grid-cols-3 gap-2 border-t border-cream-50/15 pt-5 text-center">
-                  <Stat label="Protein cal" value={`${result.proteinG * 4}`} />
-                  <Stat label="Carbs cal" value={`${result.carbsG * 4}`} />
-                  <Stat label="Fat cal" value={`${result.fatG * 9}`} />
+                  <Stat label={t('macros.proteinCal')} value={`${result.proteinG * 4}`} />
+                  <Stat label={t('macros.carbsCal')} value={`${result.carbsG * 4}`} />
+                  <Stat label={t('macros.fatCal')} value={`${result.fatG * 9}`} />
                 </div>
 
                 <div className="mt-5 flex items-center justify-between rounded-2xl border border-cream-50/15 bg-cream-50/5 px-4 py-3">
                   <span className="inline-flex items-center gap-2 text-[12px] font-medium tracking-tight text-cream-50">
                     <Droplets className="h-4 w-4 text-sage-300" />
-                    Water target
+                    {t('macros.waterTarget')}
                   </span>
                   <span className="text-base font-semibold tracking-tight text-cream-50">
-                    {(result.waterMl / 1000).toFixed(1)} L
+                    {(result.waterMl / 1000).toFixed(1)} {t('macros.liters')}
                     <span className="ml-1 text-[10px] tracking-tight text-cream-100/60">({result.waterMl} ml)</span>
                   </span>
                 </div>
@@ -625,15 +627,15 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
                     className="inline-flex items-center gap-2 rounded-full bg-cream-50 px-4 py-2 text-[12px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400 disabled:opacity-60"
                   >
                     <Download className="h-3.5 w-3.5" />
-                    {pdfBusy ? 'Building PDF' : 'Download PDF'}
+                    {pdfBusy ? t('macros.buildingPdf') : t('macros.downloadPdf')}
                   </button>
                   {savedMsg ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-400/20 px-3.5 py-2 text-[12px] font-medium tracking-tight text-sage-300">
-                      <Check className="h-3.5 w-3.5" /> Saved
+                      <Check className="h-3.5 w-3.5" /> {t('macros.savedShort')}
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-cream-50/15 px-3.5 py-2 text-[12px] font-medium tracking-tight text-cream-100/70">
-                      <Bookmark className="h-3.5 w-3.5" /> Saved on this device
+                      <Bookmark className="h-3.5 w-3.5" /> {t('macros.savedOnThisDevice')}
                     </span>
                   )}
                 </div>
@@ -641,8 +643,7 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
             )}
           </div>
           <p className="mt-3 text-[11px] tracking-tight text-ink-400">
-            Based on Mifflin-St Jeor (or Katch-McArdle if you provide body fat). A useful starting point, not a
-            prescription. Adjust over 2 weeks by watching the scale and how you feel in training.
+            {t('macros.disclaimer')}
           </p>
         </div>
       </div>
@@ -765,16 +766,17 @@ function SegmentedToggle<T extends string>({
 }
 
 function EmptyState() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-[260px] flex-col items-center justify-center text-center">
       <div className="grid h-12 w-12 place-items-center rounded-full bg-cream-50/10 text-gold-400">
         <Beef className="h-5 w-5" strokeWidth={1.5} />
       </div>
       <h4 className="mt-4 text-base font-semibold tracking-tight text-cream-50">
-        Fill in age, weight, and height
+        {t('macros.emptyTitle')}
       </h4>
       <p className="mt-1.5 max-w-[16rem] text-sm tracking-tight text-cream-100/60">
-        Add body fat for a more accurate read. Everything saves on this device automatically.
+        {t('macros.emptyBody')}
       </p>
     </div>
   );

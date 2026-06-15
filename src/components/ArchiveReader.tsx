@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BookOpen, ExternalLink, Maximize2, X } from 'lucide-react';
+import { useTranslation } from '../i18n';
 
 interface Props {
   embedUrl: string;
@@ -13,6 +14,7 @@ interface Props {
  * fullscreen modal for distraction-free reading.
  */
 export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
 
@@ -25,7 +27,7 @@ export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
           className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-4 py-2 text-[12px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
         >
           <BookOpen className="h-3.5 w-3.5" />
-          Read inside
+          {t('magazines.readInside')}
         </button>
         <a
           href={detailUrl}
@@ -33,7 +35,7 @@ export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
           rel="noreferrer"
           className="inline-flex items-center gap-1.5 rounded-full border border-ink-100 bg-cream-50 px-4 py-2 text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:border-ink-900"
         >
-          Archive page
+          {t('magazines.archivePage')}
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
@@ -50,7 +52,7 @@ export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
               type="button"
               onClick={() => setFullscreen(true)}
               className="grid h-7 w-7 place-items-center rounded-full text-ink-600 transition-colors hover:bg-ink-900 hover:text-cream-50"
-              aria-label="Open fullscreen"
+              aria-label={t('common.openFullscreen')}
             >
               <Maximize2 className="h-3.5 w-3.5" />
             </button>
@@ -58,7 +60,7 @@ export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
               type="button"
               onClick={() => setOpen(false)}
               className="grid h-7 w-7 place-items-center rounded-full text-ink-600 transition-colors hover:bg-ink-900 hover:text-cream-50"
-              aria-label="Close reader"
+              aria-label={t('common.closeReader')}
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -83,14 +85,14 @@ export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
                 rel="noreferrer"
                 className="inline-flex items-center gap-1 rounded-full bg-cream-50/90 px-3 py-1.5 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur-md transition-colors hover:bg-cream-50"
               >
-                Archive page
+                {t('magazines.archivePage')}
                 <ExternalLink className="h-3 w-3" />
               </a>
               <button
                 type="button"
                 onClick={() => setFullscreen(false)}
                 className="grid h-9 w-9 place-items-center rounded-full bg-cream-50/90 text-ink-900 backdrop-blur-md transition-colors hover:bg-cream-50"
-                aria-label="Close fullscreen"
+                aria-label={t('common.closeFullscreen')}
               >
                 <X className="h-4 w-4" />
               </button>

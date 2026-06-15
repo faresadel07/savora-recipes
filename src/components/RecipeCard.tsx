@@ -27,7 +27,7 @@ function getLocalArabicTitle(recipe: RecipeSummary): string | undefined {
 }
 
 export default function RecipeCard({ recipe, variant = 'default', index = 0, eager = false }: Props) {
-  const { language } = useTranslation();
+  const { language, t } = useTranslation();
   const isAr = language === 'ar';
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(recipe.id);
@@ -97,7 +97,7 @@ export default function RecipeCard({ recipe, variant = 'default', index = 0, eag
           e.preventDefault();
           toggleFavorite(recipe);
         }}
-        aria-label={fav ? 'Remove from favorites' : 'Save to favorites'}
+        aria-label={fav ? t('common.removeFromFavorites') : t('common.saveToFavorites')}
         className={`absolute right-2.5 top-2.5 grid h-9 w-9 place-items-center rounded-full backdrop-blur-md transition-all duration-300 ${
           fav ? 'bg-terracotta-500 text-cream-50 scale-100' : 'bg-cream-50/85 text-ink-900 hover:bg-cream-50 hover:scale-110'
         }`}

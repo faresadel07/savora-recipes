@@ -28,17 +28,28 @@ import {
   type SearchResultType,
   type UniversalResult,
 } from '../lib/universal-search';
+import { useTranslation } from '../i18n';
 
 const RECENT_KEY = 'zaytoun:search:recent';
 
-const TYPE_META: Record<SearchResultType, { label: string; icon: LucideIcon }> = {
-  recipe: { label: 'Recipes', icon: Utensils },
-  'arab-dish': { label: 'Arab Cuisine', icon: Star },
-  film: { label: 'Films', icon: Film },
-  chef: { label: 'Chefs', icon: ChefHat },
-  skill: { label: 'Skills', icon: GraduationCap },
-  market: { label: 'Markets', icon: MapPin },
-  drink: { label: 'Drinks', icon: GlassWater },
+const TYPE_META_ICONS: Record<SearchResultType, LucideIcon> = {
+  recipe: Utensils,
+  'arab-dish': Star,
+  film: Film,
+  chef: ChefHat,
+  skill: GraduationCap,
+  market: MapPin,
+  drink: GlassWater,
+};
+
+const TYPE_META_LABEL_KEYS: Record<SearchResultType, string> = {
+  recipe: 'search.typeRecipes',
+  'arab-dish': 'search.typeArab',
+  film: 'search.typeFilms',
+  chef: 'search.typeChefs',
+  skill: 'search.typeSkills',
+  market: 'search.typeMarkets',
+  drink: 'search.typeDrinks',
 };
 
 interface Props {
@@ -91,11 +102,13 @@ export default function SmartSearchInput({
   value,
   onChange,
   onSubmit,
-  placeholder = 'Search recipes, chefs, films',
+  placeholder,
   autoFocus,
   variant = 'default',
   onClose,
 }: Props) {
+  const { t } = useTranslation();
+  const effectivePlaceholder = placeholder ?? t('search.defaultPlaceholder');
   const [open, setOpen] = useState(false);
   const [debounced, setDebounced] = useState(value);
   const [cacheReady, setCacheReady] = useState(false);
@@ -251,7 +264,7 @@ export default function SmartSearchInput({
             }
           }}
           autoFocus={autoFocus}
-          placeholder={placeholder}
+          placeholder={effectivePlaceholder}
           dir="auto"
           autoComplete="off"
           spellCheck={false}
@@ -263,8 +276,8 @@ export default function SmartSearchInput({
           <button
             type="button"
             onClick={voice.active ? stopVoice : startVoice}
-            aria-label={voice.active ? 'Stop voice search' : 'Voice search'}
-            title={voice.active ? 'Listening, click to stop' : 'Voice search'}
+            aria-label={voice.active ? t('search.stopVoiceSearch') : t('search.voiceSearch')}
+            title={voice.active ? t('search.listening') : t('search.voiceSearch')}
             className={`flex-none rounded-full p-1.5 transition-colors ${
               voice.active ? 'bg-terracotta-500 text-cream-50' : 'text-ink-400 hover:text-ink-900'
             }`}
@@ -281,7 +294,7 @@ export default function SmartSearchInput({
               inputRef.current?.focus();
             }}
             className="flex-none rounded-full p-1 text-ink-400 hover:text-ink-900"
-            aria-label="Clear search"
+            aria-label={t('search.clearSearchAria')}
           >
             <X className={isLarge ? 'h-5 w-5' : 'h-4 w-4'} />
           </button>
@@ -289,7 +302,7 @@ export default function SmartSearchInput({
 
         {isLarge && (
           <button type="submit" className="btn-primary !py-2 !px-5">
-            Search
+            {t('search.searchBtn')}
           </button>
         )}
       </form>
@@ -297,7 +310,7 @@ export default function SmartSearchInput({
       {arabicHint && value.trim().length > 0 && (
         <p className="mt-2 inline-flex items-center gap-1.5 text-[12px] tracking-tight text-ink-500">
           <Languages className="h-3.5 w-3.5" />
-          Searching as
+          {t('search.searchingAs')}
           <span className="rounded-full bg-cream-100 px-2 py-0.5 font-medium text-ink-900">{arabicHint}</span>
         </p>
       )}
@@ -315,7 +328,7 @@ export default function SmartSearchInput({
                   <div className="mb-4">
                     <div className="flex items-center justify-between">
                       <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-ink-400">
-                        <Clock className="h-3 w-3" /> Recent
+                        <Clock className="h-3 w-3" /> {t('search.recent')}
                       </p>
                       <button
                         type="button"
@@ -325,7 +338,7 @@ export default function SmartSearchInput({
                         }}
                         className="text-[11px] tracking-tight text-ink-400 hover:text-ink-900"
                       >
-                        Clear
+                        {t('search.clearRecent')}
                       </button>
                     </div>
                     <div className="mt-2 flex flex-wrap gap-1.5">
@@ -348,7 +361,7 @@ export default function SmartSearchInput({
                 )}
                 <div>
                   <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-ink-400">
-                    <Sparkles className="h-3 w-3" /> Try
+                    <Sparkles className="h-3 w-3" /> {t('search.tryThese')}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {SUGGESTED_QUERIES.map((s) => (
@@ -375,7 +388,7 @@ export default function SmartSearchInput({
               <div className="p-4">
                 <div className="rounded-2xl border border-gold-500/30 bg-gold-500/10 p-4">
                   <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-gold-700">
-                    <Lightbulb className="h-3 w-3" /> Did you mean?
+                    <Lightbulb className="h-3 w-3" /> {t('search.didYouMean')}
                   </p>
                   <button
                     type="button"
@@ -420,13 +433,13 @@ export default function SmartSearchInput({
                   ] as const
                 ).map(([key, items]) => {
                   if (items.length === 0) return null;
-                  const meta = TYPE_META[items[0].type];
-                  const Icon = meta.icon;
+                  const itemType = items[0].type;
+                  const Icon = TYPE_META_ICONS[itemType];
                   return (
                     <div key={key} className="mb-1">
                       <p className="px-4 pt-2 pb-1 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-ink-400">
                         <Icon className="h-3 w-3" />
-                        {meta.label}
+                        {t(TYPE_META_LABEL_KEYS[itemType])}
                         <span className="text-ink-300">·</span>
                         <span className="font-normal normal-case tracking-tight">{items.length}</span>
                       </p>
@@ -476,7 +489,7 @@ export default function SmartSearchInput({
             >
               <span className="inline-flex items-center gap-1.5">
                 <BookOpen className="h-3 w-3" />
-                See all recipe results for{' '}
+                {t('search.seeAllResults')}{' '}
                 <span className="font-semibold text-ink-900">{expanded || value}</span>
               </span>
             </button>

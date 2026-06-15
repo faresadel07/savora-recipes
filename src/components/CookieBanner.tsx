@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Check, Cookie } from 'lucide-react';
+import { useTranslation } from '../i18n';
 
 const STORAGE_KEY = 'zaytoun:cookies:accepted';
 
@@ -11,6 +12,7 @@ const STORAGE_KEY = 'zaytoun:cookies:accepted';
  * the acknowledgement, and slides up on first visit.
  */
 export default function CookieBanner() {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -45,7 +47,7 @@ export default function CookieBanner() {
     <div
       role="dialog"
       aria-live="polite"
-      aria-label="Cookie notice"
+      aria-label={t('cookieBanner.aria')}
       className={`pointer-events-none fixed inset-x-3 bottom-3 z-[60] flex justify-center transition-all duration-300 md:inset-x-auto md:right-6 md:bottom-6 md:justify-end ${
         visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
@@ -56,10 +58,9 @@ export default function CookieBanner() {
             <Cookie className="h-4 w-4" strokeWidth={2} />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold tracking-tight text-ink-900">A small note on cookies</p>
+            <p className="text-sm font-semibold tracking-tight text-ink-900">{t('cookieBanner.title')}</p>
             <p className="mt-1.5 text-[13px] leading-relaxed tracking-tight text-ink-600">
-              Zaytoun stores your theme, favorites, and learning progress on this
-              device. No third-party tracking, no analytics, no ads.
+              {t('cookieBanner.body')}
             </p>
             <div className="mt-4 flex items-center justify-end">
               <button
@@ -68,7 +69,7 @@ export default function CookieBanner() {
                 className="inline-flex items-center gap-1.5 rounded-full bg-ink-900 px-4 py-2 text-[12px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
               >
                 <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-                Got it
+                {t('common.gotIt')}
               </button>
             </div>
           </div>
