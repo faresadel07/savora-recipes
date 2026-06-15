@@ -70,12 +70,16 @@ const MORE_NAV = NAV_ITEMS.filter((n) => !CORE_NAV_KEYS.has(n.key));
 const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   { titleKey: 'nav.browse', itemKeys: ['nav.home', 'nav.recipes'] },
   {
+    titleKey: 'nav.training',
+    itemKeys: ['nav.fitness', 'nav.workouts'],
+  },
+  {
     titleKey: 'nav.curated',
     itemKeys: ['nav.arabCuisine', 'nav.drinks', 'nav.sauces', 'nav.shorts', 'nav.films', 'nav.academy', 'nav.chefs', 'nav.markets'],
   },
   {
     titleKey: 'nav.more',
-    itemKeys: ['nav.videos', 'nav.magazines', 'nav.fitness'],
+    itemKeys: ['nav.videos', 'nav.magazines'],
   },
 ];
 

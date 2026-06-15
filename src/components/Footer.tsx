@@ -25,16 +25,18 @@ const CURATED_LINKS: NavItem[] = [
   { to: '/markets', labelKey: 'footer.worldMarkets' },
   { to: '/chefs', labelKey: 'footer.chefHall' },
   { to: '/drinks', labelKey: 'footer.drinksLibrary' },
+  { to: '/sauces', labelKey: 'footer.saucesLibrary' },
   { to: '/shorts', labelKey: 'footer.foodShorts' },
 ];
 
 const FITNESS_LINKS: NavItem[] = [
   { to: '/fitness', labelKey: 'footer.fitnessHome' },
   { to: '/fitness#calculator', labelKey: 'footer.macroCalculator' },
+  { to: '/workouts', labelKey: 'footer.workoutLibrary' },
+  { to: '/workouts#programs', labelKey: 'footer.workoutPrograms' },
+  { to: '/workouts#nippard', labelKey: 'footer.nippardVideos' },
+  { to: '/workouts#coaches', labelKey: 'footer.scienceCoaches' },
   { to: '/fitness#plans', labelKey: 'footer.goalPlans' },
-  { to: '/fitness#workout', labelKey: 'footer.workoutMeals' },
-  { to: '/fitness#mealprep', labelKey: 'footer.mealPrep' },
-  { to: '/fitness#drinks', labelKey: 'footer.proteinDrinks' },
   { to: '/fitness#protein', labelKey: 'footer.protein101' },
 ];
 
