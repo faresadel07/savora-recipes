@@ -95,7 +95,7 @@ function MarketCard({ market }: { market: FoodMarket }) {
       <div className="relative aspect-video bg-ink-900">
         <YoutubeLite videoId={market.videoId} title={market.name} />
         {market.yearFounded && (
-          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
+          <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
             <Clock className="h-3 w-3" /> {isAr ? 'منذ' : 'Since'} {market.yearFounded}
           </span>
         )}
@@ -157,7 +157,7 @@ function MarketHeroCard({ market }: { market: FoodMarket }) {
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-cream-100/70">
           <MapPin className="h-3 w-3" />
           {market.city}, {market.country}
-          {market.yearFounded && <span className="ml-2">{heroIsAr ? 'منذ' : 'Since'} {market.yearFounded}</span>}
+          {market.yearFounded && <span className="ms-2">{heroIsAr ? 'منذ' : 'Since'} {market.yearFounded}</span>}
         </p>
         <h3 className="mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tighter">
           {market.name}
@@ -304,8 +304,8 @@ export default function WorldMarketsPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
       </section>
 
       {/* ============ FEATURED MARKET ============ */}
@@ -336,19 +336,19 @@ export default function WorldMarketsPage() {
               </p>
             </div>
             <div className="relative w-full md:w-80">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+              <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t('markets.searchPlaceholder')}
-                className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
+                className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 ps-11 pe-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
+                  className="absolute end-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
                   aria-label={t('markets.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
@@ -376,7 +376,7 @@ export default function WorldMarketsPage() {
                   }`}
                 >
                   {r.name}
-                  <span className={`ml-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>
+                  <span className={`ms-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>
                     {count}
                   </span>
                 </button>

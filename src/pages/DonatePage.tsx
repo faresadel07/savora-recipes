@@ -169,7 +169,7 @@ export default function DonatePage() {
                 <div className="relative">
                   <span
                     className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-lg font-medium text-ink-500 ${
-                      isRtl ? 'right-5' : 'left-5'
+                      isRtl ? 'end-5' : 'start-5'
                     }`}
                   >
                     $
@@ -182,7 +182,7 @@ export default function DonatePage() {
                     value={customAmount}
                     onChange={(e) => setCustomAmount(e.target.value)}
                     className={`w-full rounded-full border-2 border-ink-100 bg-cream-50 py-3 text-center text-lg font-semibold tracking-tight text-ink-900 transition-colors focus:border-terracotta-500 focus:outline-none ${
-                      isRtl ? 'pr-10 pl-5' : 'pl-10 pr-5'
+                      isRtl ? 'pe-10 ps-5' : 'ps-10 pe-5'
                     }`}
                   />
                 </div>

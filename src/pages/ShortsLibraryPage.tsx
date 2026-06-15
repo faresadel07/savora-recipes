@@ -51,12 +51,12 @@ function ShortThumbCard({ short, onOpen }: { short: ShortVideo; onOpen: () => vo
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent" />
       {cat && (
-        <span className="absolute left-2.5 top-2.5 inline-flex items-center gap-1 rounded-full bg-cream-50/90 px-2.5 py-1 text-[10px] font-medium tracking-tight text-ink-900 backdrop-blur">
+        <span className="absolute start-2.5 top-2.5 inline-flex items-center gap-1 rounded-full bg-cream-50/90 px-2.5 py-1 text-[10px] font-medium tracking-tight text-ink-900 backdrop-blur">
           <span>{cat.emoji}</span>
           {isAr ? cat.nameAr : cat.name}
         </span>
       )}
-      <span className="absolute right-2.5 top-2.5 grid h-9 w-9 place-items-center rounded-full bg-cream-50/90 text-ink-900 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
+      <span className="absolute end-2.5 top-2.5 grid h-9 w-9 place-items-center rounded-full bg-cream-50/90 text-ink-900 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
         <Play className="h-3.5 w-3.5 translate-x-0.5 fill-current" />
       </span>
     </button>
@@ -129,7 +129,7 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
       <button
         type="button"
         onClick={onClose}
-        className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-cream-50/90 text-ink-900 backdrop-blur transition-colors hover:bg-cream-50"
+        className="absolute end-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-cream-50/90 text-ink-900 backdrop-blur transition-colors hover:bg-cream-50"
         aria-label={t('shortsPage.close')}
       >
         <X className="h-4 w-4" />
@@ -287,8 +287,8 @@ export default function ShortsLibraryPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
       </section>
 
       {/* ============ CATEGORY FILTER ============ */}

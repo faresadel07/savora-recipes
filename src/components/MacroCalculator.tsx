@@ -536,7 +536,7 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
                   key={g.id}
                   type="button"
                   onClick={() => setGoal(g.id)}
-                  className={`rounded-2xl border px-4 py-3 text-left transition-all ${
+                  className={`rounded-2xl border px-4 py-3 text-start transition-all ${
                     goal === g.id
                       ? 'border-ink-900 bg-ink-900 text-cream-50'
                       : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-900'
@@ -561,7 +561,7 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
                   key={s.id}
                   type="button"
                   onClick={() => setSplit(s.id)}
-                  className={`rounded-2xl border px-4 py-3 text-left transition-all ${
+                  className={`rounded-2xl border px-4 py-3 text-start transition-all ${
                     split === s.id
                       ? 'border-gold-600 bg-gold-500/15 text-gold-700'
                       : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-900'
@@ -593,7 +593,7 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
                   {' · '}
                   <span title={t('macros.tdeeTooltip')}>{t('macros.tdeeLabel')}</span>{' '}
                   {result.tdee.toLocaleString()}
-                  <span className="ml-2 text-cream-100/35">({result.method})</span>
+                  <span className="ms-2 text-cream-100/35">({result.method})</span>
                 </p>
 
                 <div className="mt-6 space-y-3">
@@ -615,7 +615,7 @@ export default function MacroCalculator({ goal: controlledGoal, onGoalChange, on
                   </span>
                   <span className="text-base font-semibold tracking-tight text-cream-50">
                     {(result.waterMl / 1000).toFixed(1)} {t('macros.liters')}
-                    <span className="ml-1 text-[10px] tracking-tight text-cream-100/60">({result.waterMl} ml)</span>
+                    <span className="ms-1 text-[10px] tracking-tight text-cream-100/60">({result.waterMl} ml)</span>
                   </span>
                 </div>
 

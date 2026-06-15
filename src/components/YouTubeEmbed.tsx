@@ -67,10 +67,10 @@ export default function YouTubeEmbed({ url, title, thumbnail }: Props) {
           <div className="absolute inset-0 bg-ink-900/30 transition-colors group-hover:bg-ink-900/50" />
           <div className="absolute inset-0 grid place-items-center">
             <span className="grid h-20 w-20 place-items-center rounded-full bg-cream-50 text-ink-900 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-active:scale-95">
-              <Play className="ml-1 h-8 w-8" fill="currentColor" strokeWidth={0} />
+              <Play className="ms-1 h-8 w-8" fill="currentColor" strokeWidth={0} />
             </span>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-5 text-left md:p-7">
+          <div className="absolute bottom-0 start-0 end-0 p-5 text-start md:p-7">
             <p className="text-[11px] uppercase tracking-widest text-cream-100/80">{t('recipe.watchTheRecipe')}</p>
             <p className="mt-1 text-lg font-semibold tracking-tight text-cream-50 md:text-xl">{title}</p>
           </div>

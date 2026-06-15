@@ -140,7 +140,7 @@ function DrinkCard({ drink }: { drink: Drink }) {
     >
       <div className="relative aspect-video bg-ink-900">
         <YoutubeLite videoId={drink.videoId} title={name} />
-        <div className="absolute left-3 top-3">
+        <div className="absolute start-3 top-3">
           <TempPill temp={drink.temp} />
         </div>
       </div>
@@ -209,7 +209,7 @@ function DrinkHeroCard({ drink }: { drink: Drink }) {
     <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
       <div className="relative aspect-[16/9] md:aspect-[16/7]">
         <YoutubeLite videoId={drink.videoId} title={heroName} />
-        <div className="absolute left-4 top-4">
+        <div className="absolute start-4 top-4">
           <TempPill temp={drink.temp} />
         </div>
       </div>
@@ -351,8 +351,8 @@ export default function DrinksLibraryPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
       </section>
 
       {/* ============ FEATURED DRINK ============ */}
@@ -383,19 +383,19 @@ export default function DrinksLibraryPage() {
               </p>
             </div>
             <div className="relative w-full md:w-80">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+              <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t('drinksPage.searchPlaceholder')}
-                className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
+                className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 ps-11 pe-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
+                  className="absolute end-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
                   aria-label={t('drinksPage.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
@@ -443,7 +443,7 @@ export default function DrinksLibraryPage() {
                   }`}
                 >
                   {c.name}
-                  <span className={`ml-2 text-[11px] ${isActive ? 'text-gold-600' : 'text-ink-400'}`}>
+                  <span className={`ms-2 text-[11px] ${isActive ? 'text-gold-600' : 'text-ink-400'}`}>
                     {count}
                   </span>
                 </button>

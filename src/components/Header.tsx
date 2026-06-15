@@ -196,7 +196,7 @@ export default function Header() {
           >
             <Heart className="h-4 w-4" strokeWidth={1.8} />
             {favorites.length > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-terracotta-500 px-1 text-[10px] font-semibold text-cream-50">
+              <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-terracotta-500 px-1 text-[10px] font-semibold text-cream-50">
                 {favorites.length > 99 ? '99+' : favorites.length}
               </span>
             )}
@@ -244,7 +244,7 @@ export default function Header() {
           }`}
         />
         <aside
-          className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-cream-50 shadow-2xl transition-transform duration-300 ${
+          className={`absolute end-0 top-0 flex h-full w-full max-w-sm flex-col bg-cream-50 shadow-2xl transition-transform duration-300 ${
             mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -352,7 +352,7 @@ export default function Header() {
                       </span>
                       {favorites.length > 0 && (
                         <span
-                          className={`absolute right-1.5 top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 text-[9px] font-bold ${
+                          className={`absolute end-1.5 top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 text-[9px] font-bold ${
                             isActive ? 'bg-cream-50 text-ink-900' : 'bg-terracotta-500 text-cream-50'
                           }`}
                         >

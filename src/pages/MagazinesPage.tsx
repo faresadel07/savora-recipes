@@ -90,8 +90,8 @@ export default function MagazinesPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-terracotta-500/8 blur-3xl" />
-        <div className="pointer-events-none absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-gold-500/8 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-terracotta-500/8 blur-3xl" />
+        <div className="pointer-events-none absolute -start-32 bottom-0 h-72 w-72 rounded-full bg-gold-500/8 blur-3xl" />
       </section>
 
       {/* ARCHIVE */}
@@ -186,12 +186,12 @@ export default function MagazinesPage() {
       <section className="container-wide py-16">
         <div className="rounded-3xl bg-cream-100 p-8 md:p-12">
           <div className="grid items-center gap-8 md:grid-cols-12">
-            <div className="md:col-span-2 text-center md:text-left">
+            <div className="md:col-span-2 text-center md:text-start">
               <div className="inline-grid h-14 w-14 place-items-center rounded-full bg-sage-100 text-sage-600">
                 <Sparkles className="h-6 w-6" strokeWidth={1.5} />
               </div>
             </div>
-            <div className="md:col-span-10 text-center md:text-left">
+            <div className="md:col-span-10 text-center md:text-start">
               <p className="eyebrow mb-2">{t('magazines.aboutEyebrow')}</p>
               <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
                 {t('magazines.aboutTitle')}

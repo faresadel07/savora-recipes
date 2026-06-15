@@ -241,7 +241,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
       <header className="relative">
         <div className="container-wide pt-5 md:pt-8" data-hide-on-print="true">
           <Link to="/recipes" className="link-underline text-[13px] tracking-tight text-ink-600">
-            <ArrowLeft className="rtl-flip mr-1 inline h-3.5 w-3.5" /> {t('recipe.backToRecipes')}
+            <ArrowLeft className="rtl-flip me-1 inline h-3.5 w-3.5" /> {t('recipe.backToRecipes')}
           </Link>
         </div>
 
@@ -250,7 +250,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-cream-200">
               <RecipeImage src={r.image} alt={displayTitle} eager className="absolute inset-0 h-full w-full object-cover" />
               {r.youtube && (
-                <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-cream-50/90 px-3 py-1.5 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur-md">
+                <div className="absolute end-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-cream-50/90 px-3 py-1.5 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur-md">
                   <PlayCircle className="h-3.5 w-3.5" />
                   {t('recipe.videoBelow')}
                 </div>
@@ -364,7 +364,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
                 </button>
                 <div className="flex-1 text-center">
                   <span className="text-lg font-semibold tracking-tighter">{servings}</span>
-                  <span className="ml-1.5 text-[11px] uppercase tracking-widest text-ink-400">
+                  <span className="ms-1.5 text-[11px] uppercase tracking-widest text-ink-400">
                     {servings === 1 ? t('common.serving') : t('common.servings')}
                   </span>
                 </div>
@@ -411,7 +411,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
                         {line.measure ? (
                           <>
                             <span className="font-medium">{line.measure}</span>
-                            <span className="ml-1 text-ink-600">{line.name}</span>
+                            <span className="ms-1 text-ink-600">{line.name}</span>
                           </>
                         ) : (
                           line.name
@@ -472,7 +472,7 @@ function RecipeView({ recipe: r, similar }: { recipe: Recipe; similar: Recipe[] 
 
             {r.sourceUrl && (
               <p className="text-sm tracking-tight text-ink-400">
-                <ChefHat className="mr-2 inline h-3.5 w-3.5" />
+                <ChefHat className="me-2 inline h-3.5 w-3.5" />
                 {t('recipe.originalAt')}{' '}
                 <a href={r.sourceUrl} target="_blank" rel="noreferrer" className="link-underline text-ink-600">
                   {r.sourceName || t('recipe.theSource')}

@@ -78,7 +78,7 @@ export default function ArchiveReader({ embedUrl, detailUrl, title }: Props) {
       {fullscreen && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-ink-900/85 p-4 backdrop-blur-sm md:p-8" role="dialog" aria-modal="true">
           <div className="relative h-full w-full max-w-6xl overflow-hidden rounded-3xl bg-ink-900">
-            <div className="absolute right-3 top-3 z-10 flex items-center gap-1">
+            <div className="absolute end-3 top-3 z-10 flex items-center gap-1">
               <a
                 href={detailUrl}
                 target="_blank"

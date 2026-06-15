@@ -74,7 +74,7 @@ export default function TermsPage() {
                 {t(`terms.${key}Title`)}
               </h2>
             </div>
-            <p className="mt-4 pl-10 text-[15px] leading-relaxed text-ink-600 md:text-[17px]">
+            <p className="mt-4 ps-10 text-[15px] leading-relaxed text-ink-600 md:text-[17px]">
               {t(`terms.${key}Body`)}
             </p>
           </div>

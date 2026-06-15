@@ -318,7 +318,7 @@ export default function SmartSearchInput({
       {dropdownVisible && (
         <div
           role="listbox"
-          className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.22)]"
+          className="absolute start-0 end-0 top-full z-40 mt-2 overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.22)]"
         >
           <div className="max-h-[460px] overflow-y-auto">
             {/* EMPTY STATE: recent + suggested */}
@@ -393,7 +393,7 @@ export default function SmartSearchInput({
                   <button
                     type="button"
                     onClick={() => navigateToResult(didYouMean)}
-                    className="mt-3 flex w-full items-center gap-3 rounded-xl bg-cream-50 p-3 text-left transition-colors hover:bg-cream-100"
+                    className="mt-3 flex w-full items-center gap-3 rounded-xl bg-cream-50 p-3 text-start transition-colors hover:bg-cream-100"
                   >
                     <div className="relative h-10 w-10 flex-none overflow-hidden rounded-lg bg-cream-200">
                       {didYouMean.image && (
@@ -449,7 +449,7 @@ export default function SmartSearchInput({
                             <button
                               type="button"
                               onClick={() => navigateToResult(r)}
-                              className="flex w-full items-center gap-3 px-4 py-2 text-left transition-colors hover:bg-ink-50"
+                              className="flex w-full items-center gap-3 px-4 py-2 text-start transition-colors hover:bg-ink-50"
                             >
                               <div className="relative h-10 w-10 flex-none overflow-hidden rounded-lg bg-cream-200">
                                 {r.image && (
@@ -485,7 +485,7 @@ export default function SmartSearchInput({
             <button
               type="button"
               onClick={() => handleSubmit(value)}
-              className="block w-full border-t border-ink-100 bg-cream-100/60 px-4 py-2.5 text-left text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:bg-ink-100"
+              className="block w-full border-t border-ink-100 bg-cream-100/60 px-4 py-2.5 text-start text-[12px] font-medium tracking-tight text-ink-700 transition-colors hover:bg-ink-100"
             >
               <span className="inline-flex items-center gap-1.5">
                 <BookOpen className="h-3 w-3" />

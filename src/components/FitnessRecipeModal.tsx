@@ -229,7 +229,7 @@ export default function FitnessRecipeModal({ recipe, onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label={labels.close}
-          className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-cream-50/95 text-ink-900 backdrop-blur transition-colors hover:bg-ink-900 hover:text-cream-50"
+          className="absolute end-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-cream-50/95 text-ink-900 backdrop-blur transition-colors hover:bg-ink-900 hover:text-cream-50"
         >
           <X className="h-4 w-4" />
         </button>
@@ -371,7 +371,7 @@ function MacroChip({
       <p className={`text-[10px] font-semibold uppercase tracking-widest ${tint}`}>{label}</p>
       <p className="mt-2 text-2xl font-bold tracking-tighter text-ink-900">
         {value}
-        <span className="ml-1 text-[11px] font-medium tracking-tight text-ink-400">{unit}</span>
+        <span className="ms-1 text-[11px] font-medium tracking-tight text-ink-400">{unit}</span>
       </p>
     </div>
   );

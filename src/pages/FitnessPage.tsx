@@ -149,8 +149,8 @@ export default function FitnessPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-sage-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-sage-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/10 blur-3xl" />
       </section>
 
       {/* ============ MACRO CALCULATOR + MEAL PLAN (centerpiece) ============ */}
@@ -372,7 +372,7 @@ export default function FitnessPage() {
                 key={p.id}
                 type="button"
                 onClick={() => setActivePlan(p.id)}
-                className={`rounded-2xl border p-5 text-left transition-all ${
+                className={`rounded-2xl border p-5 text-start transition-all ${
                   activePlan === p.id
                     ? 'border-ink-900 bg-ink-900 text-cream-50'
                     : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-900'
@@ -406,7 +406,7 @@ export default function FitnessPage() {
                     <li key={i} className="grid gap-2 rounded-2xl border border-ink-100 p-4 sm:grid-cols-[120px_1fr_auto] sm:items-center">
                       <span className="text-[10px] uppercase tracking-widest text-ink-400">{m.meal}</span>
                       <p className="text-sm tracking-tight text-ink-900">{m.food}</p>
-                      <span className="text-[11px] tracking-tight text-sage-600 sm:text-right">{m.macros}</span>
+                      <span className="text-[11px] tracking-tight text-sage-600 sm:text-end">{m.macros}</span>
                     </li>
                   ))}
                 </ul>
@@ -447,16 +447,16 @@ export default function FitnessPage() {
             <div className="grid grid-cols-[1fr_80px_60px_60px] gap-2 border-b border-ink-100 bg-cream-100/60 px-5 py-3 text-[10px] font-medium uppercase tracking-widest text-ink-400 sm:grid-cols-[1fr_120px_80px_80px]">
               <span>Food</span>
               <span>Serving</span>
-              <span className="text-right">Protein</span>
-              <span className="text-right">Calories</span>
+              <span className="text-end">Protein</span>
+              <span className="text-end">Calories</span>
             </div>
             <ul className="divide-y divide-ink-100">
               {filteredSources.map((s) => (
                 <li key={s.food} className="grid grid-cols-[1fr_80px_60px_60px] gap-2 px-5 py-3 text-sm tracking-tight sm:grid-cols-[1fr_120px_80px_80px]">
                   <span className="font-medium text-ink-900">{language === 'ar' && s.foodAr ? s.foodAr : s.food}</span>
                   <span className="text-ink-500">{s.serving}</span>
-                  <span className="text-right font-semibold text-sage-600 tabular-nums">{s.protein}g</span>
-                  <span className="text-right text-ink-500 tabular-nums">{s.cal}</span>
+                  <span className="text-end font-semibold text-sage-600 tabular-nums">{s.protein}g</span>
+                  <span className="text-end text-ink-500 tabular-nums">{s.cal}</span>
                 </li>
               ))}
             </ul>

@@ -299,14 +299,14 @@ function FilterSelect({ label, value, options, onChange, anyLabel }: FilterSelec
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-full border border-ink-100 bg-cream-50 py-2.5 pl-4 pr-9 text-[13px] tracking-tight focus:border-ink-900 focus:outline-none"
+          className="w-full appearance-none rounded-full border border-ink-100 bg-cream-50 py-2.5 ps-4 pe-9 text-[13px] tracking-tight focus:border-ink-900 focus:outline-none"
         >
           <option value="">{anyLabel}</option>
           {options.map((o) => (
             <option key={o} value={o}>{o}</option>
           ))}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-400" />
+        <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-400" />
       </div>
     </div>
   );

@@ -41,9 +41,9 @@ function MacroRow({
           </span>
           <span className="text-[13px] font-medium tracking-tight text-ink-700">{label}</span>
         </div>
-        <div className="text-right">
+        <div className="text-end">
           <span className="text-lg font-bold tracking-tighter text-ink-900">{value}</span>
-          <span className="ml-1 text-[11px] tracking-tight text-ink-400">{unit}</span>
+          <span className="ms-1 text-[11px] tracking-tight text-ink-400">{unit}</span>
         </div>
       </div>
       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-cream-100">
@@ -120,7 +120,7 @@ export default function NutritionCard({ ingredients, servings }: Props) {
             </p>
             <p className="mt-1 text-sm tracking-tight text-ink-500">{labels.perServing}</p>
           </div>
-          <div className="text-right">
+          <div className="text-end">
             <p className="text-[clamp(2rem,4vw,2.75rem)] font-bold leading-none tracking-tighter text-ink-900">
               {est.calories}
             </p>

@@ -143,7 +143,7 @@ export default function Footer() {
               {t('footer.blurb')}
             </p>
           </div>
-          <div className="md:col-span-5 md:text-right">
+          <div className="md:col-span-5 md:text-end">
             <div className="flex flex-wrap items-center gap-3 md:justify-end">
               <Link
                 to="/donate"
@@ -278,7 +278,7 @@ export default function Footer() {
                 <button
                   type="button"
                   onClick={resetCookieConsent}
-                  className="link-underline inline-flex items-center gap-1.5 text-left text-cream-50/90 transition-colors hover:text-cream-50"
+                  className="link-underline inline-flex items-center gap-1.5 text-start text-cream-50/90 transition-colors hover:text-cream-50"
                 >
                   <Cookie className="h-3.5 w-3.5" />
                   {cookieReset ? t('footer.cookieReset') : t('footer.cookieSettings')}

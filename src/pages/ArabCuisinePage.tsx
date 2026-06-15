@@ -520,8 +520,8 @@ export default function ArabCuisinePage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-sage-400/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-sage-400/15 blur-3xl" />
       </section>
 
       {/* ============ RECIPES (the main event) ============ */}
@@ -586,7 +586,7 @@ export default function ArabCuisinePage() {
               }`}
             >
               {r.name}
-              <span className="ml-2 text-[10px] opacity-60">{r.nameAr}</span>
+              <span className="ms-2 text-[10px] opacity-60">{r.nameAr}</span>
             </button>
           ))}
         </div>

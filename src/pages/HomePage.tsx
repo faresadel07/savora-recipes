@@ -134,12 +134,12 @@ export default function HomePage() {
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/15 to-transparent" />
                   {hero.data.youtube && (
-                    <div className="absolute right-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-cream-50/90 px-3 py-1.5 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur-md">
+                    <div className="absolute end-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-cream-50/90 px-3 py-1.5 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur-md">
                       <PlayCircle className="h-3.5 w-3.5" />
                       {language === 'ar' ? 'وصفة بالفيديو' : 'Video recipe'}
                     </div>
                   )}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+                  <div className="absolute bottom-0 start-0 end-0 p-5 md:p-7">
                     <p className="eyebrow mb-2 text-cream-100/80">
                       {t('home.featuredToday')} · {hero.data.area || hero.data.category}
                     </p>
@@ -244,7 +244,7 @@ export default function HomePage() {
                 <p className="mt-1 text-xs leading-snug opacity-60">
                   {language === 'ar' ? (CATEGORY_DESCRIPTIONS_AR[cat.slug] ?? cat.description) : cat.description}
                 </p>
-                <ArrowUpRight className="rtl-flip absolute right-4 top-4 h-3.5 w-3.5 -translate-y-0.5 translate-x-0.5 opacity-0 transition-all group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
+                <ArrowUpRight className="rtl-flip absolute end-4 top-4 h-3.5 w-3.5 -translate-y-0.5 translate-x-0.5 opacity-0 transition-all group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
               </Link>
             ))}
           </div>
@@ -423,8 +423,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-cream-50/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-cream-50/10 blur-3xl" />
+            <div className="pointer-events-none absolute -end-20 -top-20 h-72 w-72 rounded-full bg-cream-50/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -start-20 h-72 w-72 rounded-full bg-cream-50/10 blur-3xl" />
           </div>
         </div>
       </section>
@@ -656,7 +656,7 @@ function SectionsShowcase({ language }: { language: string }) {
                 <div className="relative aspect-video bg-cream-200">
                   <ShowcaseImage videoId={s.imageVideoId()} imageUrl={('imageUrl' in s ? s.imageUrl : undefined) as string | undefined} />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" />
-                  <div className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-cream-50/95 text-ink-900 backdrop-blur">
+                  <div className="absolute end-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-cream-50/95 text-ink-900 backdrop-blur">
                     <Icon className="h-4 w-4" strokeWidth={1.8} />
                   </div>
                 </div>
@@ -773,7 +773,7 @@ function FeaturedChef({ language }: { language: string }) {
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent md:bg-gradient-to-r" />
-              <div className="absolute bottom-5 left-5 right-5">
+              <div className="absolute bottom-5 start-5 end-5">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-terracotta-300">
                   {date}
                 </p>
@@ -850,7 +850,7 @@ function FeaturedTrio({ language }: { language: string }) {
             <div className="relative aspect-video bg-cream-200">
               <ShowcaseImage videoId={firstLesson?.videoId} />
               <div className="absolute inset-0 bg-gradient-to-t from-ink-900/40 via-transparent to-transparent" />
-              <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-gold-700 backdrop-blur">
+              <div className="absolute end-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-gold-700 backdrop-blur">
                 <Sparkles className="h-3 w-3" /> {language === 'ar' ? 'مسار تعلّم' : 'Learning path'}
               </div>
             </div>
@@ -902,7 +902,7 @@ function FeaturedTrio({ language }: { language: string }) {
               </div>
               <h3 className="mt-3 text-xl font-semibold tracking-tight md:text-2xl">{chef.name}</h3>
               <p className="mt-1 text-sm tracking-tight text-ink-500">{chef.nationality} · {chef.cuisine}</p>
-              <p className="mt-3 flex-1 border-l-2 border-gold-500/40 pl-3 text-sm italic leading-relaxed text-ink-600">
+              <p className="mt-3 flex-1 border-s-2 border-gold-500/40 ps-3 text-sm italic leading-relaxed text-ink-600">
                 "{chef.philosophy}"
               </p>
               <div className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors group-hover:text-terracotta-500">

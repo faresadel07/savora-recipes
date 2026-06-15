@@ -54,7 +54,7 @@ export default function CategoryPage() {
           <div className="grid items-center gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <Link to="/" className="link-underline text-[13px] tracking-tight text-cream-100/70">
-                <ArrowLeft className="rtl-flip mr-1 inline h-3.5 w-3.5" /> {t('common.home')}
+                <ArrowLeft className="rtl-flip me-1 inline h-3.5 w-3.5" /> {t('common.home')}
               </Link>
               <p className="eyebrow mt-7 inline-flex items-center gap-2 text-cream-100/60">
                 <ChefHat className="h-3 w-3" /> {t('category.eyebrow')}
@@ -115,8 +115,8 @@ export default function CategoryPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-terracotta-500/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-72 w-72 rounded-full bg-gold-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-terracotta-500/25 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-72 w-72 rounded-full bg-gold-500/15 blur-3xl" />
       </section>
 
       <section className="container-wide py-12 md:py-20">

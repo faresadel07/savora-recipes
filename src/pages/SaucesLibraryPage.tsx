@@ -23,7 +23,7 @@ function SauceCard({ sauce }: { sauce: (typeof SAUCES)[number] }) {
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
-        <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
+        <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
           {sauce.category}
         </span>
       </div>
@@ -125,20 +125,20 @@ export default function SaucesLibraryPage() {
             </p>
           </div>
           <div className="relative md:w-80">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
+            <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t('sauces.searchPlaceholder')}
-              className="w-full rounded-full border border-ink-100 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-300 focus:border-ink-900 focus:outline-none"
+              className="w-full rounded-full border border-ink-100 bg-cream-50 py-3 ps-11 pe-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-300 focus:border-ink-900 focus:outline-none"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
                 aria-label={t('sauces.clear')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-ink-300 hover:bg-ink-100 hover:text-ink-900"
+                className="absolute end-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-ink-300 hover:bg-ink-100 hover:text-ink-900"
               >
                 <X className="h-3.5 w-3.5" />
               </button>

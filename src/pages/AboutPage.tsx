@@ -86,7 +86,7 @@ export default function AboutPage() {
               <span className="text-3xl font-bold tracking-tighter text-cream-50 md:text-4xl">
                 FH
               </span>
-              <span className="absolute -right-1 -bottom-1 grid h-8 w-8 place-items-center rounded-full border-2 border-cream-50 bg-terracotta-500">
+              <span className="absolute -end-1 -bottom-1 grid h-8 w-8 place-items-center rounded-full border-2 border-cream-50 bg-terracotta-500">
                 <Heart className="h-3.5 w-3.5 text-cream-50" fill="currentColor" />
               </span>
             </div>
@@ -130,7 +130,7 @@ export default function AboutPage() {
           {storyParas.map((paragraph, i) => (
             <p
               key={i}
-              className={i === 0 ? 'first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-bold first-letter:leading-[0.85] first-letter:text-terracotta-500' : ''}
+              className={i === 0 ? 'first-letter:float-left first-letter:me-3 first-letter:text-6xl first-letter:font-bold first-letter:leading-[0.85] first-letter:text-terracotta-500' : ''}
             >
               {paragraph}
             </p>

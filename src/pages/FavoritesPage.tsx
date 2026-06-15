@@ -76,7 +76,7 @@ export default function FavoritesPage() {
                     <RecipeImage src={r.image} alt={r.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent" />
                     {empty && (
-                      <div className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2 py-1 text-[9px] font-medium uppercase tracking-widest text-ink-600">
+                      <div className="absolute end-2 top-2 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2 py-1 text-[9px] font-medium uppercase tracking-widest text-ink-600">
                         {t('favorites.tryThis')}
                       </div>
                     )}

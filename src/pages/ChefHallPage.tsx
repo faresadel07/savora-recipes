@@ -104,7 +104,7 @@ function ChefCard({ chef }: { chef: Chef }) {
         </p>
         <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{chef.name}</h3>
         <p className="mt-1 text-sm tracking-tight text-gold-600">{cuisine}</p>
-        <p className="mt-4 border-l-2 border-gold-500/40 pl-3 text-sm italic leading-relaxed text-ink-600">
+        <p className="mt-4 border-s-2 border-gold-500/40 ps-3 text-sm italic leading-relaxed text-ink-600">
           "{philosophy}"
         </p>
         <p className="mt-4 text-sm leading-relaxed text-ink-600">{bio}</p>
@@ -185,12 +185,12 @@ function ChefHeroCard({ chef }: { chef: Chef }) {
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-cream-100/70">
           <MapPin className="h-3 w-3" />
           {nationality}
-          <span className="ml-2 text-gold-400">{cuisine}</span>
+          <span className="ms-2 text-gold-400">{cuisine}</span>
         </p>
         <h3 className="mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tighter">
           {chef.name}
         </h3>
-        <p className="mt-4 max-w-3xl border-l-2 border-gold-400 pl-4 text-base italic leading-relaxed text-cream-100/90 md:text-lg">
+        <p className="mt-4 max-w-3xl border-s-2 border-gold-400 ps-4 text-base italic leading-relaxed text-cream-100/90 md:text-lg">
           "{philosophy}"
         </p>
         <p className="mt-5 max-w-3xl text-sm leading-relaxed text-cream-100/80 md:text-base">{bio}</p>
@@ -316,8 +316,8 @@ export default function ChefHallPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
       </section>
 
       {/* ============ FEATURED CHEF ============ */}
@@ -350,19 +350,19 @@ export default function ChefHallPage() {
               </p>
             </div>
             <div className="relative w-full md:w-80">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+              <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t('chefHall.searchPlaceholder')}
-                className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
+                className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 ps-11 pe-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
+                  className="absolute end-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
                   aria-label={t('chefHall.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
@@ -390,7 +390,7 @@ export default function ChefHallPage() {
                   }`}
                 >
                   {r.name}
-                  <span className={`ml-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>
+                  <span className={`ms-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>
                     {count}
                   </span>
                 </button>

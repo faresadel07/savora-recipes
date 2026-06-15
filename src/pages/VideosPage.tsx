@@ -99,7 +99,7 @@ export default function VideosPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/30 to-transparent" />
                         <div className="absolute inset-0 grid place-items-center">
                           <span className="grid h-10 w-10 place-items-center rounded-full bg-cream-50/90 text-ink-900 backdrop-blur-md transition-transform duration-500 group-hover:scale-110">
-                            <Play className="ml-0.5 h-3.5 w-3.5" fill="currentColor" strokeWidth={0} />
+                            <Play className="ms-0.5 h-3.5 w-3.5" fill="currentColor" strokeWidth={0} />
                           </span>
                         </div>
                         <div className="absolute inset-x-0 bottom-0 p-2.5">
@@ -116,8 +116,8 @@ export default function VideosPage() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-terracotta-500/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-gold-500/12 blur-3xl" />
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-terracotta-500/25 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-gold-500/12 blur-3xl" />
       </section>
 
       {/* RECIPE VIDEOS */}
@@ -214,7 +214,7 @@ function VideoCard({ recipe, index }: { recipe: Recipe; index: number }) {
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900/55 via-ink-900/10 to-ink-900/20 transition-colors group-hover:via-ink-900/0" />
         <div className="absolute inset-0 grid place-items-center">
           <span className="grid h-14 w-14 place-items-center rounded-full bg-cream-50/95 text-ink-900 shadow-2xl backdrop-blur-md transition-all duration-500 group-hover:scale-110">
-            <Play className="ml-0.5 h-5 w-5" fill="currentColor" strokeWidth={0} />
+            <Play className="ms-0.5 h-5 w-5" fill="currentColor" strokeWidth={0} />
           </span>
         </div>
       </div>

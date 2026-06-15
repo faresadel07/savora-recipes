@@ -20,7 +20,7 @@ export default function FitnessRecipeCard({ recipe, onOpen, index = 0 }: Props) 
       type="button"
       onClick={() => onOpen(recipe)}
       style={{ animationDelay: `${index * 40}ms` }}
-      className="group flex flex-col text-left transition-all duration-500 hover:-translate-y-1"
+      className="group flex flex-col text-start transition-all duration-500 hover:-translate-y-1"
     >
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200">
         <RecipeImage
@@ -30,12 +30,12 @@ export default function FitnessRecipeCard({ recipe, onOpen, index = 0 }: Props) 
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/80 via-transparent to-transparent" />
         {/* Calorie pill */}
-        <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-900 backdrop-blur">
+        <div className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-900 backdrop-blur">
           <Flame className="h-3 w-3 text-terracotta-500" />
           {recipe.calories} {isAr ? 'سعرة' : 'kcal'}
         </div>
         {/* Time pill */}
-        <div className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700 backdrop-blur">
+        <div className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700 backdrop-blur">
           <Clock className="h-3 w-3" />
           {recipe.minutes} {isAr ? 'د' : 'min'}
         </div>

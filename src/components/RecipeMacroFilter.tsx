@@ -144,7 +144,7 @@ export default function RecipeMacroFilter() {
 
           <div className="mb-2">
             <p className="mb-2 text-[11px] font-medium uppercase tracking-widest text-ink-500">
-              <Clock className="mr-1 inline h-3 w-3" strokeWidth={2} />
+              <Clock className="me-1 inline h-3 w-3" strokeWidth={2} />
               {isAr ? `أقصى وقت: ${filters.maxMinutes} د` : `Max time: ${filters.maxMinutes} min`}
             </p>
             <input

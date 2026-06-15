@@ -246,7 +246,7 @@ export default function MealPlanPanel({ targets }: Props) {
                     // Defer so state flushes before generate fires.
                     setTimeout(() => handleGenerate(), 50);
                   }}
-                  className="group relative overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 p-5 text-left transition-all hover:border-ink-900 hover:shadow-md"
+                  className="group relative overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 p-5 text-start transition-all hover:border-ink-900 hover:shadow-md"
                 >
                   <div className="text-2xl">{preset.emoji}</div>
                   <div className="mt-3 text-base font-semibold tracking-tight text-ink-900">
@@ -316,7 +316,7 @@ export default function MealPlanPanel({ targets }: Props) {
             {/* Time cap */}
             <div>
               <p className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-500">
-                <Clock className="mr-1 inline h-3 w-3" strokeWidth={2} />
+                <Clock className="me-1 inline h-3 w-3" strokeWidth={2} />
                 {t('mealplan.timeCap')}
               </p>
               <div className="flex gap-2">
@@ -344,7 +344,7 @@ export default function MealPlanPanel({ targets }: Props) {
             {/* Diet flags */}
             <div>
               <p className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-500">
-                <Filter className="mr-1 inline h-3 w-3" strokeWidth={2} />
+                <Filter className="me-1 inline h-3 w-3" strokeWidth={2} />
                 {t('mealplan.dietFlags')}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -678,7 +678,7 @@ function MealRow({
                   setProteinMenuOpen(false);
                   onSwapByProtein(opt.id);
                 }}
-                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm tracking-tight text-ink-700 hover:bg-cream-100"
+                className="flex w-full items-center gap-2 px-3 py-2 text-start text-sm tracking-tight text-ink-700 hover:bg-cream-100"
               >
                 <span className="text-base">{opt.emoji}</span>
                 {isAr ? opt.labelAr : opt.label}

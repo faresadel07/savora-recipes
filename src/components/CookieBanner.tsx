@@ -48,7 +48,7 @@ export default function CookieBanner() {
       role="dialog"
       aria-live="polite"
       aria-label={t('cookieBanner.aria')}
-      className={`pointer-events-none fixed inset-x-3 bottom-3 z-[60] flex justify-center transition-all duration-300 md:inset-x-auto md:right-6 md:bottom-6 md:justify-end ${
+      className={`pointer-events-none fixed inset-x-3 bottom-3 z-[60] flex justify-center transition-all duration-300 md:inset-x-auto md:end-6 md:bottom-6 md:justify-end ${
         visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
     >

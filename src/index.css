@@ -176,10 +176,17 @@ html[dir='rtl'] .rtl-flip {
   }
 
   .link-underline {
-    @apply relative inline-block after:absolute after:bottom-0 after:left-0
+    @apply relative inline-block after:absolute after:bottom-0 after:start-0
            after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current
            after:transition-transform after:duration-500
            hover:after:origin-left hover:after:scale-x-100;
+  }
+  /* Mirror the underline animation origin in RTL so it grows from the start side. */
+  [dir="rtl"] .link-underline::after {
+    transform-origin: left;
+  }
+  [dir="rtl"] .link-underline:hover::after {
+    transform-origin: right;
   }
 
   /* Eyebrow labels (small uppercase headers like "TODAY'S PICK") are
