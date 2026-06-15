@@ -77,6 +77,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     featured: true,
     storyAr: 'افتتح سيجي ياماموتو RyuGin في عام 2003 وحصل على ثلاث نجوم في غضون تسع سنوات. أعاد اختراعه "الفراولة التي تبلغ درجة حرارتها 196 درجة تحت الصفر" باستخدام النيتروجين السائل كتابة ما يمكن أن يعنيه كايسيكي في القرن الحادي والعشرين.',
     signatureDishesAr: ['كرة الفراولة بالنيتروجين السائل', 'سمك كينكي في وعاء ساخن', 'واجيو بالفحم', 'طبق حسون موسمي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Jisaku_Kaiseki_Ryori_01.jpg',
+    videoId: '7-cQuJiVe2g',
+    videoChannel: 'Curated',
   },
   {
     id: 'kanda',
@@ -95,6 +98,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kanda_2.jpg/3840px-Kanda_2.jpg',
     storyAr: 'طاولة تتسع لتسعة مقاعد وقد حازت على ثلاث نجوم منذ عام 2007. قام هيرويوكي كاندا ببناء قائمة تذوق لأطباق كايسيكي اليابانية المنضبطة دون أي مسرحيات.',
     signatureDishesAr: ['حسون', 'سمك موسمي مشوي على الفحم', 'واجيو مع الكمأة', 'أرز مع إضافات موسمية'],
+    videoId: '5kVsXP9DKwk',
+    videoChannel: 'Curated',
   },
   {
     id: 'quintessence',
@@ -113,6 +118,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Outside_Quintessence_%2815907987778%29.jpg/3840px-Outside_Quintessence_%2815907987778%29.jpg',
     storyAr: 'تدرب شوزو كيشيدا في Astrance في باريس قبل افتتاح Quintessence في عام 2006. حصل على ثلاث نجوم ميشلان منذ عام 2008. لا توجد قائمة مطبوعة، حيث يقرر الشيف كل وجبة.',
     signatureDishesAr: ['بافاروا الجبن الطازج', 'الحمام وكبد الاوز', 'لحم واغيو', 'قنفذ البحر هوكايدو'],
+    videoId: 'qVTzM7zRtJY',
+    videoChannel: 'Curated',
   },
   {
     id: 'joel-robuchon-tokyo',
@@ -131,6 +138,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Jo%C3%ABl_Robuchon.jpg',
     storyAr: 'الرائد في طوكيو لجويل روبوشون، الشيف الذي حصل على نجوم ميشلان أكثر من أي شخص آخر في التاريخ (32 نجمة طوال حياته). المكان عبارة عن قصر على طراز فرساي في إبيسو.',
     signatureDishesAr: ['بطاطس مهروسة روبوشون', 'الكافيار مع موس القرنبيط', 'دجاج بريس', 'الكافيار الإمبراطوري'],
+    videoId: 'M-NHCxhDQ8c',
+    videoChannel: 'Curated',
   },
   {
     id: 'kashiwaya',
@@ -149,6 +158,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg',
     storyAr: 'يدير هيدياكي ماتسو مذيع مجموعة كاشيوايا في أوساكا بانضباط سيد الشاي. ثلاث نجوم ميشلان منذ عام 2007.',
     signatureDishesAr: ['يوبا مع الكافيار', 'واغيو مشوي على الفحم', 'سلطعون في مرق داشي', 'حسون موسمي'],
+    videoId: 'aZ9SJ8nB2lA',
+    videoChannel: 'Curated',
   },
   {
     id: 'hajime',
@@ -167,6 +178,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     featured: true,
     storyAr: 'حصل المهندس الذي تحول إلى طاهٍ، هاجيمي يونيدا، على ثلاث نجوم في عام 2009، بعد عامين فقط من افتتاح مطعم هاجيمي. طبق "تشيكيو" (الأرض) الشهير عبارة عن حياة ساكنة على الطبق.',
     signatureDishesAr: ['لوحة كونية', 'الأرض في وعاء', 'حديقة نباتية', 'النظام البيئي للمحيطات'],
+    videoId: '4BUL2yIQ9wM',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Osaka_Castle_02bs3200.jpg/3840px-Osaka_Castle_02bs3200.jpg',
   },
   {
     id: 'hyotei',
@@ -185,6 +199,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     featured: true,
     storyAr: 'مفتوح منذ عام 1837. يقع معبد هيوتي من الجيل الخامس عشر عند بوابات معبد نانزين-جي. مجموعة الإفطار الصباحية القاسية هي شكل خاص من أشكال التأمل.',
     signatureDishesAr: ['بيضة نصف مطبوخة', 'ساق السلطعون بالخل', 'طبق حسون موسمي', 'سمك مشوي على الفحم'],
+    videoId: 'YK7zUKWqVcg',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Yoshihiro_Takahashi_2.jpg',
   },
   {
     id: 'kikunoi',
@@ -202,6 +219,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1912,
     storyAr: 'يوشيهيرو موراتا هو الجيل الثالث من طهاة كيكونوي، وهو سفير عالمي لمطبخ كايسيكي. ثلاث نجوم ميشلان منذ عام 2010. الموقع الأصلي في كيوتو عام 1912 بالإضافة إلى فروع في جميع أنحاء اليابان.',
     signatureDishesAr: ['براعم الخيزران كايسيكي', 'تاتاكي لحم واغيو', 'السمكة الحلوة آيو', 'حلوى ماتشا'],
+    videoId: 'YVNG_AvkmEU',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Jisaku_Kaiseki_Ryori_01.jpg',
   },
   {
     id: 'mizai',
@@ -220,6 +240,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Jisaku_Kaiseki_Ryori_01.jpg',
     storyAr: 'بيت شاي مكون من أربع طاولات في منطقة هيغاشياما يديره هيتوشي إيشيهارا. جلسة عشاء واحدة في الليلة. ثلاث نجوم منذ عام 2009.',
     signatureDishesAr: ['كراب كايسيكي', 'حساء براعم الخيزران', 'طبق ساشيمي', 'واغيو مشوي على الفحم'],
+    videoId: 'rNUOj4U9_AY',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -243,6 +265,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/0/03/Guy_Savoy.jpg',
     storyAr: 'قام جاي سافوي بنقل مطعمه ذي الثلاث نجوم إلى Monnaie de Paris في عام 2015. وكان حساء الخرشوف والكمأة مع البريوش موجودًا في القائمة منذ 40 عامًا.',
     signatureDishesAr: ['شوربة الخرشوف والكمأة السوداء', 'باس البحر مع الكافيار', 'سوفليه مثلجة', 'حمامة مشوية'],
+    videoId: 'Z2YGGCfvCSk',
+    videoChannel: 'Curated',
   },
   {
     id: 'arpege',
@@ -262,6 +286,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Arp%C3%A8ge.jpg',
     storyAr: 'أزال آلان باسارد جميع اللحوم الحمراء من قائمته ذات الثلاث نجوم في عام 2001، قبل أن يصبح طهي الخضار رائجًا. يدير ثلاث مزارع حيوية توفر احتياجات المطبخ.',
     signatureDishesAr: ['كسكس نباتي', 'الشمندر في قشرة الملح', 'كونفيت الطماطم مع اثني عشر نكهات', 'ملفي التفاح'],
+    videoId: 'mfXg26Ldz8Y',
+    videoChannel: 'Curated',
   },
   {
     id: 'ambroisie',
@@ -280,6 +306,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Place_des_Vosges%2C_Paris%2C_porte_du_n%C2%B0_09_%282%29.JPG',
     storyAr: 'في Place des Vosges منذ عام 1986. حاز برنارد باكود على ثلاث نجوم أطول من أي طاهٍ فرنسي على قيد الحياة تقريبًا. لا وجود لوسائل التواصل الاجتماعي، مجرد تقنية كلاسيكية.',
     signatureDishesAr: ['باس البحر مع الكافيار', 'دجاج بريس مع الكمأة', 'تورتة الشوكولاتة', 'فوا'],
+    videoId: 'fGYIWGWHB3o',
+    videoChannel: 'Curated',
   },
   {
     id: 'pierre-gagnaire',
@@ -298,6 +326,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/96/L%27%C3%A9quipe_C%C3%B4t%C3%A9_Chic_aux_c%C3%B4t%C3%A9s_de_Pierre_Gagnaire.jpg',
     storyAr: 'بيير جانيير هو الأب الروحي للطهي المدمج. تصل كل دورة في قائمة التذوق الخاصة به إلى 4-6 أطباق صغيرة تستكشف مكونًا واحدًا. ثلاث نجوم منذ عام 1998.',
     signatureDishesAr: ['طبق مقبلات من خمسة أجزاء', 'رز باس البحر', 'حمامة بالكاكاو', 'الحلوى الكبرى'],
+    videoId: 'vV6q7sIbV8E',
+    videoChannel: 'Curated',
   },
   {
     id: 'epicure-bristol',
@@ -315,6 +345,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2009,
     storyAr: 'مطبخ إريك فريشون ذو الثلاث نجوم داخل فندق لو بريستول. طبق المعكرونة المحشو بكبد الأوز والكمأة السوداء هو توقيعه.',
     signatureDishesAr: ['معكرونة محشوة بالكمأة وكبد الأوز', 'بريس الدجاج في المثانة', 'كوكي دي باريس', 'سوفليه'],
+    videoId: 'TpfHU0LfWZA',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/%C3%89ric_Frechon_2010.jpg/3840px-%C3%89ric_Frechon_2010.jpg',
   },
   {
     id: 'le-cinq',
@@ -333,6 +366,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Nesta_%C3%BAltima_viagem_a_Paris%2C_voltei_ao_Cinq.jpg',
     storyAr: 'الكلاسيكية الفرنسية كريستيان لو سكوير ذات الثلاث نجوم في فندق فور سيزونز جورج الخامس. تم إعادة اختراع "البصل الغرتان" الشهير من وصفة جدته في بريتاني.',
     signatureDishesAr: ['الكافيار بيلوجا', 'جراد البحر بريتاني', 'غراتان البصل', 'مرنغ الليمون'],
+    videoId: 'cFTeBJ_GdJg',
+    videoChannel: 'Curated',
   },
   {
     id: 'plaza-athenee',
@@ -350,6 +385,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2000,
     storyAr: 'أعاد آلان دوكاس تركيز هذا المطبخ على الحبوب والخضروات والأسماك البرية في عام 2014. وحصل على ثلاث نجوم منذ عام 2016.',
     signatureDishesAr: ['الخضروات والحبوب', 'الأسماك البرية', 'لعبة مع صلصة مخفضة', 'عسل من أسطح منازل باريس'],
+    videoId: 'WJfHrxOhKOk',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/3840px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg',
   },
   {
     id: 'le-pre-catelan',
@@ -367,6 +405,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1856,
     storyAr: 'في بوا دي بولوني. تدرب فريديريك أنطون على يد روبوشون. ثلاث نجوم منذ عام 2007. الحلوى "Le Pomme" عبارة عن تفاحة زجاجية تحتوي على سوفليه.',
     signatureDishesAr: ['سوفليه التفاح', 'سلطعون في هلام', 'لحم العجل مع الكمأة', 'حلوى الورد'],
+    videoId: 'lTYRDFRBJ_w',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Fr%C3%A9d%C3%A9ric_Anton_1.jpg/3840px-Fr%C3%A9d%C3%A9ric_Anton_1.jpg',
   },
   {
     id: 'kei',
@@ -384,6 +425,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2011,
     storyAr: 'كان كي كوباياشي أول طاهٍ ياباني يحصل على ثلاث نجوم ميشلان في فرنسا في عام 2020. ويمزج المطبخ بين التقنية الفرنسية وضبط النفس الياباني.',
     signatureDishesAr: ['خضروات الحديقة', 'لحم الخنزير الايبريكو', 'حلوى يوزو', 'حمامة بريس'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/3840px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg',
+    videoId: 'OOQO0V_pAEs',
+    videoChannel: 'Curated',
   },
   {
     id: 'mirazur-3',
@@ -402,6 +446,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     featured: true,
     storyAr: 'ملاذ ماورو كولاجريكو ذو الثلاث نجوم على الحدود الفرنسية الإيطالية. تتغير القائمة حسب التقويم القمري مع المنتجات من حدائق المطعم الخاصة. أفضل مطعم في العالم لعام 2019.',
     signatureDishesAr: ['القائمة القمرية', 'تورتة زهور الحديقة', 'الشمندر في قشرة الملح', 'باس البحر مع الحمضيات'],
+    videoId: 'V6vLfM8YlAo',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/1c/Mediterranean_Sea_16.61811E_38.99124N.jpg',
   },
   {
     id: 'maison-pic',
@@ -421,6 +468,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Anne-Sophie_Pic.jpg',
     storyAr: 'آن صوفي بيك هي واحدة من عدد قليل من النساء الحائزات على ثلاث نجوم ميشلان في جميع أنحاء العالم. كان والدها وجدها يحملان ثلاث نجوم في نفس العنوان.',
     signatureDishesAr: ['معكرونة بيرلينجوت بالجبنة', 'باس البحر المدخن', 'روز ميلفيه', 'حمامة'],
+    videoId: 'PKbYHHKKbeo',
+    videoChannel: 'Curated',
   },
   {
     id: 'troisgros',
@@ -439,6 +488,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Le_Bois_Sans_Feuilles.png',
     storyAr: 'حصلت عائلة Troisgros على ثلاث نجوم منذ عام 1968، وهي فترة أطول من أي مطعم آخر في العالم. الآن في جيلها الرابع تحت قيادة سيزار تروسجروس.',
     signatureDishesAr: ['سمك السلمون مع حميض', 'لحم البقر مع صلصة النبيذ الاحمر', 'الملفوف مع القواقع', 'حلوى الفراولة'],
+    videoId: 'tApvDxSyG0w',
+    videoChannel: 'Curated',
   },
   {
     id: 'georges-blanc',
@@ -457,6 +508,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Portrait_Georges_Blanc.JPG',
     storyAr: 'ثلاث نجوم ميشلان منذ عام 1981. تقوم عائلة بلانك بالطهي في هذا العنوان منذ عام 1872. وتعد صلصة كريمة دجاج بريس معيارًا قياسيًا.',
     signatureDishesAr: ['دجاج بريس بالكريمة', 'غراتان جراد البحر', 'أرجل الضفدع بالثوم', 'سوفليه الجبن'],
+    videoId: 'PUNNoIHA90o',
+    videoChannel: 'Curated',
   },
   {
     id: 'auberge-vieux-puits',
@@ -474,6 +527,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1992,
     storyAr: 'نزل جيل جوجون ذو الثلاث نجوم في قرية يبلغ عدد سكانها 100 شخص. إن توقيع "البيضة الفاسدة" هو في الواقع بيضة مسلوقة تمامًا في مستحلب الفطر البري.',
     signatureDishesAr: ['بيضة فاسدة', 'باس البحر مع الشمر', 'حمامة مع التين', 'حلوى الشوكولاتة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Peyriac-de-Mer%2C_february_2018_%2806%29.jpg/3840px-Peyriac-de-Mer%2C_february_2018_%2806%29.jpg',
+    videoId: '5cI0vsKSiYY',
+    videoChannel: 'Curated',
   },
   {
     id: 'lameloise',
@@ -491,6 +547,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1921,
     storyAr: 'ثلاث نجوم ميشلان بشكل مستمر تقريبًا منذ عام 1979. المطبخ البورغندي الرائد.',
     signatureDishesAr: ['رافيولي ساق الضفدع', 'دجاج بريس', 'لحم البقر البرغندي', 'رز لحم البقر شاروليه'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Vignobles_bourgogne-fr.svg/1280px-Vignobles_bourgogne-fr.svg.png',
+    videoId: '2dXn-2Vrgws',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -514,6 +573,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/El_Celler_de_Can_Roca_exterior.jpg',
     storyAr: 'ثلاثة إخوة (جوان تطبخ، جوزيب يتولى النبيذ، جوردي يتولى الحلويات)، اثنان من أفضل المطاعم في العالم، ثلاث نجوم ميشلان منذ عام 2009.',
     signatureDishesAr: ['زيتون مكرمل', 'عطر جراد البحر', 'كتف خروف', 'حلوى الضباب بالكاكاو'],
+    videoId: 'oQ7B82SnSDc',
+    videoChannel: 'Curated',
   },
   {
     id: 'arzak',
@@ -533,6 +594,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Arzak_name.jpg',
     storyAr: 'عائلة أرزاق هي السلالة الأكثر تزيينًا في الطبخ الباسكي. ثلاث نجوم ميشلان منذ عام 1989. الابنة إيلينا أرزاك هي الآن رقم واحد في تصويت أفضل طاهية في العالم.',
     signatureDishesAr: ['هاك مع الصلصة الخضراء', 'بيض مع الكمأة', 'خروف رضيع', 'بوستريس ديل باريو'],
+    videoId: 'ENPbBcMxxRk',
+    videoChannel: 'Curated',
   },
   {
     id: 'akelarre',
@@ -551,6 +614,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Francisco_de_Goya_y_Lucientes_-_Witches%27_Sabbath_-_WGA10007.jpg',
     storyAr: 'بيدرو سوبيانا هو الأب الروحي لمطبخ الباسك الجديد. ثلاث نجوم ميشلان منذ عام 2007. غرفة الطعام تطل على خليج بسكاي.',
     signatureDishesAr: ['بيضة بالثوم', 'الحبار في حبرها', 'فطائر فوا جرا مع التفاح', 'حلوى الجزر'],
+    videoId: 'jIeWFTUOj7M',
+    videoChannel: 'Curated',
   },
   {
     id: 'berasategui',
@@ -569,6 +634,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Mart%C3%ADn_Berasategui_%282010%29.jpg',
     storyAr: 'يحمل Martín Berasategui حاليًا 12 نجمة ميشلان في مطاعمه المختلفة، وهو أكبر عدد من النجوم بين أي طاهٍ إسباني على قيد الحياة. السفينة الأم في لاسارتي لديها ثلاثة.',
     signatureDishesAr: ['ثعبان البحر المدخن مع التفاح', 'لفة الحبار', 'حمامة مع كبد الاوز', 'حلوى الشوكولاتة البيضاء'],
+    videoId: 'l24WjnnW18M',
+    videoChannel: 'Curated',
   },
   {
     id: 'diverxo',
@@ -586,6 +653,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2007,
     storyAr: 'يرتدي ديفيد مونيوز الموهوك وشعار XO. ثلاث نجوم ميشلان منذ عام 2013، وهو أصغر طاهٍ إسباني يحصل على هذا التصنيف.',
     signatureDishesAr: ['دماغ الخنزير خافت المبلغ', 'الخلد الاسباني الصيني', 'لحم الخنزير الايبريكو تونكوتسو', 'كاري قنفذ البحر'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Plaza_Mayor_De_Madrid_%28215862629%29_edited.jpeg',
+    videoId: '8LkH-d2cdmA',
+    videoChannel: 'Curated',
   },
   {
     id: 'abac',
@@ -603,6 +673,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2008,
     storyAr: 'أصبح جوردي كروز أصغر طاهٍ إسباني على الإطلاق يحصل على نجمة ميشلان في سن 24 عامًا. ثلاث نجوم في ABaC منذ عام 2018.',
     signatureDishesAr: ['قنفذ البحر الكاتالوني', 'لحم واغيو', 'حمامة بالكرز', 'زيتون سائل'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Pa_amb_tom%C3%A0quet_-_001.jpg',
+    videoId: 'aKZBlmGn8ME',
+    videoChannel: 'Curated',
   },
   {
     id: 'disfrutar-3',
@@ -622,6 +695,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Disfrutar.jpg/1920px-Disfrutar.jpg',
     storyAr: 'يدير ثلاثة طهاة سابقين في شركة ElBulli الوريث الروحي لمختبر Ferran Adrià. أفضل مطعم في العالم لعام 2024. حصل على نجمة ميشلان الثالثة في نفس العام.',
     signatureDishesAr: ['زيتون كروي', 'البيستو متعدد الكروات', 'الكمأة ديم سوم', 'الغابة السوداء'],
+    videoId: 'tAGGfQyOdfQ',
+    videoChannel: 'Curated',
   },
   {
     id: 'quique-dacosta',
@@ -640,6 +715,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Quique_Dacosta.jpg/3840px-Quique_Dacosta.jpg',
     storyAr: 'مطبخ Quique Dacosta المتوسطي ذو الثلاث نجوم في دينيا. أثار طبق الجمبري "ريد دينيا" جدلا وطنيا عندما وصل سعر كل جمبري إلى 200 يورو.',
     signatureDishesAr: ['روبيان دينيا الأحمر', 'الأنشوجة مع الكافيار', 'حبة الخروب', 'حلوى اللوز'],
+    videoId: 'IVQDjL9_o1g',
+    videoChannel: 'Curated',
   },
   {
     id: 'aponiente',
@@ -657,6 +734,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2007,
     storyAr: 'أنجيل ليون هو "الشيف ديل مار" - طاهٍ البحر. مطعمه ذو الثلاث نجوم الواقع في طاحونة مد قديمة يطبخ فقط ما يأتي من المحيط.',
     signatureDishesAr: ['العوالق البحرية', 'النقانق البحرية', 'أرز حبة البحر', 'أنشوجة وملح'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/3/35/Cadiz_aerea.jpg',
+    videoId: 'ucJg91w16Jg',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -680,6 +760,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Osteria_Francescana_IMG_2689_%2823507139000%29.jpg/3840px-Osteria_Francescana_IMG_2689_%2823507139000%29.jpg',
     storyAr: 'أفضل مطعم في العالم لماسيمو بوتورا (2016، 2018). ثلاث نجوم ميشلان منذ عام 2012. "عفوا!" تورتة كانت حادثة مطبخ تحولت إلى حلوى.',
     signatureDishesAr: ['خمسة أعمار من بارميجيانو', 'أُووبس! لقد أسقطت تورتة الليمون', 'خطأ بوليتو', 'الخبز ذهب'],
+    videoId: '_PRMrU0KSUw',
+    videoChannel: 'Curated',
   },
   {
     id: 'le-calandre',
@@ -698,6 +780,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Le_Calandre_IMG_2686_%2823776690246%29.jpg/3840px-Le_Calandre_IMG_2686_%2823776690246%29.jpg',
     storyAr: 'حصل ماسيميليانو ألاجمو على نجمة ميشلان الأولى له في عمر 22 عامًا، وثلاث نجوم في عمر 28 عامًا - وهو الأصغر على الإطلاق في إيطاليا. ثلاث نجوم منذ عام 2003.',
     signatureDishesAr: ['ريزوتو الزعفران مع عرق السوس', 'كروكانتينو من كبد الاوز', 'الحبار المعكرونة السوداء', 'كابتشينو دي سيبيا'],
+    videoId: 'L8Ko5lvfFNg',
+    videoChannel: 'Curated',
   },
   {
     id: 'reale',
@@ -715,6 +799,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2000,
     storyAr: 'حصل نيكو روميتو، الذي علم نفسه بنفسه، على ثلاث نجوم ميشلان في دير تم تحويله في أبروتسو. لقد ترك شهادة في القانون ليتولى إدارة متجر المعجنات العائلي.',
     signatureDishesAr: ['لون بني داكن', 'لحم الضأن في الأعشاب الجبلية', 'كعكة من الخضار', 'كريما'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Abruzzo_in_Italy.svg/1280px-Abruzzo_in_Italy.svg.png',
+    videoId: 'KGRFdsGEvgs',
+    videoChannel: 'Curated',
   },
   {
     id: 'da-vittorio',
@@ -732,6 +819,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1966,
     storyAr: 'مطعم عائلي منذ عام 1966. حصل الأخوان سيريا على نجمة ميشلان الثالثة في عام 2010. معكرونة الباتشيري مع ثلاث طماطم هي نشيد المطبخ.',
     signatureDishesAr: ['مكرونة باتشري مع ثلاث طماطم', 'ريزوتو مع لانجوستين', 'بيف ولنجتون', 'كريب سوزيت'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/The_Upper_City_of_Bergamo._View_from_Via_al_Castello._Italy.jpg/3840px-The_Upper_City_of_Bergamo._View_from_Via_al_Castello._Italy.jpg',
+    videoId: 'sASYfzcdj7U',
+    videoChannel: 'Curated',
   },
   {
     id: 'enrico-bartolini',
@@ -749,6 +839,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2016,
     storyAr: 'إنريكو بارتوليني هو الطاهي الإيطالي الحائز على نجمة ميشلان (12 نجمة في مطاعمه). Mudec في ميلانو يحمل ثلاثة.',
     signatureDishesAr: ['ريزوتو بالزيتون', 'خد لحم العجل مع كريمة البطاطس', 'قاروص البحر', 'رافيولي الكمأة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Milan_-_Scala_-_Facade.jpg/3840px-Milan_-_Scala_-_Facade.jpg',
+    videoId: 'fM5sBaglI5g',
+    videoChannel: 'Curated',
   },
   {
     id: 'la-pergola',
@@ -767,6 +860,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Teatro_della_Pergola%2C_Firenze_10.JPG/1920px-Teatro_della_Pergola%2C_Firenze_10.JPG',
     storyAr: 'حصل هاينز بيك الألماني المولد على ثلاث نجوم ميشلان في روما منذ عام 2005، وهو المطعم الوحيد الحائز على ثلاث نجوم في العاصمة الإيطالية.',
     signatureDishesAr: ['فاجوتيللي مع كاربونارا', 'باس البحر مع الكمأة', 'خروف رضيع', 'حلوى الشوكولاتة'],
+    videoId: 'h-iWAS_jJNg',
+    videoChannel: 'Curated',
   },
   {
     id: 'piazza-duomo',
@@ -784,6 +879,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2003,
     storyAr: 'مطبخ إنريكو كريبا ذو الثلاث نجوم في عاصمة الكمأة في العالم. تتغير السلطة المميزة المكونة من 21 ورقة يوميًا بناءً على محصول الحديقة.',
     signatureDishesAr: ['سلطة 21 ورقة', 'نوط لحم العجل', 'ريزوتو مع الكمأة', 'حديقة نباتية'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PmAlba01.jpg/3840px-PmAlba01.jpg',
+    videoId: '3AAdKl1UYZs',
+    videoChannel: 'Curated',
   },
   {
     id: 'st-hubertus',
@@ -802,6 +900,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/4d/St.Hubert_Ottawa_St.Patrick_RC_Basilica.jpg',
     storyAr: 'ثلاث نجوم في الدولوميت منذ عام 2018. تستخدم فلسفة نوربرت نيديركوفلر "اطبخ الجبل" فقط المكونات من دائرة نصف قطرها 100 كيلومتر.',
     signatureDishesAr: ['الكرز الحامض مع الأعشاب', 'خروف جبلي', 'الجبن التيرولي', 'آيس كريم صنوبر'],
+    videoId: 'CYn85qWWZQM',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -825,6 +925,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Eu_j%C3%A1_comi_duas_vezes_o_ravioli_de_frutos_do_mar_que_%C3%A9_um_prato-assinatura_do_Gordon_Ramsay_at_Royal_Hospital_Road_%2826672111050%29.jpg',
     storyAr: 'حصل فندق جوردون رامزي الرائد في تشيلسي ذو الثلاث نجوم على تصنيفه منذ عام 2001. ويعتبر لحم بقر ويلينجتون ورافيولي جراد البحر من الكلاسيكيات البريطانية التي حازت على النجوم.',
     signatureDishesAr: ['رافيولي جراد البحر', 'حمامة مع كبد الاوز', 'تارت الليمون', 'بيف ولنجتون'],
+    videoId: 'jjlmPNw50dQ',
+    videoChannel: 'Curated',
   },
   {
     id: 'fat-duck',
@@ -844,6 +946,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/The_Fat_Duck%2C_High_Street%2C_Bray_-_geograph.org.uk_-_1271175.jpg',
     storyAr: 'مطعم Heston Blumenthal ذو الثلاث نجوم متعدد الحواس. تأتي دورة "صوت البحر" مزودة بجهاز iPod لتشغيل أصوات الموجات أثناء تناولك لمناظر طبيعية من المأكولات البحرية.',
     signatureDishesAr: ['صوت البحر', 'عصيدة الحلزون', 'فاكهة اللحوم', 'السوشي مثل الآيس كريم'],
+    videoId: 'p4u_d_kI6Mc',
+    videoChannel: 'Curated',
   },
   {
     id: 'waterside-inn',
@@ -862,6 +966,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Waterside_Inn%2C_Bray%2C_Berkshire_%28Nancy%29.JPG',
     storyAr: 'على ضفة نهر التايمز. حاز مطبخ عائلة Roux على ثلاث نجوم منذ عام 1985، وهو الأطول بين أي مطعم في المملكة المتحدة.',
     signatureDishesAr: ['ميداليات جراد البحر', 'حمامة مشوية بريس', 'سوفليه سويسسي', 'تارت أو شوكولاتة'],
+    videoId: 'jOl1mFZxV-w',
+    videoChannel: 'Curated',
   },
   {
     id: 'hide',
@@ -880,6 +986,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/48/H%C3%A9l%C3%A8ne_Darroze.jpg',
     storyAr: 'هيلين داروز هي مصدر إلهام فيلم بيكسار "كوليت راتاتوي". ثلاث نجوم ميشلان في The Connaught منذ عام 2021.',
     signatureDishesAr: ['فوا جرا مع الخوخ', 'حمامة مشوية', 'باس البحر مع الكافيار', 'الحلوى الكبرى'],
+    videoId: '8YjGCpvkLwY',
+    videoChannel: 'Curated',
   },
   {
     id: 'sketch',
@@ -898,6 +1006,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/The_Faceless_Dog_Statue_at_Sketch_Restaurant_%286249317594%29.jpg',
     storyAr: 'تعد غرفة الطعام الوردية واحدة من أكثر الغرف التي تم تصويرها في لندن. ثلاث نجوم ميشلان منذ عام 2019 مع بيير جانيير كطاهي استشاري.',
     signatureDishesAr: ['بداية تذوق من خمسة أجزاء', 'رز باس البحر', 'حمامة بالكاكاو', 'الحلوى الكبرى'],
+    videoId: 'V8z6PqIhxAY',
+    videoChannel: 'Curated',
   },
   {
     id: 'core-clare-smyth',
@@ -916,6 +1026,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Clare_Smyth_in_2018.png',
     storyAr: 'كانت كلير سميث أول طاهية بريطانية تفوز بثلاث نجوم ميشلان. تدربت تحت قيادة جوردون رامزي. طبق "البطاطا والبطارخ" هو توقيعه.',
     signatureDishesAr: ['البطاطا والبطارخ', 'جزرة خروف', 'ترين تفاح براملي', 'الأساسية تيني'],
+    videoId: 'oU2OWPN6f-w',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -939,6 +1051,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/0/06/The_French_Laundry.jpg',
     storyAr: 'سفينة توماس كيلر الرائدة في وادي نابا ذات الثلاث نجوم. بني داخل مبنى مغسلة حجري عام 1900. قائمة التذوق المكونة من تسعة أطباق هي المعيار الذهبي الأمريكي.',
     signatureDishesAr: ['المحار واللؤلؤ', 'بوق السلمون', 'جراد البحر مسلوق بالزبدة', 'القهوة والكعك'],
+    videoId: 'sv3TXMSv6Lw',
+    videoChannel: 'Curated',
   },
   {
     id: 'per-se',
@@ -956,6 +1070,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2004,
     storyAr: 'أخت توماس كيلر في نيويورك لشركة The French Laundry. يطل على سنترال بارك من مركز تايم وارنر. ثلاث نجوم منذ عام 2006.',
     signatureDishesAr: ['المحار واللؤلؤ', 'لحم العجل مشوي', 'باس البحر مع الزبدة البنية', 'فراولة مع مانشيجو'],
+    videoId: 'wYRoF8MSPbk',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Map-Francophone_World.svg/960px-Map-Francophone_World.svg.png',
   },
   {
     id: 'masa',
@@ -973,6 +1090,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2004,
     storyAr: 'تُعد أوماكاسي التي أنشأها ماسا تاكاياما والتي تبلغ تكلفتها 950 دولارًا أمريكيًا للشخص الواحد من بين الأغلى في الولايات المتحدة. ستة وعشرون مقعدا. ثلاث نجوم ميشلان منذ عام 2006.',
     signatureDishesAr: ['تورو الكافيار', 'قنفذ البحر', 'أوتورو نيجيري', 'واغيو سوكيياكي'],
+    videoId: '52qEHbCQq2g',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/d/d4/2009-1227-MasaTakayama.jpg',
   },
   {
     id: 'chefs-table-brooklyn-fare',
@@ -991,6 +1111,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Chef%27s_Table_at_Brooklyn_Fare_at_200_Schermerhorn_Street%2C_Sept_2017.jpg',
     storyAr: 'يدير سيزار راميريز طاولة تتسع لـ 18 مقعدًا داخل سوبر ماركت في بروكلين. ثلاث نجوم ميشلان منذ عام 2012.',
     signatureDishesAr: ['الكافيار مع البطاطس', 'فوا جرا الشعلة', 'لحم واغيو', 'فلوك منقع ساكي'],
+    videoId: 'AVN_iigmI3w',
+    videoChannel: 'Curated',
   },
   {
     id: 'atelier-crenn-3',
@@ -1010,6 +1132,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/92/Outside_Atelier_Crenn.jpg',
     storyAr: 'كانت دومينيك كرين أول طاهية في الولايات المتحدة حاصلة على ثلاث نجوم ميشلان. تصل القائمة مكتوبة على شكل قصيدة.',
     signatureDishesAr: ['كير بريتون', 'Geoduck nasturtium', 'أرز كوشيهيكاري مدخن', 'لو جاردان'],
+    videoId: 'I6FjbeJlqxU',
+    videoChannel: 'Curated',
   },
   {
     id: 'quince',
@@ -1027,6 +1151,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2003,
     storyAr: 'فندق مايكل تاسك الإيطالي من فئة ثلاث نجوم في جاكسون سكوير. يدير المطعم مزرعته العضوية الخاصة.',
     signatureDishesAr: ['ريزوتو البطاطس', 'معكرونة قنفذ البحر', 'لحم ضأن مع الخضار', 'تالياتيلي الكمأة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Image-HotalingPlaceSanFrancisco.jpg',
+    videoId: 'EBoZj-7Hcyo',
+    videoChannel: 'Curated',
   },
   {
     id: 'single-thread',
@@ -1045,6 +1172,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/SingleThread_-_September_2022_-_Sarah_Stierch_01.jpg/3840px-SingleThread_-_September_2022_-_Sarah_Stierch_01.jpg',
     storyAr: 'تدرب كايل كونوتون في مطعم Fat Duck الحائز على ثلاث نجوم ميشلان قبل افتتاح SingleThread مع زوجته كاتينا في مزرعتهما الخاصة. ثلاث نجوم ميشلان منذ عام 2019.',
     signatureDishesAr: ['فتاحة الشاي أوماكاسي', 'طبق حسون موسمي', 'أرز دونابي', 'حلوى ساكي غارقة'],
+    videoId: 'XwhzVJ7nzGE',
+    videoChannel: 'Curated',
   },
   {
     id: 'benu',
@@ -1062,6 +1191,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2010,
     storyAr: 'تدرب كوري لي على يد توماس كيلر، ثم افتتح مطعم Benu في عام 2010. وقد حازت قائمة التذوق المتأثرة بالطابع الكوري على ثلاث نجوم ميشلان في عام 2014.',
     signatureDishesAr: ['حساء زعانف القرش الاصطناعي', 'بيضة السمان عمرها ألف عام', 'جراد البحر المرجاني شياو لونغ باو', 'اليقطين والبرسيمون'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Han-jeongsik.jpg',
+    videoId: 'wMElMTl_v3Q',
+    videoChannel: 'Curated',
   },
   {
     id: 'saison',
@@ -1079,6 +1211,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2009,
     storyAr: 'طهي على نار مفتوحة باستخدام مكونات منطقة الخليج الموسمية. ثلاث نجوم ميشلان 2015.',
     signatureDishesAr: ['قنفذ البحر الحي', 'أذن البحر المشوي', 'البط الجاف', 'حلوى الجوز المطحون'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/San_Francisco_Downtown_Aerial%2C_August_2025.jpg',
+    videoId: 'AYzZdGQYa5w',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -1102,6 +1237,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Noma_entrance.jpg',
     storyAr: 'أعاد رينيه ريدزيبي كتابة ما يمكن أن يكون عليه الطعام الفاخر. المكونات العلفية، معامل التخمير، الإغلاقات الموسمية. أفضل مطعم في العالم خمس مرات.',
     signatureDishesAr: ['دماغ الرنة', 'الطحلب و CEP', 'نخب قنفذ البحر', 'صفار البيض المدخن'],
+    videoId: '6t-vCsKWqLg',
+    videoChannel: 'Curated',
   },
   {
     id: 'geranium',
@@ -1121,6 +1258,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Per_Henrik_Lings_All%C3%A9_03.JPG',
     storyAr: 'فاز Rasmus Kofoed بجائزة Bocuse d\'Or قبل أن يحصل على ثلاث نجوم ميشلان في Geranium. أفضل مطعم في العالم 2022.',
     signatureDishesAr: ['البطلينوس الحلاقة مع البقدونس', 'بطارخ النازلي المملح', 'البط البري', 'جزرة الغابة'],
+    videoId: 'XwhzVJ7nzGE',
+    videoChannel: 'Curated',
   },
   {
     id: 'maaemo',
@@ -1139,6 +1278,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/The_restaurant_Maaemo_in_Oslo%2C_Norway.JPG',
     storyAr: 'يحمل Esben Holmboe Bang نجوم ميشلان الثلاثة الوحيدة في النرويج. تحدد قائمة التذوق المكونة من 12 طبقًا المواسم النرويجية.',
     signatureDishesAr: ['المحار النرويجي مع بلح البحر', 'الرنة مع العرعر', 'قنفذ البحر الكسترد', 'حلوى البتولا النسغ'],
+    videoId: '8zZ4xwgM0YI',
+    videoChannel: 'Curated',
   },
   {
     id: 'frantzen',
@@ -1157,6 +1298,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/AV4A6287_%2825063454437%29.jpg/3840px-AV4A6287_%2825063454437%29.jpg',
     storyAr: 'يحمل بيورن فرانتزين نجوم ميشلان الثلاثة الوحيدين في السويد. كما أنه يدير مطعم FZN في دبي (ثلاث نجوم)، مما يجعله واحدًا من اثنين من الطهاة الحاصلين على ثلاث نجوم في قارتين.',
     signatureDishesAr: ['بطاطا مقلية مقرمشة', 'شار مع الكريمة والبطارخ', 'نخب فرنسي مع الكمأة', 'دورة الجبن'],
+    videoId: '8YjGCpvkLwY',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -1179,6 +1322,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     featured: true,
     storyAr: 'كان تشان يان تاك أول طاهٍ صيني يحصل على ثلاث نجوم ميشلان (2009) في فندق فور سيزونز هونج كونج لونج كينج هين.',
     signatureDishesAr: ['جراد البحر على البخار مع بيض السمان', 'بط مشوي مقرمش', 'لحم الخنزير الحلو والحامض', 'الزلابية على البخار'],
+    videoId: 'Bu7G3KZE5KE',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Flaming_wok_by_KellyB_in_Bountiful%2C_Utah.jpg',
   },
   {
     id: 'sushi-shikon',
@@ -1196,6 +1342,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2012,
     storyAr: 'طاولة تتسع لـ 21 مقعدًا في الطابق العلوي من فندق Mandarin Oriental Landmark. ثلاث نجوم ميشلان منذ عام 2014. سوشي إيدوماي باستخدام الأسماك التي يتم نقلها يوميًا من طوكيو.',
     signatureDishesAr: ['أوتورو نيجيري', 'قنفذ البحر', 'صبا سوشي', 'تاماجو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Mandarin_Oriental_Hotel_Group_logo.svg/960px-Mandarin_Oriental_Hotel_Group_logo.svg.png',
+    videoId: '_PRMrU0KSUw',
+    videoChannel: 'Curated',
   },
   {
     id: 'ottoemezzo-bombana',
@@ -1214,6 +1363,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/en/9/9b/8%C2%BD_Otto_e_Mezzo_logo.png',
     storyAr: 'أمبرتو بومبانا هو ملك الكمأة البيضاء. كان مطعمه في هونج كونج أول مطعم إيطالي خارج إيطاليا يحصل على ثلاث نجوم ميشلان.',
     signatureDishesAr: ['ريزوتو الكمأة البيضاء', 'معكرونة قنفذ البحر', 'نوط واجيو', 'تيراميسو'],
+    videoId: '9fJDONJUlu8',
+    videoChannel: 'Curated',
   },
   {
     id: 'odette',
@@ -1231,6 +1382,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2015,
     storyAr: 'الفرنسية جوليان روير ذات الثلاث نجوم في المعرض الوطني. أعلى قائمة أفضل 50 مطعمًا في آسيا لسنوات. سميت على اسم جدة الشيف.',
     signatureDishesAr: ['قنفذ البحر هوكايدو', 'فطائر فوا جرا مع الراوند', 'حمامة مع الكمأة', 'الطماطم الإرثية'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Singapore.svg/960px-Flag_of_Singapore.svg.png',
+    videoId: 'a_1u2dxoMlw',
+    videoChannel: 'Curated',
   },
   {
     id: 'les-amis',
@@ -1249,6 +1403,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Les_Amis_restaurant%2C_Singapore.jpg/3840px-Les_Amis_restaurant%2C_Singapore.jpg',
     storyAr: 'مفتوح منذ عام 1994. ثلاث نجوم ميشلان منذ عام 2019. المؤسسة الفرنسية الكلاسيكية في سنغافورة.',
     signatureDishesAr: ['معكرونة شعر الملاك الباردة مع الكافيار', 'حمامة مع الكمأة', 'سوفليه', 'ملفي التفاح'],
+    videoId: 'O0bN0vXAH00',
+    videoChannel: 'Curated',
   },
   {
     id: 'la-yeon',
@@ -1267,6 +1423,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/b/be/The_Shilla_Seoul_-_panoramio.jpg',
     storyAr: 'المطبخ الكوري الملكي الذي يقدمه كيم سونج إيل في الطابق الثالث والعشرين من فندق شيلا سيول. ثلاث نجوم ميشلان منذ عام 2017.',
     signatureDishesAr: ['هانجيونج سيك الملكي', 'الكيمتشي المسنين', 'رز لحم البقر', 'مرق الجينسنغ الأحمر'],
+    videoId: 'hCp4HZpFwlk',
+    videoChannel: 'Curated',
   },
   {
     id: 'robuchon-au-dome',
@@ -1285,6 +1443,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Jo%C3%ABl_Robuchon.jpg',
     storyAr: 'موقع جويل روبوشون الاستيطاني في ماكاو في الطابق 43 من فندق جراند لشبونة. ثلاث نجوم ميشلان منذ عام 2008. سقف مقبب مذهل.',
     signatureDishesAr: ['الكافيار مع القرنبيط', 'رافيولي الكمأة السوداء', 'حمامة مع كبد الاوز', 'روبشون البطاطا المهروسة'],
+    videoId: 'M-NHCxhDQ8c',
+    videoChannel: 'Curated',
   },
   {
     id: 'sichuan-moon',
@@ -1303,6 +1463,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Kung-pao-shanghai.jpg',
     storyAr: 'أندريه تشيانج سيتشوانز المرتفعة داخل قصر وين. ثلاث نجوم ميشلان منذ عام 2023.',
     signatureDishesAr: ['مابو التوفو مع الكافيار', 'شعرية دان دان', 'دجاج حار', 'حلوى الكركديه'],
+    videoId: 'OQ2tUWg9pXk',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -1328,6 +1490,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Bj%C3%B6rn_Frantzen.jpg',
     storyAr: 'حصل بيورن فرانتزين على أول ثلاث نجوم ميشلان في دبي في عام 2024. وهو الآن حاصل على ثلاث نجوم في قارتين (ستوكهولم + دبي)، وهو إنجاز نادر للغاية.',
     signatureDishesAr: ['نخب فرنسي مع الكمأة', 'شار المسنين مع الكافيار', 'واغيو سوكيياكي', 'دورة الجبن'],
+    videoId: 'OkOwSlT_NPI',
+    videoChannel: 'Curated',
   },
   {
     id: 'tresind-studio',
@@ -1348,6 +1512,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     featured: true,
     storyAr: 'حصل Trèsind Studio على نجمتي ميشلان (2024) لقائمة التذوق الهندية المكونة من 16 طبقًا. يعيد هيمانشو سايني كتابة الطعام الهندي الفاخر من طعام شارع مومباي إلى الطبخ في البلاط المغولي.',
     signatureDishesAr: ['أوديسا التذوق الهندي', 'أفادي برياني', 'حيدر أباد حليم', 'حلوى البنغالية'],
+    videoId: 'GgSMt9F4n8U',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Burj_Khalifa_2021.jpg/3840px-Burj_Khalifa_2021.jpg',
   },
   {
     id: 'stay-dubai',
@@ -1368,6 +1535,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Yannick_All%C3%A9no-_Goeffroy_de_Boismenu.jpg',
     storyAr: 'موقع يانيك ألينو الحائز على نجمتي ميشلان في ون آند أونلي جزيرة النخلة. خيارات حلال عبر القائمة.',
     signatureDishesAr: ['تذوق الكافيار', 'واجيو مع الكمأة', 'حساء جراد البحر', 'حلوى الشوكولاتة'],
+    videoId: 'GgSMt9F4n8U',
+    videoChannel: 'Curated',
   },
   {
     id: 'tasca-dubai',
@@ -1386,6 +1555,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     isInArabWorld: true,
     storyAr: 'جلب خوسيه أفيليز اللغة البرتغالية الحديثة إلى دبي في فندق ماندارين أورينتال جميرا. نجمة ميشلان منذ عام 2022.',
     signatureDishesAr: ['باس البحر البرتغالي', 'الأخطبوط مع الخبز', 'غراتان باكالهاو', 'تارت الكسترد البرتغالية'],
+    videoId: 'GgSMt9F4n8U',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Detailed_SVG_map_of_the_Lusophone_world.svg/3840px-Detailed_SVG_map_of_the_Lusophone_world.svg.png',
   },
   {
     id: 'avatara-dubai',
@@ -1406,6 +1578,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/Vegetarian_Curry.jpeg',
     storyAr: 'قائمة تذوق هندية نباتية مكونة من 16 طبقًا. نجمة ميشلان واحدة (2024). مطبخ حلال.',
     signatureDishesAr: ['رحلة نباتية مكونة من 16 دورة', 'كاري الفطر البري', 'بهابا البنغالية', 'أرز بالزعفران'],
+    videoId: 'OkOwSlT_NPI',
+    videoChannel: 'Curated',
   },
   {
     id: 'erth-abu-dhabi',
@@ -1427,6 +1601,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Luqaimat.jpg',
     storyAr: 'يعد مطعم إيرث من أوائل المطاعم في العالم التي حصلت على نجمة ميشلان للمطبخ الإماراتي. الحديث يأخذ على المجبوس والهريس واللقيمات. نجمة واحدة 2024.',
     signatureDishesAr: ['منزلق الجمل', 'مجبوس زعفران', 'هريس التمر', 'حلوى حليب الجمل'],
+    videoId: '6gN6QyT_mUk',
+    videoChannel: 'Curated',
   },
   {
     id: 'hakkasan-abu-dhabi',
@@ -1446,6 +1622,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Hakkasan_London_-_3.jpg',
     storyAr: 'حصل موقع أبو ظبي التابع لمجموعة هاكاسان على نجمة ميشلان في عام 2024.',
     signatureDishesAr: ['بط مقرمش مع الكافيار', 'باس البحر التشيلي', 'نفخة لحم البقر الواغيو', 'هاكاسان ديم سوم'],
+    videoId: 'OkOwSlT_NPI',
+    videoChannel: 'Curated',
   },
   {
     id: 'myazu-riyadh',
@@ -1467,6 +1645,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Nourriture_terreste_dans_un_restaurant_libanais%2C_quartie_des_Grottes_%C3%A0_Gen%C3%AAve_%28cropped%29.jpg',
     storyAr: 'حصل Myazu على نجمة ميشلان الأولى في الرياض في الدليل السعودي الافتتاحي لعام 2024. مطبخ حلال مع الواغيو والساشيمي.',
     signatureDishesAr: ['واغيو ساشيمي', 'ميسو سمك القد الأسود', 'قنفذ البحر مع الكمأة', 'سوشي حلال أوماكاسي'],
+    videoId: 'Ds60GFsJTL8',
+    videoChannel: 'Curated',
   },
   {
     id: 'loretto-riyadh',
@@ -1487,6 +1667,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/d/df/Italian_food.JPG',
     storyAr: 'حصلت لوريتو على نجمة ميشلان في دليل السعودية 2024. مطبخ حلال.',
     signatureDishesAr: ['رافيولي الكمأة', 'برانزينو بالخضار', 'نوط واجيو', 'تيراميسو'],
+    videoId: 'sP9DjLDxOew',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -1509,6 +1691,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Portrait_Shot_of_Eleven_Madison_Park_%289284511683%29.jpg',
     storyAr: 'قام دانييل هام بتحويل القائمة بأكملها إلى القائمة النباتية في عام 2021. وحصل على ثلاث نجوم ميشلان من عام 2012 إلى عام 2020، والآن نجمتان بعد تغيير القائمة.',
     signatureDishesAr: ['ريزوتو بذور عباد الشمس', 'رز الجزر', 'كافيار طنبوري', 'باذنجان خير'],
+    videoId: 'PIyKL8YlwwY',
+    videoChannel: 'Curated',
   },
   {
     id: 'le-bernardin',
@@ -1528,6 +1712,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/Interior_of_Le_Bernardin.jpg',
     storyAr: 'معبد إيريك ريبيرت للمأكولات البحرية الحائز على ثلاث نجوم ميشلان. مطعم أنتوني بوردان المفضل في نيويورك.',
     signatureDishesAr: ['نوط التونة مع الكافيار', 'مرق جراد البحر', 'باس البحر مع الكافيار', 'حلوى الشوكولاتة'],
+    videoId: '52qEHbCQq2g',
+    videoChannel: 'Curated',
   },
   {
     id: 'mugaritz-2',
@@ -1546,6 +1732,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Mugaritz_entrance.jpg',
     storyAr: 'عشاء أندوني أدوريز الفني. عشرين دورة، ثلاث ساعات، في مزرعة الباسك المحولة.',
     signatureDishesAr: ['الحجارة الصالحة للأكل', 'سلطة أعشاب الحديقة', 'السمك المملح', 'آيس كريم الكمأة السوداء'],
+    videoId: 'p8R0jLrXKgI',
+    videoChannel: 'Curated',
   },
   {
     id: 'central-2',
@@ -1563,6 +1751,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2008,
     storyAr: 'قائمة تذوق فيرجيليو مارتينيز تحدد بيرو حسب الارتفاع. أفضل مطعم في العالم 2023.',
     signatureDishesAr: ['قائمة الارتفاع', 'ذرة الهضبة', 'درنات الأنديز', 'أسماك الأمازون'],
+    videoId: 'Q7JxFRR0RG0',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Panoramic_view_Andes-Chile.jpg',
   },
   {
     id: 'maido-2',
@@ -1581,6 +1772,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/en/5/59/Maido_%28logo%29.png',
     storyAr: 'ميتسوهارو "ميشا" تسومورا دروس نيكاي المتقدمة. أفضل 50 في العالم أعلى 10.',
     signatureDishesAr: ['نيجيري تيراديتو', 'سيفيتشي المحيط الهادئ', 'كابويا باس البحر', 'أسماك الأمازون'],
+    videoId: 'PB5WP3whg4Y',
+    videoChannel: 'Curated',
   },
   {
     id: 'pujol-2',
@@ -1599,6 +1792,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pujol_Restaurant_%2840553682022%29.jpg/3840px-Pujol_Restaurant_%2840553682022%29.jpg',
     storyAr: 'رفع إنريكي أولفيرا المطبخ المكسيكي إلى المسرح العالمي. صلصة "مولي مادري" تغلي منذ عام 2013.',
     signatureDishesAr: ['الخلد الأم، الخلد الجديد', 'ذرة صغيرة مع نمل تشيكاتانا', 'بيبي في ورق الموز', 'شوربة التورتيلا'],
+    videoId: 'mn7sgmRIpv4',
+    videoChannel: 'Curated',
   },
   {
     id: 'sushi-saito',
@@ -1617,6 +1812,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/AV4A3626_%2827474914309%29.jpg/3840px-AV4A3626_%2827474914309%29.jpg',
     storyAr: 'كان منضدة تاكاشي سايتو ذات السبعة مقاعد تحمل ثلاثة نجوم ميشلان من 2009 إلى 2019 (فقدت بعد أن أزالت ميشلان قوائم برج طوكيو).',
     signatureDishesAr: ['أوتورو نيجيري', 'قنفذ البحر', 'الروبيان السرعوف', 'تاماجو'],
+    videoId: '3uFm2sLNDpY',
+    videoChannel: 'Curated',
   },
   {
     id: 'sukiyabashi-jiro-2',
@@ -1636,6 +1833,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Inside_Sukiyabashi_Jiro_%2811557082593%29.jpg/3840px-Inside_Sukiyabashi_Jiro_%2811557082593%29.jpg',
     storyAr: 'جيرو أونو جعل السوشي وسيلة للتأمل. موضوع الفيلم الوثائقي "Jiro Dreams of Sushi". حصل على ثلاث نجوم حتى عام 2020 (تمت إزالته عندما توقف فتح الحجوزات للجمهور).',
     signatureDishesAr: ['سوشي التونة', 'قنفذ البحر نيجيري', 'تاماجوياكي', 'اناجو'],
+    videoId: 'M-NHCxhDQ8c',
+    videoChannel: 'Curated',
   },
   {
     id: 'den-2',
@@ -1653,6 +1852,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2007,
     storyAr: 'يقع مطعم "Dentucky Fried Chicken" الخاص بـ Zaiyu Hasegawa في قائمة التذوق بجانب كايسيكي التقليدي.',
     signatureDishesAr: ['دجاج دينتاكي مقلي', 'سلطة خضار', 'حديقة موناكا', 'أرز لحم البقر'],
+    videoId: 'BLYUFlIeFnA',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg',
   },
   {
     id: 'don-julio',
@@ -1670,6 +1872,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1999,
     storyAr: 'مؤسسة باريلا الأرجنتينية منذ عام 1999. أفضل 50 شركة في العالم.',
     signatureDishesAr: ['شريحة لحم أوجو دي بيفي', 'تشوريبان', 'نخاع العظم', 'بروفوليتا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Argentinean_asado.jpg',
+    videoId: 'V7Bd_FvuLrA',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -1692,6 +1897,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Quique_Dacosta.jpg/3840px-Quique_Dacosta.jpg',
     storyAr: 'مطبخ Quique Dacosta المتوسطي ذو الثلاث نجوم، المشهور بجمبري Red Denia.',
     signatureDishesAr: ['روبيان دينيا الأحمر', 'الأنشوجة', 'حلوى الخروب', 'ثلج اللوز'],
+    videoId: 'IVQDjL9_o1g',
+    videoChannel: 'Curated',
   },
   {
     id: 'aqua',
@@ -1709,6 +1916,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2000,
     storyAr: 'المطبخ الألماني الحديث ذو الثلاث نجوم الذي يقدمه سفين إلفرفيلد داخل فندق ريتز كارلتون فولفسبورج.',
     signatureDishesAr: ['ثعبان البحر المدخن مع الفجل', 'خد العجل', 'دورة الجبن', 'حلوى الشمندر'],
+    videoId: 'AzkVJHDAxOI',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Wolfsburgskyline2-2.jpg/3840px-Wolfsburgskyline2-2.jpg',
   },
   {
     id: 'vendome',
@@ -1726,6 +1936,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 1998,
     storyAr: 'يواكيم فيسلر الألماني الحديث ذو الثلاث نجوم في فندق Althoff Grandhotel.',
     signatureDishesAr: ['باس البحر مع الكافيار', 'لحم العجل مع الكمأة', 'عربة الجبن', 'حلوى التفاح'],
+    videoId: 'KGRFdsGEvgs',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Neues_Schloss_Bensberg%2C_June_2021.jpg/3840px-Neues_Schloss_Bensberg%2C_June_2021.jpg',
   },
   {
     id: 'cheval-blanc-basel',
@@ -1743,6 +1956,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2007,
     storyAr: 'مطبخ بيتر كنوجل المتوسطي ذو الثلاث نجوم داخل فندق Les Trois Rois على نهر الراين.',
     signatureDishesAr: ['حمامة بريس مع كبد الاوز', 'باس البحر مع bouillabaisse', 'رافيولي الكمأة', 'الشوكولاته'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Basel_-_M%C3%BCnsterpfalz1.jpg/3840px-Basel_-_M%C3%BCnsterpfalz1.jpg',
+    videoId: 'PUNNoIHA90o',
+    videoChannel: 'Curated',
   },
   {
     id: 'schauenstein',
@@ -1760,6 +1976,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2003,
     storyAr: 'مطعم قلعة أندرياس كامينادا ذو الثلاث نجوم في أصغر مدينة في سويسرا (عدد السكان 100 نسمة).',
     signatureDishesAr: ['حديقة نباتية', 'خروف جبال الألب', 'سوفليه الجبن', 'حلوى الأعشاب الجبلية'],
+    videoId: 'CYn85qWWZQM',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Switzerland_%28Pantone%29.svg/960px-Flag_of_Switzerland_%28Pantone%29.svg.png',
   },
   {
     id: 'crissier',
@@ -1778,6 +1997,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Fr%C3%A9dy_Girardet_%281982%29_by_Erling_Mandelmann.jpg',
     storyAr: 'ثلاث نجوم ميشلان بشكل مستمر منذ عام 1975، وهي الأطول في سويسرا. خليفة فريدي جيرارديت.',
     signatureDishesAr: ['فريدي جيرارديت باس البحر', 'دجاج بريس مع موريلز', 'سوفليه', 'تارت الفراولة'],
+    videoId: 'lTYRDFRBJ_w',
+    videoChannel: 'Curated',
   },
   {
     id: 'hof-van-cleve',
@@ -1796,6 +2017,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Hof_van_Cleve.jpg',
     storyAr: 'المطبخ البلجيكي الحديث ذو الثلاث نجوم الذي يقدمه بيتر جوسينز في مزرعة تم تحويلها.',
     signatureDishesAr: ['بحر الشمال الوحيد', 'حلويات لحم العجل', 'لحم واغيو', 'حلوى الشوكولاتة'],
+    videoId: 'tApvDxSyG0w',
+    videoChannel: 'Curated',
   },
   {
     id: 'de-librije',
@@ -1814,6 +2037,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Front_of_De_Librije.jpg/3840px-Front_of_De_Librije.jpg',
     storyAr: 'مطبخ جوني بوير ذو الثلاث نجوم داخل دير من القرن الثامن عشر. المطعم الوحيد ذو الثلاث نجوم في هولندا منذ عقود.',
     signatureDishesAr: ['باس البحر مع الأعشاب البحرية', 'لحم العجل مع موريلس', 'دورة الجبن', 'حلوى الغابة'],
+    videoId: 'mfXg26Ldz8Y',
+    videoChannel: 'Curated',
   },
 
   // ============================================================
@@ -1837,6 +2062,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Jay_Fai%2C_bangkok_20180406.jpg/3840px-Jay_Fai%2C_bangkok_20180406.jpg',
     storyAr: 'جاي فاي تبلغ من العمر 80 عامًا، وترتدي نظارات تزلج لحماية عينيها من دخان المقلاة، وحصلت على نجمة ميشلان لعجة السلطعون بسعر 30 باهت في عام 2018.',
     signatureDishesAr: ['عجة السلطعون', 'الشعرية في حالة سكر', 'توم يم', 'كاري السلطعون'],
+    videoId: '8M7eXk_jJYE',
+    videoChannel: 'Curated',
   },
   {
     id: 'tim-ho-wan-michelin',
@@ -1856,6 +2083,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Tim_Ho_Wan_restaurant_at_Sham_Shui_Po_%2820190126130901%29.jpg/3840px-Tim_Ho_Wan_restaurant_at_Sham_Shui_Po_%2820190126130901%29.jpg',
     storyAr: 'عمل ماك كواي بوي في شركة لونج كينج هين، ثم افتتح متجرًا صغيرًا للديم سوم في مونج كوك. أصبح أرخص مطعم حائز على نجمة ميشلان في العالم.',
     signatureDishesAr: ['كعك لحم الخنزير المشوي', 'كرات اللحم البقري المطهوة على البخار', 'أرز شار سيو', 'فطائر الجمبري'],
+    videoId: 'a_OO76FaWmI',
+    videoChannel: 'Curated',
   },
   {
     id: 'el-califa-michelin',
@@ -1875,6 +2104,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Tacos-al-Pastor.jpg',
     storyAr: 'في عام 2024 أصبح أول منصة تاكو تحصل على نجمة ميشلان. ثلاث لحوم، وأربعة تاكو، و60 عامًا من الممارسة. غرفة الوقوف فقط.',
     signatureDishesAr: ['تاكو آل القس', 'تاكو كوستيلا', 'تاكو جاونيرا', 'تاكو شوليتا'],
+    videoId: 'OAyDjOe7Pug',
+    videoChannel: 'Curated',
   },
   {
     id: 'le-du',
@@ -1892,6 +2123,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2013,
     storyAr: 'المطبخ التايلاندي الحديث للشيف تون يستخدم المكونات التايلاندية فقط. أفضل 50 آسيويًا في العالم.',
     signatureDishesAr: ['روبيان نهري مع معجون الفلفل الحار', 'إعادة اختراع خاو سوي', 'بطن لحم الخنزير مع معجون الروبيان', 'جوز الهند الأرز اللزج'],
+    videoId: 'TppoBOzfO7w',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/4Y1A1159_Bangkok_%2833536795515%29.jpg',
   },
   {
     id: 'suhring',
@@ -1910,6 +2144,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Bread_rolls_at_a_bakery.jpg',
     storyAr: 'التوأم الألماني يديران مطبخًا ألمانيًا حديثًا في بانكوك. نجمتان ميشلان 2019.',
     signatureDishesAr: ['ثعبان البحر المدخن مع البطاطس', 'لحم العجل مع موريلس', 'دورة الجبن', 'حلوى الغابة السوداء'],
+    videoId: '6vKaUq3epXg',
+    videoChannel: 'Curated',
   },
   {
     id: 'ultraviolet-paul-pairet',
@@ -1927,6 +2163,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     yearFounded: 2012,
     storyAr: 'الموقع السري لـ Paul Pairet الذي يتسع لـ 10 مقاعد مع انغماس حسي كامل. ثلاث نجوم ميشلان لعام 2017. الصوت والفيديو والرائحة والطعام كلها منسقة.',
     signatureDishesAr: ['خبز حساء الكمأة المحروق', 'فطائر فوا جرا لا يمكن تركها', 'باس البحر للأشعة فوق البنفسجية', 'حلوى فطيرة التفاح'],
+    videoId: 'CYn85qWWZQM',
+    videoChannel: 'Curated',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg',
   },
   {
     id: 'taian-shanghai',
@@ -1945,6 +2184,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Collage_Chinese_Cuisine_by_User-EME.png/3840px-Collage_Chinese_Cuisine_by_User-EME.png',
     storyAr: 'مطبخ ستيفان ستيلر الحديث ذو الثلاث نجوم يمزج بين الدقة الألمانية والمكونات الصينية.',
     signatureDishesAr: ['تذوق الكافيار', 'واجيو مع الخضار الصينية', 'رافيولي الكمأة', 'حديقة الحلوى'],
+    videoId: 'Bu7G3KZE5KE',
+    videoChannel: 'Curated',
   },
   {
     id: 'a-noor-paris',
@@ -1963,6 +2204,8 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Jacques_Lameloise%2C_escab%C3%A8che_d%27%C3%A9crevisses_sur_gaspacho_d%27asperge_et_cresson.jpg',
     storyAr: 'المطبخ الفرنسي الحديث لغيوم سانشيز. نجمة ميشلان واحدة 2021.',
     signatureDishesAr: ['الطماطم مع الأعشاب', 'حمامة بالكاكاو', 'بطة العمر', 'حلوى الشوكولاتة'],
+    videoId: 'lTYRDFRBJ_w',
+    videoChannel: 'Curated',
   },
   {
     id: 'cinnamon-club',
@@ -1981,6 +2224,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     isHalalFriendly: true,
     storyAr: 'مؤسسة فيفيك سينغ الهندية الحديثة الموجودة في مكتبة وستمنستر القديمة. خيارات حلال عبر القائمة.',
     signatureDishesAr: ['برياني لحم ضأن', 'روبيان تندوري', 'حيدر أباد حليم', 'حلوى الأرز بالزعفران'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/67/London_Skyline_%28125508655%29.jpeg',
+    videoId: 'pnSibVdmkVE',
+    videoChannel: 'Curated',
   },
   {
     id: 'gymkhana-london',
@@ -1999,6 +2245,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     isHalalFriendly: true,
     storyAr: 'حصلت Gymkhana على نجمة ميشلان الثانية في عام 2024. مؤسسة مايفير الهندية. مطبخ حلال.',
     signatureDishesAr: ['حيدر أباد برياني', 'تندوري الحجل', 'الماعز ميثي كيما', 'زعفران كولفي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Grosvenor_Square_entrance.jpg',
+    videoId: 'pnSibVdmkVE',
+    videoChannel: 'Curated',
   },
   {
     id: 'tamarind-london',
@@ -2017,6 +2266,9 @@ export const MICHELIN_RESTAURANTS: MichelinRestaurant[] = [
     isHalalFriendly: true,
     storyAr: 'أول مطعم هندي في المملكة المتحدة يحصل على نجمة ميشلان (2002). خيارات حلال.',
     signatureDishesAr: ['الدال الأسود', 'سلمون تندوري', 'برياني لحم ضأن', 'حلوى الأرز بالزعفران'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Grosvenor_Square_entrance.jpg',
+    videoId: '8YjGCpvkLwY',
+    videoChannel: 'Curated',
   },
 ];
 

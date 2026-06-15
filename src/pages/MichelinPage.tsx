@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ChefHat, MapPin, Sparkles, Star, Utensils } from 'lucide-react';
+import { ArrowUpRight, ChefHat, MapPin, Play, Sparkles, Star, Utensils } from 'lucide-react';
 import { useTranslation } from '../i18n';
 import {
   MICHELIN_REGIONS,
@@ -25,6 +25,60 @@ function StarsBadge({ stars }: { stars: 1 | 2 | 3 }) {
   );
 }
 
+/**
+ * Hero tile that shows the restaurant image. If a videoId is present and
+ * the user clicks play, swap in the YouTube embed.
+ */
+function VideoOrImage({ videoId, image, alt }: { videoId?: string; image?: string; alt: string }) {
+  const [playing, setPlaying] = useState(false);
+
+  if (playing && videoId) {
+    return (
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+        title={alt}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+        className="absolute inset-0 h-full w-full"
+      />
+    );
+  }
+
+  return (
+    <>
+      {image ? (
+        <img
+          src={image}
+          alt={alt}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      ) : (
+        <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-800 via-ink-900 to-terracotta-900">
+          <ChefHat className="h-12 w-12 text-cream-50/30" strokeWidth={1} />
+        </div>
+      )}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
+      {videoId && (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          aria-label={`Play ${alt}`}
+          className="absolute inset-0 flex items-center justify-center"
+        >
+          <span className="grid h-14 w-14 place-items-center rounded-full bg-cream-50/95 text-ink-900 shadow-2xl transition-transform group-hover:scale-110 md:h-16 md:w-16">
+            <Play className="h-6 w-6 translate-x-0.5 fill-current md:h-7 md:w-7" strokeWidth={1.5} />
+          </span>
+        </button>
+      )}
+    </>
+  );
+}
+
 function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
   const { t, pl, language } = useTranslation();
   const isAr = language === 'ar';
@@ -42,25 +96,10 @@ function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
       className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
     >
       <div className="relative aspect-video overflow-hidden bg-ink-900">
-        {restaurant.image ? (
-          <img
-            src={restaurant.image}
-            alt={name}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).style.display = 'none';
-            }}
-          />
-        ) : (
-          <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-800 via-ink-900 to-terracotta-900">
-            <ChefHat className="h-12 w-12 text-cream-50/30" strokeWidth={1} />
-          </div>
-        )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
+        <VideoOrImage videoId={restaurant.videoId} image={restaurant.image} alt={name} />
 
         {/* Stars badge */}
-        <span className="absolute start-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-cream-50 backdrop-blur">
+        <span className="pointer-events-none absolute start-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-cream-50 backdrop-blur">
           <StarsBadge stars={restaurant.stars} />
           {restaurant.starsSince && (
             <span className="text-cream-100/70">{restaurant.starsSince}</span>
@@ -68,7 +107,7 @@ function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
         </span>
 
         {/* Halal / Arab world badges */}
-        <div className="absolute end-3 top-3 flex flex-col items-end gap-1.5">
+        <div className="pointer-events-none absolute end-3 top-3 flex flex-col items-end gap-1.5">
           {restaurant.isHalalFriendly && (
             <span className="rounded-full bg-sage-500 px-2.5 py-1 text-[10px] font-semibold tracking-tight text-cream-50 backdrop-blur">
               {t('michelin.halalBadge')}

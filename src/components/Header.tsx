@@ -52,6 +52,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/academy', key: 'nav.academy', icon: GraduationCap },
   { to: '/chefs', key: 'nav.chefs', icon: ChefHat },
   { to: '/markets', key: 'nav.markets', icon: MapPin },
+  { to: '/michelin', key: 'nav.michelin', icon: Star },
   { to: '/videos', key: 'nav.videos', icon: Tv },
   { to: '/magazines', key: 'nav.magazines', icon: Newspaper },
   { to: '/fitness', key: 'nav.fitness', icon: Activity },
@@ -75,7 +76,7 @@ const MOBILE_GROUPS: { titleKey: string; itemKeys: string[] }[] = [
   },
   {
     titleKey: 'nav.curated',
-    itemKeys: ['nav.arabCuisine', 'nav.drinks', 'nav.sauces', 'nav.shorts', 'nav.films', 'nav.academy', 'nav.chefs', 'nav.markets'],
+    itemKeys: ['nav.arabCuisine', 'nav.drinks', 'nav.sauces', 'nav.shorts', 'nav.films', 'nav.academy', 'nav.chefs', 'nav.markets', 'nav.michelin'],
   },
   {
     titleKey: 'nav.more',
