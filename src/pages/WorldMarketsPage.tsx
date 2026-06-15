@@ -60,7 +60,13 @@ function useHeroStats() {
   ];
 }
 
-function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
+/**
+ * Video tile with a fallback image. If `fallbackImage` is provided, it is
+ * used as the thumbnail; the YouTube embed only loads when the user clicks
+ * play. This way the page looks correct even when a video ID is missing or
+ * dead, because we have a real Wikipedia image to show.
+ */
+function YoutubeLite({ videoId, title, fallbackImage }: { videoId: string; title: string; fallbackImage?: string }) {
   const [playing, setPlaying] = useState(false);
   if (playing) {
     return (
@@ -74,6 +80,11 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
       />
     );
   }
+
+  // Prefer the explicit fallback image (Wikipedia) when available; fall back
+  // to the YouTube thumbnail otherwise.
+  const primarySrc = fallbackImage ?? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
   return (
     <button
       type="button"
@@ -82,8 +93,11 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
       className="group absolute inset-0 flex items-center justify-center overflow-hidden bg-ink-900"
     >
       <img
-        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        src={primarySrc}
         onLoad={(e) => {
+          // When using YouTube thumbs, fall back to lower-res variants if the
+          // 120x90 placeholder loaded.
+          if (fallbackImage) return;
           const t = e.currentTarget;
           if (t.naturalWidth > 120) return;
           if (t.src.includes('maxresdefault')) {
@@ -94,6 +108,11 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
         }}
         onError={(e) => {
           const t = e.currentTarget;
+          // If the Wikipedia image fails, drop to YouTube as a second chance.
+          if (fallbackImage && !t.src.includes('youtube.com')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            return;
+          }
           if (t.src.includes('maxresdefault')) {
             t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
           } else if (t.src.includes('sddefault')) {
@@ -149,7 +168,14 @@ function CityCard({ city }: { city: FoodCity }) {
   return (
     <article id={`city-${city.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
-        {activeVideo && <YoutubeLite videoId={activeVideo.videoId} title={activeVideo.title} />}
+        {activeVideo && (
+          <YoutubeLite
+            key={activeVideo.videoId}
+            videoId={activeVideo.videoId}
+            title={activeVideo.title}
+            fallbackImage={city.image}
+          />
+        )}
         <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
           {t('markets.cityVideosLabel', { n: city.videos.length })}
         </span>
@@ -205,7 +231,7 @@ function RestaurantCard({ restaurant }: { restaurant: FamousRestaurant }) {
   return (
     <article id={`r-${restaurant.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
-        <YoutubeLite videoId={restaurant.videoId} title={restaurant.name} />
+        <YoutubeLite videoId={restaurant.videoId} title={restaurant.name} fallbackImage={restaurant.image} />
         {restaurant.yearFounded && (
           <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
             <Clock className="h-3 w-3" /> {t('markets.restaurantSince')} {restaurant.yearFounded}
@@ -377,7 +403,7 @@ export default function WorldMarketsPage() {
               <div className="grid grid-cols-2 gap-3">
                 {FEATURED_CITIES.slice(0, 4).map((c, i) => {
                   const firstVideo = c.videos[0];
-                  if (!firstVideo) return null;
+                  const src = c.image ?? (firstVideo ? `https://img.youtube.com/vi/${firstVideo.videoId}/maxresdefault.jpg` : '');
                   return (
                     <a
                       key={c.id}
@@ -386,12 +412,10 @@ export default function WorldMarketsPage() {
                       style={{ animationDelay: `${i * 60}ms` }}
                     >
                       <img
-                        src={`https://img.youtube.com/vi/${firstVideo.videoId}/maxresdefault.jpg`}
+                        src={src}
                         onError={(e) => {
                           const t = e.currentTarget;
-                          if (t.src.includes('maxresdefault')) {
-                            t.src = `https://img.youtube.com/vi/${firstVideo.videoId}/sddefault.jpg`;
-                          } else if (t.src.includes('sddefault')) {
+                          if (firstVideo && !t.src.includes('youtube.com')) {
                             t.src = `https://img.youtube.com/vi/${firstVideo.videoId}/hqdefault.jpg`;
                           }
                         }}

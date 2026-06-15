@@ -24,6 +24,7 @@ export interface FoodCity {
   country: string;
   countryAr: string;
   region: CityRegion;
+  image?: string;
   blurb: string;
   blurbAr?: string;
   signatureDishes: string[];
@@ -60,6 +61,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'فول، كشري، حواوشي، ملوخية. مطبخ وادي النيل الساعة الواحدة صباحًا ما زال يعمل بقوة.',
     signatureDishesAr: ['كشري', 'مدمس كامل', 'حواوشي', 'ملوخية', 'محشي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Cairo_Opera_House%2C_Al_Hurriyah_Park_and_the_Nile_river_%2814797782354%29.jpg/3840px-Cairo_Opera_House%2C_Al_Hurriyah_Park_and_the_Nile_river_%2814797782354%29.jpg',
   },
   {
     id: 'beirut',
@@ -79,6 +81,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'طاولات المزة التي لا تنتهي أبدًا. يقدم فلافل صهيون ولو شيف المناقيش المثالية عند شروق الشمس.',
     signatureDishesAr: ['المزة', 'مناقيش', 'فلافل', 'تبولة', 'كبة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Beyrouth_vue_a%C3%A9rienne.jpg',
   },
   {
     id: 'damascus',
@@ -97,6 +100,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'يقدم الحمص دافئًا، كبة نية، فتوش غني بالسماق المجفف. أقدم مطبخ مطبوخ باستمرار على وجه الأرض.',
     signatureDishesAr: ['حمص', 'فتوش', 'كبة', 'يبراق', 'الشيخ المحشي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Damascus%2C_Syria%2C_Panoramic_view_of_Damascus.jpg/3840px-Damascus%2C_Syria%2C_Panoramic_view_of_Damascus.jpg',
   },
   {
     id: 'istanbul',
@@ -116,6 +120,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'كباب، سميت، حلقوم، شطائر السمك على مضيق البوسفور. قارتان، واحدة من أعظم مدن الطعام في العالم.',
     signatureDishesAr: ['اسكندر', 'لحماكون', 'بيدا', 'مانتي', 'بقلاوة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg',
   },
   {
     id: 'amman',
@@ -134,6 +139,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'حمص هاشم الساعة 4 صباحا، كنافة حبيبة، منسف سفرة. عاصمة ترتدي مطبخها على جعبتها.',
     signatureDishesAr: ['منسف', 'حمص', 'كنافة', 'مقلوبة', 'شاورما'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/24/New_Abdali_2024.png',
   },
   {
     id: 'marrakech',
@@ -153,6 +159,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'الطاجين يغلي في الطين، والشاي بالنعناع يُسكب من ارتفاع متر واحد، وجامع الفنا متوقف عند غروب الشمس.',
     signatureDishesAr: ['طاجين', 'الكسكس', 'باستيلا', 'حريرة', 'مشوي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Pavillon_Menarag%C3%A4rten.jpg',
   },
   {
     id: 'dubai',
@@ -171,6 +178,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'مفترق طرق عالمي على طبق من ذهب: المشرقي، الإماراتي، الهندي، الفلبيني، جميعهم حافظوا على مستويات عالية.',
     signatureDishesAr: ['مجبوس', 'هريس', 'اللقيمات', 'الكرك', 'شاورما'],
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Burj_Khalifa_2021.jpg/3840px-Burj_Khalifa_2021.jpg',
   },
   {
     id: 'doha',
@@ -189,6 +197,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'محلات العطور في سوق واقف، والأسماك على الكورنيش، والطبخ القطري الحديث في إدام والمرجان.',
     signatureDishesAr: ['مجبوس', 'مضروبة', 'هريس', 'ثريد', 'اللقيمات'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/26/The_Pearl_Marina_in_Nov_2013.jpg',
   },
 
   // ============ EUROPE ============
@@ -210,6 +219,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'بولانجيري من الفجر. الحانات الصغيرة في الغداء. الحانات في منتصف الليل. مخطط للمطعم الحديث.',
     signatureDishesAr: ['كرواسون', 'شريحة لحم فريتس', 'كاسوليت', 'بوف بورغينيون', 'تارت تاتن'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/3840px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg',
   },
   {
     id: 'lyon',
@@ -228,6 +238,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'بوشون، سلطة ليونيز، كوينيل. مسقط رأس بول بوكوز وعاصمة فن الطهو في فرنسا.',
     signatureDishesAr: ['كوينيل', 'سلطة ليونيز', 'أندويليت', 'تارت أو حلوى الشيكولاتة', 'سيرفيل دي كانوت'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Lyon-part-dieu-2023.jpg/3840px-Lyon-part-dieu-2023.jpg',
   },
   {
     id: 'rome',
@@ -247,6 +258,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'كاسيو إي بيبي، كاربونارا، أماتريسيانا. أربع معكرونات بسيطة تحدد المدينة.',
     signatureDishesAr: ['كاسيو إي بيبي', 'كاربونارا', 'أماتريسيانا', 'سالتيمبوككا', 'ماريتوزو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg',
   },
   {
     id: 'naples',
@@ -266,6 +278,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'ولدت هنا بيتزا مارجريتا. كابريزي صوفيا لورين، sfogliatelle، راجو نابوليتانو.',
     signatureDishesAr: ['بيتزا مارجريتا', 'سفوجلياتيلا', 'راجو نابوليتانو', 'معكرونة ألا جينوفيز', 'بابا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Napoli_-_Maschio_Angioino_-_202209302342_3.jpg/3840px-Napoli_-_Maschio_Angioino_-_202209302342_3.jpg',
   },
   {
     id: 'madrid',
@@ -284,6 +297,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'تاباس في الساعة 11 مساءً، بوكاديلو دي كالاماريس في الساعة 1 صباحًا، تشوروس كون شوكولاتة عند شروق الشمس.',
     signatureDishesAr: ['تاباس', 'كوكيدو مادريلينيو', 'بوكاديلو دي كالاماريس', 'تشوروس كون شوكولاتة', 'باتاتاس برافاس'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Plaza_Mayor_De_Madrid_%28215862629%29_edited.jpeg',
   },
   {
     id: 'lisbon',
@@ -302,6 +316,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'باكالهاو، باستيس دي ناتا، السردين على الشواية. مدينة تفوح منها رائحة المحيط الأطلسي عند الظهيرة.',
     signatureDishesAr: ['باستيل دي ناتا', 'باكالهاو براس', 'ساردينهاس أساداس', 'بيفانا', 'كالدو الأخضر'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg',
   },
   {
     id: 'london',
@@ -320,6 +335,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'دجاج تيكا ماسالا في بريك لين، وسمك ورقائق البطاطس في بوبيز، وكعك اللحم البقري المملح في بيجيل بيك.',
     signatureDishesAr: ['السمك وشرائح البطاطس المقلية', 'دجاج تكا ماسالا', 'مشوي يوم الأحد', 'خبز لحم البقر المملح', 'فطيرة الكورنيش'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/67/London_Skyline_%28125508655%29.jpeg',
   },
   {
     id: 'copenhagen',
@@ -338,6 +354,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'نوما. المطبخ الاسكندنافي الجديد. Smørrebrød والهوت دوج وسوق Torvehallerne.',
     signatureDishesAr: ['سموربرود', 'فريكادلر', 'ستيجت فلاسك', 'نقانق مع بصل مقرمش', 'إيبلسكيفر'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/2018_-_Christiansborg_from_the_Marble_Bridge.jpg/3840px-2018_-_Christiansborg_from_the_Marble_Bridge.jpg',
   },
 
   // ============ ASIA ============
@@ -359,6 +376,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'المدينة الأكثر حصولاً على نجمة ميشلان على وجه الأرض. سوكياباشي جيرو، ريوجين، دين، بالإضافة إلى 200 متجر رامين في مبنى واحد.',
     signatureDishesAr: ['سوشي', 'رامين', 'تمبورا', 'تونكاتسو', 'ياكيتوري'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg',
   },
   {
     id: 'osaka',
@@ -377,6 +395,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'كويدور، "تناول الطعام حتى تسقط." تاكوياكي، أوكونوميياكي، كوشيكاتسو. النظير الغذائي الأول لبروتوكول كيوتو المكرر.',
     signatureDishesAr: ['تاكوياكي', 'أوكونومياكي', 'كوشيكاتسو', 'تاكو ساشيمي', 'نيجياكي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Osaka_Castle_02bs3200.jpg/3840px-Osaka_Castle_02bs3200.jpg',
   },
   {
     id: 'bangkok',
@@ -396,6 +415,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'نودلز القارب، باد تاي، أرز مانجو. تقع عجة السلطعون الحائزة على نجمة ميشلان من جاي فاي على زاوية الشارع.',
     signatureDishesAr: ['الوسادة التايلاندية', 'نودلز القارب', 'أرز مانجو لزج', 'توم يم', 'خاو سوي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/4Y1A1159_Bangkok_%2833536795515%29.jpg',
   },
   {
     id: 'hanoi',
@@ -415,6 +435,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'فو على الإفطار، بون تشا على الغداء، قهوة البيض عند غروب الشمس. رأس المال الغذائي المشي.',
     signatureDishesAr: ['فو', 'بون تشا', 'بانه مي', 'تشا كاليفورنيا', 'قهوة البيض'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Hanoi_skyline_with_Ba_Vi_Mountain.jpg',
   },
   {
     id: 'singapore',
@@ -433,6 +454,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'مراكز هوكر مع نجوم ميشلان. أرز دجاج، سلطعون بالفلفل الحار، لاكسا، توست كايا.',
     signatureDishesAr: ['أرز دجاج هاينانيز', 'سلطعون الفلفل الحار', 'لاكسا', 'نخب كايا', 'شار كواي تيو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Singapore.svg/960px-Flag_of_Singapore.svg.png',
   },
   {
     id: 'hong-kong',
@@ -451,6 +473,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'عربات الديم سوم عند الفجر، معكرونة فطيرة باللحم في منتصف الليل، أوزة مشوية طوال اليوم.',
     signatureDishesAr: ['مبلغ خافت', 'نودلز وانتون', 'أوزة مشوية', 'شار سيو', 'تارت البيض'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/960px-Flag_of_Hong_Kong.svg.png',
   },
   {
     id: 'seoul',
@@ -469,6 +492,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'الشواء الكوري حتى منتصف الليل، ثم الكيمباب والتيوكبوكي في طريق العودة إلى المنزل. رأس مال الأكل على مدار 24 ساعة.',
     signatureDishesAr: ['شواء كوري', 'بيبيمباب', 'كيمتشي جيجيجاي', 'تتوكبوككي', 'ناينغميون'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/%EC%A4%91%ED%99%94%EC%A0%84%EC%9D%98_%EB%82%AE.jpg/3840px-%EC%A4%91%ED%99%94%EC%A0%84%EC%9D%98_%EB%82%AE.jpg',
   },
   {
     id: 'mumbai',
@@ -487,6 +511,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'فادا باف، باف باجي، بيل بوري. عاصمة طعام الشوارع في الهند، حيث يتم تقديمها في 100 كشك في كل مبنى.',
     signatureDishesAr: ['فادا باف', 'باف باجي', 'بهيل بوري', 'ميسال باف', 'ساندويتش بومباي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Mumbai_Bandra-Worli_Sea_Link.jpg',
   },
 
   // ============ AMERICAS ============
@@ -508,6 +533,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'بيتزا، كعك، بسطرمة، عربة دجاج حلال فوق الأرز. كل مطبخ على وجه الأرض، في جزيرة واحدة.',
     signatureDishesAr: ['بيتزا على طريقة نيويورك', 'باجل مع لوكس', 'ساندويتش بسطرمة', 'الدجاج فوق الأرز', 'تشيز كيك'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/3840px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg',
   },
   {
     id: 'los-angeles',
@@ -526,6 +552,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'تاكوس آل باستور، شواء كوري، على طراز الحيوانات الداخلية والخارجية. مدينة الطعام الأكثر تنوعًا في أمريكا.',
     signatureDishesAr: ['سندويشات التاكو آل القس', 'شواء كوري', 'تراجع الفرنسية', 'برجر على الطريقة الحيوانية', 'كارني أسادا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hollywood_Sign_%28Zuschnitt%29.jpg/3840px-Hollywood_Sign_%28Zuschnitt%29.jpg',
   },
   {
     id: 'mexico-city',
@@ -545,6 +572,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'التاكو آل القس في كل زاوية، الخلد في بوجول، سكويتس في محطة المترو. CDMX هو مطبخ عملاق.',
     signatureDishesAr: ['سندويشات التاكو آل القس', 'الخلد', 'إسكيتس', 'تلاكويو', 'تاماليس'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg/3840px-Sobrevuelos_CDMX_HJ2A4913_%2825514321687%29_%28cropped%29.jpg',
   },
   {
     id: 'lima',
@@ -564,6 +592,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'سيفيتشي على المحيط الهادئ، لومو سالتادو من المطبخ الصيني البيروفي، مايدو والوسطى يتصدران القوائم العالمية.',
     signatureDishesAr: ['سيفيتشي', 'لومو سالتادو', 'آجي دي جالينا', 'أنتيكوتشوس', 'سبب'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Bas%C3%ADlica_Catedral_Metropolitana_de_Lima_%28cropped%29.jpg',
   },
   {
     id: 'buenos-aires',
@@ -582,6 +611,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'باريلا بعد منتصف الليل، امباناداس في الغداء، دولسي دي ليتشي على كل شيء. عاصمة الشواء في أمريكا الجنوبية.',
     signatureDishesAr: ['أسادو', 'امباناداس', 'تشوريبان', 'ميلانيسا', 'دولسي دي ليتشي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/1e/Puerto_Madero%2C_Buenos_Aires_%2840689219792%29_%28cropped%29.jpg',
   },
 
   // ============ AFRICA ============
@@ -602,6 +632,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'أقدم من مراكش، مطابخ أعمق. بسطيلة مخبوزة بالسكاب، شوربة الحريرة، المروزية بالعسل.',
     signatureDishesAr: ['باستيلا', 'حريرة', 'طاجين بيل الحوت', 'مروزية', 'خليا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Bab_Bou_Jeloud_Frame_Minaret_Fes_Nov25_A7CR_09127-8_HDR3.jpg/3840px-Bab_Bou_Jeloud_Frame_Minaret_Fes_Nov25_A7CR_09127-8_HDR3.jpg',
   },
   {
     id: 'tunis',
@@ -620,6 +651,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'بريك، هريسة، كسكس مع سبع خضار. شمال أفريقيا بتوقيت فرنسي.',
     signatureDishesAr: ['بريك', 'الكسكس', 'كافتيجي', 'لبلابي', 'بابلوني'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Minaret_et_patio_de_la_mosqu%C3%A9e_Zitouna_au_centre_de_la_M%C3%A9dina_de_Tunis.jpg/3840px-Minaret_et_patio_de_la_mosqu%C3%A9e_Zitouna_au_centre_de_la_M%C3%A9dina_de_Tunis.jpg',
   },
   {
     id: 'lagos',
@@ -638,6 +670,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'مناظرات أرز الجولوف، الصويا في منتصف الليل، حساء إيجوسي، حساء الفلفل. المطبخ الضخم في غرب أفريقيا.',
     signatureDishesAr: ['أرز الجولوف', 'سويا', 'حساء ايجوسي', 'حساء الفلفل', 'أكارا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Tafa_Balewa_Square_%28Onikan%29_in_Lagos._Nigeria.jpg',
   },
   {
     id: 'addis-ababa',
@@ -656,6 +689,7 @@ export const FOOD_CITIES: FoodCity[] = [
     ],
     blurbAr: 'إنجيرا مع اثني عشر طبقًا من اليخنة على طبق واحد، ووجبات خفيفة، وكيتفو، واحتفالات القهوة التي تستغرق ساعة.',
     signatureDishesAr: ['إنجيرا', 'دورو وات', 'تيبس', 'كيتفو', 'شيرو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Addis_in_night.jpg/3840px-Addis_in_night.jpg',
   },
 ];
 

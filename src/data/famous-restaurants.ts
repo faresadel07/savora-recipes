@@ -21,6 +21,7 @@ export interface FamousRestaurant {
   yearFounded?: number;
   cuisine: string;
   cuisineAr: string;
+  image?: string;
   videoId: string;
   channel: string;
   signatureDishes: string[];
@@ -60,6 +61,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'أعاد رينيه ريدزيبي كتابة ما يمكن أن يكون عليه الطعام الفاخر. مكونات علفية وغرف تخمير ومطبخ يغلق سنويًا لدراسة مطبخ جديد. تم التصويت له كأفضل مطعم في العالم خمس مرات.',
     signatureDishesAr: ['دماغ الرنة', 'الطحلب و CEP', 'نخب قنفذ البحر', 'نملة خشب العسل', 'صفار البيض المدخن'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Noma_entrance.jpg',
   },
   {
     id: 'mirazur',
@@ -80,6 +82,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 3,
     storyAr: 'يقع فندق Mauro Colagreco الحائز على ثلاث نجوم ميشلان على الحدود الفرنسية الإيطالية، مع قائمة طعام مصممة حسب الدورات القمرية ومنتجات من حدائقه الخاصة. تم التصويت له كأفضل مطعم في العالم لعام 2019.',
     signatureDishesAr: ['تورتة زهور الحديقة', 'بيض البحر بالليمون', 'حمامة مع وردة', 'آيس كريم زيت الزيتون'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Menton_february_13.jpg',
   },
   {
     id: 'el-celler-de-can-roca',
@@ -101,6 +104,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'ثلاثة إخوة روكا، قائمة واحدة، لقبان لأفضل لقب في العالم. تطبخ "جوان"، وينسق "جوسيب" النبيذ، ويتعامل "جوردي" مع الحلويات التي تعيد كتابة النموذج.',
     signatureDishesAr: ['زيتون مكرمل', 'سمك السلمون مع الحمضيات', 'ضباب الكاكاو', 'حديقة البحر الأبيض المتوسط'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/El_Celler_de_Can_Roca_exterior.jpg',
   },
   {
     id: 'pujol',
@@ -122,6 +126,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'قام إنريكي أولفيرا بوجول برفع المطبخ المكسيكي إلى المسرح العالمي. كانت "مادة الخلد" المميزة تغلي منذ عام 2013، وتزداد عمقًا كل يوم.',
     signatureDishesAr: ['الخلد الأم، الخلد الجديد', 'ذرة صغيرة مع نمل تشيكاتانا', 'بيبي ملفوفة في ورق الموز', 'شوربة التورتيلا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pujol_Restaurant_%2840553682022%29.jpg/3840px-Pujol_Restaurant_%2840553682022%29.jpg',
   },
   {
     id: 'maido',
@@ -142,11 +147,13 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 0,
     storyAr: 'Mitsuharu "Micha" Tsumura\'s Nikkei Masterclass، الذي يمزج الدقة اليابانية مع اللون البيروفي. أعلى 3 من أفضل 50 في أمريكا اللاتينية لعقد من الزمن على التوالي.',
     signatureDishesAr: ['نيجيري تيراديتو', 'سيفيتشي المحيط الهادئ', 'كابويا باس البحر', 'أسماك الأمازون'],
+    image: 'https://upload.wikimedia.org/wikipedia/en/5/59/Maido_%28logo%29.png',
   },
   {
     id: 'central',
     name: 'Central',
     nameAr: 'سنترال',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Ceviche_mixto.jpg/800px-Ceviche_mixto.jpg',
     city: 'Lima',
     cityAr: 'ليما',
     country: 'Peru',
@@ -183,6 +190,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 3,
     storyAr: 'قام دانيال هام بتحويل القائمة بأكملها إلى قائمة نباتية في عام 2021. ولا تزال غرفة آرت ديكو في ماديسون سكوير بارك واحدة من أكثر التجارب المسرحية في تناول الطعام.',
     signatureDishesAr: ['ريزوتو بذور عباد الشمس', 'رز الجزر', 'باذنجان خير', 'كافيار طنبوري'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Portrait_Shot_of_Eleven_Madison_Park_%289284511683%29.jpg',
   },
   {
     id: 'sukiyabashi-jiro',
@@ -204,6 +212,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'جيرو أونو جعل السوشي وسيلة للتأمل. يستغرق إعداد أوماكاسي المكون من 20 قطعة 30 دقيقة. مدخل محطة مترو الانفاق. 3 نجوم ميشلان لمدة 14 عامًا. موضوع الفيلم الوثائقي "Jiro Dreams of Sushi".',
     signatureDishesAr: ['سوشي التونة', 'قنفذ البحر نيجيري', 'تاماجوياكي', 'اناجو اناجو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Inside_Sukiyabashi_Jiro_%2811557082593%29.jpg/3840px-Inside_Sukiyabashi_Jiro_%2811557082593%29.jpg',
   },
   {
     id: 'ryugin',
@@ -224,6 +233,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 3,
     storyAr: 'يستخدم كايسيكي سيجي ياماموتو ذو الثلاث نجوم تقنية حديثة دون ترك الجماليات اليابانية. حلوى الفراولة المجمدة "ناقص 196" هي ميم خاصة بها.',
     signatureDishesAr: ['كرة آيس كريم بالنيتروجين السائل', 'سمكة كينكي', 'طبق حسون موسمي', 'واغيو الحجر الساخن'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/RyuGin.jpg/3840px-RyuGin.jpg',
   },
   {
     id: 'den',
@@ -244,6 +254,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 2,
     storyAr: 'يقع مطعم "Dentucky Fried Chicken" الخاص بـ Zaiyu Hasegawa في قائمة التذوق بجانب كايسيكي التقليدي. نجمتان ميشلان وثلاثة يعيشون في قائمة أفضل 50 فندق في آسيا.',
     signatureDishesAr: ['دجاج دينتاكي مقلي', 'سلطة خضار', 'حديقة موناكا', 'أرز لحم البقر'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg',
   },
   {
     id: 'disfrutar',
@@ -265,6 +276,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'يدير ثلاثة طهاة سابقين في شركة ElBulli الوريث الروحي لمختبر Adria. تم التصويت له كأفضل مطعم في العالم لعام 2024.',
     signatureDishesAr: ['البيستو متعدد الكروات', 'زيتون كروي', 'بيض البيستو الساخن والبارد', 'أرنب بانشينو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Disfrutar.jpg/1920px-Disfrutar.jpg',
   },
   {
     id: 'mugaritz',
@@ -285,6 +297,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 2,
     storyAr: 'أنشأ أندوني أدوريز قائمة تذوق في إقليم الباسك تشبه عرضًا فنيًا. عشرون دورة، ثلاث ساعات، نجمتان ميشلان.',
     signatureDishesAr: ['الحجارة الصالحة للأكل', 'سلطة الحديقة من الأعشاب الضارة', 'السمك المملح', 'آيس كريم الكمأة السوداء'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Mugaritz_entrance.jpg',
   },
   {
     id: 'atelier-crenn',
@@ -305,6 +318,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     michelinStars: 3,
     storyAr: 'كانت دومينيك كرين أول طاهية في الولايات المتحدة حاصلة على ثلاث نجوم ميشلان. تقرأ القائمة كقصيدة.',
     signatureDishesAr: ['كير بريتون', 'Geoduck nasturtium', 'أرز كوشيهيكاري مدخن', 'حديقة النحل'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/92/Outside_Atelier_Crenn.jpg',
   },
 
   // ============ CLASSIC INSTITUTIONS ============
@@ -327,6 +341,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'مفتوح منذ عام 1888 في شرق هيوستن. مشهد "سأحصل على ما تملكه" من فيلم "عندما التقى هاري بسالي" تم تصويره على الطاولة 26. لقد قاموا بمعالجة البسطرمة الخاصة بهم لمدة 30 يومًا.',
     signatureDishesAr: ['بسطرمة على الجاودار', 'ساندويتش لحم بقري بالذرة', 'حساء كرات ماتزو', 'كنيش'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Katz%27s_Delicatessen_%2851623899326%29.jpg/3840px-Katz%27s_Delicatessen_%2851623899326%29.jpg',
   },
   {
     id: 'joes-pizza',
@@ -347,6 +362,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'متجر شرائح جو بوزوولي في شارع كارمين في قرية الأمنية الخضراء. شريحة Marvel\'s Spider-Man ورسم SNL "Pizza Place" جعلها مشهورة. شريحة مطوية، لا مفاجآت، مثالية.',
     signatureDishesAr: ['شريحة جبنة كلاسيكية', 'شريحة بيبروني', 'مربعات موزاريلا طازجة', 'ساحة صقلية'],
+    image: 'https://upload.wikimedia.org/wikipedia/en/2/2d/Joe%27s_Pizza_logo.png',
   },
   {
     id: 'russ-daughters',
@@ -366,6 +382,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Four generations at 179 East Houston. Joel Russ\'s daughters sliced the smoked fish before the term "Jewish appetizing" was even coined.',
     storyAr: 'أربعة أجيال في 179 شرق هيوستن. قامت بنات جويل روس بتقطيع السمك المدخن إلى شرائح قبل صياغة مصطلح "المقبلات اليهودية".',
     signatureDishesAr: ['باجل مع لوكس', 'سلطة السمك الأبيض', 'سمك الحفش', 'بابكا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Russ_%26_Daughters_%2851624125108%29.jpg/3840px-Russ_%26_Daughters_%2851624125108%29.jpg',
   },
   {
     id: 'le-train-bleu',
@@ -386,6 +403,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'تم بناؤه في Gare de Lyon بمناسبة المعرض العالمي لعام 1900، وأسقفه مذهبة، ولوحات زيتية، ولحم خروف مشوي مثالي. أكل بيلموندو هنا في Le Cerveau.',
     signatureDishesAr: ['حساء جراد البحر الدسم', 'خروف مشوي', 'بومس سوفليه', 'بابا أو روم'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Gare_De_Lyon_Paris.jpg/3840px-Gare_De_Lyon_Paris.jpg',
   },
   {
     id: 'antica-pizzeria-da-michele',
@@ -406,6 +424,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'مفتوح منذ عام 1870. يوجد في القائمة نوعان فقط من البيتزا: مارجريتا ومارينارا. يتشكل الخط في الساعة 11 صباحًا. أطلق عليه روبرتو سافيانو اسم "معبد البيتزا".',
     signatureDishesAr: ['بيتزا مارجريتا', 'بيتزا مارينارا', 'بيتزا كوزاكا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Neapolitan_pizza_at_Trappica_%2848701940197%29.jpg',
   },
   {
     id: 'da-enzo',
@@ -425,6 +444,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'A 30-seat trattoria in Trastevere. No reservations, two-hour wait, perfect carbonara every time. The benchmark for traditional Roman pasta.',
     storyAr: 'مطعم تراتوريا يتسع لـ 30 مقعدًا في تراستيفيري. لا توجد حجوزات، انتظر لمدة ساعتين، كاربونارا مثالي في كل مرة. معيار المعكرونة الرومانية التقليدية.',
     signatureDishesAr: ['كاربونارا', 'كاسيو إي بيبي', 'سالتيمبوككا', 'تيراميسو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Santa_Maria_in_Trastevere_fountain.jpg',
   },
   {
     id: 'st-john',
@@ -445,6 +465,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'افتتح فيرغوس هندرسون مطعم سانت جون في سميثفيلد في عام 1994 وقام بإعادة ضبط المطبخ البريطاني من خلال قطع اللحوم ومخلفاتها الرخيصة. أصبح نخاع العظم المشوي مع سلطة البقدونس هو القالب.',
     signatureDishesAr: ['نخاع العظم مع سلطة البقدونس', 'نادر الويلزية', 'كعكة اكليس', 'مادلين'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/26_St_John_Street%2C_Clerkenwell%2C_April_2023.jpg',
   },
   {
     id: 'the-wolseley',
@@ -464,6 +485,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Corbin & King built a 1920s grand cafe inside a 1921 car showroom on Piccadilly. Power-breakfast central.',
     storyAr: 'قام Corbin & King ببناء مقهى كبير يعود تاريخه إلى عشرينيات القرن الماضي داخل صالة عرض للسيارات عام 1921 في بيكاديللي. إفطار السلطة المركزية.',
     signatureDishesAr: ['بيض بنديكت', 'وينر شنيتزل', 'رز شريحة لحم', 'كايزرشمارن'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/14/1%E2%80%933_Arlington_Street_and_157%E2%80%93160_Piccadilly.jpg',
   },
   {
     id: 'cafe-de-flore',
@@ -483,6 +505,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Boulevard Saint-Germain. Sartre and de Beauvoir wrote here through the 1940s. Picasso, Hemingway, Camus all left tabs. The croque monsieur is still perfect.',
     storyAr: 'بوليفارد سان جيرمان. لقد كتب سارتر ودي بوفوار هنا خلال الأربعينيات. بيكاسو، همنغواي، كامو جميعهم تركوا علامات التبويب. السيد كروك لا يزال مثاليا.',
     signatureDishesAr: ['كروك مسيو', 'حساء البصل', 'بيض مسلوق', 'الشوكولاته'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Caf%C3%A9_de_Flore%2C_172_boulevard_Saint-Germain%2C_Paris_6e.jpg/3840px-Caf%C3%A9_de_Flore%2C_172_boulevard_Saint-Germain%2C_Paris_6e.jpg',
   },
   {
     id: 'harrys-bar',
@@ -502,6 +525,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Hemingway, Hitchcock, Truman Capote, Onassis. Carpaccio was invented here for a Countess on a doctor-ordered raw diet. The risotto is still untouched.',
     storyAr: 'همنغواي، هيتشكوك، ترومان كابوت، أوناسيس. تم اختراع كارباتشيو هنا للكونتيسة التي كانت تتبع نظامًا غذائيًا خامًا طلبه الطبيب. الريسوتو لا يزال دون تغيير.',
     signatureDishesAr: ['نوط دي مانزو', 'ريزوتو ألا بريمافيرا', 'تاجليوليني جراتيناتي', 'عصير على طريقة بيليني'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Harrysbar.jpg',
   },
   {
     id: 'tetsuya',
@@ -521,6 +545,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Tetsuya Wakuda introduced Japanese sensibility to Sydney fine dining. The confit ocean trout has been on the menu for 25 years.',
     storyAr: 'قدم تيتسويا واكودا الإحساس الياباني بالطعام الفاخر في سيدني. سمك السلمون المرقط المحيطي موجود في القائمة منذ 25 عامًا.',
     signatureDishesAr: ['كونفيت تراوت المحيط مع الدايكون', 'صلصة الوسابي', 'ماعز أيانا مشوي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Tetsuyas-Ocean-Trout.jpg',
   },
 
   // ============ STREET LEGENDS ============
@@ -544,6 +569,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'جاي فاي تبلغ من العمر 80 عامًا، وترتدي نظارات تزلج لحماية عينيها من دخان المقلاة، وحصلت على نجمة ميشلان مقابل عجة السلطعون بسعر 30 باهت. يبدأ الخط عند الظهر حتى الساعة 6 مساءً. الجلوس.',
     signatureDishesAr: ['عجة السلطعون', 'الشعرية في حالة سكر', 'توم يم', 'كاري السلطعون'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Jay_Fai%2C_bangkok_20180406.jpg/3840px-Jay_Fai%2C_bangkok_20180406.jpg',
   },
   {
     id: 'tim-ho-wan',
@@ -564,6 +590,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'عمل ماك كواي بوي في شركة لونج كينج هين، ثم افتتح متجرًا صغيرًا للديم سوم في مونج كوك. أصبح أرخص مطعم حائز على نجمة ميشلان في العالم. تم بيع كعك لحم الخنزير بحلول الساعة الثانية بعد الظهر.',
     signatureDishesAr: ['كعك لحم الخنزير المشوي', 'كرات اللحم البقري المطهوة على البخار', 'أرز شار سيو', 'فطائر الجمبري'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Tim_Ho_Wan_restaurant_at_Sham_Shui_Po_%2820190126130901%29.jpg/3840px-Tim_Ho_Wan_restaurant_at_Sham_Shui_Po_%2820190126130901%29.jpg',
   },
   {
     id: 'karims',
@@ -584,6 +611,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'مفتوح منذ عام 1913 بجوار المسجد الجامع. سليل طهاة البلاط المغولي. اهتمام من فئة السوشي بطحن التوابل، وطبق النيهاري المطبوخ ببطء والذي يستغرق 8 ساعات.',
     signatureDishesAr: ['لحم ضأن بورا كباب', 'نهاري', 'شيرمال', 'موغلاي برياني'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/92/Karim%27s.jpg',
   },
   {
     id: 'mariscos-jalisco',
@@ -603,6 +631,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Raul Ortega\'s lonchera in Boyle Heights. The crispy shrimp taco "estilo Jalisco" became the most copied taco in the city. Anthony Bourdain stood in line.',
     storyAr: 'غداء راؤول أورتيجا في بويل هايتس. أصبح تاكو الجمبري المقرمش "إستيلو خاليسكو" هو التاكو الأكثر نسخًا في المدينة. وقف أنتوني بوردان في الطابور.',
     signatureDishesAr: ['تاكو الروبيان', 'أغواتشيليس', 'توستادا دي سيفيتشي', 'بولبو لا ديابلا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/92/Crossing_1st_St._%2815569188450%29_%28cropped%29.jpg',
   },
   {
     id: 'el-califa',
@@ -624,6 +653,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'في عام 2024 أصبح أول منصة تاكو تحصل على نجمة ميشلان. ثلاث لحوم، وأربعة تاكو، و60 عامًا من الممارسة. غرفة الوقوف فقط.',
     signatureDishesAr: ['تاكو آل القس', 'تاكو كوستيلا', 'تاكو جاونيرا', 'تاكو شوليتا'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Tacos-al-Pastor.jpg',
   },
   {
     id: 'naqsh-e-jahan',
@@ -643,6 +673,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Just off Naqsh-e Jahan Square. Beryani isfahani is minced lamb folded into bread, nothing like the Indian version. Mid-day only.',
     storyAr: 'بالقرب من ميدان نقش جهان. البرياني الأصفهاني هو لحم ضأن مفروم مطوي في الخبز، ولا يشبه النسخة الهندية. منتصف النهار فقط.',
     signatureDishesAr: ['البرياني الاصفهاني', 'خورشت غيمه', 'تحشين', 'فيسنجان'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Naqsh-i_Jahan_Square%2C_Jan._2018.jpg/3840px-Naqsh-i_Jahan_Square%2C_Jan._2018.jpg',
   },
 
   // ============ ARAB WORLD ICONS ============
@@ -665,6 +696,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'الملك عبد الله يأكل هنا. وكذلك يفعل سائق التاكسي في وقت متأخر من الليل. هاشم هو مطعم الحمص والفلافل الذي يعمل على مدار 24 ساعة في وسط مدينة عمان. طاولات النزهة والكراسي البلاستيكية والطعام المثالي.',
     signatureDishesAr: ['حمص', 'فلافل', 'مدمس كامل', 'متبل'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Lebanese_style_hummus.jpg',
   },
   {
     id: 'habibah',
@@ -684,6 +716,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'A 1.5-dinar plate of kunafa Nabulsia for 70 years. Downtown Amman, always a line. The benchmark for kunafa in Jordan.',
     storyAr: 'صحن كنافة نابلسية بـ 1.5 دينار لمدة 70 سنة. وسط مدينة عمان، دائما خط. معيار الكنافة في الأردن.',
     signatureDishesAr: ['كنافة', 'بقلاوة', 'معمول', 'حلاوة الجبن'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/K%C3%BCnefe.jpg',
   },
   {
     id: 'falafel-sahyoun',
@@ -704,6 +737,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'واجهتان متجران جنبًا إلى جنب من تقسيم عائلي، وكلاهما يدعي أنه الأصلي. أشهر فلافل في لبنان منذ عام 1933. مقرمشة من الخارج وخضراء من الداخل.',
     signatureDishesAr: ['سندويش فلافل', 'لفة متبل', 'حمص', 'رول تبولة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Falafels_2.jpg/3840px-Falafels_2.jpg',
   },
   {
     id: 'abou-tarek',
@@ -724,6 +758,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'معبد الكشري بميدان التحرير. طبق واحد، 70 عامًا، أربعة طوابق من العملاء. المعيار.',
     signatureDishesAr: ['كشري كلاسيكي', 'كشري خاص مع اضافة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Egyptian_food_Koshary.jpg',
   },
   {
     id: 'hadramawt',
@@ -744,6 +779,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     featured: true,
     storyAr: 'أرز يمني ولحم ضأن مطبوخ ببطء في قلب الرياض. اجلس على الأرض وتناول الطعام بيديك. توسعت سلسلة حضرموت المخططة عبر الخليج.',
     signatureDishesAr: ['مندي', 'مظبي', 'مدفون', 'سلطه'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Mandi_pit_from_inside.jpg',
   },
   {
     id: 'saraya',
@@ -763,6 +799,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'A walled garden in old Damascus, fountains, jasmine, and an unbroken Damascene mezze tradition. Friday lunch books out a year.',
     storyAr: 'حديقة مسورة في دمشق القديمة، نوافير، ياسمين، وتقاليد مزة دمشقية متواصلة. كتب غداء الجمعة خارج السنة.',
     signatureDishesAr: ['كبة نية', 'فتوش', 'الشيخ المحشي', 'كباب اورفالي'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Petra_metzes.jpg',
   },
   {
     id: 'kayan',
@@ -782,6 +819,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Chef Reif Othman\'s modern Levantine table. Kibbeh shaped to order, mansaf reimagined.',
     storyAr: 'طاولة الشيف ريف عثمان الشامية الحديثة. كبة على شكل حسب الطلب، مع إعادة تصميم المنسف.',
     signatureDishesAr: ['حمص على الفحم', 'ريزوتو منسف', 'كبة نية', 'كنافة'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Syrian_meal.jpg',
   },
   {
     id: 'abu-shukri',
@@ -801,6 +839,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'On the Via Dolorosa. One menu: hummus, hummus with extras, hummus with more extras. The hummus stays at 38°C all day, perfect texture.',
     storyAr: 'على طريق الآلام. قائمة واحدة: حمص، حمص مع إضافات، حمص مع المزيد من الإضافات. يبقى الحمص في درجة حرارة 38 درجة مئوية طوال اليوم، وهو ذو ملمس مثالي.',
     signatureDishesAr: ['حمص بالطحينة', 'حمص بالفول', 'حمص بالصنوبر', 'مخللات'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Lebanese_style_hummus.jpg',
   },
   {
     id: 'asseraya',
@@ -820,6 +859,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Nablus invented kunafa. Saraya in the old city has been baking it since 1850. The cheese is from local Nabulsi cows. Eat it standing.',
     storyAr: 'النابلسيون هم من اخترعوا الكنافة . تقوم السرايا في المدينة القديمة بخبزها منذ عام 1850. الجبن يأتي من الأبقار النابلسية المحلية. أكلها واقفة.',
     signatureDishesAr: ['كنافة نابلسية', 'كنافة بجبنة عكاوي', 'سميد حلو'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/K%C3%BCnefe.jpg',
   },
   {
     id: 'shaher-restaurant',
@@ -839,6 +879,7 @@ export const FAMOUS_RESTAURANTS: FamousRestaurant[] = [
     story: 'Aleppo\'s kebab tradition runs through cherries and pomegranate. Shaher has been hand-grilling cherry kebab over olive-wood charcoal for half a century.',
     storyAr: 'يمتد تقاليد الكباب في حلب من خلال الكرز والرمان. يقوم شاهر بشواء كباب الكرز يدويًا على فحم خشب الزيتون منذ نصف قرن.',
     signatureDishesAr: ['كباب كرز (كباب الكرز)', 'محشي ملفوف', 'محمرة', 'كباب رمان'],
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Lula_kebab_2.jpg/3840px-Lula_kebab_2.jpg',
   },
 ];
 
