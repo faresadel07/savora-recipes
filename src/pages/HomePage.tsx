@@ -16,6 +16,7 @@ import { CUISINE_AR } from '../i18n/data-translations';
 import RecipeCard from '../components/RecipeCard';
 import RecipeImage from '../components/RecipeImage';
 import ChefQuotesMarquee from '../components/ChefQuotesMarquee';
+import TrainAndEatRight from '../components/TrainAndEatRight';
 import { RecipeGridSkeleton } from '../components/Skeleton';
 import ErrorState from '../components/ErrorState';
 
@@ -51,10 +52,10 @@ export default function HomePage() {
   });
 
   const homepageStats = [
-    { value: '825+', label: t('home.statRecipes') },
-    { value: '29', label: t('home.statCuisines') },
+    { value: '1,272+', label: t('home.statRecipes') },
+    { value: '873', label: t('home.statExercises') },
+    { value: '13', label: t('home.statPrograms') },
     { value: '100%', label: t('common.freeAlways') },
-    { value: '0', label: t('home.statSignUp') },
   ];
 
   const bento = useQuery({
@@ -182,20 +183,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* EXPLORE ZAYTOUN - showcase the major sections */}
-      <SectionsShowcase language={language} />
-
-      {/* RECIPE OF THE DAY */}
+      {/* RECIPE OF THE DAY (hook) */}
       <RecipeOfTheDay language={language} />
-
-      {/* FEATURED CHEF SPOTLIGHT - editorial article rotation */}
-      <FeaturedChef language={language} />
-
-      {/* CHEF QUOTES - horizontal marquee of famous chef sayings */}
-      <ChefQuotesMarquee />
-
-      {/* FEATURED LEARNING PATH + EDITOR'S PICK FILM */}
-      <FeaturedTrio language={language} />
 
       {/* BENTO */}
       <section className="mt-20 md:mt-28">
@@ -365,6 +354,21 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FEATURED CHEF SPOTLIGHT (editorial depth) */}
+      <FeaturedChef language={language} />
+
+      {/* TRAIN + EAT RIGHT (gym + fitness CTA) */}
+      <TrainAndEatRight />
+
+      {/* SECTIONS SHOWCASE (what else is here) */}
+      <SectionsShowcase language={language} />
+
+      {/* FEATURED TRIO (learning path + film + chef pick) */}
+      <FeaturedTrio language={language} />
+
+      {/* CHEF QUOTES (delight moment before social proof) */}
+      <ChefQuotesMarquee />
 
       {/* POPULAR */}
       <section className="mt-24 md:mt-32">
