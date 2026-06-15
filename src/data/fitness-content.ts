@@ -155,49 +155,49 @@ export interface ProteinSource {
 
 export const PROTEIN_SOURCES: ProteinSource[] = [
   // Meat
-  { food: 'Chicken breast, cooked', serving: '100g', protein: 31, cal: 165, category: 'meat', foodAr: 'صدر دجاج، مطبوخ' },
-  { food: 'Chicken thigh, cooked', serving: '100g', protein: 26, cal: 209, category: 'meat', foodAr: 'فخذ دجاج، مطبوخ' },
-  { food: 'Lean ground beef (93/7)', serving: '100g', protein: 22, cal: 152, category: 'meat', foodAr: 'لحم البقر المفروم (93/7)' },
-  { food: 'Sirloin steak', serving: '100g', protein: 29, cal: 206, category: 'meat', foodAr: 'شريحة لحم الخاصرة' },
-  { food: 'Pork tenderloin', serving: '100g', protein: 26, cal: 143, category: 'meat', foodAr: 'لحم الخنزير المتن' },
-  { food: 'Turkey breast', serving: '100g', protein: 29, cal: 135, category: 'meat', foodAr: 'صدر تركيا' },
+  { food: 'Chicken breast, cooked', serving: '100g', protein: 31, cal: 165, category: 'meat', foodAr: 'صدر دجاج مطبوخ' },
+  { food: 'Chicken thigh, cooked', serving: '100g', protein: 26, cal: 209, category: 'meat', foodAr: 'فخذ دجاج مطبوخ' },
+  { food: 'Lean ground beef (93/7)', serving: '100g', protein: 22, cal: 152, category: 'meat', foodAr: 'لحم بقر مفروم قليل الدهن (93/7)' },
+  { food: 'Sirloin steak', serving: '100g', protein: 29, cal: 206, category: 'meat', foodAr: 'ستيك سيرلوين' },
+  { food: 'Pork tenderloin', serving: '100g', protein: 26, cal: 143, category: 'meat', foodAr: 'لحم خنزير متن' },
+  { food: 'Turkey breast', serving: '100g', protein: 29, cal: 135, category: 'meat', foodAr: 'صدر ديك رومي' },
 
   // Fish
-  { food: 'Salmon, baked', serving: '100g', protein: 25, cal: 208, category: 'fish', foodAr: 'سمك السلمون، خبز' },
-  { food: 'Tuna, canned in water', serving: '100g', protein: 26, cal: 116, category: 'fish', foodAr: 'تونة معلبة في الماء' },
-  { food: 'Cod, baked', serving: '100g', protein: 23, cal: 105, category: 'fish', foodAr: 'سمك القد، خبز' },
-  { food: 'Shrimp, cooked', serving: '100g', protein: 24, cal: 99, category: 'fish', foodAr: 'روبيان، مطبوخ' },
-  { food: 'Tilapia', serving: '100g', protein: 26, cal: 128, category: 'fish', foodAr: 'البلطي' },
-  { food: 'Sardines, canned', serving: '100g', protein: 25, cal: 208, category: 'fish', foodAr: 'السردين، المعلب' },
+  { food: 'Salmon, baked', serving: '100g', protein: 25, cal: 208, category: 'fish', foodAr: 'سلمون مخبوز' },
+  { food: 'Tuna, canned in water', serving: '100g', protein: 26, cal: 116, category: 'fish', foodAr: 'تونة معلبة بالماء' },
+  { food: 'Cod, baked', serving: '100g', protein: 23, cal: 105, category: 'fish', foodAr: 'سمك القد المخبوز' },
+  { food: 'Shrimp, cooked', serving: '100g', protein: 24, cal: 99, category: 'fish', foodAr: 'روبيان مطبوخ' },
+  { food: 'Tilapia', serving: '100g', protein: 26, cal: 128, category: 'fish', foodAr: 'بلطي' },
+  { food: 'Sardines, canned', serving: '100g', protein: 25, cal: 208, category: 'fish', foodAr: 'سردين معلب' },
 
   // Eggs
   { food: 'Whole egg', serving: '1 large', protein: 6, cal: 72, category: 'eggs', foodAr: 'بيضة كاملة' },
-  { food: 'Egg white', serving: '1 large', protein: 4, cal: 17, category: 'eggs', foodAr: 'بياض البيض' },
+  { food: 'Egg white', serving: '1 large', protein: 4, cal: 17, category: 'eggs', foodAr: 'بياض بيض' },
 
   // Dairy
   { food: 'Greek yogurt, nonfat', serving: '170g', protein: 17, cal: 100, category: 'dairy', foodAr: 'زبادي يوناني خالي الدسم' },
-  { food: 'Cottage cheese, low-fat', serving: '100g', protein: 11, cal: 72, category: 'dairy', foodAr: 'جبن قريش، قليل الدسم' },
+  { food: 'Cottage cheese, low-fat', serving: '100g', protein: 11, cal: 72, category: 'dairy', foodAr: 'جبنة قريش قليلة الدسم' },
   { food: 'Skim milk', serving: '240ml', protein: 8, cal: 86, category: 'dairy', foodAr: 'حليب خالي الدسم' },
   { food: 'Cheddar cheese', serving: '28g', protein: 7, cal: 113, category: 'dairy', foodAr: 'جبنة شيدر' },
-  { food: 'String cheese', serving: '1 stick', protein: 7, cal: 80, category: 'dairy', foodAr: 'سلسلة الجبن' },
-  { food: 'Kefir, low-fat', serving: '240ml', protein: 11, cal: 110, category: 'dairy', foodAr: 'الكفير قليل الدسم' },
+  { food: 'String cheese', serving: '1 stick', protein: 7, cal: 80, category: 'dairy', foodAr: 'جبنة موزاريلا خيطية' },
+  { food: 'Kefir, low-fat', serving: '240ml', protein: 11, cal: 110, category: 'dairy', foodAr: 'كفير قليل الدسم' },
 
   // Plant
-  { food: 'Tofu, firm', serving: '100g', protein: 17, cal: 144, category: 'plant', foodAr: 'التوفو، حازم' },
-  { food: 'Tempeh', serving: '100g', protein: 19, cal: 192, category: 'plant', foodAr: 'تمبه' },
-  { food: 'Edamame, shelled', serving: '100g', protein: 11, cal: 121, category: 'plant', foodAr: 'ادامامي، مقشر' },
+  { food: 'Tofu, firm', serving: '100g', protein: 17, cal: 144, category: 'plant', foodAr: 'توفو متماسك' },
+  { food: 'Tempeh', serving: '100g', protein: 19, cal: 192, category: 'plant', foodAr: 'تيمبي' },
+  { food: 'Edamame, shelled', serving: '100g', protein: 11, cal: 121, category: 'plant', foodAr: 'إيدامامي مقشّر' },
   { food: 'Lentils, cooked', serving: '100g', protein: 9, cal: 116, category: 'plant', foodAr: 'عدس مطبوخ' },
-  { food: 'Black beans, cooked', serving: '100g', protein: 9, cal: 132, category: 'plant', foodAr: 'الفاصوليا السوداء، مطبوخة' },
+  { food: 'Black beans, cooked', serving: '100g', protein: 9, cal: 132, category: 'plant', foodAr: 'فاصوليا سوداء مطبوخة' },
   { food: 'Chickpeas, cooked', serving: '100g', protein: 9, cal: 164, category: 'plant', foodAr: 'حمص مطبوخ' },
-  { food: 'Quinoa, cooked', serving: '100g', protein: 4, cal: 120, category: 'plant', foodAr: 'كينوا، مطبوخة' },
-  { food: 'Peanut butter', serving: '32g', protein: 8, cal: 188, category: 'plant', foodAr: 'زبدة الفول السوداني' },
-  { food: 'Almonds', serving: '28g', protein: 6, cal: 164, category: 'plant', foodAr: 'اللوز' },
-  { food: 'Chia seeds', serving: '28g', protein: 5, cal: 138, category: 'plant', foodAr: 'بذور الشيا' },
-  { food: 'Hemp seeds', serving: '28g', protein: 10, cal: 166, category: 'plant', foodAr: 'بذور القنب' },
+  { food: 'Quinoa, cooked', serving: '100g', protein: 4, cal: 120, category: 'plant', foodAr: 'كينوا مطبوخة' },
+  { food: 'Peanut butter', serving: '32g', protein: 8, cal: 188, category: 'plant', foodAr: 'زبدة فول سوداني' },
+  { food: 'Almonds', serving: '28g', protein: 6, cal: 164, category: 'plant', foodAr: 'لوز' },
+  { food: 'Chia seeds', serving: '28g', protein: 5, cal: 138, category: 'plant', foodAr: 'بذور شيا' },
+  { food: 'Hemp seeds', serving: '28g', protein: 10, cal: 166, category: 'plant', foodAr: 'بذور قنّب' },
 
   // Supplements
-  { food: 'Whey protein isolate', serving: '30g scoop', protein: 25, cal: 110, category: 'supplement', foodAr: 'بروتين مصل اللبن المعزول' },
-  { food: 'Casein protein', serving: '30g scoop', protein: 24, cal: 120, category: 'supplement', foodAr: 'بروتين الكازين' },
+  { food: 'Whey protein isolate', serving: '30g scoop', protein: 25, cal: 110, category: 'supplement', foodAr: 'بروتين مصل اللبن المعزول (Whey)' },
+  { food: 'Casein protein', serving: '30g scoop', protein: 24, cal: 120, category: 'supplement', foodAr: 'بروتين كازين' },
   { food: 'Plant protein blend', serving: '30g scoop', protein: 22, cal: 130, category: 'supplement', foodAr: 'مزيج البروتين النباتي' },
 ];
 

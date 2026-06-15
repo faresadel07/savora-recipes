@@ -185,7 +185,7 @@ export default function Header() {
             type="button"
             onClick={() => setSearchOpen((v) => !v)}
             className="rounded-full p-2 text-ink-900 transition-colors hover:bg-ink-900/5 dark:text-cream-50 dark:hover:bg-cream-50/10"
-            aria-label="Search recipes"
+            aria-label={t('common.searchRecipes')}
           >
             <Search className="h-4 w-4" strokeWidth={1.8} />
           </button>
@@ -258,7 +258,7 @@ export default function Header() {
               type="button"
               onClick={() => setMobileOpen(false)}
               className="grid h-9 w-9 place-items-center rounded-full text-ink-700 transition-colors hover:bg-ink-900/5"
-              aria-label="Close menu"
+              aria-label={t('common.close')}
             >
               <X className="h-5 w-5" strokeWidth={1.8} />
             </button>

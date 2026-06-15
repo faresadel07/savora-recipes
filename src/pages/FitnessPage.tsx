@@ -50,16 +50,19 @@ import { useTranslation } from '../i18n';
 
 const PROTEIN_CATEGORIES = ['Chicken', 'Seafood', 'Beef', 'Lamb', 'Pork'] as const;
 
-const HERO_STATS = [
-  { value: '700+', label: 'Recipes' },
-  { value: `${FITNESS_CHANNELS.length}`, label: 'Channels' },
-  { value: `${GOAL_PLANS.length}`, label: 'Goal plans' },
-  { value: 'Free', label: 'Always' },
-];
+function useHeroStats(isAr: boolean) {
+  return [
+    { value: '700+', label: isAr ? 'وصفة' : 'Recipes' },
+    { value: `${FITNESS_CHANNELS.length}`, label: isAr ? 'قناة' : 'Channels' },
+    { value: `${GOAL_PLANS.length}`, label: isAr ? 'خطط أهداف' : 'Goal plans' },
+    { value: isAr ? 'مجاني' : 'Free', label: isAr ? 'دائماً' : 'Always' },
+  ];
+}
 
 export default function FitnessPage() {
   const { language } = useTranslation();
   const isAr = language === 'ar';
+  const HERO_STATS = useHeroStats(isAr);
   const [activeCategory, setActiveCategory] = useState<(typeof PROTEIN_CATEGORIES)[number]>('Chicken');
   const [drinkFilter, setDrinkFilter] = useState<'all' | 'pre' | 'post' | 'anytime' | 'meal-replace'>('all');
   const [sourceFilter, setSourceFilter] = useState<'all' | 'meat' | 'fish' | 'dairy' | 'eggs' | 'plant' | 'supplement'>('all');
@@ -100,23 +103,23 @@ export default function FitnessPage() {
           <div className="grid items-center gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
-                Fuel your body.
+                {isAr ? 'غذِّ جسمك.' : 'Fuel your body.'}
                 <br />
-                <span className="text-sage-600">Eat with intention.</span>
+                <span className="text-sage-600">{isAr ? 'كُل بنيّة.' : 'Eat with intention.'}</span>
               </h1>
               <p className="mt-7 max-w-xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A no-nonsense library for athletes, lifters, and anyone who treats
-                food as part of training. Macro-balanced recipes, meal plans,
-                workout-timed meals, and the cleanest fitness channels on YouTube.
+                {isAr
+                  ? 'مكتبة بلا حشو للرياضيين ورافعي الأثقال وكل من يتعامل مع الطعام كجزء من التدريب. وصفات متوازنة بالماكروز، جداول وجبات، أكلات مرتّبة حول التمرين، وأنظف قنوات الفتنس على يوتيوب.'
+                  : 'A no-nonsense library for athletes, lifters, and anyone who treats food as part of training. Macro-balanced recipes, meal plans, workout-timed meals, and the cleanest fitness channels on YouTube.'}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#calculator" className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-sage-600">
                   <Flame className="h-4 w-4" />
-                  Calculate my macros
+                  {isAr ? 'احسب ماكروزي' : 'Calculate my macros'}
                 </a>
                 <a href="#plans" className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900">
-                  Pick a goal plan
+                  {isAr ? 'اختر خطة هدف' : 'Pick a goal plan'}
                   <ArrowUpRight className="rtl-flip h-3.5 w-3.5" />
                 </a>
               </div>
@@ -131,10 +134,10 @@ export default function FitnessPage() {
             <div className="md:col-span-5">
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { icon: <Beef className="h-5 w-5" />, label: '1.6 to 2.2g', sub: 'protein per kg' },
-                  { icon: <Coffee className="h-5 w-5" />, label: '20 to 40g', sub: 'per meal' },
-                  { icon: <Zap className="h-5 w-5" />, label: '2 hours', sub: 'pre-workout window' },
-                  { icon: <Heart className="h-5 w-5" />, label: '25 to 38g', sub: 'fiber daily' },
+                  { icon: <Beef className="h-5 w-5" />, label: isAr ? '1.6 إلى 2.2 جم' : '1.6 to 2.2g', sub: isAr ? 'بروتين لكل كجم' : 'protein per kg' },
+                  { icon: <Coffee className="h-5 w-5" />, label: isAr ? '20 إلى 40 جم' : '20 to 40g', sub: isAr ? 'لكل وجبة' : 'per meal' },
+                  { icon: <Zap className="h-5 w-5" />, label: isAr ? 'ساعتان' : '2 hours', sub: isAr ? 'قبل التمرين' : 'pre-workout window' },
+                  { icon: <Heart className="h-5 w-5" />, label: isAr ? '25 إلى 38 جم' : '25 to 38g', sub: isAr ? 'ألياف يومياً' : 'fiber daily' },
                 ].map((c) => (
                   <div key={c.sub} className="rounded-2xl border border-ink-100 bg-cream-50 p-5">
                     <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sage-50 text-sage-600">
@@ -287,17 +290,19 @@ export default function FitnessPage() {
       <section id="workout" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            eyebrow="Timed for training"
+            eyebrow={isAr ? 'مرتّبة حول التمرين' : 'Timed for training'}
             icon={<Zap className="h-3 w-3" />}
-            title="Workout meals."
-            body="Ideas tailored to when you train. Eat for energy before, repair after, and recover overnight."
+            title={isAr ? 'وجبات التمرين.' : 'Workout meals.'}
+            body={isAr
+              ? 'أفكار مفصّلة حسب وقت تمرينك. كُل للطاقة قبله، للترميم بعده، والتعافي طوال الليل.'
+              : 'Ideas tailored to when you train. Eat for energy before, repair after, and recover overnight.'}
           />
 
           <div className="mb-8 inline-flex rounded-full border border-ink-100 bg-cream-50 p-1">
             {([
-              { id: 'pre', label: 'Pre-workout', icon: <Zap className="h-3.5 w-3.5" /> },
-              { id: 'post', label: 'Post-workout', icon: <Beef className="h-3.5 w-3.5" /> },
-              { id: 'recovery', label: 'Recovery', icon: <Heart className="h-3.5 w-3.5" /> },
+              { id: 'pre', label: isAr ? 'قبل التمرين' : 'Pre-workout', icon: <Zap className="h-3.5 w-3.5" /> },
+              { id: 'post', label: isAr ? 'بعد التمرين' : 'Post-workout', icon: <Beef className="h-3.5 w-3.5" /> },
+              { id: 'recovery', label: isAr ? 'تعافي' : 'Recovery', icon: <Heart className="h-3.5 w-3.5" /> },
             ] as const).map((tab) => (
               <button
                 key={tab.id}
@@ -333,10 +338,12 @@ export default function FitnessPage() {
       {/* ============ MEAL PREP ============ */}
       <section id="mealprep" className="container-wide py-16 md:py-24">
         <SectionHead
-          eyebrow="Sunday afternoon"
+          eyebrow={isAr ? 'بعد ظهر الأحد' : 'Sunday afternoon'}
           icon={<ShoppingBasket className="h-3 w-3" />}
-          title="Meal prep ideas."
-          body="Big batches that store well. One cook session, five days of macro-balanced food."
+          title={isAr ? 'أفكار تحضير الوجبات.' : 'Meal prep ideas.'}
+          body={isAr
+            ? 'كميات كبيرة تحتفظ جيداً. جلسة طبخ واحدة، خمسة أيام من الطعام المتوازن.'
+            : 'Big batches that store well. One cook session, five days of macro-balanced food.'}
         />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -360,10 +367,12 @@ export default function FitnessPage() {
       <section id="plans" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            eyebrow="Pick your goal"
+            eyebrow={isAr ? 'اختر هدفك' : 'Pick your goal'}
             icon={<Calendar className="h-3 w-3" />}
-            title="Goal-based plans."
-            body="A starting point — not a prescription. Adjust over weeks by watching the scale and how you feel in training."
+            title={isAr ? 'خطط حسب الهدف.' : 'Goal-based plans.'}
+            body={isAr
+              ? 'نقطة بداية، ليست وصفة طبية. عدّل خلال أسابيع بمراقبة الميزان وكيف تشعر في التمرين.'
+              : 'A starting point — not a prescription. Adjust over weeks by watching the scale and how you feel in training.'}
           />
 
           <div className="mb-8 grid grid-cols-3 gap-3">
@@ -392,15 +401,15 @@ export default function FitnessPage() {
                 <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">{language === 'ar' && currentPlan.titleAr ? currentPlan.titleAr : currentPlan.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-ink-600">{language === 'ar' && currentPlan.blurbAr ? currentPlan.blurbAr : currentPlan.blurb}</p>
                 <div className="mt-6 space-y-3">
-                  <MacroLine icon={<Flame className="h-4 w-4" />} label="Daily calories" value={currentPlan.calories} />
-                  <MacroLine icon={<Beef className="h-4 w-4" />} label="Protein" value={currentPlan.protein} />
-                  <MacroLine icon={<Activity className="h-4 w-4" />} label="Carbs" value={currentPlan.carbs} />
-                  <MacroLine icon={<Heart className="h-4 w-4" />} label="Fats" value={currentPlan.fats} />
+                  <MacroLine icon={<Flame className="h-4 w-4" />} label={isAr ? 'السعرات اليومية' : 'Daily calories'} value={currentPlan.calories} />
+                  <MacroLine icon={<Beef className="h-4 w-4" />} label={isAr ? 'بروتين' : 'Protein'} value={currentPlan.protein} />
+                  <MacroLine icon={<Activity className="h-4 w-4" />} label={isAr ? 'كربوهيدرات' : 'Carbs'} value={currentPlan.carbs} />
+                  <MacroLine icon={<Heart className="h-4 w-4" />} label={isAr ? 'دهون' : 'Fats'} value={currentPlan.fats} />
                 </div>
               </div>
 
               <div className="md:col-span-8">
-                <p className="mb-4 text-[12px] font-semibold uppercase tracking-widest text-ink-500">Sample day</p>
+                <p className="mb-4 text-[12px] font-semibold uppercase tracking-widest text-ink-500">{isAr ? 'يوم نموذجي' : 'Sample day'}</p>
                 <ul className="space-y-3">
                   {currentPlan.sampleDay.map((m, i) => (
                     <li key={i} className="grid gap-2 rounded-2xl border border-ink-100 p-4 sm:grid-cols-[120px_1fr_auto] sm:items-center">
@@ -420,35 +429,48 @@ export default function FitnessPage() {
       <section className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            eyebrow="Quick reference"
+            eyebrow={isAr ? 'مرجع سريع' : 'Quick reference'}
             icon={<BookOpen className="h-3 w-3" />}
-            title="Protein source cheat sheet."
-            body="Common foods, sorted by category. Memorize a handful and you can build a meal plan in your head."
+            title={isAr ? 'مصادر البروتين بنظرة.' : 'Protein source cheat sheet.'}
+            body={isAr
+              ? 'الأطعمة الشائعة، مرتّبة حسب الفئة. احفظ بعضها وتقدر تبني جدول وجبات بعقلك.'
+              : 'Common foods, sorted by category. Memorize a handful and you can build a meal plan in your head.'}
           />
 
           <div className="mb-6 flex flex-wrap gap-2">
-            {(['all', 'meat', 'fish', 'dairy', 'eggs', 'plant', 'supplement'] as const).map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() => setSourceFilter(c)}
-                className={`rounded-full border px-3.5 py-1.5 text-[12px] font-medium capitalize tracking-tight transition-colors ${
-                  sourceFilter === c
-                    ? 'border-ink-900 bg-ink-900 text-cream-50'
-                    : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
-                }`}
-              >
-                {c === 'all' ? 'All' : c}
-              </button>
-            ))}
+            {(['all', 'meat', 'fish', 'dairy', 'eggs', 'plant', 'supplement'] as const).map((c) => {
+              const labels: Record<string, { en: string; ar: string }> = {
+                all: { en: 'All', ar: 'الكل' },
+                meat: { en: 'meat', ar: 'لحم' },
+                fish: { en: 'fish', ar: 'سمك' },
+                dairy: { en: 'dairy', ar: 'ألبان' },
+                eggs: { en: 'eggs', ar: 'بيض' },
+                plant: { en: 'plant', ar: 'نباتي' },
+                supplement: { en: 'supplement', ar: 'مكمّل' },
+              };
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setSourceFilter(c)}
+                  className={`rounded-full border px-3.5 py-1.5 text-[12px] font-medium capitalize tracking-tight transition-colors ${
+                    sourceFilter === c
+                      ? 'border-ink-900 bg-ink-900 text-cream-50'
+                      : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                  }`}
+                >
+                  {isAr ? labels[c].ar : labels[c].en}
+                </button>
+              );
+            })}
           </div>
 
           <div className="overflow-hidden rounded-3xl border border-ink-100 bg-cream-50">
             <div className="grid grid-cols-[1fr_80px_60px_60px] gap-2 border-b border-ink-100 bg-cream-100/60 px-5 py-3 text-[10px] font-medium uppercase tracking-widest text-ink-400 sm:grid-cols-[1fr_120px_80px_80px]">
-              <span>Food</span>
-              <span>Serving</span>
-              <span className="text-end">Protein</span>
-              <span className="text-end">Calories</span>
+              <span>{isAr ? 'الطعام' : 'Food'}</span>
+              <span>{isAr ? 'الحصة' : 'Serving'}</span>
+              <span className="text-end">{isAr ? 'بروتين' : 'Protein'}</span>
+              <span className="text-end">{isAr ? 'سعرات' : 'Calories'}</span>
             </div>
             <ul className="divide-y divide-ink-100">
               {filteredSources.map((s) => (
@@ -467,19 +489,21 @@ export default function FitnessPage() {
       {/* ============ DRINKS & SHAKES ============ */}
       <section id="drinks" className="container-wide py-16 md:py-24">
         <SectionHead
-          eyebrow="Drink your protein"
+          eyebrow={isAr ? 'اشرب بروتينك' : 'Drink your protein'}
           icon={<GlassWater className="h-3 w-3" />}
-          title="Protein drinks and shakes."
-          body="Fifteen blends across the day — pre-workout fuel, post-workout repair, slow-release before bed."
+          title={isAr ? 'مشروبات وشيكات البروتين.' : 'Protein drinks and shakes.'}
+          body={isAr
+            ? 'خمسة عشر خلطة على مدار اليوم: وقود قبل التمرين، ترميم بعده، إطلاق بطيء قبل النوم.'
+            : 'Fifteen blends across the day — pre-workout fuel, post-workout repair, slow-release before bed.'}
         />
 
         <div className="mb-6 flex flex-wrap gap-2">
           {([
-            { id: 'all', label: 'All' },
-            { id: 'pre', label: 'Pre-workout' },
-            { id: 'post', label: 'Post-workout' },
-            { id: 'anytime', label: 'Anytime' },
-            { id: 'meal-replace', label: 'Meal replacement' },
+            { id: 'all', label: isAr ? 'الكل' : 'All' },
+            { id: 'pre', label: isAr ? 'قبل التمرين' : 'Pre-workout' },
+            { id: 'post', label: isAr ? 'بعد التمرين' : 'Post-workout' },
+            { id: 'anytime', label: isAr ? 'أي وقت' : 'Anytime' },
+            { id: 'meal-replace', label: isAr ? 'بديل وجبة' : 'Meal replacement' },
           ] as const).map((c) => (
             <button
               key={c.id}
@@ -509,7 +533,11 @@ export default function FitnessPage() {
                 </span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-ink-600">{language === 'ar' && d.ingredientsAr ? d.ingredientsAr : d.ingredients}</p>
-              <p className="mt-4 text-[10px] uppercase tracking-widest text-ink-400">{d.vibe.replace('-', ' ')}</p>
+              <p className="mt-4 text-[10px] uppercase tracking-widest text-ink-400">{
+                isAr
+                  ? ({ pre: 'قبل التمرين', post: 'بعد التمرين', anytime: 'أي وقت', 'meal-replace': 'بديل وجبة' } as Record<string, string>)[d.vibe]
+                  : d.vibe.replace('-', ' ')
+              }</p>
             </article>
           ))}
         </div>
@@ -519,10 +547,12 @@ export default function FitnessPage() {
       <section className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            eyebrow="Between meals"
+            eyebrow={isAr ? 'بين الوجبات' : 'Between meals'}
             icon={<Coffee className="h-3 w-3" />}
-            title="High-protein snacks."
-            body="Twenty no-cook or near-no-cook ideas. Keep two or three on rotation and your protein totals will quietly take care of themselves."
+            title={isAr ? 'سناكات عالية البروتين.' : 'High-protein snacks.'}
+            body={isAr
+              ? 'عشرون فكرة بدون طبخ أو قريبة منه. خلّي 2-3 منها بالدوران وأرقام البروتين بتعتني بحالها.'
+              : 'Twenty no-cook or near-no-cook ideas. Keep two or three on rotation and your protein totals will quietly take care of themselves.'}
           />
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -543,10 +573,12 @@ export default function FitnessPage() {
       {/* ============ SMART SUBSTITUTIONS ============ */}
       <section className="container-wide py-16 md:py-24">
         <SectionHead
-          eyebrow="Quiet upgrades"
+          eyebrow={isAr ? 'تحسينات هادئة' : 'Quiet upgrades'}
           icon={<Repeat className="h-3 w-3" />}
-          title="Boost any recipe."
-          body="Fifteen one-for-one swaps that quietly bump protein without changing how a recipe tastes."
+          title={isAr ? 'عزّز أي وصفة.' : 'Boost any recipe.'}
+          body={isAr
+            ? 'خمسة عشر استبدال 1-إلى-1 يرفع البروتين بصمت بدون ما يغيّر طعم الوصفة.'
+            : 'Fifteen one-for-one swaps that quietly bump protein without changing how a recipe tastes.'}
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -578,10 +610,12 @@ export default function FitnessPage() {
       <section id="protein" className="border-y border-ink-100 bg-cream-100/40 py-16 md:py-24">
         <div className="container-wide">
           <SectionHead
-            eyebrow="The science, briefly"
+            eyebrow={isAr ? 'العلم، باختصار' : 'The science, briefly'}
             icon={<BookOpen className="h-3 w-3" />}
-            title="Protein 101."
-            body="Six topics that answer the questions every trainee eventually asks. Each cites peer-reviewed sports nutrition research."
+            title={isAr ? 'البروتين 101.' : 'Protein 101.'}
+            body={isAr
+              ? 'ستّة مواضيع بتجاوب على الأسئلة اللي بيسألها كل متدرّب. كل واحدة بتستند لبحث منشور بمجال التغذية الرياضية.'
+              : 'Six topics that answer the questions every trainee eventually asks. Each cites peer-reviewed sports nutrition research.'}
           />
 
           <div className="grid gap-6 lg:grid-cols-2">
@@ -613,10 +647,12 @@ export default function FitnessPage() {
       {/* ============ FITNESS CHANNELS ============ */}
       <section className="container-wide py-16 md:py-24">
         <SectionHead
-          eyebrow="Cooks who lift"
+          eyebrow={isAr ? 'طبّاخون يرفعون' : 'Cooks who lift'}
           icon={<Tv className="h-3 w-3" />}
-          title="Fitness cooking channels."
-          body="A short shelf of YouTube channels worth following. Each one earns its place — no random TikTok-bait recipes."
+          title={isAr ? 'قنوات طبخ الفتنس.' : 'Fitness cooking channels.'}
+          body={isAr
+            ? 'رفّ قصير من قنوات يوتيوب اللي تستحق المتابعة. كل واحدة كسبت مكانها، بدون وصفات تيك توك عشوائية.'
+            : 'A short shelf of YouTube channels worth following. Each one earns its place — no random TikTok-bait recipes.'}
         />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -633,10 +669,12 @@ export default function FitnessPage() {
             <Sparkles className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
-            Consistency beats perfection. Hit your protein, train hard, sleep enough. The rest sorts itself out.
+            {isAr
+              ? 'الانتظام بيغلب الكمال. حقّق بروتينك، تمرّن بجدّ، نام كفاية. الباقي بيرتّب حاله.'
+              : 'Consistency beats perfection. Hit your protein, train hard, sleep enough. The rest sorts itself out.'}
           </h3>
           <Link to="/recipes" className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-sage-400 hover:text-ink-900">
-            Browse all recipes
+            {isAr ? 'تصفّح كل الوصفات' : 'Browse all recipes'}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
         </div>
