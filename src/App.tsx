@@ -21,6 +21,7 @@ import DrinksLibraryPage from './pages/DrinksLibraryPage';
 import SaucesLibraryPage from './pages/SaucesLibraryPage';
 import ShortsLibraryPage from './pages/ShortsLibraryPage';
 import WorkoutLibraryPage from './pages/WorkoutLibraryPage';
+import MichelinPage from './pages/MichelinPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="sauces" element={<SaucesLibraryPage />} />
         <Route path="shorts" element={<ShortsLibraryPage />} />
         <Route path="workouts" element={<WorkoutLibraryPage />} />
+        <Route path="michelin" element={<MichelinPage />} />
         <Route path="favorites" element={<FavoritesPage />} />
         <Route path="donate" element={<DonatePage />} />
         <Route path="about" element={<AboutPage />} />

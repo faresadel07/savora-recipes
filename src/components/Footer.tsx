@@ -23,6 +23,7 @@ const CURATED_LINKS: NavItem[] = [
   { to: '/films', labelKey: 'footer.filmLibrary' },
   { to: '/academy', labelKey: 'footer.skillsAcademy' },
   { to: '/markets', labelKey: 'footer.worldMarkets' },
+  { to: '/michelin', labelKey: 'footer.michelinStars' },
   { to: '/chefs', labelKey: 'footer.chefHall' },
   { to: '/drinks', labelKey: 'footer.drinksLibrary' },
   { to: '/sauces', labelKey: 'footer.saucesLibrary' },

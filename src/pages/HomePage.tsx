@@ -9,6 +9,7 @@ import { WORLD_MARKETS, FEATURED_MARKETS } from '../data/world-markets';
 import { CHEFS, FEATURED_CHEFS } from '../data/chef-hall';
 import { CHEF_ARTICLES, FEATURED_CHEF_IDS } from '../data/chef-articles';
 import { DRINKS, FEATURED_DRINKS } from '../data/drinks-library';
+import { FEATURED_MICHELIN, COUNT_BY_STARS } from '../data/michelin-restaurants';
 import { HOME_CATEGORIES, WORLD_CUISINES } from '../lib/constants';
 import { useCollections } from '../hooks/useCollections';
 import { useTranslation } from '../i18n';
@@ -361,6 +362,9 @@ export default function HomePage() {
       {/* TRAIN + EAT RIGHT (gym + fitness CTA) */}
       <TrainAndEatRight />
 
+      {/* MICHELIN SPOTLIGHT (premium fine-dining CTA) */}
+      <MichelinSpotlight isAr={language === 'ar'} />
+
       {/* SECTIONS SHOWCASE (what else is here) */}
       <SectionsShowcase language={language} />
 
@@ -620,6 +624,75 @@ function ShowcaseImage({ videoId, imageUrl }: { videoId?: string; imageUrl?: str
       loading="lazy"
       className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
     />
+  );
+}
+
+function MichelinSpotlight({ isAr }: { isAr: boolean }) {
+  const featured = FEATURED_MICHELIN.filter((r) => r.image).slice(0, 4);
+  if (featured.length < 3) return null;
+
+  return (
+    <section className="container-wide mt-24 md:mt-32">
+      <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-900 to-terracotta-900 text-cream-50 md:rounded-[2rem]">
+        <div className="grid items-center gap-8 p-7 md:grid-cols-12 md:gap-10 md:p-12">
+          <div className="md:col-span-6">
+            <p className="eyebrow mb-4 inline-flex items-center gap-2 text-gold-400">
+              <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+              <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+              <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+              <span>{isAr ? 'نجوم ميشلان' : 'Michelin stars'}</span>
+            </p>
+            <h2 className="max-w-2xl text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tighter">
+              {isAr ? 'أعلى تكريم بعالم المطاعم.' : 'The highest honor in dining.'}
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-cream-100/70 md:text-lg">
+              {isAr
+                ? `${COUNT_BY_STARS.three} مطعم بثلاث نجوم. ${COUNT_BY_STARS.two} بنجمتين. ${COUNT_BY_STARS.one} بنجمة واحدة. من نوما لجاي فاي، ومن أول بسطة تاكو حصلت نجمة، لمطاعم دبي والرياض اللي دخلت دليل ميشلان.`
+                : `${COUNT_BY_STARS.three} three-star restaurants. ${COUNT_BY_STARS.two} two-star. ${COUNT_BY_STARS.one} one-star. From Noma to Jay Fai, the first Michelin taco stand, and the restaurants of Dubai and Riyadh that just made the guide.`}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Link
+                to="/michelin"
+                className="inline-flex items-center gap-1.5 rounded-full bg-gold-500 px-5 py-2.5 text-sm font-medium text-ink-900 transition-colors hover:bg-gold-400"
+              >
+                <Star className="h-3.5 w-3.5 fill-current" />
+                {isAr ? 'افتح أطلس ميشلان' : 'Open the Michelin atlas'}
+              </Link>
+            </div>
+          </div>
+
+          <div className="md:col-span-6">
+            <div className="grid grid-cols-2 gap-3">
+              {featured.map((r, i) => (
+                <Link
+                  key={r.id}
+                  to={`/michelin#m-${r.id}`}
+                  className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-ink-800 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1"
+                  style={{ animationDelay: `${i * 60}ms` }}
+                >
+                  <img
+                    src={r.image!}
+                    alt={r.name}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-3.5">
+                    <div className="mb-1 inline-flex">
+                      {Array.from({ length: r.stars }).map((_, idx) => (
+                        <Star key={idx} className="h-3 w-3 fill-current text-gold-400" />
+                      ))}
+                    </div>
+                    <p className="text-[9px] font-medium tracking-tight text-gold-400">{isAr ? r.cityAr : r.city}</p>
+                    <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">{isAr ? r.nameAr : r.name}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

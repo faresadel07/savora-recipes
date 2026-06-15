@@ -1,0 +1,418 @@
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, ChefHat, MapPin, Sparkles, Star, Utensils } from 'lucide-react';
+import { useTranslation } from '../i18n';
+import {
+  MICHELIN_REGIONS,
+  MICHELIN_RESTAURANTS,
+  FEATURED_MICHELIN,
+  ARAB_WORLD_MICHELIN,
+  COUNT_BY_STARS,
+  type MichelinRestaurant,
+  type MichelinRegion,
+} from '../data/michelin-restaurants';
+
+type StarsFilter = 'all' | '3' | '2' | '1';
+type RegionFilter = 'all' | MichelinRegion;
+
+function StarsBadge({ stars }: { stars: 1 | 2 | 3 }) {
+  return (
+    <span className="inline-flex items-center gap-0.5">
+      {Array.from({ length: stars }).map((_, i) => (
+        <Star key={i} className="h-3.5 w-3.5 fill-current text-gold-500" strokeWidth={1.5} />
+      ))}
+    </span>
+  );
+}
+
+function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
+  const { t, pl, language } = useTranslation();
+  const isAr = language === 'ar';
+  const name = isAr ? restaurant.nameAr : restaurant.name;
+  const city = isAr ? restaurant.cityAr : restaurant.city;
+  const country = isAr ? restaurant.countryAr : restaurant.country;
+  const chef = pl(restaurant.chef, restaurant.chefAr);
+  const cuisine = isAr ? restaurant.cuisineAr : restaurant.cuisine;
+  const story = pl(restaurant.story, restaurant.storyAr);
+  const dishes = isAr && restaurant.signatureDishesAr ? restaurant.signatureDishesAr : restaurant.signatureDishes;
+
+  return (
+    <article
+      id={`m-${restaurant.id}`}
+      className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
+    >
+      <div className="relative aspect-video overflow-hidden bg-ink-900">
+        {restaurant.image ? (
+          <img
+            src={restaurant.image}
+            alt={name}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = 'none';
+            }}
+          />
+        ) : (
+          <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-800 via-ink-900 to-terracotta-900">
+            <ChefHat className="h-12 w-12 text-cream-50/30" strokeWidth={1} />
+          </div>
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
+
+        {/* Stars badge */}
+        <span className="absolute start-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-cream-50 backdrop-blur">
+          <StarsBadge stars={restaurant.stars} />
+          {restaurant.starsSince && (
+            <span className="text-cream-100/70">{restaurant.starsSince}</span>
+          )}
+        </span>
+
+        {/* Halal / Arab world badges */}
+        <div className="absolute end-3 top-3 flex flex-col items-end gap-1.5">
+          {restaurant.isHalalFriendly && (
+            <span className="rounded-full bg-sage-500 px-2.5 py-1 text-[10px] font-semibold tracking-tight text-cream-50 backdrop-blur">
+              {t('michelin.halalBadge')}
+            </span>
+          )}
+          {restaurant.isInArabWorld && (
+            <span className="rounded-full bg-terracotta-500 px-2.5 py-1 text-[10px] font-semibold tracking-tight text-cream-50 backdrop-blur">
+              {t('michelin.arabWorldBadge')}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
+          <MapPin className="h-3 w-3" />
+          {city}, {country}
+        </p>
+        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{name}</h3>
+        <p className="mt-1 text-sm tracking-tight text-gold-600">{cuisine}</p>
+
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-500">
+          <ChefHat className="h-3 w-3" />
+          {chef}
+        </p>
+
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">{story}</p>
+
+        {dishes && dishes.length > 0 && (
+          <div className="mt-5">
+            <p className="text-[12px] font-semibold tracking-tight text-ink-900">{t('michelin.dishesLabel')}</p>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {dishes.map((d) => (
+                <span
+                  key={d}
+                  className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700"
+                >
+                  {d}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+export default function MichelinPage() {
+  const { t, language } = useTranslation();
+  const isAr = language === 'ar';
+  const [stars, setStars] = useState<StarsFilter>('all');
+  const [region, setRegion] = useState<RegionFilter>('all');
+
+  const filtered = useMemo(() => {
+    return MICHELIN_RESTAURANTS.filter((r) => {
+      if (stars !== 'all' && String(r.stars) !== stars) return false;
+      if (region !== 'all' && r.region !== region) return false;
+      return true;
+    });
+  }, [stars, region]);
+
+  const threeStars = filtered.filter((r) => r.stars === 3);
+  const twoStars = filtered.filter((r) => r.stars === 2);
+  const oneStars = filtered.filter((r) => r.stars === 1);
+
+  return (
+    <div>
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden bg-cream-50 pb-16 pt-12 md:pb-24 md:pt-16">
+        <div className="container-wide relative z-10">
+          <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
+            <div className="md:col-span-7">
+              <p className="eyebrow mb-4 inline-flex items-center gap-2 text-gold-600">
+                <Sparkles className="h-3 w-3" strokeWidth={2} />
+                {t('michelin.eyebrow')}
+              </p>
+              <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
+                {t('michelin.title1')}
+                <br />
+                <span className="text-gold-600">
+                  {t('michelin.title2', { three: COUNT_BY_STARS.three, two: COUNT_BY_STARS.two, one: COUNT_BY_STARS.one })}
+                </span>
+              </h1>
+              <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">{t('michelin.body')}</p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#three-stars"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-gold-600"
+                >
+                  <Star className="h-3.5 w-3.5 fill-current" />
+                  {t('michelin.ctaStart')}
+                </a>
+                <a
+                  href="#arab-world"
+                  className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
+                >
+                  {t('michelin.ctaArabWorld')}
+                </a>
+              </div>
+
+              <div className="mt-10 grid max-w-md grid-cols-4 gap-2">
+                {[
+                  { value: `${COUNT_BY_STARS.three}`, label: t('michelin.statThreeStars') },
+                  { value: `${COUNT_BY_STARS.two}`, label: t('michelin.statTwoStars') },
+                  { value: `${COUNT_BY_STARS.one}`, label: t('michelin.statOneStar') },
+                  { value: `${new Set(MICHELIN_RESTAURANTS.map((r) => r.country)).size}`, label: t('michelin.statCountries') },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-2xl border border-ink-100 bg-cream-50 p-3 text-center">
+                    <p className="text-xl font-bold tracking-tighter text-ink-900 md:text-2xl">{s.value}</p>
+                    <p className="mt-1 text-xs tracking-tight text-ink-500">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="md:col-span-5">
+              <div className="grid grid-cols-2 gap-3">
+                {FEATURED_MICHELIN.slice(0, 4).map((r, i) => {
+                  if (!r.image) return null;
+                  return (
+                    <a
+                      key={r.id}
+                      href={`#m-${r.id}`}
+                      className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] transition-transform duration-500 hover:-translate-y-1"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
+                      <img
+                        src={r.image}
+                        alt={r.name}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5">
+                        <div className="mb-1">
+                          <StarsBadge stars={r.stars} />
+                        </div>
+                        <p className="text-[9px] font-medium tracking-tight text-gold-400">
+                          {isAr ? r.cityAr : r.city}
+                        </p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">
+                          {isAr ? r.nameAr : r.name}
+                        </p>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute -end-32 -top-32 h-96 w-96 rounded-full bg-gold-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
+      </section>
+
+      {/* ============ FILTERS ============ */}
+      <section className="border-y border-ink-100 bg-cream-100/40 py-8">
+        <div className="container-wide">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-wrap gap-2">
+              {([
+                { id: 'all' as StarsFilter, label: t('michelin.allStars') },
+                { id: '3' as StarsFilter, label: t('michelin.threeStars') },
+                { id: '2' as StarsFilter, label: t('michelin.twoStars') },
+                { id: '1' as StarsFilter, label: t('michelin.oneStar') },
+              ]).map((b) => {
+                const isActive = stars === b.id;
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    onClick={() => setStars(b.id)}
+                    className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+                      isActive
+                        ? 'border-ink-900 bg-ink-900 text-cream-50'
+                        : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                    }`}
+                  >
+                    {b.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {([
+                { id: 'all' as RegionFilter, name: t('michelin.allRegions') },
+                ...MICHELIN_REGIONS.map((r) => ({ id: r.id as RegionFilter, name: isAr ? r.nameAr : r.name })),
+              ]).map((b) => {
+                const isActive = region === b.id;
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    onClick={() => setRegion(b.id)}
+                    className={`rounded-full border px-3.5 py-1.5 text-[12px] font-medium tracking-tight transition-colors ${
+                      isActive
+                        ? 'border-gold-600 bg-gold-500/15 text-gold-700'
+                        : 'border-ink-200 bg-cream-50 text-ink-500 hover:border-ink-900 hover:text-ink-900'
+                    }`}
+                  >
+                    {b.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <p className="mt-4 text-sm tracking-tight text-ink-500">{t('michelin.nResults', { n: filtered.length })}</p>
+        </div>
+      </section>
+
+      {filtered.length === 0 ? (
+        <section className="container-wide py-20">
+          <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
+            <p className="text-base text-ink-600">{t('michelin.emptyTitle')}</p>
+            <button
+              type="button"
+              onClick={() => {
+                setStars('all');
+                setRegion('all');
+              }}
+              className="mt-4 inline-flex items-center gap-2 rounded-full border border-ink-200 px-5 py-2 text-sm font-medium tracking-tight text-ink-900 hover:border-ink-900"
+            >
+              {t('michelin.resetFilters')}
+            </button>
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* ============ THREE STARS ============ */}
+          {threeStars.length > 0 && (
+            <section id="three-stars" className="container-wide py-12 md:py-20">
+              <div className="mb-10">
+                <p className="eyebrow mb-3 inline-flex items-center gap-2 text-gold-600">
+                  <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+                  <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+                  <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+                </p>
+                <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+                  {t('michelin.threeStarsTitle')}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base">{t('michelin.threeStarsBody')}</p>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {threeStars.map((r) => (
+                  <RestaurantCard key={r.id} restaurant={r} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ============ ARAB WORLD SPOTLIGHT ============ */}
+          {region === 'all' && stars === 'all' && (
+            <section id="arab-world" className="border-y border-ink-100 bg-gradient-to-b from-terracotta-50/40 to-cream-100/40 py-12 md:py-20">
+              <div className="container-wide">
+                <div className="mb-10">
+                  <p className="eyebrow mb-3 inline-flex items-center gap-2 text-terracotta-500">
+                    <Sparkles className="h-3 w-3" strokeWidth={2} />
+                    <span>{t('michelin.arabWorldBadge')}</span>
+                  </p>
+                  <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+                    {t('michelin.arabWorldTitle')}
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base">{t('michelin.arabWorldBody')}</p>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                  {ARAB_WORLD_MICHELIN.map((r) => (
+                    <RestaurantCard key={r.id} restaurant={r} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ============ TWO STARS ============ */}
+          {twoStars.length > 0 && (
+            <section className="container-wide py-12 md:py-20">
+              <div className="mb-10">
+                <p className="eyebrow mb-3 inline-flex items-center gap-2 text-gold-600">
+                  <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+                  <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+                </p>
+                <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+                  {t('michelin.twoStarsTitle')}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base">{t('michelin.twoStarsBody')}</p>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {twoStars.map((r) => (
+                  <RestaurantCard key={r.id} restaurant={r} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ============ ONE STAR ============ */}
+          {oneStars.length > 0 && (
+            <section className="border-t border-ink-100 bg-cream-100/40 py-12 md:py-20">
+              <div className="container-wide">
+                <div className="mb-10">
+                  <p className="eyebrow mb-3 inline-flex items-center gap-2 text-gold-600">
+                    <Star className="h-3 w-3 fill-current" strokeWidth={2} />
+                  </p>
+                  <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+                    {t('michelin.oneStarTitle')}
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base">{t('michelin.oneStarBody')}</p>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                  {oneStars.map((r) => (
+                    <RestaurantCard key={r.id} restaurant={r} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </>
+      )}
+
+      {/* ============ CLOSING ============ */}
+      <section className="container-wide pb-20 pt-16">
+        <div className="overflow-hidden rounded-3xl bg-ink-900 px-7 py-14 text-center text-cream-50 md:px-16 md:py-20">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-gold-500/25 text-gold-400">
+            <Utensils className="h-6 w-6" strokeWidth={1.5} />
+          </div>
+          <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
+            {t('michelin.closingTitle')}
+          </h3>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
+            {t('michelin.closingBody')}
+          </p>
+          <Link
+            to="/markets"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
+          >
+            {t('michelin.closingCta')}
+            <ArrowUpRight className="rtl-flip h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
