@@ -1,6 +1,19 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Clock, MapPin, Play, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
+import {
+  ArrowUpRight,
+  Award,
+  ChefHat,
+  Clock,
+  MapPin,
+  Play,
+  Search,
+  ShoppingBag,
+  Sparkles,
+  Star,
+  Utensils,
+  X,
+} from 'lucide-react';
 import { useTranslation } from '../i18n';
 import {
   MARKET_REGIONS,
@@ -9,6 +22,21 @@ import {
   type FoodMarket,
   type MarketRegion,
 } from '../data/world-markets';
+import {
+  CITY_REGIONS,
+  FOOD_CITIES,
+  FEATURED_CITIES,
+  type FoodCity,
+  type CityVideo,
+  type CityRegion,
+} from '../data/food-cities';
+import {
+  RESTAURANT_TYPES,
+  FAMOUS_RESTAURANTS,
+  FEATURED_RESTAURANTS,
+  type FamousRestaurant,
+  type RestaurantType,
+} from '../data/famous-restaurants';
 
 type RegionFilter = 'all' | MarketRegion;
 
@@ -23,11 +51,12 @@ function useRegionFilters() {
 
 function useHeroStats() {
   const { t } = useTranslation();
+  const totalVideos = FOOD_CITIES.reduce((sum, c) => sum + c.videos.length, 0);
   return [
+    { value: `${FOOD_CITIES.length}`, label: t('markets.statCities') },
+    { value: `${FAMOUS_RESTAURANTS.length}`, label: t('markets.statRestaurants') },
     { value: `${WORLD_MARKETS.length}`, label: t('markets.statMarkets') },
-    { value: `${new Set(WORLD_MARKETS.map((m) => m.country)).size}`, label: t('markets.statCountries') },
-    { value: `${MARKET_REGIONS.length}`, label: t('markets.statRegions') },
-    { value: `${Math.min(...WORLD_MARKETS.map((m) => m.yearFounded ?? 9999))}`, label: t('markets.statOldestYear') },
+    { value: `${totalVideos}+`, label: t('markets.statVideos') },
   ];
 }
 
@@ -57,11 +86,11 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
         onLoad={(e) => {
           const t = e.currentTarget;
           if (t.naturalWidth > 120) return;
-                          if (t.src.includes('maxresdefault')) {
-                            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-                          } else if (t.src.includes('sddefault')) {
-                            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                          }
+          if (t.src.includes('maxresdefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+          } else if (t.src.includes('sddefault')) {
+            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          }
         }}
         onError={(e) => {
           const t = e.currentTarget;
@@ -82,6 +111,137 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
     </button>
   );
 }
+
+// ============ CITY CARD ============
+
+function CityVideoTab({ video, isActive, onClick, label }: { video: CityVideo; isActive: boolean; onClick: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex-1 rounded-full border px-3 py-1.5 text-[11px] font-medium tracking-tight transition-colors ${
+        isActive ? 'border-ink-900 bg-ink-900 text-cream-50' : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function CityCard({ city }: { city: FoodCity }) {
+  const { t, pl, language } = useTranslation();
+  const isAr = language === 'ar';
+  const [activeVideoIdx, setActiveVideoIdx] = useState(0);
+  const activeVideo = city.videos[activeVideoIdx];
+
+  const labels: Record<string, string> = {
+    street: t('markets.cityVideoStreet'),
+    restaurants: t('markets.cityVideoRestaurants'),
+    market: t('markets.cityVideoMarket'),
+    signature: t('markets.cityVideoSignature'),
+  };
+
+  const blurb = pl(city.blurb, city.blurbAr);
+  const name = isAr ? city.nameAr : city.name;
+  const country = isAr ? city.countryAr : city.country;
+  const dishes = isAr && city.signatureDishesAr ? city.signatureDishesAr : city.signatureDishes;
+
+  return (
+    <article id={`city-${city.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
+      <div className="relative aspect-video bg-ink-900">
+        {activeVideo && <YoutubeLite videoId={activeVideo.videoId} title={activeVideo.title} />}
+        <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
+          {t('markets.cityVideosLabel', { n: city.videos.length })}
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
+          <MapPin className="h-3 w-3" />
+          {country}
+        </p>
+        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{name}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-ink-600">{blurb}</p>
+
+        <div className="mt-5 grid grid-cols-2 gap-1.5 md:grid-cols-4">
+          {city.videos.map((v, i) => (
+            <CityVideoTab
+              key={i}
+              video={v}
+              isActive={i === activeVideoIdx}
+              onClick={() => setActiveVideoIdx(i)}
+              label={labels[v.category] ?? v.category}
+            />
+          ))}
+        </div>
+
+        {dishes && dishes.length > 0 && (
+          <div className="mt-5">
+            <p className="text-[12px] font-semibold tracking-tight text-ink-900">{t('markets.citySignatureDishes')}</p>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {dishes.map((d) => (
+                <span key={d} className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700">{d}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+// ============ RESTAURANT CARD ============
+
+function RestaurantCard({ restaurant }: { restaurant: FamousRestaurant }) {
+  const { t, pl, language } = useTranslation();
+  const isAr = language === 'ar';
+  const name = isAr ? restaurant.nameAr : restaurant.name;
+  const city = isAr ? restaurant.cityAr : restaurant.city;
+  const country = isAr ? restaurant.countryAr : restaurant.country;
+  const cuisine = isAr ? restaurant.cuisineAr : restaurant.cuisine;
+  const story = pl(restaurant.story, restaurant.storyAr);
+  const dishes = isAr && restaurant.signatureDishesAr ? restaurant.signatureDishesAr : restaurant.signatureDishes;
+
+  return (
+    <article id={`r-${restaurant.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
+      <div className="relative aspect-video bg-ink-900">
+        <YoutubeLite videoId={restaurant.videoId} title={restaurant.name} />
+        {restaurant.yearFounded && (
+          <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
+            <Clock className="h-3 w-3" /> {t('markets.restaurantSince')} {restaurant.yearFounded}
+          </span>
+        )}
+        {restaurant.michelinStars != null && restaurant.michelinStars > 0 && (
+          <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-900 backdrop-blur">
+            <Star className="h-3 w-3 fill-current" /> {t('markets.restaurantMichelin', { n: restaurant.michelinStars })}
+          </span>
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
+          <MapPin className="h-3 w-3" />
+          {city}, {country}
+        </p>
+        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{name}</h3>
+        <p className="mt-1 text-sm tracking-tight text-gold-600">{cuisine}</p>
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">{story}</p>
+
+        {dishes && dishes.length > 0 && (
+          <div className="mt-5">
+            <p className="text-[12px] font-semibold tracking-tight text-ink-900">{t('markets.restaurantDishes')}</p>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {dishes.map((d) => (
+                <span key={d} className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700">{d}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+// ============ MARKET CARD (preserved) ============
 
 function MarketCard({ market }: { market: FoodMarket }) {
   const { pl, language } = useTranslation();
@@ -105,12 +265,8 @@ function MarketCard({ market }: { market: FoodMarket }) {
           <MapPin className="h-3 w-3" />
           {market.city}, {market.country}
         </p>
-        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">
-          {market.name}
-        </h3>
-        {market.nameLocal && (
-          <p className="mt-1 text-base font-medium tracking-tight text-ink-500">{market.nameLocal}</p>
-        )}
+        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight md:text-2xl">{market.name}</h3>
+        {market.nameLocal && <p className="mt-1 text-base font-medium tracking-tight text-ink-500">{market.nameLocal}</p>}
         <p className="mt-3 text-sm tracking-tight text-ink-500">{marketType}</p>
         <p className="mt-4 text-sm leading-relaxed text-ink-600">{blurb}</p>
 
@@ -118,12 +274,7 @@ function MarketCard({ market }: { market: FoodMarket }) {
           <p className="text-[12px] font-semibold tracking-tight text-ink-900">{isAr ? 'الأكلات الشهيرة' : 'Signature foods'}</p>
           <div className="mt-2.5 flex flex-wrap gap-1.5">
             {foods.map((food) => (
-              <span
-                key={food}
-                className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700"
-              >
-                {food}
-              </span>
+              <span key={food} className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700">{food}</span>
             ))}
           </div>
         </div>
@@ -143,75 +294,45 @@ function MarketCard({ market }: { market: FoodMarket }) {
   );
 }
 
-function MarketHeroCard({ market }: { market: FoodMarket }) {
-  const { pl, language } = useTranslation();
-  const heroIsAr = language === 'ar';
-  const heroBlurb = pl(market.blurb, market.blurbAr);
-  const heroFoods = heroIsAr && market.signatureFoodsAr ? market.signatureFoodsAr : market.signatureFoods;
-  return (
-    <article className="group relative overflow-hidden rounded-3xl bg-ink-900 text-cream-50 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]">
-      <div className="relative aspect-[16/9] md:aspect-[16/7]">
-        <YoutubeLite videoId={market.videoId} title={market.name} />
-      </div>
-      <div className="p-6 md:p-8">
-        <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-cream-100/70">
-          <MapPin className="h-3 w-3" />
-          {market.city}, {market.country}
-          {market.yearFounded && <span className="ms-2">{heroIsAr ? 'منذ' : 'Since'} {market.yearFounded}</span>}
-        </p>
-        <h3 className="mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-          {market.name}
-        </h3>
-        {market.nameLocal && (
-          <p className="mt-1 text-lg font-medium tracking-tight text-gold-400">{market.nameLocal}</p>
-        )}
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-cream-100/80 md:text-base">
-          {heroBlurb}
-        </p>
-        <div className="mt-5 flex flex-wrap gap-1.5">
-          {heroFoods.slice(0, 5).map((food) => (
-            <span
-              key={food}
-              className="rounded-full border border-cream-50/20 bg-cream-50/5 px-2.5 py-1 text-[11px] font-medium tracking-tight text-cream-100/90"
-            >
-              {food}
-            </span>
-          ))}
-        </div>
-      </div>
-    </article>
-  );
-}
+// ============ MAIN PAGE ============
 
 export default function WorldMarketsPage() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  const isAr = language === 'ar';
   const REGION_FILTERS = useRegionFilters();
   const HERO_STATS = useHeroStats();
+
+  // Markets section state (kept)
   const [region, setRegion] = useState<RegionFilter>('all');
   const [query, setQuery] = useState('');
 
-  const filtered = useMemo(() => {
+  // Cities section state
+  const [cityRegion, setCityRegion] = useState<'all' | CityRegion>('all');
+
+  // Restaurants section state
+  const [restaurantType, setRestaurantType] = useState<'all' | RestaurantType>('all');
+
+  const filteredMarkets = useMemo(() => {
     const q = query.trim().toLowerCase();
     return WORLD_MARKETS.filter((m) => {
       if (region !== 'all' && m.region !== region) return false;
       if (!q) return true;
-      const haystack = [
-        m.name,
-        m.nameLocal ?? '',
-        m.city,
-        m.country,
-        m.blurb,
-        m.history,
-        ...m.signatureFoods,
-      ]
-        .join(' ')
-        .toLowerCase();
+      const haystack = [m.name, m.nameLocal ?? '', m.city, m.country, m.blurb, m.history, ...m.signatureFoods].join(' ').toLowerCase();
       return haystack.includes(q);
     });
   }, [region, query]);
 
+  const filteredCities = useMemo(() => {
+    return cityRegion === 'all' ? FOOD_CITIES : FOOD_CITIES.filter((c) => c.region === cityRegion);
+  }, [cityRegion]);
+
+  const filteredRestaurants = useMemo(() => {
+    return restaurantType === 'all' ? FAMOUS_RESTAURANTS : FAMOUS_RESTAURANTS.filter((r) => r.type === restaurantType);
+  }, [restaurantType]);
+
   const showRegionGroups = region === 'all' && !query;
-  const featured = FEATURED_MARKETS[0];
+  const featuredMarket = FEATURED_MARKETS[0];
+  const featuredRestaurant = FEATURED_RESTAURANTS[0];
 
   return (
     <div>
@@ -223,25 +344,22 @@ export default function WorldMarketsPage() {
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
                 {t('markets.title1')}
                 <br />
-                <span className="text-gold-600">{t('markets.title2', { n: WORLD_MARKETS.length })}</span>
+                <span className="text-gold-600">
+                  {t('markets.title2', { c: FOOD_CITIES.length, r: FAMOUS_RESTAURANTS.length, m: WORLD_MARKETS.length })}
+                </span>
               </h1>
-              <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                {t('markets.body')}
-              </p>
+              <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">{t('markets.body')}</p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="#atlas"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
-                >
+                <a href="#cities" className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500">
                   <ShoppingBag className="h-3.5 w-3.5" />
                   {t('markets.ctaOpenAtlas')}
                 </a>
-                <a
-                  href="#region-middle-east"
-                  className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
-                >
-                  {t('markets.ctaMiddleEastFirst')}
+                <a href="#city-new-york" className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900">
+                  {t('markets.ctaStartNewYork')}
+                </a>
+                <a href="#city-tokyo" className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900">
+                  {t('markets.ctaStartTokyo')}
                 </a>
               </div>
 
@@ -257,48 +375,42 @@ export default function WorldMarketsPage() {
 
             <div className="md:col-span-5">
               <div className="grid grid-cols-2 gap-3">
-                {FEATURED_MARKETS.slice(0, 4).map((m, i) => (
-                  <a
-                    key={m.id}
-                    href="#atlas"
-                    onClick={() => setRegion(m.region)}
-                    className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] transition-transform duration-500 hover:-translate-y-1"
-                    style={{ animationDelay: `${i * 60}ms` }}
-                  >
-                    <img
-                      src={`https://img.youtube.com/vi/${m.videoId}/maxresdefault.jpg`}
-                      onLoad={(e) => {
-                        const t = e.currentTarget;
-                        if (t.naturalWidth > 120) return;
+                {FEATURED_CITIES.slice(0, 4).map((c, i) => {
+                  const firstVideo = c.videos[0];
+                  if (!firstVideo) return null;
+                  return (
+                    <a
+                      key={c.id}
+                      href={`#city-${c.id}`}
+                      className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] transition-transform duration-500 hover:-translate-y-1"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${firstVideo.videoId}/maxresdefault.jpg`}
+                        onError={(e) => {
+                          const t = e.currentTarget;
                           if (t.src.includes('maxresdefault')) {
-                            t.src = `https://img.youtube.com/vi/${m.videoId}/sddefault.jpg`;
+                            t.src = `https://img.youtube.com/vi/${firstVideo.videoId}/sddefault.jpg`;
                           } else if (t.src.includes('sddefault')) {
-                            t.src = `https://img.youtube.com/vi/${m.videoId}/hqdefault.jpg`;
+                            t.src = `https://img.youtube.com/vi/${firstVideo.videoId}/hqdefault.jpg`;
                           }
-                      }}
-                      onError={(e) => {
-                        const t = e.currentTarget;
-                        if (t.src.includes('maxresdefault')) {
-                          t.src = `https://img.youtube.com/vi/${m.videoId}/sddefault.jpg`;
-                        } else if (t.src.includes('sddefault')) {
-                          t.src = `https://img.youtube.com/vi/${m.videoId}/hqdefault.jpg`;
-                        }
-                      }}
-                      alt={m.name}
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-3.5">
-                      <p className="text-[9px] font-medium tracking-tight text-gold-400">
-                        {m.city}, {m.country}
-                      </p>
-                      <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">
-                        {m.name}
-                      </p>
-                    </div>
-                  </a>
-                ))}
+                        }}
+                        alt={c.name}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5">
+                        <p className="text-[9px] font-medium tracking-tight text-gold-400">
+                          {isAr ? c.countryAr : c.country}
+                        </p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">
+                          {isAr ? c.nameAr : c.name}
+                        </p>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -308,22 +420,144 @@ export default function WorldMarketsPage() {
         <div className="pointer-events-none absolute -bottom-32 -start-32 h-96 w-96 rounded-full bg-terracotta-500/15 blur-3xl" />
       </section>
 
-      {/* ============ FEATURED MARKET ============ */}
-      {featured && (
+      {/* ============ FEATURED RESTAURANT (eyebrow) ============ */}
+      {featuredRestaurant && (
         <section className="border-t border-ink-100 py-12 md:py-16">
           <div className="container-wide">
+            <div className="mb-6 flex items-baseline justify-between gap-4">
+              <p className="eyebrow inline-flex items-center gap-2 text-terracotta-500">
+                <Award className="h-3 w-3" strokeWidth={2} />
+                {isAr ? 'مطعم اليوم' : 'Restaurant of the day'}
+              </p>
+              <p className="text-sm tracking-tight text-ink-500">{isAr ? 'مطعم واحد، بعمق' : 'One restaurant, deeply'}</p>
+            </div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <RestaurantCard restaurant={featuredRestaurant} />
+              <RestaurantCard restaurant={FEATURED_RESTAURANTS[1] ?? FAMOUS_RESTAURANTS[1]} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ============ FOOD CITIES ============ */}
+      <section id="cities" className="border-y border-ink-100 bg-cream-100/40 py-12 md:py-20">
+        <div className="container-wide">
+          <p className="eyebrow mb-3 inline-flex items-center gap-2 text-gold-600">
+            <Sparkles className="h-3 w-3" strokeWidth={2} />
+            {t('markets.citiesEyebrow')}
+          </p>
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
+            {t('markets.citiesTitle')}
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base">{t('markets.citiesBody')}</p>
+
+          <div className="mb-10 mt-8 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setCityRegion('all')}
+              className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+                cityRegion === 'all' ? 'border-ink-900 bg-ink-900 text-cream-50' : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+              }`}
+            >
+              {t('markets.allMarkets')}
+              <span className={`ms-2 text-[11px] ${cityRegion === 'all' ? 'text-cream-100/60' : 'text-ink-400'}`}>{FOOD_CITIES.length}</span>
+            </button>
+            {CITY_REGIONS.map((r) => {
+              const count = FOOD_CITIES.filter((c) => c.region === r.id).length;
+              const isActive = cityRegion === r.id;
+              return (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => setCityRegion(r.id)}
+                  className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+                    isActive ? 'border-ink-900 bg-ink-900 text-cream-50' : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                  }`}
+                >
+                  {isAr ? r.nameAr : r.name}
+                  <span className={`ms-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>{count}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {filteredCities.map((city) => (
+              <CityCard key={city.id} city={city} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ FAMOUS RESTAURANTS ============ */}
+      <section id="restaurants" className="container-wide py-12 md:py-20">
+        <p className="eyebrow mb-3 inline-flex items-center gap-2 text-terracotta-500">
+          <ChefHat className="h-3 w-3" strokeWidth={2} />
+          {t('markets.restaurantsEyebrow')}
+        </p>
+        <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">{t('markets.restaurantsTitle')}</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base">{t('markets.restaurantsBody')}</p>
+
+        <div className="mb-10 mt-8 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setRestaurantType('all')}
+            className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+              restaurantType === 'all' ? 'border-ink-900 bg-ink-900 text-cream-50' : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+            }`}
+          >
+            {t('markets.allMarkets')}
+            <span className={`ms-2 text-[11px] ${restaurantType === 'all' ? 'text-cream-100/60' : 'text-ink-400'}`}>{FAMOUS_RESTAURANTS.length}</span>
+          </button>
+          {RESTAURANT_TYPES.map((r) => {
+            const count = FAMOUS_RESTAURANTS.filter((res) => res.type === r.id).length;
+            const isActive = restaurantType === r.id;
+            return (
+              <button
+                key={r.id}
+                type="button"
+                onClick={() => setRestaurantType(r.id)}
+                className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
+                  isActive ? 'border-ink-900 bg-ink-900 text-cream-50' : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                }`}
+              >
+                {isAr ? r.nameAr : r.name}
+                <span className={`ms-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {filteredRestaurants.map((r) => (
+            <RestaurantCard key={r.id} restaurant={r} />
+          ))}
+        </div>
+      </section>
+
+      {/* ============ FEATURED MARKET ============ */}
+      {featuredMarket && (
+        <section className="border-t border-ink-100 py-12 md:py-16">
+          <div className="container-wide">
+            <p className="eyebrow mb-3 inline-flex items-center gap-2 text-sage-600">
+              <ShoppingBag className="h-3 w-3" strokeWidth={2} />
+              {t('markets.marketsEyebrow')}
+            </p>
             <div className="mb-6 flex items-baseline justify-between gap-4">
               <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
                 {t('markets.stallOfTheDay')}
               </h2>
               <p className="text-sm tracking-tight text-ink-500">{t('markets.stallOfTheDaySub')}</p>
             </div>
-            <MarketHeroCard market={featured} />
+            <div className="grid gap-6 lg:grid-cols-2">
+              <MarketCard market={featuredMarket} />
+              {FEATURED_MARKETS[1] && <MarketCard market={FEATURED_MARKETS[1]} />}
+            </div>
           </div>
         </section>
       )}
 
-      {/* ============ ATLAS ============ */}
+      {/* ============ MARKETS ATLAS (preserved) ============ */}
       <section id="atlas" className="border-t border-ink-100 bg-cream-100/40 py-12 md:py-16">
         <div className="container-wide">
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -360,25 +594,18 @@ export default function WorldMarketsPage() {
           <div className="mb-10 flex flex-wrap gap-2">
             {REGION_FILTERS.map((r) => {
               const isActive = region === r.id;
-              const count =
-                r.id === 'all'
-                  ? WORLD_MARKETS.length
-                  : WORLD_MARKETS.filter((m) => m.region === r.id).length;
+              const count = r.id === 'all' ? WORLD_MARKETS.length : WORLD_MARKETS.filter((m) => m.region === r.id).length;
               return (
                 <button
                   key={r.id}
                   type="button"
                   onClick={() => setRegion(r.id)}
                   className={`rounded-full border px-4 py-2 text-[13px] font-medium tracking-tight transition-colors ${
-                    isActive
-                      ? 'border-ink-900 bg-ink-900 text-cream-50'
-                      : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
+                    isActive ? 'border-ink-900 bg-ink-900 text-cream-50' : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
                   }`}
                 >
                   {r.name}
-                  <span className={`ms-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>
-                    {count}
-                  </span>
+                  <span className={`ms-2 text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>{count}</span>
                 </button>
               );
             })}
@@ -393,9 +620,7 @@ export default function WorldMarketsPage() {
                   <div key={reg.id} id={`region-${reg.id}`} className="scroll-mt-24">
                     <div className="mb-6 flex items-end justify-between gap-4">
                       <div>
-                        <h3 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
-                          {reg.name}
-                        </h3>
+                        <h3 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">{reg.name}</h3>
                         <p className="mt-1 text-sm tracking-tight text-ink-500">{reg.tagline}</p>
                       </div>
                       <p className="text-sm tracking-tight text-ink-500">{t('markets.nMarkets', { n: items.length })}</p>
@@ -409,7 +634,7 @@ export default function WorldMarketsPage() {
                 );
               })}
             </div>
-          ) : filtered.length === 0 ? (
+          ) : filteredMarkets.length === 0 ? (
             <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
               <p className="text-base text-ink-600">{t('markets.emptyTitle')}</p>
               <button
@@ -425,7 +650,7 @@ export default function WorldMarketsPage() {
             </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {filtered.map((m) => (
+              {filteredMarkets.map((m) => (
                 <MarketCard key={m.id} market={m} />
               ))}
             </div>
@@ -437,7 +662,7 @@ export default function WorldMarketsPage() {
       <section className="container-wide pb-20 pt-16">
         <div className="overflow-hidden rounded-3xl bg-ink-900 px-7 py-14 text-center text-cream-50 md:px-16 md:py-20">
           <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-gold-500/25 text-gold-400">
-            <ShoppingBag className="h-6 w-6" strokeWidth={1.5} />
+            <Utensils className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
             {t('markets.closingTitle')}
@@ -445,10 +670,7 @@ export default function WorldMarketsPage() {
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
             {t('markets.closingBody')}
           </p>
-          <Link
-            to="/films"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
-          >
+          <Link to="/films" className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400">
             {t('markets.closingCta')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
