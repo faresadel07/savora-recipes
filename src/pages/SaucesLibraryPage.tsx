@@ -8,7 +8,9 @@ import { useTranslation } from '../i18n';
 type SauceCategory = 'all' | 'Sauce' | 'Dip' | 'Condiment' | 'Dressing' | 'Marinade';
 
 function SauceCard({ sauce }: { sauce: (typeof SAUCES)[number] }) {
-  const { t } = useTranslation();
+  const { t, pl } = useTranslation();
+  const title = pl(sauce.title, sauce.titleAr);
+  const blurb = pl(sauce.blurb, sauce.blurbAr);
   return (
     <Link
       to={`/recipe/${sauce.id}`}
@@ -17,7 +19,7 @@ function SauceCard({ sauce }: { sauce: (typeof SAUCES)[number] }) {
       <div className="relative aspect-[4/3] overflow-hidden bg-cream-200">
         <RecipeImage
           src={sauce.image}
-          alt={sauce.title}
+          alt={title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
@@ -30,9 +32,9 @@ function SauceCard({ sauce }: { sauce: (typeof SAUCES)[number] }) {
           {sauce.area}
         </p>
         <h3 className="text-lg font-semibold leading-snug tracking-tight text-ink-900 group-hover:text-terracotta-500">
-          {sauce.title}
+          {title}
         </h3>
-        <p className="text-sm leading-relaxed text-ink-500 line-clamp-2">{sauce.blurb}</p>
+        <p className="text-sm leading-relaxed text-ink-500 line-clamp-2">{blurb}</p>
         <div className="mt-auto flex items-center gap-3 pt-2 text-xs tracking-tight text-ink-300">
           <span>{sauce.readyInMinutes} {t('sauces.minLabel')}</span>
           <span className="h-1 w-1 rounded-full bg-ink-200" />

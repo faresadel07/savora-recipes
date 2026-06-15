@@ -321,9 +321,9 @@ export default function FitnessPage() {
                 key={`${m.title}-${i}`}
                 className="rounded-2xl border border-ink-100 bg-cream-50 p-6 transition-colors hover:border-ink-900"
               >
-                <p className="text-[11px] font-semibold uppercase tracking-widest text-sage-600">{m.protein}</p>
-                <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight md:text-xl">{m.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-600">{m.body}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-sage-600">{language === 'ar' && m.proteinAr ? m.proteinAr : m.protein}</p>
+                <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight md:text-xl">{language === 'ar' && m.titleAr ? m.titleAr : m.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-600">{language === 'ar' && m.bodyAr ? m.bodyAr : m.body}</p>
               </article>
             ))}
           </div>
@@ -345,11 +345,11 @@ export default function FitnessPage() {
               <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sage-50 text-sage-600">
                 <ShoppingBasket className="h-4 w-4" />
               </div>
-              <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight md:text-xl">{m.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-600">{m.body}</p>
+              <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight md:text-xl">{language === 'ar' && m.titleAr ? m.titleAr : m.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-600">{language === 'ar' && m.bodyAr ? m.bodyAr : m.body}</p>
               <div className="mt-5 space-y-1.5 border-t border-ink-100 pt-4 text-[12px] tracking-tight text-ink-400">
-                <p><strong className="text-ink-700">Yield:</strong> {m.yield}</p>
-                <p><strong className="text-ink-700">Stores:</strong> {m.storage}</p>
+                <p><strong className="text-ink-700">{language === 'ar' ? 'الكمية:' : 'Yield:'}</strong> {language === 'ar' && m.yieldAr ? m.yieldAr : m.yield}</p>
+                <p><strong className="text-ink-700">{language === 'ar' ? 'يحفظ:' : 'Stores:'}</strong> {language === 'ar' && m.storageAr ? m.storageAr : m.storage}</p>
               </div>
             </article>
           ))}
@@ -378,7 +378,7 @@ export default function FitnessPage() {
                     : 'border-ink-100 bg-cream-50 text-ink-700 hover:border-ink-900'
                 }`}
               >
-                <p className="text-lg font-semibold tracking-tight md:text-xl">{p.title}</p>
+                <p className="text-lg font-semibold tracking-tight md:text-xl">{language === 'ar' && p.titleAr ? p.titleAr : p.title}</p>
                 <p className={`mt-1 text-[12px] tracking-tight ${activePlan === p.id ? 'text-cream-100/70' : 'text-ink-400'}`}>
                   {p.calories}
                 </p>
@@ -389,8 +389,8 @@ export default function FitnessPage() {
           <div className="rounded-3xl bg-cream-50 p-6 md:p-8">
             <div className="grid items-start gap-8 md:grid-cols-12 md:gap-10">
               <div className="md:col-span-4">
-                <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">{currentPlan.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-600">{currentPlan.blurb}</p>
+                <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">{language === 'ar' && currentPlan.titleAr ? currentPlan.titleAr : currentPlan.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-600">{language === 'ar' && currentPlan.blurbAr ? currentPlan.blurbAr : currentPlan.blurb}</p>
                 <div className="mt-6 space-y-3">
                   <MacroLine icon={<Flame className="h-4 w-4" />} label="Daily calories" value={currentPlan.calories} />
                   <MacroLine icon={<Beef className="h-4 w-4" />} label="Protein" value={currentPlan.protein} />
@@ -453,7 +453,7 @@ export default function FitnessPage() {
             <ul className="divide-y divide-ink-100">
               {filteredSources.map((s) => (
                 <li key={s.food} className="grid grid-cols-[1fr_80px_60px_60px] gap-2 px-5 py-3 text-sm tracking-tight sm:grid-cols-[1fr_120px_80px_80px]">
-                  <span className="font-medium text-ink-900">{s.food}</span>
+                  <span className="font-medium text-ink-900">{language === 'ar' && s.foodAr ? s.foodAr : s.food}</span>
                   <span className="text-ink-500">{s.serving}</span>
                   <span className="text-right font-semibold text-sage-600 tabular-nums">{s.protein}g</span>
                   <span className="text-right text-ink-500 tabular-nums">{s.cal}</span>
@@ -503,12 +503,12 @@ export default function FitnessPage() {
               className="rounded-2xl border border-ink-100 bg-cream-50 p-6 transition-colors hover:border-ink-900"
             >
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-lg font-semibold leading-snug tracking-tight md:text-xl">{d.title}</h3>
+                <h3 className="text-lg font-semibold leading-snug tracking-tight md:text-xl">{language === 'ar' && d.titleAr ? d.titleAr : d.title}</h3>
                 <span className="inline-flex flex-none items-center rounded-full bg-sage-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-sage-600">
                   {d.protein}
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-ink-600">{d.ingredients}</p>
+              <p className="mt-3 text-sm leading-relaxed text-ink-600">{language === 'ar' && d.ingredientsAr ? d.ingredientsAr : d.ingredients}</p>
               <p className="mt-4 text-[10px] uppercase tracking-widest text-ink-400">{d.vibe.replace('-', ' ')}</p>
             </article>
           ))}
@@ -531,9 +531,9 @@ export default function FitnessPage() {
                 key={`${s.title}-${i}`}
                 className="rounded-2xl border border-ink-100 bg-cream-50 p-5"
               >
-                <p className="text-[11px] font-semibold uppercase tracking-widest text-sage-600">{s.protein}</p>
-                <h3 className="mt-2.5 text-base font-semibold leading-snug tracking-tight">{s.title}</h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{s.body}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-sage-600">{language === 'ar' && s.proteinAr ? s.proteinAr : s.protein}</p>
+                <h3 className="mt-2.5 text-base font-semibold leading-snug tracking-tight">{language === 'ar' && s.titleAr ? s.titleAr : s.title}</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{language === 'ar' && s.bodyAr ? s.bodyAr : s.body}</p>
               </article>
             ))}
           </div>
@@ -558,17 +558,17 @@ export default function FitnessPage() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold leading-tight tracking-tight text-ink-900">
-                    <span className="text-sage-600">{b.swap}</span>{' '}
+                    <span className="text-sage-600">{language === 'ar' && b.swapAr ? b.swapAr : b.swap}</span>{' '}
                     {b.for_ !== '—' && (
                       <>
-                        instead of <span className="text-ink-500">{b.for_}</span>
+                        {language === 'ar' ? 'بدلاً من' : 'instead of'} <span className="text-ink-500">{language === 'ar' && b.for_Ar ? b.for_Ar : b.for_}</span>
                       </>
                     )}
                   </p>
-                  <p className="mt-1 text-[12px] font-medium uppercase tracking-widest text-terracotta-500">{b.extra}</p>
+                  <p className="mt-1 text-[12px] font-medium uppercase tracking-widest text-terracotta-500">{language === 'ar' && b.extraAr ? b.extraAr : b.extra}</p>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-ink-600">{b.note}</p>
+              <p className="mt-4 text-sm leading-relaxed text-ink-600">{language === 'ar' && b.noteAr ? b.noteAr : b.note}</p>
             </article>
           ))}
         </div>
@@ -592,18 +592,18 @@ export default function FitnessPage() {
                 style={{ animationDelay: `${i * 60}ms` }}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-xl font-semibold leading-snug tracking-tight md:text-2xl">{topic.title}</h3>
+                  <h3 className="text-xl font-semibold leading-snug tracking-tight md:text-2xl">{language === 'ar' && topic.titleAr ? topic.titleAr : topic.title}</h3>
                   <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-sage-50 text-sage-600">
                     <BookOpen className="h-4 w-4" />
                   </span>
                 </div>
                 {topic.highlight && (
                   <p className="mt-5 rounded-2xl bg-sage-50 px-4 py-3 text-sm font-medium leading-relaxed tracking-tight text-sage-600">
-                    {topic.highlight}
+                    {language === 'ar' && topic.highlightAr ? topic.highlightAr : topic.highlight}
                   </p>
                 )}
-                <p className="mt-5 text-sm leading-relaxed text-ink-600">{topic.body}</p>
-                <p className="mt-5 text-[11px] tracking-tight text-ink-400">— {topic.source}</p>
+                <p className="mt-5 text-sm leading-relaxed text-ink-600">{language === 'ar' && topic.bodyAr ? topic.bodyAr : topic.body}</p>
+                <p className="mt-5 text-[11px] tracking-tight text-ink-400">— {language === 'ar' && topic.sourceAr ? topic.sourceAr : topic.source}</p>
               </article>
             ))}
           </div>

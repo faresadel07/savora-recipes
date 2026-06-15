@@ -29,6 +29,8 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 function ShortThumbCard({ short, onOpen }: { short: ShortVideo; onOpen: () => void }) {
+  const { language } = useTranslation();
+  const isAr = language === 'ar';
   const cat = SHORT_CATEGORIES.find((c) => c.id === short.category);
   return (
     <button
@@ -51,7 +53,7 @@ function ShortThumbCard({ short, onOpen }: { short: ShortVideo; onOpen: () => vo
       {cat && (
         <span className="absolute left-2.5 top-2.5 inline-flex items-center gap-1 rounded-full bg-cream-50/90 px-2.5 py-1 text-[10px] font-medium tracking-tight text-ink-900 backdrop-blur">
           <span>{cat.emoji}</span>
-          {cat.name}
+          {isAr ? cat.nameAr : cat.name}
         </span>
       )}
       <span className="absolute right-2.5 top-2.5 grid h-9 w-9 place-items-center rounded-full bg-cream-50/90 text-ink-900 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
@@ -166,7 +168,8 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
 }
 
 export default function ShortsLibraryPage() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  const isAr = language === 'ar';
   const HERO_STATS = useHeroStats();
   const [filter, setFilter] = useState<Filter>('all');
   const [shuffled, setShuffled] = useState(false);
@@ -319,7 +322,7 @@ export default function ShortsLibraryPage() {
                   }`}
                 >
                   <span>{c.emoji}</span>
-                  {c.name}
+                  {isAr ? c.nameAr : c.name}
                   <span className={`text-[11px] ${isActive ? 'text-cream-100/60' : 'text-ink-400'}`}>{count}</span>
                 </button>
               );
@@ -346,7 +349,7 @@ export default function ShortsLibraryPage() {
           <p className="mt-10 text-center text-sm tracking-tight text-ink-400">
             {filter === 'all'
               ? t('shortsPage.endOfFeedAll')
-              : t('shortsPage.endOfFeed', { name: SHORT_CATEGORIES.find((c) => c.id === filter)?.name ?? '' })}
+              : t('shortsPage.endOfFeed', { name: (isAr ? SHORT_CATEGORIES.find((c) => c.id === filter)?.nameAr : SHORT_CATEGORIES.find((c) => c.id === filter)?.name) ?? '' })}
           </p>
         )}
 

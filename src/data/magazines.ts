@@ -12,9 +12,12 @@
 export interface ArchiveMagazine {
   id: string;
   title: string;
+  titleAr?: string;
   issue: string;
+  issueAr?: string;
   year: number;
   blurb: string;
+  blurbAr?: string;
   archiveId: string;
   detailUrl: string;
   embedUrl: string;
@@ -45,6 +48,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=boston+cooking+school+cookbook+farmer',
     era: 'Victorian',
     accent: 'terracotta',
+    titleAr: 'كتاب الطبخ في مدرسة بوسطن للطبخ',
+    issueAr: 'الطبعة الأولى',
+    blurbAr: 'الكتاب الذي أعطى الأمريكان ملاعق قياس المستوى. لقد غير نثر فاني فارمر الاحتياطي والدقيق الطبخ المنزلي إلى الأبد.',
   },
   {
     id: 'mrs-beeton-1861',
@@ -57,6 +63,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=mrs+beeton+book+household+management',
     era: 'Victorian',
     accent: 'ink',
+    titleAr: 'كتاب إدارة الأسرة',
+    issueAr: 'إيزابيلا بيتون، الطبعة الأولى',
+    blurbAr: 'ألف وصفة وألف رأي حول إدارة الأسرة. عالم الطبخ الفيكتوري في مجلد واحد.',
   },
   {
     id: 'white-house-1887',
@@ -69,6 +78,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=white+house+cook+book+ziemann',
     era: 'Victorian',
     accent: 'gold',
+    titleAr: 'كتاب طبخ البيت الأبيض',
+    issueAr: 'طبعة زيمان وجيليت',
+    blurbAr: 'وصفات من طاهٍ رئاسي مقترنة بفصول عن خدمة المائدة وما يجب فعله عند اندلاع حريق.',
   },
   {
     id: 'inglenook-1911',
@@ -81,6 +93,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=inglenook+cook+book',
     era: 'Edwardian',
     accent: 'sage',
+    titleAr: 'كتاب إنجلينوك كوك',
+    issueAr: 'طبعة مجتمع الاخوة',
+    blurbAr: 'طبخ منزلي بسيط للأخوة مقدم من قراء مجلة دينية. المخللات والفطائر والحظوظ.',
   },
   {
     id: 'settlement-1903',
@@ -93,6 +108,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=settlement+cook+book+kander',
     era: 'Edwardian',
     accent: 'terracotta',
+    titleAr: 'كتاب طبخ التسوية',
+    issueAr: 'الطبعة الأولى',
+    blurbAr: 'كتاب طبخ منزل مستوطنة ميلووكي الذي أصبح واحدًا من أفضل كتب الطبخ المجتمعية المحبوبة في أمريكا. الطبخ المنزلي اليهودي في جوهره.',
   },
   {
     id: 'rumford-1908',
@@ -105,6 +123,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=rumford+complete+cook+book',
     era: 'Edwardian',
     accent: 'gold',
+    titleAr: 'كتاب طبخ رومفورد الكامل',
+    issueAr: 'طبعة والاس',
+    blurbAr: 'كلاسيكيات مطلع القرن من الخبز المنزلي البسيط. بسكويت الصودا، وكعك جوني، وظهور الخميرة الكيميائية.',
   },
   {
     id: 'american-cookery-1796',
@@ -117,6 +138,9 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=american+cookery+amelia+simmons',
     era: 'Victorian',
     accent: 'ink',
+    titleAr: 'الطبخ الأمريكي',
+    issueAr: 'أميليا سيمونز، أول كتاب طبخ أمريكي',
+    blurbAr: 'أول كتاب طبخ كتبه أمريكي للأمريكيين. يتضمن أول وصفات مطبوعة لبودنغ دقيق الذرة، وبيرة التنوب، وفطيرة اليقطين.',
   },
   {
     id: 'choice-cookery-1889',
@@ -129,15 +153,21 @@ export const ARCHIVE_MAGAZINES: ArchiveMagazine[] = [
     fallbackSearchUrl: 'https://archive.org/search?query=choice+cookery+catherine+owen',
     era: 'Victorian',
     accent: 'sage',
+    titleAr: 'اختيار الطبخ',
+    issueAr: 'طبعة أوين',
+    blurbAr: 'دليل كاثرين أوين الحاد والصريح لـ "العائلات الصغيرة والوسائل النحيلة". ساحر، عنيد، مفيد.',
   },
 ];
 
 export interface ModernSite {
   id: string;
   name: string;
+  nameAr?: string;
   url: string;
   blurb: string;
+  blurbAr?: string;
   region: string;
+  regionAr?: string;
   free: 'fully free' | 'mostly free' | 'some free';
   category: 'general' | 'baking' | 'global' | 'healthy' | 'science' | 'community';
   accent: 'terracotta' | 'sage' | 'gold' | 'ink';
@@ -153,6 +183,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'general',
     accent: 'terracotta',
+    nameAr: 'بي بي سي طعام جيد',
+    blurbAr: 'أكبر موقع وصفات مجانية في المملكة المتحدة. اختبار جودة المطبخ، وكتابة المجلات.',
+    regionAr: 'المملكة المتحدة',
   },
   {
     id: 'eatingwell',
@@ -163,6 +196,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'healthy',
     accent: 'sage',
+    nameAr: 'الأكل بشكل جيد',
+    blurbAr: 'مجلة وموقع متخصص في التغذية. وصفات تنتبه لما فيها.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'serious-eats',
@@ -173,6 +209,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'science',
     accent: 'ink',
+    nameAr: 'يأكل خطيرة',
+    blurbAr: 'مدرسة كينجي لوبيز ألت للطهي. تم اختباره بعمق، وجادل علميا.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'food52',
@@ -183,6 +222,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'community',
     accent: 'gold',
+    nameAr: 'الغذاء52',
+    blurbAr: 'موقع الغذاء يحركه المجتمع. وصفات من مصادر جماعية بالإضافة إلى مطبخ الاختبار التحريري الخاص بها.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'king-arthur',
@@ -193,6 +235,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'baking',
     accent: 'gold',
+    nameAr: 'الملك آرثر بيكينج',
+    blurbAr: 'تدير أقدم شركة دقيق في أمريكا مدرسة مجانية للخبز. العجين المخمر للكعكات.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'nyt-cooking',
@@ -203,6 +248,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'some free',
     category: 'general',
     accent: 'ink',
+    nameAr: 'نيويورك تايمز الطبخ',
+    blurbAr: 'قبو وصفة الصحيفة. مجموعة فرعية مجانية بدون اشتراك.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'smitten-kitchen',
@@ -213,6 +261,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'general',
     accent: 'terracotta',
+    nameAr: 'مطبخ سميت',
+    blurbAr: 'كلاسيكيات Deb Perelman التي تم اختبارها في المنزل. كتابة بجودة كتب الطبخ على مدونة مجانية.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'half-baked-harvest',
@@ -223,6 +274,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'general',
     accent: 'gold',
+    nameAr: 'نصف حصاد مخبوز',
+    blurbAr: 'الطبخ الموسمي لتيغان جيرارد. التصوير الفوتوغرافي الخصب، وصفات كاملة النكهة.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'the-kitchn',
@@ -233,6 +287,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'general',
     accent: 'sage',
+    nameAr: 'المطبخ',
+    blurbAr: 'الكتابة اليومية للطبخ كحياة. وصفات بالإضافة إلى المهارات الصغيرة التي لا أحد يعلمها.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'cookie-and-kate',
@@ -243,6 +300,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'healthy',
     accent: 'sage',
+    nameAr: 'كوكي وكيت',
+    blurbAr: 'الطبخ النباتي لكيت تايلور. الغذاء النباتي الأول ذو جاذبية واسعة.',
+    regionAr: 'الولايات المتحدة',
   },
   {
     id: 'olive-magazine',
@@ -253,6 +313,9 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'mostly free',
     category: 'global',
     accent: 'sage',
+    nameAr: 'مجلة الزيتون',
+    blurbAr: 'مجلة بريطانية للطعام والسفر تحتوي على أرشيف مجاني سخي.',
+    regionAr: 'المملكة المتحدة',
   },
   {
     id: 'taste',
@@ -263,5 +326,8 @@ export const MODERN_SITES: ModernSite[] = [
     free: 'fully free',
     category: 'general',
     accent: 'terracotta',
+    nameAr: 'Taste.com.au',
+    blurbAr: 'موقع الوصفات الأكثر قراءة في أستراليا. الطبخ العائلي، وتيرة عطلة نهاية الأسبوع.',
+    regionAr: 'أستراليا',
   },
 ];

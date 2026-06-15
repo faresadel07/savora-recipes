@@ -7,9 +7,11 @@
 export interface FitnessChannel {
   id: string;
   name: string;
+  nameAr?: string;
   handle: string;
   url: string;
   blurb: string;
+  blurbAr?: string;
   vibe: 'protein' | 'science' | 'plant' | 'meal-prep' | 'cutting' | 'modest' | 'ramadan' | 'home' | 'yoga' | 'strength';
   accent: 'terracotta' | 'sage' | 'gold' | 'ink';
 }
@@ -23,6 +25,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Every recipe is engineered around macros. The original high-protein cooking channel.',
     vibe: 'protein',
     accent: 'terracotta',
+    nameAr: 'الشيف البروتين',
+    blurbAr: 'تم تصميم كل وصفة حول وحدات الماكرو. قناة الطبخ الأصلية عالية البروتين.',
   },
   {
     id: 'jeff-nippard',
@@ -32,6 +36,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'A pro natural bodybuilder explaining training and nutrition with published research behind every claim.',
     vibe: 'science',
     accent: 'ink',
+    nameAr: 'جيف نيبارد',
+    blurbAr: 'لاعب كمال أجسام محترف يشرح التدريب والتغذية من خلال الأبحاث المنشورة وراء كل ادعاء.',
   },
   {
     id: 'mike-diamonds',
@@ -41,6 +47,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'A doctor who lifts. Aesthetic recipes with full macro breakdowns and meal-prep speed.',
     vibe: 'protein',
     accent: 'terracotta',
+    nameAr: 'مايك دايموندز',
+    blurbAr: 'الطبيب الذي يرفع. وصفات جمالية مع تفاصيل كاملة عن الماكرو وسرعة إعداد الوجبات.',
   },
   {
     id: 'sean-nalewanyj',
@@ -50,6 +58,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Twenty years of natural bodybuilding turned into honest, sciency content. No hype.',
     vibe: 'science',
     accent: 'sage',
+    nameAr: 'شون نالوانيج',
+    blurbAr: 'عشرين عامًا من كمال الأجسام الطبيعي تحولت إلى محتوى علمي صادق. لا الضجيج.',
   },
   {
     id: 'pick-up-limes',
@@ -59,6 +69,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'A registered dietitian making plant-based meals that hit your protein targets without supplements.',
     vibe: 'plant',
     accent: 'sage',
+    nameAr: 'التقط الليمون الحامض',
+    blurbAr: 'يقوم اختصاصي تغذية مسجل بإعداد وجبات نباتية تحقق أهدافك من البروتين دون مكملات غذائية.',
   },
   {
     id: 'whitney-erd',
@@ -68,6 +80,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'High-protein meals you actually want to eat. Strong macro discipline, zero pretension.',
     vibe: 'protein',
     accent: 'gold',
+    nameAr: 'ويتني إرد',
+    blurbAr: 'وجبات عالية البروتين ترغب في تناولها بالفعل. انضباط كلي قوي، صفر ادعاء.',
   },
   {
     id: 'mr-make-it-happen',
@@ -77,6 +91,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Soul-food classics rebuilt to be healthier without losing the comfort. Master of flavor balance.',
     vibe: 'protein',
     accent: 'terracotta',
+    nameAr: 'السيد اجعله يحدث',
+    blurbAr: 'أعيد بناء كلاسيكيات أطعمة الروح لتكون أكثر صحة دون أن تفقد الراحة. ماجستير في توازن النكهة.',
   },
   {
     id: 'joanna-soh',
@@ -86,6 +102,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Meal prep, fitness, and workout pairings in one channel. Practical for busy weekdays.',
     vibe: 'meal-prep',
     accent: 'sage',
+    nameAr: 'جوانا سوه',
+    blurbAr: 'إعداد الوجبات واللياقة البدنية والتمارين الرياضية في قناة واحدة. عملي لأيام الأسبوع المزدحمة.',
   },
   {
     id: 'fitmencook',
@@ -95,6 +113,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Kevin Curry\'s archive of macro-friendly meals. Big variety, big servings.',
     vibe: 'protein',
     accent: 'ink',
+    nameAr: 'FitMenCook',
+    blurbAr: 'أرشيف كيفن كاري للوجبات الصديقة للبيئة. تنوع كبير، كميات كبيرة.',
   },
   {
     id: 'athlean-x',
@@ -104,6 +124,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'A trainer of pro athletes. Mostly workouts, but his nutrition videos are gold.',
     vibe: 'science',
     accent: 'ink',
+    nameAr: 'Athlean-X (وصفات)',
+    blurbAr: 'مدرب للرياضيين المحترفين. في الغالب تمارين رياضية، لكن مقاطع الفيديو الخاصة بالتغذية ذهبية.',
   },
   {
     id: 'sculpted-vegan',
@@ -113,6 +135,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Plant-based recipes built to support real muscle building. Macro-balanced and tasty.',
     vibe: 'plant',
     accent: 'sage',
+    nameAr: 'النباتي المنحوت',
+    blurbAr: 'وصفات نباتية مصممة لدعم بناء العضلات الحقيقية. الكلي متوازن ولذيذ.',
   },
   {
     id: 'mind-over-munch',
@@ -122,6 +146,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Alyssia Sheikh on meal-prep, intermittent fasting, and budget healthy cooking.',
     vibe: 'meal-prep',
     accent: 'gold',
+    nameAr: 'العقل على مونك',
+    blurbAr: 'أليسيا شيخ تتحدث عن إعداد الوجبات، والصيام المتقطع، والطهي الصحي بميزانية محدودة.',
   },
 
   // Muslim and Arab fitness creators (modest content, halal focus)
@@ -133,6 +159,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Amina Khan trains Muslim women with modest-friendly home workouts and pregnancy programs.',
     vibe: 'modest',
     accent: 'sage',
+    nameAr: 'أمانة للياقة البدنية',
+    blurbAr: 'تقوم أمينة خان بتدريب النساء المسلمات على التدريبات المنزلية المتواضعة وبرامج الحمل.',
   },
   {
     id: 'eslam-hamouda',
@@ -142,6 +170,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Arabic high protein cooking and gym nutrition. Halal recipes, gym kitchen energy.',
     vibe: 'protein',
     accent: 'terracotta',
+    nameAr: 'اسلام حمودة',
+    blurbAr: 'الطبخ العربي عالي البروتين والتغذية في صالة الألعاب الرياضية. وصفات حلال، طاقة المطبخ الرياضي.',
   },
   {
     id: 'mostafa-mohammad-fitness',
@@ -151,6 +181,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Arabic fitness coaching, training breakdowns, and Egyptian high-protein meals.',
     vibe: 'science',
     accent: 'ink',
+    nameAr: 'مصطفى محمد للياقة البدنية',
+    blurbAr: 'تدريب اللياقة البدنية باللغة العربية، وأعطال التدريب، والوجبات المصرية عالية البروتين.',
   },
   {
     id: 'fit-nest',
@@ -160,6 +192,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Modest-friendly strength and conditioning. Beginner programs designed for Muslim women.',
     vibe: 'modest',
     accent: 'gold',
+    nameAr: 'عش صالح',
+    blurbAr: 'قوة وتكييف متواضعين. برامج للمبتدئين مصممة للنساء المسلمات.',
   },
 
   // Ramadan and home-friendly creators
@@ -171,6 +205,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Free, gentle yoga for every level. The all-time most-watched home yoga channel.',
     vibe: 'yoga',
     accent: 'sage',
+    nameAr: 'اليوغا مع ادرين',
+    blurbAr: 'يوغا لطيفة ومجانية لكل المستويات. قناة اليوغا المنزلية الأكثر مشاهدة على الإطلاق.',
   },
   {
     id: 'fitness-blender',
@@ -180,6 +216,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: '600+ free full-length home workouts. HIIT, strength, low impact. Modest workout gear.',
     vibe: 'home',
     accent: 'ink',
+    nameAr: 'خلاط اللياقة البدنية',
+    blurbAr: 'أكثر من 600 تمرين منزلي مجاني كامل الطول. HIIT، القوة، التأثير المنخفض. معدات تجريب متواضعة.',
   },
   {
     id: 'madfit',
@@ -189,6 +227,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Apartment-friendly home workouts, no jumping, no equipment. Calm and quiet routines.',
     vibe: 'home',
     accent: 'terracotta',
+    nameAr: 'مادفيت',
+    blurbAr: 'تمارين منزلية ملائمة للشقق، بدون قفز أو معدات. روتين هادئ وهادئ.',
   },
   {
     id: 'heather-robertson',
@@ -198,6 +238,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'Free 12-week workout programs with full-body strength and HIIT. Modest training fits.',
     vibe: 'strength',
     accent: 'gold',
+    nameAr: 'هيذر روبرتسون',
+    blurbAr: 'برامج تمرين مجانية لمدة 12 أسبوعًا لتقوية الجسم بالكامل وتدريب HIIT. تدريب متواضع يناسب.',
   },
   {
     id: 'caroline-girvan',
@@ -207,6 +249,8 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'No-music dumbbell strength workouts. Disciplined coaching for serious home training.',
     vibe: 'strength',
     accent: 'ink',
+    nameAr: 'كارولين جيرفان',
+    blurbAr: 'تمارين القوة بالدمبل بدون موسيقى. التدريب المنضبط للتدريب المنزلي الجاد.',
   },
   {
     id: 'sydney-cummings',
@@ -216,5 +260,7 @@ export const FITNESS_CHANNELS: FitnessChannel[] = [
     blurb: 'A fresh full-body workout every single day. Strength, HIIT, mobility, all free.',
     vibe: 'home',
     accent: 'sage',
+    nameAr: 'سيدني كامينغز',
+    blurbAr: 'تمرين جديد لكامل الجسم كل يوم. القوة، HIIT، والتنقل، وكلها مجانية.',
   },
 ];
