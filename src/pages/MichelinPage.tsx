@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ChefHat, MapPin, Play, Sparkles, Star, Utensils } from 'lucide-react';
+import { ArrowUpRight, ChefHat, MapPin, Sparkles, Star, Utensils } from 'lucide-react';
 import { useTranslation } from '../i18n';
+import MichelinDetailModal from '../components/MichelinDetailModal';
 import {
   MICHELIN_REGIONS,
   MICHELIN_RESTAURANTS,
@@ -26,25 +27,10 @@ function StarsBadge({ stars }: { stars: 1 | 2 | 3 }) {
 }
 
 /**
- * Hero tile that shows the restaurant image. If a videoId is present and
- * the user clicks play, swap in the YouTube embed.
+ * Restaurant image tile. The whole card is clickable to open the detail
+ * modal which carries the video search, Wikipedia link, and full info.
  */
-function VideoOrImage({ videoId, image, alt }: { videoId?: string; image?: string; alt: string }) {
-  const [playing, setPlaying] = useState(false);
-
-  if (playing && videoId) {
-    return (
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
-        title={alt}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        loading="lazy"
-        className="absolute inset-0 h-full w-full"
-      />
-    );
-  }
-
+function RestaurantImage({ image, alt }: { image?: string; alt: string }) {
   return (
     <>
       {image ? (
@@ -63,23 +49,16 @@ function VideoOrImage({ videoId, image, alt }: { videoId?: string; image?: strin
         </div>
       )}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
-      {videoId && (
-        <button
-          type="button"
-          onClick={() => setPlaying(true)}
-          aria-label={`Play ${alt}`}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          <span className="grid h-14 w-14 place-items-center rounded-full bg-cream-50/95 text-ink-900 shadow-2xl transition-transform group-hover:scale-110 md:h-16 md:w-16">
-            <Play className="h-6 w-6 translate-x-0.5 fill-current md:h-7 md:w-7" strokeWidth={1.5} />
-          </span>
-        </button>
-      )}
+      <div className="pointer-events-none absolute inset-x-0 bottom-3 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+        <span className="rounded-full bg-cream-50/95 px-3 py-1 text-[10px] font-medium tracking-tight text-ink-900 backdrop-blur">
+          View details
+        </span>
+      </div>
     </>
   );
 }
 
-function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
+function RestaurantCard({ restaurant, onOpen }: { restaurant: MichelinRestaurant; onOpen: () => void }) {
   const { t, pl, language } = useTranslation();
   const isAr = language === 'ar';
   const name = isAr ? restaurant.nameAr : restaurant.name;
@@ -95,8 +74,13 @@ function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
       id={`m-${restaurant.id}`}
       className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]"
     >
-      <div className="relative aspect-video overflow-hidden bg-ink-900">
-        <VideoOrImage videoId={restaurant.videoId} image={restaurant.image} alt={name} />
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={isAr ? `افتح تفاصيل ${name}` : `Open details for ${name}`}
+        className="relative aspect-video w-full overflow-hidden bg-ink-900"
+      >
+        <RestaurantImage image={restaurant.image} alt={name} />
 
         {/* Stars badge */}
         <span className="pointer-events-none absolute start-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-cream-50 backdrop-blur">
@@ -119,9 +103,13 @@ function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
             </span>
           )}
         </div>
-      </div>
+      </button>
 
-      <div className="flex flex-1 flex-col p-5 md:p-6">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="flex flex-1 flex-col p-5 text-start md:p-6"
+      >
         <p className="inline-flex items-center gap-1.5 text-xs tracking-tight text-ink-400">
           <MapPin className="h-3 w-3" />
           {city}, {country}
@@ -134,13 +122,13 @@ function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
           {chef}
         </p>
 
-        <p className="mt-4 text-sm leading-relaxed text-ink-600">{story}</p>
+        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-ink-600">{story}</p>
 
         {dishes && dishes.length > 0 && (
           <div className="mt-5">
             <p className="text-[12px] font-semibold tracking-tight text-ink-900">{t('michelin.dishesLabel')}</p>
             <div className="mt-2.5 flex flex-wrap gap-1.5">
-              {dishes.map((d) => (
+              {dishes.slice(0, 4).map((d) => (
                 <span
                   key={d}
                   className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-700"
@@ -148,10 +136,20 @@ function RestaurantCard({ restaurant }: { restaurant: MichelinRestaurant }) {
                   {d}
                 </span>
               ))}
+              {dishes.length > 4 && (
+                <span className="rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-500">
+                  +{dishes.length - 4}
+                </span>
+              )}
             </div>
           </div>
         )}
-      </div>
+
+        <span className="mt-5 inline-flex items-center gap-1 self-start text-[11px] font-medium tracking-tight text-terracotta-500">
+          {isAr ? 'اضغط للتفاصيل' : 'Click for details'}
+          <ArrowUpRight className="rtl-flip h-3 w-3" />
+        </span>
+      </button>
     </article>
   );
 }
@@ -161,6 +159,7 @@ export default function MichelinPage() {
   const isAr = language === 'ar';
   const [stars, setStars] = useState<StarsFilter>('all');
   const [region, setRegion] = useState<RegionFilter>('all');
+  const [openRestaurant, setOpenRestaurant] = useState<MichelinRestaurant | null>(null);
 
   const filtered = useMemo(() => {
     return MICHELIN_RESTAURANTS.filter((r) => {
@@ -357,7 +356,7 @@ export default function MichelinPage() {
               </div>
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {threeStars.map((r) => (
-                  <RestaurantCard key={r.id} restaurant={r} />
+                  <RestaurantCard key={r.id} restaurant={r} onOpen={() => setOpenRestaurant(r)} />
                 ))}
               </div>
             </section>
@@ -379,7 +378,7 @@ export default function MichelinPage() {
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                   {ARAB_WORLD_MICHELIN.map((r) => (
-                    <RestaurantCard key={r.id} restaurant={r} />
+                    <RestaurantCard key={r.id} restaurant={r} onOpen={() => setOpenRestaurant(r)} />
                   ))}
                 </div>
               </div>
@@ -401,7 +400,7 @@ export default function MichelinPage() {
               </div>
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {twoStars.map((r) => (
-                  <RestaurantCard key={r.id} restaurant={r} />
+                  <RestaurantCard key={r.id} restaurant={r} onOpen={() => setOpenRestaurant(r)} />
                 ))}
               </div>
             </section>
@@ -422,7 +421,7 @@ export default function MichelinPage() {
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                   {oneStars.map((r) => (
-                    <RestaurantCard key={r.id} restaurant={r} />
+                    <RestaurantCard key={r.id} restaurant={r} onOpen={() => setOpenRestaurant(r)} />
                   ))}
                 </div>
               </div>
@@ -452,6 +451,10 @@ export default function MichelinPage() {
           </Link>
         </div>
       </section>
+
+      {/* Detail modal — opens when a card is clicked. Carries the YouTube
+          search button, the Wikipedia link, the full story, and dishes. */}
+      <MichelinDetailModal restaurant={openRestaurant} onClose={() => setOpenRestaurant(null)} />
     </div>
   );
 }
