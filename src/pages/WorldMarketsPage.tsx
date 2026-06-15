@@ -12,17 +12,24 @@ import {
 
 type RegionFilter = 'all' | MarketRegion;
 
-const REGION_FILTERS: { id: RegionFilter; name: string }[] = [
-  { id: 'all', name: 'All markets' },
-  ...MARKET_REGIONS.map((r) => ({ id: r.id as RegionFilter, name: r.name })),
-];
+function useRegionFilters() {
+  const { t } = useTranslation();
+  const list: { id: RegionFilter; name: string }[] = [
+    { id: 'all', name: t('markets.allMarkets') },
+    ...MARKET_REGIONS.map((r) => ({ id: r.id as RegionFilter, name: r.name })),
+  ];
+  return list;
+}
 
-const HERO_STATS = [
-  { value: `${WORLD_MARKETS.length}`, label: 'Markets' },
-  { value: `${new Set(WORLD_MARKETS.map((m) => m.country)).size}`, label: 'Countries' },
-  { value: `${MARKET_REGIONS.length}`, label: 'Regions' },
-  { value: `${Math.min(...WORLD_MARKETS.map((m) => m.yearFounded ?? 9999))}`, label: 'Oldest year' },
-];
+function useHeroStats() {
+  const { t } = useTranslation();
+  return [
+    { value: `${WORLD_MARKETS.length}`, label: t('markets.statMarkets') },
+    { value: `${new Set(WORLD_MARKETS.map((m) => m.country)).size}`, label: t('markets.statCountries') },
+    { value: `${MARKET_REGIONS.length}`, label: t('markets.statRegions') },
+    { value: `${Math.min(...WORLD_MARKETS.map((m) => m.yearFounded ?? 9999))}`, label: t('markets.statOldestYear') },
+  ];
+}
 
 function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
   const [playing, setPlaying] = useState(false);
@@ -177,6 +184,9 @@ function MarketHeroCard({ market }: { market: FoodMarket }) {
 }
 
 export default function WorldMarketsPage() {
+  const { t } = useTranslation();
+  const REGION_FILTERS = useRegionFilters();
+  const HERO_STATS = useHeroStats();
   const [region, setRegion] = useState<RegionFilter>('all');
   const [query, setQuery] = useState('');
 
@@ -211,16 +221,12 @@ export default function WorldMarketsPage() {
           <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
-                Markets of the world.
+                {t('markets.title1')}
                 <br />
-                <span className="text-gold-600">{WORLD_MARKETS.length} food cathedrals, one atlas.</span>
+                <span className="text-gold-600">{t('markets.title2', { n: WORLD_MARKETS.length })}</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A travelogue of the world's most famous food markets, from the
-                tuna auction at Toyosu to the spice lanes of Khan El-Khalili,
-                from Borough Market to Jemaa el-Fnaa. Every market has a video
-                tour from a real food traveler, the founding year, signature
-                foods, and the long story of how it became what it is.
+                {t('markets.body')}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -229,13 +235,13 @@ export default function WorldMarketsPage() {
                   className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
                 >
                   <ShoppingBag className="h-3.5 w-3.5" />
-                  Open the atlas
+                  {t('markets.ctaOpenAtlas')}
                 </a>
                 <a
                   href="#region-middle-east"
                   className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
                 >
-                  Middle East first
+                  {t('markets.ctaMiddleEastFirst')}
                 </a>
               </div>
 
@@ -308,9 +314,9 @@ export default function WorldMarketsPage() {
           <div className="container-wide">
             <div className="mb-6 flex items-baseline justify-between gap-4">
               <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
-                Stall of the day
+                {t('markets.stallOfTheDay')}
               </h2>
-              <p className="text-sm tracking-tight text-ink-500">One market, walked end to end</p>
+              <p className="text-sm tracking-tight text-ink-500">{t('markets.stallOfTheDaySub')}</p>
             </div>
             <MarketHeroCard market={featured} />
           </div>
@@ -323,11 +329,10 @@ export default function WorldMarketsPage() {
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-                The atlas
+                {t('markets.atlasTitle')}
               </h2>
               <p className="mt-2 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
-                {WORLD_MARKETS.length} markets across {MARKET_REGIONS.length} regions. Search by city, country, or
-                signature dish.
+                {t('markets.atlasBody', { n: WORLD_MARKETS.length, m: MARKET_REGIONS.length })}
               </p>
             </div>
             <div className="relative w-full md:w-80">
@@ -336,7 +341,7 @@ export default function WorldMarketsPage() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search city, dish, market"
+                placeholder={t('markets.searchPlaceholder')}
                 className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
@@ -344,7 +349,7 @@ export default function WorldMarketsPage() {
                   type="button"
                   onClick={() => setQuery('')}
                   className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
-                  aria-label="Clear search"
+                  aria-label={t('markets.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -393,7 +398,7 @@ export default function WorldMarketsPage() {
                         </h3>
                         <p className="mt-1 text-sm tracking-tight text-ink-500">{reg.tagline}</p>
                       </div>
-                      <p className="text-sm tracking-tight text-ink-500">{items.length} markets</p>
+                      <p className="text-sm tracking-tight text-ink-500">{t('markets.nMarkets', { n: items.length })}</p>
                     </div>
                     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                       {items.map((m) => (
@@ -406,7 +411,7 @@ export default function WorldMarketsPage() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
-              <p className="text-base text-ink-600">No markets match that search.</p>
+              <p className="text-base text-ink-600">{t('markets.emptyTitle')}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -415,7 +420,7 @@ export default function WorldMarketsPage() {
                 }}
                 className="mt-4 inline-flex items-center gap-2 rounded-full border border-ink-200 px-5 py-2 text-sm font-medium tracking-tight text-ink-900 hover:border-ink-900"
               >
-                Reset filters
+                {t('markets.resetFilters')}
               </button>
             </div>
           ) : (
@@ -435,17 +440,16 @@ export default function WorldMarketsPage() {
             <ShoppingBag className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
-            Every great cuisine has a market behind it.
+            {t('markets.closingTitle')}
           </h3>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
-            Walking a market is half of learning a kitchen. Save these tours and watch
-            one a week.
+            {t('markets.closingBody')}
           </p>
           <Link
             to="/films"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
           >
-            Watch the film library
+            {t('markets.closingCta')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
         </div>

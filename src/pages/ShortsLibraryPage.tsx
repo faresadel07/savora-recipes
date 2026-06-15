@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Pause, Play, Shuffle, Sparkles, X } from 'lucide-react';
 import { SHORT_CATEGORIES, SHORTS, type ShortCategory, type ShortVideo } from '../data/shorts-library';
 import YouTubeShortPlayer from '../components/YouTubeShortPlayer';
+import { useTranslation } from '../i18n';
 
 type Filter = 'all' | ShortCategory;
 
 const PAGE_SIZE = 24;
-const HERO_STATS = [
-  { value: `${SHORTS.length}`, label: 'Shorts' },
-  { value: `${SHORT_CATEGORIES.length}`, label: 'Categories' },
-  { value: '9:16', label: 'Portrait' },
-  { value: 'Endless', label: 'Scroll' },
-];
+
+function useHeroStats() {
+  const { t } = useTranslation();
+  return [
+    { value: `${SHORTS.length}`, label: t('shortsPage.statShorts') },
+    { value: `${SHORT_CATEGORIES.length}`, label: t('shortsPage.statCategories') },
+    { value: '9:16', label: t('shortsPage.statPortrait') },
+    { value: '∞', label: t('shortsPage.statScroll') },
+  ];
+}
 
 function shuffle<T>(arr: T[]): T[] {
   const copy = arr.slice();
@@ -63,6 +68,7 @@ interface PlayerModalProps {
 }
 
 function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
+  const { t } = useTranslation();
   const [index, setIndex] = useState(startIndex);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -122,7 +128,7 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
         type="button"
         onClick={onClose}
         className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-cream-50/90 text-ink-900 backdrop-blur transition-colors hover:bg-cream-50"
-        aria-label="Close"
+        aria-label={t('shortsPage.close')}
       >
         <X className="h-4 w-4" />
       </button>
@@ -153,13 +159,15 @@ function PlayerModal({ shorts, startIndex, onClose }: PlayerModalProps) {
       </div>
 
       <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 text-[11px] tracking-tight text-cream-100/60">
-        {index + 1} of {shorts.length}  ·  scroll for next
+        {t('shortsPage.indexOf', { i: index + 1, n: shorts.length })}
       </p>
     </div>
   );
 }
 
 export default function ShortsLibraryPage() {
+  const { t } = useTranslation();
+  const HERO_STATS = useHeroStats();
   const [filter, setFilter] = useState<Filter>('all');
   const [shuffled, setShuffled] = useState(false);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE * 2);
@@ -206,16 +214,12 @@ export default function ShortsLibraryPage() {
           <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
-                Food shorts.
+                {t('shortsPage.title1')}
                 <br />
-                <span className="text-gold-600">{SHORTS.length.toLocaleString()} bite-size clips.</span>
+                <span className="text-gold-600">{t('shortsPage.title2', { n: SHORTS.length.toLocaleString() })}</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A bottomless feed of food shorts: burgers, pizza, fried chicken,
-                steak, shawarma, kebab, ASMR eating, ASMR cooking, street food
-                from Bangkok to Cairo to Istanbul, dessert porn, and the
-                Levantine kitchen by the pan. Tap any thumbnail to enter
-                full-screen scroll, then keep going.
+                {t('shortsPage.body')}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -228,7 +232,7 @@ export default function ShortsLibraryPage() {
                   className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
                 >
                   <Shuffle className="h-3.5 w-3.5" />
-                  Start the random feed
+                  {t('shortsPage.ctaRandomFeed')}
                 </button>
                 <button
                   type="button"
@@ -236,7 +240,7 @@ export default function ShortsLibraryPage() {
                   className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
-                  {shuffled ? 'Sort by category' : 'Shuffle the grid'}
+                  {shuffled ? t('shortsPage.ctaSortByCategory') : t('shortsPage.ctaShuffle')}
                 </button>
               </div>
 
@@ -297,7 +301,7 @@ export default function ShortsLibraryPage() {
                   : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
               }`}
             >
-              All {SHORTS.length.toLocaleString()}
+              {t('shortsPage.allCount', { n: SHORTS.length.toLocaleString() })}
             </button>
             {SHORT_CATEGORIES.map((c) => {
               const count = SHORTS.filter((s) => s.category === c.id).length;
@@ -334,20 +338,21 @@ export default function ShortsLibraryPage() {
 
         {visibleCount < deck.length && (
           <div ref={sentinelRef} className="mt-8 grid place-items-center py-6 text-sm tracking-tight text-ink-400">
-            Loading more…
+            {t('shortsPage.loadingMore')}
           </div>
         )}
 
         {visibleCount >= deck.length && deck.length > 0 && (
           <p className="mt-10 text-center text-sm tracking-tight text-ink-400">
-            You reached the end of {filter === 'all' ? 'all' : SHORT_CATEGORIES.find((c) => c.id === filter)?.name} shorts.
-            Shuffle the deck for a fresh order.
+            {filter === 'all'
+              ? t('shortsPage.endOfFeedAll')
+              : t('shortsPage.endOfFeed', { name: SHORT_CATEGORIES.find((c) => c.id === filter)?.name ?? '' })}
           </p>
         )}
 
         {deck.length === 0 && (
           <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
-            <p className="text-base text-ink-600">No shorts in this category yet.</p>
+            <p className="text-base text-ink-600">{t('shortsPage.emptyCategory')}</p>
           </div>
         )}
       </section>
@@ -359,16 +364,16 @@ export default function ShortsLibraryPage() {
             <Pause className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
-            One more, then dinner.
+            {t('shortsPage.closingTitle')}
           </h3>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
-            All credit to the original creators. Open any short on YouTube to follow, comment, or save.
+            {t('shortsPage.closingBody')}
           </p>
           <Link
             to="/recipes"
             className="mt-7 inline-flex items-center gap-2 rounded-full bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
           >
-            Browse all recipes
+            {t('shortsPage.closingCta')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
         </div>

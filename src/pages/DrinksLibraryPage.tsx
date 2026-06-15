@@ -27,23 +27,34 @@ import {
 type CategoryFilter = 'all' | DrinkCategory;
 type TempFilter = 'all' | DrinkTemp;
 
-const CATEGORY_FILTERS: { id: CategoryFilter; name: string }[] = [
-  { id: 'all', name: 'All categories' },
-  ...DRINK_CATEGORIES.map((c) => ({ id: c.id as CategoryFilter, name: c.name })),
-];
+function useCategoryFilters() {
+  const { t } = useTranslation();
+  const list: { id: CategoryFilter; name: string }[] = [
+    { id: 'all', name: t('drinksPage.allCategories') },
+    ...DRINK_CATEGORIES.map((c) => ({ id: c.id as CategoryFilter, name: c.name })),
+  ];
+  return list;
+}
 
-const TEMP_FILTERS: { id: TempFilter; name: string; icon: LucideIcon }[] = [
-  { id: 'all', name: 'Hot and cold', icon: GlassWater },
-  { id: 'hot', name: 'Hot', icon: Sun },
-  { id: 'cold', name: 'Cold', icon: Snowflake },
-];
+function useTempFilters() {
+  const { t } = useTranslation();
+  const list: { id: TempFilter; name: string; icon: LucideIcon }[] = [
+    { id: 'all', name: t('drinksPage.tempAll'), icon: GlassWater },
+    { id: 'hot', name: t('drinksPage.tempHot'), icon: Sun },
+    { id: 'cold', name: t('drinksPage.tempCold'), icon: Snowflake },
+  ];
+  return list;
+}
 
-const HERO_STATS = [
-  { value: `${DRINKS.length}`, label: 'Drinks' },
-  { value: `${DRINKS.filter((d) => d.temp === 'hot').length}`, label: 'Hot' },
-  { value: `${DRINKS.filter((d) => d.temp === 'cold').length}`, label: 'Cold' },
-  { value: `${DRINK_CATEGORIES.length}`, label: 'Categories' },
-];
+function useHeroStats() {
+  const { t } = useTranslation();
+  return [
+    { value: `${DRINKS.length}`, label: t('drinksPage.statDrinks') },
+    { value: `${DRINKS.filter((d) => d.temp === 'hot').length}`, label: t('drinksPage.statHot') },
+    { value: `${DRINKS.filter((d) => d.temp === 'cold').length}`, label: t('drinksPage.statCold') },
+    { value: `${DRINK_CATEGORIES.length}`, label: t('drinksPage.statCategories') },
+  ];
+}
 
 function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
   const [playing, setPlaying] = useState(false);
@@ -98,16 +109,17 @@ function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
 }
 
 function TempPill({ temp }: { temp: DrinkTemp }) {
+  const { t } = useTranslation();
   if (temp === 'hot') {
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-terracotta-500/15 px-2.5 py-1 text-[11px] font-medium tracking-tight text-terracotta-600">
-        <Sun className="h-3 w-3" /> Hot
+        <Sun className="h-3 w-3" /> {t('drinksPage.tempHot')}
       </span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-sage-50 px-2.5 py-1 text-[11px] font-medium tracking-tight text-sage-700">
-      <Snowflake className="h-3 w-3" /> Cold
+      <Snowflake className="h-3 w-3" /> {t('drinksPage.tempCold')}
     </span>
   );
 }
@@ -219,6 +231,10 @@ function DrinkHeroCard({ drink }: { drink: Drink }) {
 }
 
 export default function DrinksLibraryPage() {
+  const { t } = useTranslation();
+  const CATEGORY_FILTERS = useCategoryFilters();
+  const TEMP_FILTERS = useTempFilters();
+  const HERO_STATS = useHeroStats();
   const [category, setCategory] = useState<CategoryFilter>('all');
   const [temp, setTemp] = useState<TempFilter>('all');
   const [query, setQuery] = useState('');
@@ -245,18 +261,14 @@ export default function DrinksLibraryPage() {
           <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
-                What's in your cup.
+                {t('drinksPage.title1')}
                 <br />
                 <span className="text-gold-600">
-                  {DRINKS.length} drinks, hot and cold.
+                  {t('drinksPage.title2', { n: DRINKS.length })}
                 </span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A curated library of {DRINKS.length} drinks: Arabic coffee in a dallah,
-                Vietnamese ca phe through a phin, Moroccan mint tea poured from a height,
-                jallab with pine nuts, karkadeh iced, the works. Each one with a verified
-                video tutorial, full ingredient list, step-by-step method, and the story
-                of where it comes from.
+                {t('drinksPage.body', { n: DRINKS.length })}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -265,7 +277,7 @@ export default function DrinksLibraryPage() {
                   className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
                 >
                   <Coffee className="h-3.5 w-3.5" />
-                  Open the library
+                  {t('drinksPage.ctaOpenLibrary')}
                 </a>
                 <button
                   type="button"
@@ -277,7 +289,7 @@ export default function DrinksLibraryPage() {
                   className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
                 >
                   <Snowflake className="h-3.5 w-3.5" />
-                  Cold drinks first
+                  {t('drinksPage.ctaColdFirst')}
                 </button>
               </div>
 
@@ -328,7 +340,7 @@ export default function DrinksLibraryPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-3.5">
                         <p className="text-[9px] font-medium tracking-tight text-gold-400">
-                          {d.temp === 'hot' ? 'Hot' : 'Cold'} · {d.origin.split('.')[0]}
+                          {d.temp === 'hot' ? t('drinksPage.tempHot') : t('drinksPage.tempCold')} · {d.origin.split('.')[0]}
                         </p>
                         <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">{d.name}</p>
                       </div>
@@ -349,9 +361,9 @@ export default function DrinksLibraryPage() {
           <div className="container-wide">
             <div className="mb-6 flex items-baseline justify-between gap-4">
               <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
-                Today's pour
+                {t('drinksPage.todaysPour')}
               </h2>
-              <p className="text-sm tracking-tight text-ink-500">One drink, properly</p>
+              <p className="text-sm tracking-tight text-ink-500">{t('drinksPage.todaysPourSub')}</p>
             </div>
             <DrinkHeroCard drink={featured} />
           </div>
@@ -364,11 +376,10 @@ export default function DrinksLibraryPage() {
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-                The cellar
+                {t('drinksPage.cellarTitle')}
               </h2>
               <p className="mt-2 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
-                {DRINKS.length} drinks across {DRINK_CATEGORIES.length} categories. Filter by temperature, by
-                kind, or just search.
+                {t('drinksPage.cellarBody', { n: DRINKS.length, m: DRINK_CATEGORIES.length })}
               </p>
             </div>
             <div className="relative w-full md:w-80">
@@ -377,7 +388,7 @@ export default function DrinksLibraryPage() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search drink or ingredient"
+                placeholder={t('drinksPage.searchPlaceholder')}
                 className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
@@ -385,7 +396,7 @@ export default function DrinksLibraryPage() {
                   type="button"
                   onClick={() => setQuery('')}
                   className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
-                  aria-label="Clear search"
+                  aria-label={t('drinksPage.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -454,7 +465,7 @@ export default function DrinksLibraryPage() {
                         </h3>
                         <p className="mt-1 text-sm tracking-tight text-ink-500">{cat.tagline}</p>
                       </div>
-                      <p className="text-sm tracking-tight text-ink-500">{items.length} drinks</p>
+                      <p className="text-sm tracking-tight text-ink-500">{t('drinksPage.nDrinks', { n: items.length })}</p>
                     </div>
                     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                       {items.map((d) => (
@@ -467,7 +478,7 @@ export default function DrinksLibraryPage() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
-              <p className="text-base text-ink-600">No drinks match those filters.</p>
+              <p className="text-base text-ink-600">{t('drinksPage.emptyTitle')}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -477,7 +488,7 @@ export default function DrinksLibraryPage() {
                 }}
                 className="mt-4 inline-flex items-center gap-2 rounded-full border border-ink-200 px-5 py-2 text-sm font-medium tracking-tight text-ink-900 hover:border-ink-900"
               >
-                Reset filters
+                {t('drinksPage.resetFilters')}
               </button>
             </div>
           ) : (
@@ -500,17 +511,16 @@ export default function DrinksLibraryPage() {
             <GlassWater className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
-            Every meal is also a drink.
+            {t('drinksPage.closingTitle')}
           </h3>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
-            More drinks get added every month. If a drink belongs in this library, send the
-            name.
+            {t('drinksPage.closingBody')}
           </p>
           <Link
             to="/arab-cuisine"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
           >
-            Browse Arab cuisine
+            {t('drinksPage.closingCta')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
         </div>
@@ -535,6 +545,7 @@ interface CocktailEntry {
 }
 
 function MocktailCatalog() {
+  const { t } = useTranslation();
   const list = cocktails as CocktailEntry[];
   if (!list.length) return null;
   return (
@@ -543,17 +554,16 @@ function MocktailCatalog() {
         <div>
           <p className="eyebrow mb-3 inline-flex items-center gap-2">
             <Sparkles className="h-3 w-3" strokeWidth={2} />
-            Mocktail catalog
+            {t('drinksPage.mocktailEyebrow')}
           </p>
           <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-            More from the catalog.
+            {t('drinksPage.mocktailTitle')}
           </h2>
           <p className="mt-2 max-w-xl text-sm tracking-tight text-ink-500 md:text-base">
-            Forty alcohol free cocktails and mocktails sourced from TheCocktailDB. Photos, full
-            ingredients, calories, and step by step method.
+            {t('drinksPage.mocktailBody')}
           </p>
         </div>
-        <p className="text-sm tracking-tight text-ink-500">{list.length} mocktails</p>
+        <p className="text-sm tracking-tight text-ink-500">{t('drinksPage.nMocktails', { n: list.length })}</p>
       </div>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {list.map((c) => (
@@ -577,7 +587,7 @@ function MocktailCatalog() {
               <h3 className="text-base font-semibold leading-snug tracking-tight text-ink-900 group-hover:text-terracotta-500">
                 {c.title}
               </h3>
-              <p className="text-xs tracking-tight text-ink-500">{c.calories} kcal per serving</p>
+              <p className="text-xs tracking-tight text-ink-500">{t('drinksPage.kcalPerServing', { n: c.calories })}</p>
             </div>
           </Link>
         ))}

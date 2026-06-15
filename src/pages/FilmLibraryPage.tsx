@@ -12,21 +12,28 @@ import {
 
 type FilterId = 'all' | FilmCategory;
 
-const FILTERS: { id: FilterId; name: string }[] = [
-  { id: 'all', name: 'All films' },
-  ...FILM_CATEGORIES.map((c) => ({ id: c.id as FilterId, name: c.name })),
-];
-
 function uniqueChannels() {
   return new Set(FOOD_FILMS.map((f) => f.channel)).size;
 }
 
-const HERO_STATS = [
-  { value: `${FOOD_FILMS.length}`, label: 'Films' },
-  { value: `${uniqueChannels()}`, label: 'Channels' },
-  { value: `${FILM_CATEGORIES.length}`, label: 'Categories' },
-  { value: `${new Set(FOOD_FILMS.map((f) => f.region).filter(Boolean)).size}`, label: 'Regions' },
-];
+function useFilters() {
+  const { t } = useTranslation();
+  const list: { id: FilterId; name: string }[] = [
+    { id: 'all', name: t('filmsPage.allFilms') },
+    ...FILM_CATEGORIES.map((c) => ({ id: c.id as FilterId, name: c.name })),
+  ];
+  return list;
+}
+
+function useHeroStats() {
+  const { t } = useTranslation();
+  return [
+    { value: `${FOOD_FILMS.length}`, label: t('filmsPage.statFilms') },
+    { value: `${uniqueChannels()}`, label: t('filmsPage.statChannels') },
+    { value: `${FILM_CATEGORIES.length}`, label: t('filmsPage.statCategories') },
+    { value: `${new Set(FOOD_FILMS.map((f) => f.region).filter(Boolean)).size}`, label: t('filmsPage.statRegions') },
+  ];
+}
 
 /**
  * Lite YouTube embed: shows the maxres thumbnail until the user clicks,
@@ -158,6 +165,9 @@ function FilmHeroCard({ film }: { film: FoodFilm }) {
 }
 
 export default function FilmLibraryPage() {
+  const { t } = useTranslation();
+  const FILTERS = useFilters();
+  const HERO_STATS = useHeroStats();
   const [filter, setFilter] = useState<FilterId>('all');
   const [query, setQuery] = useState('');
 
@@ -190,16 +200,12 @@ export default function FilmLibraryPage() {
           <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
-                Watch the masters.
+                {t('filmsPage.title1')}
                 <br />
-                <span className="text-gold-600">{FOOD_FILMS.length} films, one library.</span>
+                <span className="text-gold-600">{t('filmsPage.title2', { n: FOOD_FILMS.length })}</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A curated library of professional food films from Netflix,
-                National Geographic, PBS, DW, UNESCO, and the best independent
-                food channels on YouTube. Chef profiles, travel docs, food
-                history, food science, and cultural deep dives. Press play and
-                watch inside the site.
+                {t('filmsPage.body')}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -208,7 +214,7 @@ export default function FilmLibraryPage() {
                   className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
                 >
                   <Film className="h-3.5 w-3.5" />
-                  Browse the library
+                  {t('filmsPage.ctaBrowse')}
                 </a>
                 {FILM_CATEGORIES.slice(0, 2).map((c) => (
                   <a
@@ -286,9 +292,9 @@ export default function FilmLibraryPage() {
           <div className="container-wide">
             <div className="mb-6 flex items-baseline justify-between gap-4">
               <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
-                Editor's pick
+                {t('filmsPage.editorsPick')}
               </h2>
-              <p className="text-sm tracking-tight text-ink-500">One film, watched in full</p>
+              <p className="text-sm tracking-tight text-ink-500">{t('filmsPage.editorsPickSub')}</p>
             </div>
             <FilmHeroCard film={featured} />
           </div>
@@ -301,11 +307,10 @@ export default function FilmLibraryPage() {
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-                The library
+                {t('filmsPage.libraryTitle')}
               </h2>
               <p className="mt-2 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
-                {FOOD_FILMS.length} films across {FILM_CATEGORIES.length} categories. Filter, search, and play any of
-                them right inside the page.
+                {t('filmsPage.libraryBody', { n: FOOD_FILMS.length, m: FILM_CATEGORIES.length })}
               </p>
             </div>
             <div className="relative w-full md:w-80">
@@ -314,7 +319,7 @@ export default function FilmLibraryPage() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search film, chef, or country"
+                placeholder={t('filmsPage.searchPlaceholder')}
                 className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
@@ -322,7 +327,7 @@ export default function FilmLibraryPage() {
                   type="button"
                   onClick={() => setQuery('')}
                   className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
-                  aria-label="Clear search"
+                  aria-label={t('filmsPage.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -368,7 +373,7 @@ export default function FilmLibraryPage() {
                         </h3>
                         <p className="mt-1 text-sm tracking-tight text-ink-500">{cat.tagline}</p>
                       </div>
-                      <p className="text-sm tracking-tight text-ink-500">{items.length} films</p>
+                      <p className="text-sm tracking-tight text-ink-500">{t('filmsPage.nFilms', { n: items.length })}</p>
                     </div>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                       {items.map((f) => (
@@ -381,7 +386,7 @@ export default function FilmLibraryPage() {
             </div>
           ) : filteredFilms.length === 0 ? (
             <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
-              <p className="text-base text-ink-600">No films match that search.</p>
+              <p className="text-base text-ink-600">{t('filmsPage.emptyTitle')}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -390,7 +395,7 @@ export default function FilmLibraryPage() {
                 }}
                 className="mt-4 inline-flex items-center gap-2 rounded-full border border-ink-200 px-5 py-2 text-sm font-medium tracking-tight text-ink-900 hover:border-ink-900"
               >
-                Reset filters
+                {t('filmsPage.resetFilters')}
               </button>
             </div>
           ) : (
@@ -410,17 +415,16 @@ export default function FilmLibraryPage() {
             <Film className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
-            Cook better by watching the people who do it best.
+            {t('filmsPage.closingTitle')}
           </h3>
           <p className="mt-4 max-w-2xl mx-auto text-sm leading-relaxed text-cream-100/70 md:text-base">
-            More films get added every month. If there is a documentary you think
-            belongs here, send it in.
+            {t('filmsPage.closingBody')}
           </p>
           <Link
             to="/recipes"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
           >
-            Browse all recipes
+            {t('filmsPage.closingCta')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
         </div>

@@ -13,17 +13,24 @@ import { CHEF_ARTICLES } from '../data/chef-articles';
 
 type RegionFilter = 'all' | ChefRegion;
 
-const REGION_FILTERS: { id: RegionFilter; name: string }[] = [
-  { id: 'all', name: 'All chefs' },
-  ...CHEF_REGIONS.map((r) => ({ id: r.id as RegionFilter, name: r.name })),
-];
+function useRegionFilters() {
+  const { t } = useTranslation();
+  const list: { id: RegionFilter; name: string }[] = [
+    { id: 'all', name: t('chefHall.allChefs') },
+    ...CHEF_REGIONS.map((r) => ({ id: r.id as RegionFilter, name: r.name })),
+  ];
+  return list;
+}
 
-const HERO_STATS = [
-  { value: `${CHEFS.length}`, label: 'Chefs' },
-  { value: `${new Set(CHEFS.map((c) => c.cuisine)).size}`, label: 'Cuisines' },
-  { value: `${CHEF_REGIONS.length}`, label: 'Regions' },
-  { value: `${CHEFS.reduce((sum, c) => sum + (c.restaurants?.length ?? 0), 0)}`, label: 'Restaurants' },
-];
+function useHeroStats() {
+  const { t } = useTranslation();
+  return [
+    { value: `${CHEFS.length}`, label: t('chefHall.statChefs') },
+    { value: `${new Set(CHEFS.map((c) => c.cuisine)).size}`, label: t('chefHall.statCuisines') },
+    { value: `${CHEF_REGIONS.length}`, label: t('chefHall.statRegions') },
+    { value: `${CHEFS.reduce((sum, c) => sum + (c.restaurants?.length ?? 0), 0)}`, label: t('chefHall.statRestaurants') },
+  ];
+}
 
 function YoutubeLite({ videoId, title }: { videoId: string; title: string }) {
   const [playing, setPlaying] = useState(false);
@@ -193,6 +200,9 @@ function ChefHeroCard({ chef }: { chef: Chef }) {
 }
 
 export default function ChefHallPage() {
+  const { t } = useTranslation();
+  const REGION_FILTERS = useRegionFilters();
+  const HERO_STATS = useHeroStats();
   const [region, setRegion] = useState<RegionFilter>('all');
   const [query, setQuery] = useState('');
 
@@ -227,16 +237,12 @@ export default function ChefHallPage() {
           <div className="grid items-end gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-7">
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
-                The Chef Hall.
+                {t('chefHall.title1')}
                 <br />
-                <span className="text-gold-600">{CHEFS.length} portraits of the people behind the plate.</span>
+                <span className="text-gold-600">{t('chefHall.title2', { n: CHEFS.length })}</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
-                A hall of portraits of the most important chefs alive (and a few
-                who are no longer). Each has a verified video, a philosophy in
-                one line, a working bio, the restaurants they cook in, and the
-                books they wrote. From Ottolenghi to Ottolenghi's grandmother;
-                from Pépin to Pujol.
+                {t('chefHall.body')}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -245,13 +251,13 @@ export default function ChefHallPage() {
                   className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[13px] font-medium tracking-tight text-cream-50 transition-colors hover:bg-terracotta-500"
                 >
                   <ChefHat className="h-3.5 w-3.5" />
-                  Enter the hall
+                  {t('chefHall.ctaEnterHall')}
                 </a>
                 <a
                   href="#region-middle-east"
                   className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-cream-50 px-6 py-3 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:border-ink-900"
                 >
-                  Arab chefs first
+                  {t('chefHall.ctaArabFirst')}
                 </a>
               </div>
 
@@ -320,10 +326,10 @@ export default function ChefHallPage() {
           <div className="container-wide">
             <div className="mb-6 flex items-baseline justify-between gap-4">
               <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tighter">
-                Portrait of the day
+                {t('chefHall.portraitOfDay')}
               </h2>
               <p className="inline-flex items-center gap-1.5 text-sm tracking-tight text-ink-500">
-                <Award className="h-3.5 w-3.5" /> One chef, deeply
+                <Award className="h-3.5 w-3.5" /> {t('chefHall.portraitOfDaySub')}
               </p>
             </div>
             <ChefHeroCard chef={featured} />
@@ -337,11 +343,10 @@ export default function ChefHallPage() {
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tighter">
-                The hall
+                {t('chefHall.hallTitle')}
               </h2>
               <p className="mt-2 max-w-prose-wide text-sm leading-relaxed text-ink-600 sm:text-base">
-                {CHEFS.length} chef portraits across {CHEF_REGIONS.length} regions. Search by chef, restaurant, cookbook,
-                or cuisine.
+                {t('chefHall.hallBody', { n: CHEFS.length, m: CHEF_REGIONS.length })}
               </p>
             </div>
             <div className="relative w-full md:w-80">
@@ -350,7 +355,7 @@ export default function ChefHallPage() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search chef, restaurant, book"
+                placeholder={t('chefHall.searchPlaceholder')}
                 className="w-full rounded-full border border-ink-200 bg-cream-50 py-3 pl-11 pr-10 text-sm tracking-tight text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none"
               />
               {query && (
@@ -358,7 +363,7 @@ export default function ChefHallPage() {
                   type="button"
                   onClick={() => setQuery('')}
                   className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 hover:bg-ink-100 hover:text-ink-900"
-                  aria-label="Clear search"
+                  aria-label={t('chefHall.clearSearch')}
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -407,7 +412,7 @@ export default function ChefHallPage() {
                         </h3>
                         <p className="mt-1 text-sm tracking-tight text-ink-500">{reg.tagline}</p>
                       </div>
-                      <p className="text-sm tracking-tight text-ink-500">{items.length} chefs</p>
+                      <p className="text-sm tracking-tight text-ink-500">{t('chefHall.nChefs', { n: items.length })}</p>
                     </div>
                     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                       {items.map((c) => (
@@ -420,7 +425,7 @@ export default function ChefHallPage() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="rounded-3xl border border-ink-100 bg-cream-50 p-12 text-center">
-              <p className="text-base text-ink-600">No chefs match that search.</p>
+              <p className="text-base text-ink-600">{t('chefHall.emptyTitle')}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -429,7 +434,7 @@ export default function ChefHallPage() {
                 }}
                 className="mt-4 inline-flex items-center gap-2 rounded-full border border-ink-200 px-5 py-2 text-sm font-medium tracking-tight text-ink-900 hover:border-ink-900"
               >
-                Reset filters
+                {t('chefHall.resetFilters')}
               </button>
             </div>
           ) : (
@@ -449,17 +454,17 @@ export default function ChefHallPage() {
             <ChefHat className="h-6 w-6" strokeWidth={1.5} />
           </div>
           <h3 className="mx-auto mt-6 max-w-2xl text-[clamp(1.5rem,2.5vw,2rem)] font-semibold leading-tight tracking-tight">
-            Every great recipe was first cooked by someone, somewhere.
+            {t('chefHall.closingTitle')}
           </h3>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-100/70 md:text-base">
-            The hall keeps growing. If a chef belongs here, send the name.
+            {t('chefHall.closingBody')}
           </p>
           <Link
             to="/films"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 text-[13px] font-medium tracking-tight text-ink-900 transition-colors hover:bg-gold-400"
           >
             <Sparkles className="h-4 w-4" />
-            Watch the film library
+            {t('chefHall.closingCta')}
             <ArrowUpRight className="rtl-flip h-4 w-4" />
           </Link>
         </div>
