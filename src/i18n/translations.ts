@@ -104,6 +104,7 @@ export const en = {
     training: 'Training',
     more: 'More',
     personal: 'Personal',
+    about: 'About',
   },
   footer: {
     blurb: 'A quiet, curated corner of the internet for recipes worth cooking. Hundreds of thousands of dishes from kitchens around the world, all in one place.',
@@ -983,6 +984,7 @@ export const ar: typeof en = {
     more: 'المزيد',
     personal: 'حسابك',
     dark: 'ليلي',
+    about: 'حول',
   },
   footer: {
     blurb: 'ركن هادئ ومنتقى على الإنترنت لوصفات تستحق الطبخ. مئات الآلاف من الأطباق من مطابخ حول العالم، كلها في مكان واحد.',

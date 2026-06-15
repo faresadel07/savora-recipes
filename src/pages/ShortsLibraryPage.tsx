@@ -219,7 +219,7 @@ export default function ShortsLibraryPage() {
               <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1] tracking-tighter text-ink-900">
                 {t('shortsPage.title1')}
                 <br />
-                <span className="text-gold-600">{t('shortsPage.title2', { n: SHORTS.length.toLocaleString() })}</span>
+                <span className="text-gold-600">{t('shortsPage.title2', { n: SHORTS.length.toLocaleString(isAr ? 'ar-EG' : undefined) })}</span>
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-relaxed text-ink-600 sm:text-lg">
                 {t('shortsPage.body')}
@@ -304,7 +304,7 @@ export default function ShortsLibraryPage() {
                   : 'border-ink-200 bg-cream-50 text-ink-700 hover:border-ink-900'
               }`}
             >
-              {t('shortsPage.allCount', { n: SHORTS.length.toLocaleString() })}
+              {t('shortsPage.allCount', { n: SHORTS.length.toLocaleString(isAr ? 'ar-EG' : undefined) })}
             </button>
             {SHORT_CATEGORIES.map((c) => {
               const count = SHORTS.filter((s) => s.category === c.id).length;

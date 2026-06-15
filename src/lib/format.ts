@@ -21,7 +21,8 @@ export function minutesToText(min?: number): string {
 
 export function fmtNumber(n?: number, digits = 0): string {
   if (n == null) return '·';
-  return n.toLocaleString(undefined, {
+  const lang = typeof document !== 'undefined' && document.documentElement.lang === 'ar' ? 'ar-EG' : undefined;
+  return n.toLocaleString(lang, {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   });

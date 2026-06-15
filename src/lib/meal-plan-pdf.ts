@@ -136,7 +136,7 @@ function renderCoverPage(plan: MealPlan, ctx: RenderCtx): string {
           ${esc(labels.dailyTarget)}
         </div>
         <div style="font-size: 56px; font-weight: 700; letter-spacing: -2px; line-height: 1;">
-          ${plan.targets.calories.toLocaleString()}
+          ${plan.targets.calories.toLocaleString(ctx.isAr ? 'ar-EG' : undefined)}
           <span style="font-size: 18px; color: rgba(251,246,239,0.55); font-weight: 400; letter-spacing: 0;">${esc(labels.kcal)}</span>
         </div>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px;">
@@ -190,11 +190,11 @@ function renderDayPage(day: PlannedDay, plan: MealPlan, ctx: RenderCtx): string 
             ${esc(dayLabel)}
           </div>
           <div style="font-size: 38px; font-weight: 700; letter-spacing: -1.5px; margin-top: 6px;">
-            ${day.totals.calories.toLocaleString()} <span style="font-size: 16px; color: #56524D; font-weight: 400;">${esc(labels.kcal)}</span>
+            ${day.totals.calories.toLocaleString(ctx.isAr ? 'ar-EG' : undefined)} <span style="font-size: 16px; color: #56524D; font-weight: 400;">${esc(labels.kcal)}</span>
           </div>
         </div>
         <div style="text-align: ${ctx.isAr ? 'left' : 'right'}; font-size: 11px; color: #56524D;">
-          <div style="margin-bottom: 4px;">${esc(labels.target)} ${plan.targets.calories.toLocaleString()} ${esc(labels.kcal)}</div>
+          <div style="margin-bottom: 4px;">${esc(labels.target)} ${plan.targets.calories.toLocaleString(ctx.isAr ? 'ar-EG' : undefined)} ${esc(labels.kcal)}</div>
           <div style="${day.diff.calories > 0 ? 'color: #B83D2E;' : day.diff.calories < -50 ? 'color: #56524D;' : 'color: #5E7549;'}">
             ${esc(labels.diff)} ${day.diff.calories > 0 ? '+' : ''}${day.diff.calories} ${esc(labels.kcal)}
           </div>

@@ -196,7 +196,7 @@ export default function SearchPage() {
           </button>
 
           <p className="text-xs tracking-tight text-ink-400">
-            {data ? t('search.n_recipes', { n: data.total.toLocaleString() }) : '·'}
+            {data ? t('search.n_recipes', { n: data.total.toLocaleString(language === 'ar' ? 'ar-EG' : undefined) }) : '·'}
           </p>
         </div>
 
