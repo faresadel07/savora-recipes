@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ChefHat, ExternalLink, MapPin, PlayCircle, Star, X } from 'lucide-react';
 import { useTranslation } from '../i18n';
 import type { MichelinRestaurant } from '../data/michelin-restaurants';
+import MichelinCover, { hasUniqueImage } from './MichelinCover';
 
 interface Props {
   restaurant: MichelinRestaurant | null;
@@ -11,12 +12,6 @@ interface Props {
 export default function MichelinDetailModal({ restaurant, onClose }: Props) {
   const { t, pl, language } = useTranslation();
   const isAr = language === 'ar';
-  const [playingVideo, setPlayingVideo] = useState(false);
-
-  // Reset video player whenever a new restaurant is opened.
-  useEffect(() => {
-    setPlayingVideo(false);
-  }, [restaurant?.id]);
 
   // Lock body scroll while open and let Esc dismiss.
   useEffect(() => {
@@ -43,9 +38,10 @@ export default function MichelinDetailModal({ restaurant, onClose }: Props) {
   const story = pl(restaurant.story, restaurant.storyAr);
   const dishes = isAr && restaurant.signatureDishesAr ? restaurant.signatureDishesAr : restaurant.signatureDishes;
 
-  const youtubeSearchQuery = encodeURIComponent(`${restaurant.name} ${restaurant.city} restaurant`);
+  const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(restaurant.name + ' ' + restaurant.city + ' michelin')}`;
   const wikipediaUrl = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(restaurant.name + ' ' + restaurant.city)}`;
   const michelinGuideUrl = `https://guide.michelin.com/en/search?q=${encodeURIComponent(restaurant.name)}`;
+  const showTitleOverlay = hasUniqueImage(restaurant);
 
   return (
     <div
@@ -69,87 +65,66 @@ export default function MichelinDetailModal({ restaurant, onClose }: Props) {
           <X className="h-4 w-4" />
         </button>
 
-        {/* Hero / Video region */}
+        {/* Hero region — image or typographic cover. Video playback is
+            delegated to YouTube to guarantee a working result every time. */}
         <div className="relative aspect-[16/9] overflow-hidden bg-ink-900">
-          {playingVideo && restaurant.videoId ? (
-            // Inline YouTube embed. Stays inside the modal — never redirects.
-            <iframe
-              key={restaurant.videoId}
-              src={`https://www.youtube-nocookie.com/embed/${restaurant.videoId}?autoplay=1&rel=0`}
-              title={restaurant.name}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              className="absolute inset-0 h-full w-full"
-            />
-          ) : (
-            <>
-              {restaurant.image ? (
-                <img
-                  src={restaurant.image}
-                  alt={name}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              ) : (
-                <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-800 via-ink-900 to-terracotta-900">
-                  <ChefHat className="h-16 w-16 text-cream-50/30" strokeWidth={1} />
-                </div>
-              )}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" />
-
-              {/* Stars overlay */}
-              <div className="pointer-events-none absolute start-5 top-5 flex items-center gap-1.5 rounded-full bg-ink-900/85 px-3 py-1.5 text-[12px] font-semibold text-cream-50 backdrop-blur">
-                {Array.from({ length: restaurant.stars }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current text-gold-500" />
-                ))}
-                {restaurant.starsSince && (
-                  <span className="ms-1 text-cream-100/70">{isAr ? 'منذ' : 'since'} {restaurant.starsSince}</span>
-                )}
-              </div>
-
-              {/* Badges */}
-              <div className="pointer-events-none absolute end-16 top-5 flex flex-col items-end gap-1.5">
-                {restaurant.isHalalFriendly && (
-                  <span className="rounded-full bg-sage-500 px-3 py-1 text-[11px] font-semibold text-cream-50 backdrop-blur">
-                    {t('michelin.halalBadge')}
-                  </span>
-                )}
-                {restaurant.isInArabWorld && (
-                  <span className="rounded-full bg-terracotta-500 px-3 py-1 text-[11px] font-semibold text-cream-50 backdrop-blur">
-                    {t('michelin.arabWorldBadge')}
-                  </span>
-                )}
-              </div>
-
-              {/* Title overlay on hero image */}
-              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
-                <p className="inline-flex items-center gap-1.5 text-[12px] tracking-tight text-cream-50/85">
-                  <MapPin className="h-3 w-3" />
-                  {city}, {country}
-                </p>
-                <h2 className="mt-2 text-[clamp(1.75rem,3vw,2.75rem)] font-bold leading-tight tracking-tighter text-cream-50">
-                  {name}
-                </h2>
-                <p className="mt-1 text-sm font-medium text-gold-400">{cuisine}</p>
-              </div>
-
-              {/* Play button — only when we have a video id */}
-              {restaurant.videoId && (
-                <button
-                  type="button"
-                  onClick={() => setPlayingVideo(true)}
-                  aria-label={isAr ? 'تشغيل الفيديو' : 'Play video'}
-                  className="group absolute end-6 bottom-6 inline-flex items-center gap-2.5 rounded-full bg-cream-50 px-5 py-3 text-[13px] font-medium tracking-tight text-ink-900 shadow-2xl backdrop-blur transition-all hover:bg-gold-400"
-                >
-                  <PlayCircle className="h-5 w-5 fill-ink-900 text-cream-50" strokeWidth={2} />
-                  {isAr ? 'شاهد الفيديو' : 'Watch video'}
-                </button>
-              )}
-            </>
+          <MichelinCover restaurant={restaurant} isAr={isAr} size="hero" />
+          {showTitleOverlay && (
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" />
           )}
+
+          {/* Stars overlay */}
+          <div className="pointer-events-none absolute start-5 top-5 flex items-center gap-1.5 rounded-full bg-ink-900/85 px-3 py-1.5 text-[12px] font-semibold text-cream-50 backdrop-blur">
+            {Array.from({ length: restaurant.stars }).map((_, i) => (
+              <Star key={i} className="h-4 w-4 fill-current text-gold-500" />
+            ))}
+            {restaurant.starsSince && (
+              <span className="ms-1 text-cream-100/70">{isAr ? 'منذ' : 'since'} {restaurant.starsSince}</span>
+            )}
+          </div>
+
+          {/* Halal / Arab world badges */}
+          <div className="pointer-events-none absolute end-16 top-5 flex flex-col items-end gap-1.5">
+            {restaurant.isHalalFriendly && (
+              <span className="rounded-full bg-sage-500 px-3 py-1 text-[11px] font-semibold text-cream-50 backdrop-blur">
+                {t('michelin.halalBadge')}
+              </span>
+            )}
+            {restaurant.isInArabWorld && (
+              <span className="rounded-full bg-terracotta-500 px-3 py-1 text-[11px] font-semibold text-cream-50 backdrop-blur">
+                {t('michelin.arabWorldBadge')}
+              </span>
+            )}
+          </div>
+
+          {/* Title overlay only over real photographs — the typographic
+              cover already shows the title in large display type. */}
+          {showTitleOverlay && (
+            <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+              <p className="inline-flex items-center gap-1.5 text-[12px] tracking-tight text-cream-50/85">
+                <MapPin className="h-3 w-3" />
+                {city}, {country}
+              </p>
+              <h2 className="mt-2 text-[clamp(1.75rem,3vw,2.75rem)] font-bold leading-tight tracking-tighter text-cream-50">
+                {name}
+              </h2>
+              <p className="mt-1 text-sm font-medium text-gold-400">{cuisine}</p>
+            </div>
+          )}
+
+          {/* Watch on YouTube — opens a fresh search in a new tab. Always
+              returns relevant working videos, regardless of which clip is
+              up at any given moment. */}
+          <a
+            href={youtubeSearchUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={isAr ? 'شاهد على يوتيوب' : 'Watch on YouTube'}
+            className="group absolute end-6 bottom-6 inline-flex items-center gap-2.5 rounded-full bg-cream-50 px-5 py-3 text-[13px] font-medium tracking-tight text-ink-900 shadow-2xl backdrop-blur transition-all hover:bg-gold-400"
+          >
+            <PlayCircle className="h-5 w-5 fill-ink-900 text-cream-50" strokeWidth={2} />
+            {isAr ? 'شاهد على يوتيوب' : 'Watch on YouTube'}
+          </a>
         </div>
 
         {/* Body — chef, story, dishes */}
@@ -215,20 +190,6 @@ export default function MichelinDetailModal({ restaurant, onClose }: Props) {
             </a>
           </div>
 
-          {/* Backup YouTube search link, small and quiet */}
-          {!restaurant.videoId && (
-            <p className="mt-4 text-center text-[12px] text-ink-400">
-              {isAr ? 'تبحث عن المزيد؟ ' : 'Looking for more? '}
-              <a
-                href={`https://www.youtube.com/results?search_query=${youtubeSearchQuery}`}
-                target="_blank"
-                rel="noreferrer"
-                className="font-medium text-ink-700 underline hover:text-ink-900"
-              >
-                {isAr ? 'ابحث على يوتيوب' : 'Search YouTube'}
-              </a>
-            </p>
-          )}
         </div>
       </div>
     </div>

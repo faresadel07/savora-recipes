@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChefHat, MapPin, Sparkles, Star, Utensils } from 'lucide-react';
 import { useTranslation } from '../i18n';
 import MichelinDetailModal from '../components/MichelinDetailModal';
+import MichelinCover, { hasUniqueImage } from '../components/MichelinCover';
 import {
   MICHELIN_REGIONS,
   MICHELIN_RESTAURANTS,
@@ -27,28 +28,17 @@ function StarsBadge({ stars }: { stars: 1 | 2 | 3 }) {
 }
 
 /**
- * Restaurant image tile. The whole card is clickable to open the detail
- * modal which carries the video search, Wikipedia link, and full info.
+ * Restaurant cover tile. Uses a real photograph when the image is
+ * unique to the restaurant, otherwise renders a typographic Michelin
+ * Guide style cover. The whole card opens the detail modal.
  */
-function RestaurantImage({ image, alt }: { image?: string; alt: string }) {
+function RestaurantImage({ restaurant, isAr }: { restaurant: MichelinRestaurant; isAr: boolean }) {
   return (
     <>
-      {image ? (
-        <img
-          src={image}
-          alt={alt}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).style.display = 'none';
-          }}
-        />
-      ) : (
-        <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-800 via-ink-900 to-terracotta-900">
-          <ChefHat className="h-12 w-12 text-cream-50/30" strokeWidth={1} />
-        </div>
+      <MichelinCover restaurant={restaurant} isAr={isAr} size="card" />
+      {hasUniqueImage(restaurant) && (
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
       )}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-3 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
         <span className="rounded-full bg-cream-50/95 px-3 py-1 text-[10px] font-medium tracking-tight text-ink-900 backdrop-blur">
           View details
@@ -80,7 +70,7 @@ function RestaurantCard({ restaurant, onOpen }: { restaurant: MichelinRestaurant
         aria-label={isAr ? `افتح تفاصيل ${name}` : `Open details for ${name}`}
         className="relative aspect-video w-full overflow-hidden bg-ink-900"
       >
-        <RestaurantImage image={restaurant.image} alt={name} />
+        <RestaurantImage restaurant={restaurant} isAr={isAr} />
 
         {/* Stars badge */}
         <span className="pointer-events-none absolute start-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink-900/85 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-cream-50 backdrop-blur">
@@ -233,34 +223,41 @@ export default function MichelinPage() {
           {/* Right — 2x2 featured grid */}
           <div className="md:col-span-5">
             <div className="grid grid-cols-2 gap-3">
-              {FEATURED_MICHELIN.filter((r) => r.image).slice(0, 4).map((r, i) => (
-                <button
-                  key={r.id}
-                  type="button"
-                  onClick={() => setOpenRestaurant(r)}
-                  className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] transition-transform duration-500 hover:-translate-y-1"
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
-                  <img
-                    src={r.image}
-                    alt={r.name}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-3.5 text-start">
-                    <div className="mb-1">
-                      <StarsBadge stars={r.stars} />
-                    </div>
-                    <p className="text-[10px] font-medium tracking-tight text-gold-400">
-                      {isAr ? r.cityAr : r.city}
-                    </p>
-                    <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">
-                      {isAr ? r.nameAr : r.name}
-                    </p>
-                  </div>
-                </button>
-              ))}
+              {FEATURED_MICHELIN.slice(0, 4).map((r, i) => {
+                const photo = hasUniqueImage(r);
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => setOpenRestaurant(r)}
+                    className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-200 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] transition-transform duration-500 hover:-translate-y-1"
+                    style={{ animationDelay: `${i * 60}ms` }}
+                  >
+                    <MichelinCover restaurant={r} isAr={isAr} size="card" />
+                    {photo && (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
+                        <div className="absolute inset-x-0 bottom-0 p-3.5 text-start">
+                          <div className="mb-1">
+                            <StarsBadge stars={r.stars} />
+                          </div>
+                          <p className="text-[10px] font-medium tracking-tight text-gold-400">
+                            {isAr ? r.cityAr : r.city}
+                          </p>
+                          <p className="mt-1 line-clamp-2 text-sm font-semibold tracking-tight text-cream-50">
+                            {isAr ? r.nameAr : r.name}
+                          </p>
+                        </div>
+                      </>
+                    )}
+                    {!photo && (
+                      <div className="absolute start-3 top-3">
+                        <StarsBadge stars={r.stars} />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
