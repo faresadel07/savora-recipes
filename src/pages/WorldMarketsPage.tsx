@@ -61,73 +61,75 @@ function useHeroStats() {
 }
 
 /**
- * Video tile with a fallback image. If `fallbackImage` is provided, it is
- * used as the thumbnail; the YouTube embed only loads when the user clicks
- * play. This way the page looks correct even when a video ID is missing or
- * dead, because we have a real Wikipedia image to show.
+ * Video tile that always works. The thumbnail prefers the explicit
+ * Wikipedia image (when provided), then falls back through YouTube's
+ * own thumbnail variants. Clicking the tile opens a YouTube search for
+ * the supplied query in a new tab — never an inline embed — because
+ * embedded videos go dead the moment a creator unlists or restricts
+ * embedding, and YouTube search always returns live results.
  */
-function YoutubeLite({ videoId, title, fallbackImage }: { videoId: string; title: string; fallbackImage?: string }) {
-  const [playing, setPlaying] = useState(false);
-  if (playing) {
-    return (
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
-        title={title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        loading="lazy"
-        className="absolute inset-0 h-full w-full"
-      />
-    );
-  }
-
-  // Prefer the explicit fallback image (Wikipedia) when available; fall back
-  // to the YouTube thumbnail otherwise.
-  const primarySrc = fallbackImage ?? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+function YoutubeLite({
+  videoId,
+  title,
+  searchQuery,
+  fallbackImage,
+}: {
+  videoId?: string;
+  title: string;
+  searchQuery: string;
+  fallbackImage?: string;
+}) {
+  const primarySrc = fallbackImage
+    ?? (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '');
+  const href = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
 
   return (
-    <button
-      type="button"
-      onClick={() => setPlaying(true)}
-      aria-label={`Play ${title}`}
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Watch ${title} on YouTube`}
       className="group absolute inset-0 flex items-center justify-center overflow-hidden bg-ink-900"
     >
-      <img
-        src={primarySrc}
-        onLoad={(e) => {
-          // When using YouTube thumbs, fall back to lower-res variants if the
-          // 120x90 placeholder loaded.
-          if (fallbackImage) return;
-          const t = e.currentTarget;
-          if (t.naturalWidth > 120) return;
-          if (t.src.includes('maxresdefault')) {
-            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-          } else if (t.src.includes('sddefault')) {
-            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-          }
-        }}
-        onError={(e) => {
-          const t = e.currentTarget;
-          // If the Wikipedia image fails, drop to YouTube as a second chance.
-          if (fallbackImage && !t.src.includes('youtube.com')) {
-            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-            return;
-          }
-          if (t.src.includes('maxresdefault')) {
-            t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-          } else if (t.src.includes('sddefault')) {
-            t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-          }
-        }}
-        alt=""
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink-900/55 via-transparent to-ink-900/10" />
+      {primarySrc && (
+        <img
+          src={primarySrc}
+          onLoad={(e) => {
+            if (fallbackImage) return;
+            if (!videoId) return;
+            const t = e.currentTarget;
+            if (t.naturalWidth > 120) return;
+            if (t.src.includes('maxresdefault')) {
+              t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+            } else if (t.src.includes('sddefault')) {
+              t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            }
+          }}
+          onError={(e) => {
+            const t = e.currentTarget;
+            if (fallbackImage && videoId && !t.src.includes('youtube.com')) {
+              t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+              return;
+            }
+            if (videoId && t.src.includes('maxresdefault')) {
+              t.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+            } else if (videoId && t.src.includes('sddefault')) {
+              t.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            }
+          }}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-ink-900/15" />
       <span className="relative grid h-16 w-16 place-items-center rounded-full bg-cream-50/95 text-ink-900 shadow-2xl transition-transform group-hover:scale-110 md:h-20 md:w-20">
         <Play className="h-7 w-7 translate-x-0.5 fill-current md:h-8 md:w-8" strokeWidth={1.5} />
       </span>
-    </button>
+      <span className="absolute bottom-3 inline-flex items-center gap-1 rounded-full bg-ink-900/85 px-2.5 py-1 text-[10px] font-medium tracking-tight text-cream-50 backdrop-blur transition-opacity group-hover:opacity-100 md:opacity-0">
+        Watch on YouTube
+      </span>
+    </a>
   );
 }
 
@@ -165,6 +167,18 @@ function CityCard({ city }: { city: FoodCity }) {
   const country = isAr ? city.countryAr : city.country;
   const dishes = isAr && city.signatureDishesAr ? city.signatureDishesAr : city.signatureDishes;
 
+  // Search hint per category. Always returns relevant live results on
+  // YouTube. For the signature tab we steer toward the city's most
+  // famous dish when we know one.
+  const searchTerms: Record<string, string> = {
+    street: 'street food',
+    restaurants: 'food tour',
+    market: 'market tour',
+    signature: city.signatureDishes[0] ?? 'food',
+  };
+  const activeCategoryTerm = activeVideo ? (searchTerms[activeVideo.category] ?? 'food') : 'food';
+  const ytSearchQuery = `${city.name} ${activeCategoryTerm}`;
+
   return (
     <article id={`city-${city.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
@@ -173,6 +187,7 @@ function CityCard({ city }: { city: FoodCity }) {
             key={activeVideo.videoId}
             videoId={activeVideo.videoId}
             title={activeVideo.title}
+            searchQuery={ytSearchQuery}
             fallbackImage={city.image}
           />
         )}
@@ -231,7 +246,12 @@ function RestaurantCard({ restaurant }: { restaurant: FamousRestaurant }) {
   return (
     <article id={`r-${restaurant.id}`} className="group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
-        <YoutubeLite videoId={restaurant.videoId} title={restaurant.name} fallbackImage={restaurant.image} />
+        <YoutubeLite
+          videoId={restaurant.videoId}
+          title={restaurant.name}
+          searchQuery={`${restaurant.name} ${restaurant.city} restaurant`}
+          fallbackImage={restaurant.image}
+        />
         {restaurant.yearFounded && (
           <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
             <Clock className="h-3 w-3" /> {t('markets.restaurantSince')} {restaurant.yearFounded}
@@ -279,7 +299,11 @@ function MarketCard({ market }: { market: FoodMarket }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink-100 bg-cream-50 transition-all duration-500 hover:-translate-y-1 hover:border-ink-900 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.18)]">
       <div className="relative aspect-video bg-ink-900">
-        <YoutubeLite videoId={market.videoId} title={market.name} />
+        <YoutubeLite
+          videoId={market.videoId}
+          title={market.name}
+          searchQuery={`${market.name} ${market.city} market tour`}
+        />
         {market.yearFounded && (
           <span className="absolute start-3 top-3 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-ink-900 backdrop-blur">
             <Clock className="h-3 w-3" /> {isAr ? 'منذ' : 'Since'} {market.yearFounded}
