@@ -213,7 +213,13 @@ function sortResults(items: RecipeSummary[], sort?: SearchFilters['sort']): Reci
   if (sort === 'name') {
     return [...items].sort((a, b) => a.title.localeCompare(b.title));
   }
-  return items;
+  // Stable sort: recipes with a video tutorial first, others after.
+  // Within each group the original input order is preserved.
+  return [...items].sort((a, b) => {
+    const av = a.hasVideo ? 0 : 1;
+    const bv = b.hasVideo ? 0 : 1;
+    return av - bv;
+  });
 }
 
 function paginate(items: RecipeSummary[], filters: SearchFilters): SearchResponse {

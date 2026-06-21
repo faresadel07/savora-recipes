@@ -86,6 +86,7 @@ function adaptSummary(m: MealRaw): RecipeSummary {
     image: m.strMealThumb,
     category: m.strCategory || undefined,
     area: m.strArea || undefined,
+    hasVideo: Boolean(m.strYoutube && m.strYoutube.trim()),
   };
 }
 

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Clock, Heart, Users } from 'lucide-react';
+import { Clock, Heart, PlayCircle, Users } from 'lucide-react';
 import type { RecipeSummary } from '../types/recipe';
 import { useFavorites } from '../hooks/useFavorites';
 import { minutesToText } from '../lib/format';
@@ -89,6 +89,12 @@ export default function RecipeCard({ recipe, variant = 'default', index = 0, eag
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.06]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/35 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        {recipe.hasVideo && (
+          <span className="pointer-events-none absolute start-2.5 top-2.5 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2 py-0.5 text-[10px] font-semibold tracking-tight text-ink-900 shadow-sm backdrop-blur">
+            <PlayCircle className="h-3 w-3 fill-terracotta-500 text-cream-50" strokeWidth={1.5} />
+            {isAr ? 'فيديو' : 'VIDEO'}
+          </span>
+        )}
       </Link>
 
       <button

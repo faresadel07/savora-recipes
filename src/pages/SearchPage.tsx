@@ -5,7 +5,15 @@ import { ChevronDown, Filter, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { searchRecipes } from '../api';
 import { MEALDB_AREAS, MEALDB_CATEGORIES } from '../lib/constants';
-import { LOCAL_RECIPES } from '../data/local-recipes';
+// Hand-picked hero peek recipes. Each one ships with a YouTube tutorial,
+// so a visitor clicking any of these always lands on a recipe page that
+// has a video, which is what we want to showcase.
+const PEEK_RECIPES = [
+  { id: 'mdb-52770', title: 'Spaghetti Bolognese', titleAr: 'سباغيتي بولونيز', image: 'https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg', category: 'Beef', categoryAr: 'لحم' },
+  { id: 'mdb-52796', title: 'Chicken Alfredo Primavera', titleAr: 'دجاج ألفريدو بريمافيرا', image: 'https://www.themealdb.com/images/media/meals/syqypv1486981727.jpg', category: 'Chicken', categoryAr: 'دجاج' },
+  { id: 'mdb-53065', title: 'Sushi', titleAr: 'سوشي', image: 'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg', category: 'Seafood', categoryAr: 'مأكولات بحرية' },
+  { id: 'mdb-52767', title: 'Bakewell tart', titleAr: 'تارت بيكويل', image: 'https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg', category: 'Dessert', categoryAr: 'حلويات' },
+];
 import { useTranslation } from '../i18n';
 import { expandEnglishSynonyms, translateQuery } from '../lib/search-i18n';
 import RecipeCard from '../components/RecipeCard';
@@ -29,8 +37,6 @@ const QUICK_CUISINES = [
   { label: 'Mexican', area: 'Mexican' },
   { label: 'Moroccan', area: 'Moroccan' },
 ];
-
-const PEEK_RECIPES = LOCAL_RECIPES.slice(0, 4);
 
 const PAGE = 12;
 
@@ -145,10 +151,8 @@ export default function SearchPage() {
             <div className="md:col-span-5">
               <div className="grid grid-cols-2 gap-3">
                 {PEEK_RECIPES.map((r, i) => {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  const lr = r as any;
-                  const peekTitle = language === 'ar' ? (lr.titleAr || r.title) : r.title;
-                  const peekCategory = language === 'ar' ? (lr.categoryAr || r.category) : r.category;
+                  const peekTitle = language === 'ar' ? r.titleAr : r.title;
+                  const peekCategory = language === 'ar' ? r.categoryAr : r.category;
                   return (
                     <Link
                       key={r.id}
@@ -162,6 +166,10 @@ export default function SearchPage() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent" />
+                      <span className="absolute end-2.5 top-2.5 inline-flex items-center gap-1 rounded-full bg-cream-50/95 px-2 py-0.5 text-[9px] font-semibold tracking-tight text-ink-900 backdrop-blur">
+                        <span aria-hidden className="grid h-2 w-2 place-items-center">▶</span>
+                        VIDEO
+                      </span>
                       <div className="absolute inset-x-0 bottom-0 p-3.5">
                         <p className="text-[10px] uppercase tracking-widest text-cream-100/75">
                           {peekCategory}

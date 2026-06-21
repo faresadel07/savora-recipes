@@ -14,6 +14,7 @@ export interface RecipeSummary {
   readyInMinutes?: number;
   servings?: number;
   publisher?: string;
+  hasVideo?: boolean;
 }
 
 export interface Ingredient {
